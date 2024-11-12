@@ -1,0 +1,223 @@
+
+html, body {
+  background-color: rgba(20, 20, 20);
+  margin: 0;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 400;
+  padding: 0;
+}
+
+/*#region Navigacio*/
+.navbar{
+  width: 100%;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.726);
+  margin: 0;
+  position:fixed;
+  z-index: 99;
+  top: 0;
+}
+
+.navItem {
+  margin: 1% 3%;
+  text-decoration: none;
+  color: aliceblue;
+  position: relative;
+  padding: 5px 0;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.navItem::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #e09900;
+  transition: width 0.3s ease;
+}
+
+.navItem:hover::after {
+  width: 100%;
+}
+
+.navItem:hover {
+  color: #e09900;
+}
+
+.belepesBtn{
+  margin: 0.5rem 1rem 0.5rem auto;
+  width: 5rem;
+  background-color: transparent;
+  border: 3px solid rgb(51, 51, 51 0.7);
+  border-radius: 5px;
+  color: aliceblue;
+}
+
+.belepesBtn:hover, .headerBtn:hover {
+  color: #e09900;
+  border-color: #e09900;
+}
+/*#endregion Navigacio*/
+/*#region Főoldal*/
+/*#region Header*/
+.header {
+  background-image: url(img/header.jpg);
+  background-position: center;
+  background-size: cover;
+  height: 80vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.headerContent {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5%;
+  width: 35%;
+  height: 70%;
+  margin: 5rem 3rem;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerTitle {
+  font-family: Rodeluxet;
+  font-size: 10rem;
+  font-weight: 50;
+  margin: 0;
+  color: white;
+}
+
+.headerText {
+  margin: 0 5%;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.headerBtn {
+  margin-top: 3rem;
+  height: 3rem;
+  width: 50%;
+  background-color: transparent;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 0.5rem;
+  color: white;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+/*#endregion Header*/
+
+
+/*#endregion Főoldal*/
+/*#region Reszponzivitas*/
+/* Asztali */
+@media (max-width: 1200px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .headerContent {
+    width: 40%;
+  }
+
+  .headerTitle {
+    font-size: 8rem;
+  }
+
+  .headerText {
+    font-size: 1rem;
+  }
+
+  .headerBtn {
+    width: 60%;
+  }
+
+  .belepesBtn {
+    font-size: 1.2rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .navItem {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+  }
+
+  .header {
+    height: 70vh;
+  }
+
+  .headerContent {
+    width: 60%;
+  }
+
+  .headerTitle {
+    font-size: 5rem;
+  }
+
+  .headerText {
+    font-size: 1rem;
+  }
+
+  .headerBtn {
+    width: 80%;
+  }
+
+  .belepesBtn {
+    font-size: 1rem;
+    width: auto;
+  }
+}
+
+/* Telefon */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  .navItem {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+
+  .belepesBtn {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .header {
+    height: 60vh;
+  }
+
+  .headerContent {
+    width: 90%;
+    margin: 2rem 0;
+  }
+
+  .headerTitle {
+    font-size: 4rem;
+  }
+
+  .headerText {
+    font-size: 0.9rem;
+  }
+
+  .headerBtn {
+    width: 100%;
+  }
+}
+/*#endregion */
