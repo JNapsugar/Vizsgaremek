@@ -133,9 +133,12 @@ html, body {
   color: white;
   transition: color 0.3s ease, border-color 0.3s ease;
   padding: 0.5rem;
+  padding-top: 1rem;
   font-family: "Poiret One", sans-serif;
   font-weight: 1000;
-  font-size: 15px;
+  font-size: 30px;
+  text-decoration: none;
+  text-align: center;
 }
 /*#endregion Header*/
 .homeContent{
@@ -519,6 +522,7 @@ footer{
   text-shadow: #000000 10px 10px 10px;
 }
 
+/*#region filter*/
 .filter{
   background-color: rgba(108, 115, 122, 0.932);
   height: 8rem;
@@ -553,6 +557,9 @@ footer{
   margin-top: 0.5rem;
   height: 2rem;
   background-color: rgb(204, 205, 206);
+  &:hover{
+    background-color: rgb(174, 186, 197);
+  }
 }
 
 .showMoreFilter{
@@ -599,6 +606,7 @@ footer{
     background-color: rgb(174, 186, 197);
   }
 }
+/*#endregion filter*/
 
 .gridCards{
   display: flex;
