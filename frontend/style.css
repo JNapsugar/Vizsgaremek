@@ -67,6 +67,7 @@ html, body {
 /*#region Főoldal*/
 /*#region Header*/
 .header {
+  background-color: #000000;
   background-image: url(img/header.jpg);
   background-position: center;
   background-size: cover;
@@ -74,6 +75,27 @@ html, body {
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.headerImages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.headerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.headerImage.active {
+  opacity: 1;
 }
 
 .headerContent {
@@ -87,6 +109,8 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1;
+  position: relative;
 }
 
 .headerTitle {
@@ -94,7 +118,7 @@ html, body {
   font-size: 10rem;
   font-weight: 50;
   margin: 0;
-  color: white;
+  color: #eeb53a;
 }
 
 .headerText {
@@ -105,7 +129,7 @@ html, body {
 
 .headerBtn {
   margin-top: 1rem;
-  height: 5rem;
+  height: 3rem;
   width: 50%;
   background-color: transparent;
   border: 3px solid rgba(255, 255, 255, 0.7);
@@ -137,7 +161,12 @@ html, body {
   justify-content: center;
 }
 
+.cityImg{
+  height: 25rem;
+}
+
 .kiemeltSection{
+  text-align: center;
   background-color: rgb(187,187,187);
   background-image: url(img/pattern.png);
   background-repeat: repeat;
@@ -243,6 +272,7 @@ footer{
       cursor: pointer;
       inset: auto auto auto 30px; 
       transition: inset .8s ease-out;
+      transition: opacity .5s .1s ease-in;
       &:hover {
         color: #e09900;
         border-color: #e09900;
@@ -274,28 +304,11 @@ footer{
 
 }
 
-.cardInformaciokkal{
-  &:hover .card-content {
-      height: 60%;
-      transition: height .3s ease-in-out;
-  }
-  &:hover .TovabbiInformaciok{
-      opacity: 1;
-      transition: opacity .5s .1s ease-in;
-  }
-  &:hover h2 {
-      inset: auto auto 150px 30px;
-      transition: inset .5s ease-out;
-  }
-  button
-  {
-      inset: auto auto 50px 30px; 
-  }
-}
+
 
 /*Városos*/
 .cityCard {
-  width: 600px;
+  width: 500px;
   height: 200px;
   border-radius: 10px;
   overflow: hidden;
@@ -308,18 +321,19 @@ footer{
 
   button {
     background-color:#ffffff64;
-    border: 1px black solid;
+    border: 1px solid black solid;
     border-radius: 0.4rem;
     color: inherit;
     height: 2rem;
     width: 20rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     cursor: pointer;
     inset: auto auto auto 30px; 
     transition: inset .8s ease-out;
     &:hover {
+      background-color:#ffffffbe;
       color: #e09900;
-      border-color: #e09900;
+      border: 3px solid #e09900;
     }
   }
 }
@@ -392,6 +406,10 @@ footer{
   .belepesBtn {
     font-size: 1.2rem;
   }
+
+  .cityImg{
+    height: 15rem;
+  }
 }
 
 
@@ -434,6 +452,10 @@ footer{
     width: auto;
     margin: 0;
   }
+
+  .cityImg{
+    height: 10rem;
+  }
 }
 
 
@@ -473,6 +495,10 @@ footer{
 
   .headerBtn {
     width: 100%;
+  }
+
+  .cityImg{
+    height: 5rem;
   }
 }
 /*#endregion */
