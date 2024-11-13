@@ -1,6 +1,6 @@
 
 html, body {
-  background-color: rgba(20, 20, 20);
+  background-color: rgb(34, 33, 33);
   margin: 0;
   font-family: "Poiret One", sans-serif;
   font-weight: 400;
@@ -54,11 +54,14 @@ html, body {
   border: 3px solid rgb(51, 51, 51 0.7);
   border-radius: 5px;
   color: aliceblue;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 1000;
 }
 
-.belepesBtn:hover, .headerBtn:hover {
+.belepesBtn:hover, .headerBtn:hover, .moreBtn:hover {
   color: #e09900;
   border-color: #e09900;
+
 }
 /*#endregion Navigacio*/
 /*#region Főoldal*/
@@ -101,21 +104,269 @@ html, body {
 }
 
 .headerBtn {
-  margin-top: 3rem;
-  height: 3rem;
+  margin-top: 1rem;
+  height: 5rem;
   width: 50%;
   background-color: transparent;
   border: 3px solid rgba(255, 255, 255, 0.7);
   border-radius: 0.5rem;
   color: white;
   transition: color 0.3s ease, border-color 0.3s ease;
+  padding: 0.5rem;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 1000;
+  font-size: 15px;
 }
 /*#endregion Header*/
+.homeContent{
+  display: flex;
+  flex-direction: column;
+}
 
+
+.sectionTitle{
+  font-size: 3rem;
+  margin: 3rem 0;
+  text-align: center;
+  color: white;
+}
+
+.cityCards, .kiemeltCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.kiemeltSection{
+  background-color: rgb(187,187,187);
+  background-image: url(img/pattern.png);
+  background-repeat: repeat;
+  background-position: left;
+  background-blend-mode: soft-light;
+  box-shadow: inset 0 100px 40px 10px rgb(187,187,187);
+  & .sectionTitle{
+    color: black;
+  }
+}
+
+.moreBtn{
+  height: 4rem;
+  width: 25rem;
+  margin: 1rem;
+  background-color: #333;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 1.5rem;
+  color: white;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  padding: 0.5rem;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 1000;
+  font-size: large;
+}
 
 /*#endregion Főoldal*/
+
+/*#region footer*/
+footer{
+  height: 4rem;
+  width: 100%;
+  color: white;
+  border-top: 1px solid white;
+  background-color: black;
+}
+/*#endregion footer*/
+
+/*#region Card*/
+.card {
+  width: 25rem;
+  height: 20rem;
+  float: left;
+  border: 1px black solid;
+  border-radius: 1rem;
+  margin: 1rem;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.375);
+
+  img {
+      position: absolute;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      filter: contrast(80%);
+  }
+
+  .card-content {
+      width: 100%;
+      height: 20%;
+      position: absolute;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: whitesmoke;
+      font-family: "Goudy Old Style", serif;
+      transition: height .5s .5s ease-in-out;
+      text-align: left;
+  }
+
+  h2 {
+      position: absolute;
+      inset: auto auto 30px 30px;
+      margin: 0;
+      transition: inset .3s .3s ease-out;
+  }
+
+  .price{
+    font-size: 55%;
+  }
+
+  p, button {
+      position: absolute;
+      opacity: 0;
+      transition: opacity .3s ease-out;
+  }
+
+  p {
+      inset: auto auto 30px 30px;
+      transition: opacity .5s .1s ease-in;
+  }
+  
+  button {
+      background-color:#ffffff00;
+      border: 1px white solid;
+      border-radius: 0.4rem;
+      color: inherit;
+      height: 2rem;
+      width: 10rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      inset: auto auto auto 30px; 
+      transition: inset .8s ease-out;
+      &:hover {
+        color: #e09900;
+        border-color: #e09900;
+      }
+  }
+
+  .TovabbiInformaciok{
+      height: 2rem;
+      transition: opacity .5s .1s ease-in;
+  }
+
+  &:hover h2 {
+      inset: auto auto 90px 30px;
+      transition: inset .5s ease-out;
+  }
+  &:hover button {
+      opacity: 1;
+      transition: opacity .5s .1s ease-in;
+  }
+  &:hover p {
+    opacity: 1;
+    transition: opacity .5s .1s ease-in;
+}
+
+  &:hover .card-content {
+      height: 40%;
+      transition: height .3s ease-in-out;
+  }
+
+}
+
+.cardInformaciokkal{
+  &:hover .card-content {
+      height: 60%;
+      transition: height .3s ease-in-out;
+  }
+  &:hover .TovabbiInformaciok{
+      opacity: 1;
+      transition: opacity .5s .1s ease-in;
+  }
+  &:hover h2 {
+      inset: auto auto 150px 30px;
+      transition: inset .5s ease-out;
+  }
+  button
+  {
+      inset: auto auto 50px 30px; 
+  }
+}
+
+/*Városos*/
+.cityCard {
+  width: 600px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 5px #ffffff80;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-image: url(img/budapest.jpg);
+  background-position: center;
+  background-size: cover;
+  margin: 1rem;
+
+  button {
+    background-color:#ffffff64;
+    border: 1px black solid;
+    border-radius: 0.4rem;
+    color: inherit;
+    height: 2rem;
+    width: 20rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    inset: auto auto auto 30px; 
+    transition: inset .8s ease-out;
+    &:hover {
+      color: #e09900;
+      border-color: #e09900;
+    }
+  }
+}
+
+.cityCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.cityCardContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2b5;
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cityCard:hover .cityCardContent {
+  transform: rotateX(0deg);
+}
+
+.cityCardTitle {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 700;
+}
+
+
+.cityCardDescription {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #000000;
+  line-height: 1.4;
+}
+
+/*#endregion Card*/
 /*#region Reszponzivitas*/
-/* Asztali */
+
+
+
 @media (max-width: 1200px) {
   .navbar {
     flex-direction: row;
@@ -143,12 +394,14 @@ html, body {
   }
 }
 
-/* Tablet */
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+    z-index: 1;
+    position: relative;
   }
 
   .navItem {
@@ -179,10 +432,11 @@ html, body {
   .belepesBtn {
     font-size: 1rem;
     width: auto;
+    margin: 0;
   }
 }
 
-/* Telefon */
+
 @media (max-width: 480px) {
   .navbar {
     flex-direction: column;
@@ -197,6 +451,7 @@ html, body {
   .belepesBtn {
     font-size: 1rem;
     width: 100%;
+    margin: 0;
   }
 
   .header {
