@@ -67,10 +67,6 @@ html, body {
 /*#region Főoldal*/
 /*#region Header*/
 .header {
-  background-color: #000000;
-  background-image: url(img/header.jpg);
-  background-position: center;
-  background-size: cover;
   height: 80vh;
   position: relative;
   overflow: hidden;
@@ -502,3 +498,118 @@ footer{
   }
 }
 /*#endregion */
+
+/*#region Ingatlanok*/
+.smallHeader{
+  height: 40vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.smallHeaderTitle{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-family: Rodeluxet;
+  font-size: 10rem;
+  font-weight: 50;
+  margin-top: 5rem;
+  color: #eeb53a;
+  text-shadow: #000000 10px 10px 10px;
+}
+
+.filter{
+  background-color: rgba(108, 115, 122, 0.932);
+  height: 8rem;
+  width: 80%;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+  top: -4rem;
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  font-size: 2rem;
+  font-weight: 1000;
+  transition: height .8s ease-in-out;
+}
+
+.filterRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.filterSelectContainer {
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+  margin: 1rem;
+}
+
+.filterSelect{
+  margin-top: 0.5rem;
+  height: 2rem;
+  background-color: rgb(204, 205, 206);
+}
+
+.showMoreFilter{
+  text-align: center;
+  width: 8rem;
+  font-size: 90%;
+  margin: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  &:hover{
+    color: rgb(204, 205, 206);
+  }
+}
+
+.filterMore{
+  margin-top: 3rem;
+  opacity: 0;
+  transition: opacity .5s .2s ease-in-out;
+}
+
+.filterCheckbox{
+  transform: scale(2);
+  margin: 0 3rem 0 1rem ;
+}
+
+.viewBtnContainer{
+  display: flex;
+  flex-direction: column;
+  width: 3rem;
+  height: 6rem;
+  
+}
+
+.viewBtn {
+  border: none;
+  margin: 5%;
+  margin-left: 2rem;
+  background-color: rgb(204, 205, 206);
+  cursor: pointer;
+  width: 100%;
+  height: 45%;
+  border-radius: 1rem;
+  &:hover{
+    background-color: rgb(174, 186, 197);
+  }
+}
+
+.gridCards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+}
+
+
+
+/*#endregion Ingatlanok*/
+
+
+
