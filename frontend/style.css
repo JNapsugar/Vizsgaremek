@@ -16,6 +16,8 @@ html, body {
   position:fixed;
   z-index: 99;
   top: 0;
+  height: 4rem;
+  padding: 0;
 }
 
 .navItem {
@@ -155,7 +157,7 @@ html, body {
   font-family: Rodeluxet;
   font-size: 10rem;
   font-weight: 50;
-  margin-top: 3rem;
+  margin-top: 4rem;
   color: #eeb53a;
   text-shadow: #000000 10px 10px 10px;
 }
@@ -221,6 +223,7 @@ footer{
   color: white;
   border-top: 1px solid white;
   background-color: black;
+  margin-top: 3rem;
 }
 /*#endregion footer*/
 
@@ -622,14 +625,15 @@ footer{
 /*#endregion Ingatlanok*/
 
 /*region Reszletek*/
-.residentMainContent{
+.houseMainContent{
   display: flex;
   flex-direction: row;
 }
 
-.carousel{
+.houseCarousel{
   width: 40%;
   margin: 2rem;
+  margin-left: 4rem;
   & img{
     border-radius: 1rem;
   }
@@ -642,25 +646,26 @@ footer{
   margin-bottom: 1rem;
 }
 
-.residentTitle{
+.houseTitle{
   font-size: 3rem;
   margin: 0;
   font-weight: 800;
 }
 
-.residentLocation{
+.houseLocation{
   font-size: 2rem;
   font-weight: 600;
   color: rgb(147, 147, 147);
 }
 
-.residentPrice{
+.housePrice{
   text-align: right;
   font-size: 2rem;
   font-weight: 200;
+  color: #e09900;
 }
 
-.residentDescription{
+.houseDescription{
   margin-top: 1rem;
 }
 
@@ -671,18 +676,63 @@ hr{
   margin-bottom: 2rem;
 }
 
-.residentContactCard{
-  float: right;
+.houseOtherContent {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.otherDetails{
+  width: 80%;
+  padding: 2rem 15rem 2rem 5rem;
+  color: white;
+}
+
+.houseDetailsTitle{
+  color: #e09900;
+  font-size: 3rem;
+}
+
+.services{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.service{
+  height: 4rem;
+  margin: 1rem;
+  background-color: rgba(78, 77, 77, 0.664);
+  border: 3px rgb(78, 77, 77) solid;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  img{
+    height: 2rem;
+    filter: invert(100%);
+    margin-right: 1rem;
+  }
+}
+
+.houseContactCard{
   background-color: rgb(78, 77, 77);
   border-radius: 2rem;
-  height: 20rem;
-  width: 15rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  height: 22rem;
+  width: 20rem;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   font-weight: 1000;
   color: black;
   text-align: center;
+  padding: 2rem 2rem;
+}
+
+.uploaderName{
+  color: black;
+  text-decoration: none;
+  font-style: italic;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .uploaderImg{
@@ -692,18 +742,33 @@ hr{
   margin: auto;
 }
 
-.residentContactTitle{
+.houseContactTitle{
   font-size: 1.5rem;
   text-decoration: underline;
-  
 }
 
-.residentContact{
-
+.houseContact{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 
-.residentContactValue{
-
+.houseContactValue{
+  float: right;
 }
+
+.moreRecs{
+  margin-left: 5rem;
+  display: flex;
+}
+
+.moreRecsTitle{
+  color: #e09900;
+  font-size: 3rem;
+  margin-left: 5rem;
+  margin-top: 2rem;
+}
+
+
 
 /*endregion Reszletek*/
