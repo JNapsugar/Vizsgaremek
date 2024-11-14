@@ -140,6 +140,26 @@ html, body {
   text-decoration: none;
   text-align: center;
 }
+
+.smallHeader{
+  height: 40vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.smallHeaderTitle{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-family: Rodeluxet;
+  font-size: 10rem;
+  font-weight: 50;
+  margin-top: 3rem;
+  color: #eeb53a;
+  text-shadow: #000000 10px 10px 10px;
+}
+
 /*#endregion Header*/
 .homeContent{
   display: flex;
@@ -503,24 +523,6 @@ footer{
 /*#endregion */
 
 /*#region Ingatlanok*/
-.smallHeader{
-  height: 40vh;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.smallHeaderTitle{
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  font-family: Rodeluxet;
-  font-size: 10rem;
-  font-weight: 50;
-  margin-top: 5rem;
-  color: #eeb53a;
-  text-shadow: #000000 10px 10px 10px;
-}
 
 /*#region filter*/
 .filter{
@@ -619,5 +621,89 @@ footer{
 
 /*#endregion Ingatlanok*/
 
+/*region Reszletek*/
+.residentMainContent{
+  display: flex;
+  flex-direction: row;
+}
 
+.carousel{
+  width: 40%;
+  margin: 2rem;
+  & img{
+    border-radius: 1rem;
+  }
+}
 
+.mainDetails{
+  width: 60%;
+  color: white;
+  padding: 2rem 5rem 2rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.residentTitle{
+  font-size: 3rem;
+  margin: 0;
+  font-weight: 800;
+}
+
+.residentLocation{
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgb(147, 147, 147);
+}
+
+.residentPrice{
+  text-align: right;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.residentDescription{
+  margin-top: 1rem;
+}
+
+hr{
+  width: 100%;
+  border: #000000 3px solid;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.residentContactCard{
+  float: right;
+  background-color: rgb(78, 77, 77);
+  border-radius: 2rem;
+  height: 20rem;
+  width: 15rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  font-weight: 1000;
+  color: black;
+  text-align: center;
+}
+
+.uploaderImg{
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.residentContactTitle{
+  font-size: 1.5rem;
+  text-decoration: underline;
+  
+}
+
+.residentContact{
+
+}
+
+.residentContactValue{
+
+}
+
+/*endregion Reszletek*/
