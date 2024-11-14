@@ -1,3 +1,7 @@
+@font-face {
+  font-family: Rodeluxet;
+  src: url(Rodeluxet.otf);
+}
 
 html, body {
   background-color: rgb(34, 33, 33);
@@ -221,10 +225,16 @@ footer{
   height: 4rem;
   width: 100%;
   color: white;
-  border-top: 1px solid white;
-  background-color: black;
-  margin-top: 3rem;
+  background-color: #171411;
+  position: absolute;
 }
+
+.footerImg{
+  width: 100%;
+  height: 10rem;
+  margin-bottom: -1rem;
+}
+
 /*#endregion footer*/
 
 /*#region Card*/
@@ -772,3 +782,135 @@ hr{
 
 
 /*endregion Reszletek*/
+
+/*region Profil*/
+.profileContent{
+  color: white;
+  display: flex;
+}
+
+.profileSide{
+  border: 3px rgb(49, 49, 49) solid;
+  border-bottom: none;
+  width: 20%;
+  text-align: center;
+  height: 90%;
+}
+
+.profilePicture{
+  height: 15rem;
+  width: 15rem;
+  border-radius: 50%;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.5);
+  margin-top: 3rem;
+}
+
+.ProfileUsername{
+  font-size: 2rem;
+}
+
+.ProfileFullname{
+  font-size: 1.5rem;
+}
+
+.profileDetails{
+  width: 80%;
+  padding: 3rem;
+  
+}
+
+.profileTitle{
+  color: #e09900;
+  font-size: 2rem;
+}
+
+.profileHouses{
+  border: 1px rgb(49, 49, 49) solid;
+  border-radius: 1rem;
+  overflow-y: auto;
+  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  height: 20rem;
+  width: 60rem;
+}
+
+.profileHouseCard{
+  height: 8rem;
+  display: flex;
+  border-bottom: 1px rgb(49, 49, 49) solid;
+  margin: 0 1rem;
+  img{
+    height: 7rem;
+    width: 7rem;
+    border-radius: 1rem;
+    margin: 0.5rem 2rem 0 2rem; 
+  }
+  p{
+    font-size: 1.5rem;
+  }
+  span{
+    font-size: 1rem;
+  }
+  button{
+    height: 3rem;
+    width: 8rem;
+    margin-top: 2.5rem;
+    margin-left: 30rem;
+    background-color: #e09900;
+    border: #c98a02 solid 2px;
+    border-radius: 0.5rem;
+    &:hover{
+      background-color: #ffbc2b;
+      cursor: pointer;
+      box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(34, 33, 33);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.profileData{
+  border: 1px rgb(49, 49, 49) solid;
+  border-radius: 1rem;
+  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  width: 60rem;
+}
+.profileDataRow{
+  height: 3rem;
+  display: flex;
+  border-bottom: 1px rgb(49, 49, 49) solid;
+  padding-left: 2rem;
+  margin: 1rem 1rem 0rem 1rem;
+  span{
+    margin-left: 5rem;
+  }
+}
+
+.logOut{
+  background-color: #c24925cc;
+  border: #8a2d11 solid 1px;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  height: 2rem;
+  width: 10rem;
+  &:hover{
+    background-color: #973517;
+    cursor: pointer;
+    box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  }
+}
+
+/*endreagion Profil*/
