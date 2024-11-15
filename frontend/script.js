@@ -19,12 +19,12 @@ const filterMore = document.getElementById('filterMore')
 showMoreFilter.addEventListener('click', () => {
     
     if (showMoreFilter.innerHTML == 'További<br>▼') {
-        filterDiv.style.height = '16rem'
+        filterDiv.style.height = '18rem'
         showMoreFilter.innerHTML = 'Kevesebb<br>▲'
         filterMore.style.opacity = 1 
 
     } else {
-        filterDiv.style.height = '8rem'
+        filterDiv.style.height = '10rem'
         showMoreFilter.innerHTML = 'További<br>▼'
         filterMore.style.opacity = 0 
     }
