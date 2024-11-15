@@ -1,0 +1,86 @@
+-- 1. Felhasználók tábla
+CREATE TABLE Felhasznalok (
+    felhasznalo_id INT AUTO_INCREMENT PRIMARY KEY,
+    nev VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    jelszo VARCHAR(255) NOT NULL,
+    telefon VARCHAR(15),
+    felhasznalo_tipus ENUM('tulajdonos', 'berlo') NOT NULL,
+    letrehozas_datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Ingatlanok tábla
+CREATE TABLE Ingatlanok (
+    ingatlan_id INT AUTO_INCREMENT PRIMARY KEY,
+    tulajdonos_id INT NOT NULL,
+    cim VARCHAR(255) NOT NULL,
+    leiras TEXT,
+    helyszin VARCHAR(255),
+    ar DECIMAL(10, 2) NOT NULL,
+    meret INT,
+    feltoltes_datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (tulajdonos_id) REFERENCES Felhasznalok(felhasznalo_id) ON DELETE CASCADE
+);
+
+-- 3. Foglalások tábla
+CREATE TABLE Foglalasok (
+    foglalas_id INT AUTO_INCREMENT PRIMARY KEY,
+    ingatlan_id INT NOT NULL,
+    berlo_id INT NOT NULL,
+    kezdes_datum DATE NOT NULL,
+    befejezes_datum DATE NOT NULL,
+    allapot ENUM('függőben', 'elfogadva', 'elutasítva') DEFAULT 'függőben',
+    letrehozas_datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ingatlan_id) REFERENCES Ingatlanok(ingatlan_id) ON DELETE CASCADE,
+    FOREIGN KEY (berlo_id) REFERENCES Felhasznalok(felhasznalo_id) ON DELETE CASCADE
+);
+
+-- 4. Üzenetek tábla
+CREATE TABLE Uzenetek (
+    uzenet_id INT AUTO_INCREMENT PRIMARY KEY,
+    kuldo_id INT NOT NULL,
+    fogado_id INT NOT NULL,
+    ingatlan_id INT NOT NULL,
+    uzenet_szoveg TEXT,
+    kuldes_datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (kuldo_id) REFERENCES Felhasznalok(felhasznalo_id) ON DELETE CASCADE,
+    FOREIGN KEY (fogado_id) REFERENCES Felhasznalok(felhasznalo_id) ON DELETE CASCADE,
+    FOREIGN KEY (ingatlan_id) REFERENCES Ingatlanok(ingatlan_id) ON DELETE CASCADE
+);
+
+-- 5. Ingatlan Képek tábla
+CREATE TABLE IngatlanKepek (
+    kep_id INT AUTO_INCREMENT PRIMARY KEY,
+    ingatlan_id INT NOT NULL,
+    kep_url VARCHAR(255) NOT NULL,
+    feltoltes_datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ingatlan_id) REFERENCES Ingatlanok(ingatlan_id) ON DELETE CASCADE
+);
+
+-- 6. Szerepkörök tábla
+CREATE TABLE Szerepkorok (
+    szerepkor_id INT AUTO_INCREMENT PRIMARY KEY,
+    szerepkor_nev VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- 7. Jogosultságok tábla
+CREATE TABLE Jogosultsagok (
+    jogosultsag_id INT AUTO_INCREMENT PRIMARY KEY,
+    jogosultsag_nev VARCHAR(100) NOT NULL UNIQUE,
+    leiras TEXT
+);
+
+-- 8. Szerepkör-Jogosultságok összekapcsoló tábla
+CREATE TABLE SzerepkorJogosultsagok (
+    szerepkor_id INT NOT NULL,
+    jogosultsag_id INT NOT NULL,
+    PRIMARY KEY (szerepkor_id, jogosultsag_id),
+    FOREIGN KEY (szerepkor_id) REFERENCES Szerepkorok(szerepkor_id) ON DELETE CASCADE,
+    FOREIGN KEY (jogosultsag_id) REFERENCES Jogosultsagok(jogosultsag_id) ON DELETE CASCADE
+);
+
+-- 9. Felhasználói szerepkörök összekapcsolása
+ALTER TABLE Felhasznalok
+ADD COLUMN szerepkor_id INT,
+ADD FOREIGN KEY (szerepkor_id) REFERENCES Szerepkorok(szerepkor_id) ON DELETE SET NULL;
+
