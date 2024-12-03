@@ -1,0 +1,1058 @@
+@font-face {
+  font-family: Rodeluxet;
+  src: url(Rodeluxet.otf);
+}
+
+@font-face {
+  font-family: Poiret One;
+  src: url(PoiretOne-Regular.ttf);
+}
+
+
+html, body {
+  background-color: rgb(34, 33, 33);
+  margin: 0;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 400;
+  padding: 0;
+}
+
+/*#region Navigacio*/
+.navbar{
+  width: 100%;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.726);
+  margin: 0;
+  position:fixed;
+  z-index: 99;
+  top: 0;
+  padding: 0;
+}
+
+.navItem {
+  margin: 1% 3%;
+  text-decoration: none;
+  color: aliceblue;
+  position: relative;
+  padding: 5px 0;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.navItem::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #e09900;
+  transition: width 0.3s ease;
+}
+
+.navItem:hover::after {
+  width: 100%;
+}
+
+.navItem:hover {
+  color: #e09900;
+}
+
+.belepesBtn{
+  margin: 0.5rem 1rem 0.5rem auto;
+  width: 5rem;
+  background-color: transparent;
+  border: 3px solid rgb(51, 51, 51 0.7);
+  border-radius: 5px;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 1000;
+  a{
+    color: aliceblue;
+    text-decoration: none;
+  }
+}
+
+.belepesBtn:hover, .headerBtn:hover, .moreBtn:hover {
+  color: #e09900;
+  border-color: #e09900;
+
+}
+/*#endregion Navigacio*/
+/*#region Főoldal*/
+/*#region Header*/
+.header {
+  height: 80vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.headerImages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.headerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.headerImage.active {
+  opacity: 1;
+}
+
+.headerContent {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5%;
+  width: 35%;
+  height: 70%;
+  margin: 5rem 3rem;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+}
+
+.headerTitle {
+  font-family: Rodeluxet;
+  font-size: 10rem;
+  font-weight: 50;
+  margin: 0;
+  color: #eeb53a;
+}
+
+.headerText {
+  margin: 0 5%;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.headerBtn {
+  margin-top: 1rem;
+  min-height: 3rem;
+  min-width: 50%;
+  background-color: transparent;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 0.5rem;
+  color: white;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  padding: 0.5rem;
+  padding-top: 1rem;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 1000;
+  font-size: 2rem;
+  text-decoration: none;
+  text-align: center;
+}
+
+.smallHeader{
+  height: 40vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.smallHeaderTitle{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-family: Rodeluxet;
+  font-size: 10rem;
+  font-weight: 50;
+  margin-top: 4rem;
+  color: #eeb53a;
+  text-shadow: #000000 10px 10px 10px;
+}
+
+/*#endregion Header*/
+.homeContent{
+  display: flex;
+  flex-direction: column;
+}
+
+
+.sectionTitle{
+  font-size: 3rem;
+  margin: 3rem 0;
+  text-align: center;
+  color: white;
+}
+
+.cityCards, .kiemeltCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cityImg{
+  height: 25rem;
+}
+
+.kiemeltSection{
+  text-align: center;
+  background-color: rgb(187,187,187);
+  background-image: url(img/pattern.png);
+  background-repeat: repeat;
+  background-position: left;
+  background-blend-mode: soft-light;
+  box-shadow: inset 0 100px 40px 10px rgb(187,187,187);
+  & .sectionTitle{
+    color: black;
+  }
+}
+
+.moreBtn{
+  height: 4rem;
+  width: 25rem;
+  margin: 1rem;
+  background-color: #333;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 1.5rem;
+  color: white;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  padding: 0.5rem;
+  font-family: "Poiret One", sans-serif;
+  font-weight: 1000;
+  font-size: large;
+}
+
+/*#endregion Főoldal*/
+
+/*#region footer*/
+footer{
+  height: 4rem;
+  width: 100%;
+  color: white;
+  background-color: #171411;
+  position: absolute;
+}
+
+.footerImg{
+  width: 100%;
+  height: 10rem;
+  margin-bottom: -1rem;
+}
+
+/*#endregion footer*/
+
+/*#region Card*/
+.card {
+  width: 25rem;
+  height: 20rem;
+  float: left;
+  border: 1px black solid;
+  border-radius: 1rem;
+  margin: 1rem;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.375);
+
+  img {
+      position: absolute;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      filter: contrast(80%);
+  }
+
+  .card-content {
+      width: 100%;
+      height: 20%;
+      position: absolute;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: whitesmoke;
+      font-family: "Goudy Old Style", serif;
+      transition: height .5s .5s ease-in-out;
+      text-align: left;
+  }
+
+  h2 {
+      position: absolute;
+      inset: auto auto 30px 30px;
+      margin: 0;
+      transition: inset .3s .3s ease-out;
+  }
+
+  .price{
+    font-size: 55%;
+  }
+
+  p, button {
+      position: absolute;
+      opacity: 0;
+      transition: opacity .3s ease-out;
+  }
+
+  p {
+      inset: auto auto 30px 30px;
+      transition: opacity .5s .1s ease-in;
+  }
+  
+  button {
+      background-color:#ffffff00;
+      border: 1px white solid;
+      border-radius: 0.4rem;
+      color: inherit;
+      height: 2rem;
+      width: 10rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      inset: auto auto auto 30px; 
+      transition: inset .8s ease-out;
+      transition: opacity .5s .1s ease-in;
+      &:hover {
+        color: #e09900;
+        border-color: #e09900;
+      }
+  }
+
+  .TovabbiInformaciok{
+      height: 2rem;
+      transition: opacity .5s .1s ease-in;
+  }
+
+  &:hover h2 {
+      inset: auto auto 90px 30px;
+      transition: inset .5s ease-out;
+  }
+  &:hover button {
+      opacity: 1;
+      transition: opacity .5s .1s ease-in;
+  }
+  &:hover p {
+    opacity: 1;
+    transition: opacity .5s .1s ease-in;
+}
+
+  &:hover .card-content {
+      height: 40%;
+      transition: height .3s ease-in-out;
+  }
+
+}
+
+
+
+/*Városos*/
+.cityCard {
+  width: 500px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 5px #ffffff80;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-position: center;
+  background-size: cover;
+  margin: 1rem;
+  position: relative;
+
+  img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    filter: contrast(80%);
+}
+
+  button {
+    background-color:#ffffff64;
+    border: 1px solid black solid;
+    border-radius: 0.4rem;
+    color: inherit;
+    height: 2rem;
+    width: 20rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    inset: auto auto auto 30px; 
+    transition: inset .8s ease-out;
+    &:hover {
+      background-color:#ffffffbe;
+      color: #e09900;
+      border: 3px solid #e09900;
+    }
+  }
+}
+
+.cityCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.cityCardContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2b5;
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cityCard:hover .cityCardContent {
+  transform: rotateX(0deg);
+}
+
+.cityCardTitle {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 700;
+}
+
+
+.cityCardDescription {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #000000;
+  line-height: 1.4;
+}
+
+/*#endregion Card*/
+
+
+/*#region Bejelentkezés*/
+.Login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('img/LoginBg.jpg');
+    background-size: cover; background-position: center;
+  
+  .wrapper{
+    width: 400px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(9px);
+    color: white; 
+    padding: 30px 40px;
+    border-radius: 12px;
+  }
+  
+  h1{
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  .input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+  }
+  
+  .input-box input{
+    width: 70%;
+    height: 10px;
+    border-radius: 40px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 17px;
+    color: white;
+    padding: 20px 45px 20px 20px;
+  }
+  
+  .input-box ::placeholder{
+    color: white;
+  }
+  
+  .forgot{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+  }
+  
+  .forgot label input{
+    margin-right: 8px;
+    accent-color: white;
+  }
+  
+  .forgot a{
+    text-decoration: none;
+    color: white;
+    transition: .4s ease-in-out;
+  }
+  
+  .forgot a:hover{
+    text-decoration: underline;
+  }
+  
+  .btn{
+    width: 100%;
+    height: 45px;
+    border: none;
+    outline: none;
+    background-color: white;
+    border-radius: 40px;
+    cursor: pointer;
+    color: black;
+    font-weight: 600;
+  }
+  
+  .btn:hover{
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0%{
+      transform: scale(1);
+    }
+    50%{
+      transform: scale(1.05);
+    }
+    100%{
+      transform: scale(1);
+    }
+  }
+  
+  .sign-up-link{
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+  }
+  
+  .sign-up-link p a{
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .sign-up-link p a:hover{
+    text-decoration: underline;
+  }
+  
+}
+/*#endregion Bejelentkezés*/
+
+/*#region Ingatlanok*/
+
+/*#region filter*/
+.filter{
+  background-color: rgba(108, 115, 122, 0.932);
+  height: 10rem;
+  width: 80%;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+  top: -4rem;
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  font-size: 2rem;
+  font-weight: 1000;
+  transition: height .8s ease-in-out;
+}
+
+.filterRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+.filterSelectContainer {
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+  margin: 1rem;
+}
+
+.filterSelect{
+  margin-top: 0.5rem;
+  height: 2rem;
+  background-color: rgb(204, 205, 206);
+  &:hover{
+    background-color: rgb(174, 186, 197);
+  }
+}
+
+.showMoreFilter{
+  text-align: center;
+  width: 8rem;
+  font-size: 90%;
+  margin: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  &:hover{
+    color: rgb(204, 205, 206);
+  }
+}
+
+.filterMore{
+  margin-top: 3rem;
+  opacity: 0;
+  transition: opacity .5s .2s ease-in-out;
+}
+
+.filterCheckbox{
+  transform: scale(2);
+  margin: 0 3rem 0 1rem ;
+}
+
+.viewBtnContainer{
+  display: flex;
+  flex-direction: column;
+  width: 3rem;
+  height: 6rem;
+  
+}
+
+.viewBtn {
+  border: none;
+  margin: 5%;
+  margin-left: 2rem;
+  background-color: rgb(204, 205, 206);
+  cursor: pointer;
+  width: 100%;
+  height: 45%;
+  border-radius: 1rem;
+  &:hover{
+    background-color: rgb(174, 186, 197);
+  }
+}
+/*#endregion filter*/
+
+.gridCards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+}
+
+
+
+/*#endregion Ingatlanok*/
+
+/*region Reszletek*/
+.houseMainContent{
+  display: flex;
+  flex-direction: row;
+}
+
+.houseCarousel{
+  width: 50%;
+  margin: 2rem;
+  margin-left: 4rem;
+  & img{
+    border-radius: 1rem;
+  }
+}
+
+.mainDetails{
+  width: 60%;
+  color: white;
+  padding: 2rem 5rem 2rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.houseTitle{
+  font-size: 3rem;
+  margin: 0;
+  font-weight: 800;
+}
+
+.houseLocation{
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgb(147, 147, 147);
+}
+
+.housePrice{
+  text-align: right;
+  font-size: 2rem;
+  font-weight: 200;
+  color: #e09900;
+}
+
+.houseDescription{
+  margin-top: 1rem;
+}
+
+hr{
+  width: 100%;
+  border: #000000 3px solid;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.houseOtherContent {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.otherDetails{
+  width: 75%;
+  padding: 2rem 7rem 2rem 5rem;
+  color: white;
+}
+
+.houseDetailsTitle{
+  color: #e09900;
+  font-size: 3rem;
+}
+
+.services{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.service{
+  height: 4rem;
+  margin: 1rem;
+  background-color: rgba(78, 77, 77, 0.664);
+  border: 3px rgb(78, 77, 77) solid;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  img{
+    height: 2rem;
+    filter: invert(100%);
+    margin-right: 1rem;
+  }
+}
+
+.houseContactCard{
+  background-color: rgb(78, 77, 77);
+  border-radius: 2rem;
+  height: 22rem;
+  width: 20rem;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  font-weight: 1000;
+  color: black;
+  text-align: center;
+  padding: 2rem 2rem;
+}
+
+.uploaderName{
+  color: black;
+  text-decoration: none;
+  font-style: italic;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.uploaderImg{
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.houseContactTitle{
+  font-size: 1.5rem;
+  text-decoration: underline;
+}
+
+.houseContact{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.houseContactValue{
+  float: right;
+}
+
+.moreRecs{
+  margin-left: 5rem;
+  display: flex;
+}
+
+.moreRecsTitle{
+  color: #e09900;
+  font-size: 3rem;
+  margin-left: 5rem;
+  margin-top: 2rem;
+}
+
+
+
+/*endregion Reszletek*/
+
+/*region Profil*/
+.profileContent{
+  color: white;
+  display: flex;
+}
+
+.profileSide{
+  border: 3px rgb(49, 49, 49) solid;
+  border-bottom: none;
+  width: 20%;
+  text-align: center;
+  height: 90%;
+}
+
+.profilePicture{
+  height: 15rem;
+  width: 15rem;
+  border-radius: 50%;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.5);
+  margin-top: 3rem;
+}
+
+.ProfileUsername{
+  font-size: 2rem;
+}
+
+.ProfileFullname{
+  font-size: 1.5rem;
+}
+
+.profileDetails{
+  width: 80%;
+  padding: 3rem;
+}
+
+.profileTitle{
+  color: #e09900;
+  font-size: 2rem;
+}
+
+.profileHouses{
+  border: 1px rgb(49, 49, 49) solid;
+  border-radius: 1rem;
+  overflow-y: auto;
+  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  height: 20rem;
+  width: 75%;
+}
+
+.profileHouseCard{
+  height: 8rem;
+  display: flex;
+  border-bottom: 1px rgb(49, 49, 49) solid;
+  margin: 0 1rem;
+  img{
+    height: 7rem;
+    width: 7rem;
+    border-radius: 1rem;
+    margin: 0.5rem 2rem 0 2rem; 
+  }
+  p{
+    font-size: 1.5rem;
+  }
+  span{
+    font-size: 1rem;
+  }
+  button{
+    height: 3rem;
+    width: 8rem;
+    margin-top: 2.5rem;
+    margin-left: 40%;
+    background-color: #e09900;
+    border: #c98a02 solid 2px;
+    border-radius: 0.5rem;
+    &:hover{
+      background-color: #ffbc2b;
+      cursor: pointer;
+      box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(34, 33, 33);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.profileData{
+  border: 1px rgb(49, 49, 49) solid;
+  border-radius: 1rem;
+  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  width: 75%;
+}
+.profileDataRow{
+  height: 3rem;
+  display: flex;
+  border-bottom: 1px rgb(49, 49, 49) solid;
+  padding-left: 2rem;
+  margin: 1rem 1rem 0rem 1rem;
+  span{
+    margin-left: 5rem;
+  }
+}
+
+.logOut{
+  background-color: #c24925cc;
+  border: #8a2d11 solid 1px;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  height: 2rem;
+  width: 10rem;
+  &:hover{
+    background-color: #973517;
+    cursor: pointer;
+    box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  }
+}
+
+/*endreagion Profil*/
+
+/*#region Reszponzivitas*/
+
+
+@media (max-width: 1300px) {
+
+.headerContent{
+  width: 55%;
+  height: auto;
+  padding-bottom: 2rem;
+}
+
+.profilePicture{
+  height: 10rem;
+  width: 10rem;
+}
+
+.ProfileUsername{
+  font-size: 1.5rem;
+}
+
+.ProfileFullname{
+  font-size: 1rem;
+}
+
+.otherDetails{
+  width: 100%;
+}
+
+.houseContactCard{
+  margin: 2rem auto;
+}
+
+}
+
+
+@media (max-width: 750px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    z-index: 1;
+    position: relative;
+  }
+
+  .navItem {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+  }
+
+  .belepesBtn {
+    font-size: 1rem;
+    width: auto;
+    margin: 0;
+  }
+
+  .header {
+    height: 70vh;
+  }
+
+  .headerContent {
+    width: 80%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .headerTitle {
+    font-size: 7rem;
+  }
+
+  .cityImg{
+    height: 10rem;
+  }
+
+  .profileContent{
+    flex-direction: column;
+  }
+
+  .profileSide{
+    border: none;
+    border-bottom: 3px rgb(49, 49, 49) solid;
+    width: 100%;
+    text-align: center;
+    height: 90%;
+  }
+
+  .profileDetails{
+    width: 100%;
+    padding: 0;
+  }
+
+  .profileHouses, .profileData{
+    width: 80%;
+    margin: auto;
+  }
+
+  .profileTitle{
+    text-align: center;
+  }
+
+.logOut{
+  display: block;
+  margin: 2rem auto;
+  }
+
+#profileHeaderTitle{
+  font-size: 7rem;
+  }
+
+  .houseMainContent{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .houseCarousel{
+    width: 100%;
+    margin: 0;
+    margin-top: 2rem;
+  }
+
+  .mainDetails{
+    width: 100%;
+  }
+
+
+
+}
+
+/*#endregion */
