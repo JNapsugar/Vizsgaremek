@@ -58,9 +58,12 @@ html, body {
   background-color: transparent;
   border: 3px solid rgb(51, 51, 51 0.7);
   border-radius: 5px;
-  color: aliceblue;
   font-family: "Poiret One", sans-serif;
   font-weight: 1000;
+  a{
+    color: aliceblue;
+    text-decoration: none;
+  }
 }
 
 .belepesBtn:hover, .headerBtn:hover, .moreBtn:hover {
@@ -349,6 +352,16 @@ footer{
   background-position: center;
   background-size: cover;
   margin: 1rem;
+
+  img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    filter: contrast(80%);
+}
 
   button {
     background-color:#ffffff64;
