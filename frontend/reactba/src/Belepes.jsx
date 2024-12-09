@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./style.css";
+import {Link} from "react-router-dom";
 
 
 function LoginPage() {
@@ -8,7 +8,6 @@ function LoginPage() {
 
     const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Logging in with", username, password);
 };
 
 return (
@@ -36,19 +35,12 @@ return (
                 required
             />
         </div>
-
-        <a href="elfelejtettjelszo.html">
-            <p className="belepesBtn">Elfelejtett jelszó</p>
-        </a>
-
+        <Link to={"/elfelejtettjelszo"} className="login-link">Elfelejtett jelszó</Link>
         <button type="submit" className="btn">
             Bejelentkezés
         </button>
     </form>
-
-    <div className="sign-up-link">
-        <a href="regisztracio.html">Még nincs fiókja? Regisztráljon most!</a>
-    </div>
+    <Link to={"/regisztracio"} className="login-link">Még nincs fiókja? Regisztráljon most!</Link>
 </div>
 </div>
 );

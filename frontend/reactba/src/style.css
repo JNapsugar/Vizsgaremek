@@ -201,7 +201,7 @@ html, body {
 .kiemeltSection{
   text-align: center;
   background-color: rgb(187,187,187);
-  background-image: url(img/pattern.png);
+  background-image: url('img/pattern.png');
   background-repeat: repeat;
   background-position: left;
   background-blend-mode: soft-light;
@@ -310,7 +310,7 @@ footer{
       width: 10rem;
       margin-top: 2rem;
       cursor: pointer;
-      inset: auto auto auto 30px; 
+      inset: auto auto 10px 30px; 
       transition: inset .8s ease-out;
       transition: opacity .5s .1s ease-in;
       &:hover {
@@ -508,6 +508,7 @@ footer{
     cursor: pointer;
     color: black;
     font-weight: 600;
+    margin: 1rem 0;
   }
   
   .btn:hover{
@@ -526,19 +527,16 @@ footer{
     }
   }
   
-  .sign-up-link{
+  .login-link{
     font-size: 14.5px;
     text-align: center;
-    margin: 20px 0 15px;
-  }
-  
-  .sign-up-link p a{
     color: white;
     text-decoration: none;
     font-weight: 600;
   }
   
-  .sign-up-link p a:hover{
+  
+  .login-link:hover{
     text-decoration: underline;
   }
   
@@ -555,7 +553,7 @@ footer{
   margin: auto;
   position: relative;
   z-index: 1;
-  top: -4rem;
+  top: -2rem;
   border-radius: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   padding: 2rem;
@@ -602,8 +600,15 @@ footer{
 
 .filterMore{
   margin-top: 3rem;
+  max-height: 0;
   opacity: 0;
-  transition: opacity .5s .2s ease-in-out;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, opacity 0.5s 0.3s ease-out;
+}
+
+.filterMore.expanded {
+  max-height: 200px;
+  opacity: 1;
 }
 
 .filterCheckbox{
