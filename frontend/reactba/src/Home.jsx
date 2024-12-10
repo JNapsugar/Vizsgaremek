@@ -1,5 +1,6 @@
 import React, { useState, useEffect }from "react";
 import {Link} from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 
 
@@ -43,7 +44,8 @@ const App = () => {
             </div>
     </div>
     );
-    
+
+
     const CitySection = () => (
         <section className="citySection">
             <h2 className="sectionTitle">Népszerű városok vagy valami ilyesmi</h2>
@@ -58,6 +60,17 @@ const App = () => {
             </div>
         </section>
     );
+
+    const[houses,setHouses] = useState([]);
+    const[isPending, setPending] = useState(false);
+    
+    useEffect(() => {
+        setPending(true);
+        axios.get('')
+        .then(res => setHouses(res.data))
+        .catch(error => console.log(error))
+        .finally(() => setPending(false));
+    }, []);
     
     const FeaturedPropertyCard = ({ image, helyszin, price, rooms, services }) => (
     <div className="card">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
+import axios from 'axios';
 import './style.css';
 
 const App = () => {
@@ -25,12 +26,16 @@ const App = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
 
-    const cardData = new Array(12).fill({
-        location: "Helyszin",
-        price: "ft/ejszaka",
-        rooms: "Szobák száma",
-        additionalInfo: "még valamik"
-    });
+    const[houses,setHouses] = useState([]);
+    const[isPending, setPending] = useState(false);
+    
+    useEffect(() => {
+        setPending(true);
+        axios.get('')
+        .then(res => setHouses(res.data))
+        .catch(error => console.log(error))
+        .finally(() => setPending(false));
+    }, []);
 
     return (
         <div className="App">
@@ -102,18 +107,22 @@ const App = () => {
             </div>
 
             <div className="gridCards" id="cards">
-                {cardData.map((card, index) => (
+            {isPending ? (
+                <div className="spinner-border"></div>
+            ) : (
+                <div>
+                {houses.map((house, index) => (
                     <div key={index} className="card">
-                        <img src="img/placeholder.jpg" alt="Placeholder" />
+                        <img src="img/placeholder.jpg" alt={house.location} />
                         <div className="card-content">
-                            <h2>{card.location} <span className="price">{card.price}</span></h2>
+                            <h2>{house.location} <span className="price">{house.price}</span></h2>
                             <div className="TovabbiInformaciok">
-                                <p>{card.rooms}<br />{card.additionalInfo}</p>
+                                <p>{house.rooms}<br />{house.services}</p>
                             </div>
                             <button>További információk</button>
                         </div>
                     </div>
-                ))}
+                ))}</div>)}
             </div>
 
             <img src="img/city2.png" className="footerImg" alt="City view" />
