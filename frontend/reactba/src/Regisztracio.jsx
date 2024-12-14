@@ -1,56 +1,98 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './style.css';
 
-function Registration() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
+const RegistrationForm = () => {
+const [formData, setFormData] = useState({
+    name: "",
+    loginName: "",
+    email: "",
+    password: "",
+});
 
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Registration submitted', { username, password, email });
+const [responseMessage, setResponseMessage] = useState("");
+
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }));
 };
 
-return (
-    <div className="Login">
-    <div className="wrapper">
-        <h1>Regisztráció</h1>
-        <form onSubmit={handleSubmit}>
-            <div className="input-box">
-                <input 
-                    type="text" 
-                    placeholder="Felhasználónév" 
-                    value={username} 
-                    onChange={(e) => setUsername(e.target.value)} 
-                    required 
-                />
-            </div>
+const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            <div className="input-box">
-                <input 
-                    type="password" 
-                    placeholder="Jelszó" 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    required 
-                />
-            </div>
+    try {
+        const response = await axios.post("https://localhost:7079/api/Login/Register", formData);
+        setResponseMessage(response.data); 
+    if (response.status === 200) {
+        alert('Sikeres regisztráció'); 
+        }
+    } catch (error) {
+        if (error.response) {
+        setResponseMessage(error.response.data); 
+    } else {
+        setResponseMessage("Hiba történt a regisztráció során.");
+    }
+    }
+};
 
-            <div className="input-box">
-                <input 
-                    type="email" 
-                    placeholder="E-mail" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                    required 
-                />
-            </div>
-
-            <button type="submit" className="btn">Regisztráció</button>
-        </form>
+    return (
+    <div className='Login'>
+        <div className='wrapper'>
+        <h2 className='registerh2'>Regisztráció</h2>  
+    <form onSubmit={handleSubmit}>
+        <div className='input-box'>
+            <input
+            placeholder='Név' 
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            />
+        </div>
+        <div className="input-box">
+            <input
+            placeholder='Felhasználónév'
+            type="text"
+            id="loginName"
+            name="loginName"
+            value={formData.loginName}
+            onChange={handleChange}
+            required
+            />
+        </div>
+        <div className="input-box">
+            <input
+            placeholder='Email'
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            />
+        </div>
+        <div className="input-box">
+            <input
+            placeholder='Jelszó'
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            />
+        </div>
+        <button type="submit" className='btn'>Regisztráció</button>
+    </form>
+        {responseMessage && <p>{responseMessage}</p>}
     </div>
     </div>
-);
-}
+    );
+};
 
-export default Registration;
+export default RegistrationForm;

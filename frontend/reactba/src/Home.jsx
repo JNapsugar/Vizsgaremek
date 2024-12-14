@@ -48,7 +48,7 @@ const App = () => {
 
     const CitySection = () => (
         <section className="citySection">
-            <h2 className="sectionTitle">Népszerű városok vagy valami ilyesmi</h2>
+            <h2 className="sectionTitle">Népszerű városok</h2>
             <div className="cityCards">
                 <CityCard image="img/budapest.jpg" title="Budapest" description="Budapest pesti oldala, tele látnivalókkal, mint a Parlament és a Hősök tere. Pezsgő városi élet és sok program várja a látogatókat." />
                 <CityCard image="img/miskolc.jpg" title="Miskolc" description="Miskolc gazdag történelemmel és gyönyörű természeti környezettel várja a látogatókat. A Diósgyőri Vár, a Lillafüredi Palota és a Miskolctapolcai Barlangfürdő népszerű látnivalók. A környező Bükk hegység ideális hely a túrázásra, pihenésre és kikapcsolódásra." />
@@ -124,7 +124,7 @@ const App = () => {
                     <p className="headerText">
                         Üdvözöljük a Rentify oldalán, ahol az ideális ingatlan megtalálása egyszerű és problémamentes. Fedezze fel változatos ingatlankínálatunkat, amelyek az Ön igényeire és életstílusára szabottak. Kezdje meg az utat következő otthona felé még ma!
                     </p>
-                    <a href="ingatlanok.html" className="headerBtn">INGATLAN KERESÉSE</a>
+                    <button className="headerBtn"> <Link to="/ingatlanok" className="headerBtnLink"> INGATLAN KERESÉSE </Link></button>
                 </div>
             </header>
             <div className="homeContent">
