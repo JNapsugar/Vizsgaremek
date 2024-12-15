@@ -155,6 +155,18 @@ html, body {
   text-align: center;
 }
 
+.headerBtnLink {
+  color: white; 
+  text-decoration: none; 
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.headerBtnLink:hover {
+  color: white;
+}
+
 .smallHeader{
   height: 40vh;
   position: relative;
@@ -450,6 +462,10 @@ footer{
   
   h1{
     font-size: 30px;
+    text-align: center;
+  }
+
+  .registerh2{
     text-align: center;
   }
   
