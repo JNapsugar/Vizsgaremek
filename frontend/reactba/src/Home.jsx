@@ -66,19 +66,19 @@ const App = () => {
     
     useEffect(() => {
         setPending(true);
-        axios.get('')
+        axios.get('https://localhost:7079')
         .then(res => setHouses(res.data))
         .catch(error => console.log(error))
         .finally(() => setPending(false));
     }, []);
     
-    const FeaturedPropertyCard = ({ image, helyszin, price, rooms, services }) => (
+    const FeaturedPropertyCard = ({ image, helyszin, price, size, services }) => (
     <div className="card">
         <img src={image} alt="ingatlan"/>
         <div className="card-content">
             <h2>{helyszin} <span className="price">{price}</span></h2>
             <div className="TovabbiInformaciok">
-            <p>Szobák száma:{rooms}<br/>{services}</p>
+            <p>{size}<br/>{services}</p>
             </div>
             <button>További információk</button>
         </div>

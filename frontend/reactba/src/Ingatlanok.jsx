@@ -31,7 +31,7 @@ const App = () => {
     
     useEffect(() => {
         setPending(true);
-        axios.get('')
+        axios.get('https://localhost:7079')
         .then(res => setHouses(res.data))
         .catch(error => console.log(error))
         .finally(() => setPending(false));
@@ -113,11 +113,11 @@ const App = () => {
                 <div>
                 {houses.map((house, index) => (
                     <div key={index} className="card">
-                        <img src="img/placeholder.jpg" alt={house.location} />
+                        <img src={house.Ingatlankepeks[0]} alt={house.Cim} />
                         <div className="card-content">
-                            <h2>{house.location} <span className="price">{house.price}</span></h2>
+                            <h2>{house.Helyszin} <span className="price">{house.Ar}</span></h2>
                             <div className="TovabbiInformaciok">
-                                <p>{house.rooms}<br />{house.services}</p>
+                                <p>{house.Meret}<br />{house.Szolgaltatasok}</p>
                             </div>
                             <button>További információk</button>
                         </div>
