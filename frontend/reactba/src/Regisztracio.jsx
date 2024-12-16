@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './style.css';
+
 
 const RegistrationForm = () => {
 const [formData, setFormData] = useState({
@@ -11,7 +13,7 @@ const [formData, setFormData] = useState({
 });
 
 const [responseMessage, setResponseMessage] = useState("");
-
+const navigate = useNavigate();
 const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
