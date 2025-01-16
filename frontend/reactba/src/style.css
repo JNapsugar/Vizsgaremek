@@ -336,6 +336,10 @@ footer{
       transition: opacity .5s .1s ease-in;
   }
 
+  a{
+    color: white;
+  }
+
   &:hover h2 {
       inset: auto auto 90px 30px;
       transition: inset .5s ease-out;
@@ -725,7 +729,7 @@ hr{
 }
 
 .otherDetails{
-  width: 75%;
+  width: 65%;
   padding: 2rem 7rem 2rem 5rem;
   color: white;
 }
@@ -741,13 +745,16 @@ hr{
 }
 
 .service{
-  height: 4rem;
+  height: 3rem;
   margin: 1rem;
   background-color: rgba(78, 77, 77, 0.664);
   border: 3px rgb(78, 77, 77) solid;
   border-radius: 1rem;
   padding: 1rem;
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   img{
     height: 2rem;
     filter: invert(100%);

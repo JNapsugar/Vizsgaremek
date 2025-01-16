@@ -31,14 +31,14 @@ const App = () => {
     
     useEffect(() => {
         setPending(true);
-        axios.get('https://localhost:7079')
+        axios.get('https://localhost:7079/api/ingatlanok')
         .then(res => setHouses(res.data))
         .catch(error => console.log(error))
         .finally(() => setPending(false));
     }, []);
 
     return (
-        <div className="App">
+        <div>
             <nav className="navbar">
                 <Link to={"/home"} className="navItem">Főoldal</Link>
                 <Link to={"/ingatlanok"} className="navItem">Ingatlanok</Link>
@@ -113,13 +113,17 @@ const App = () => {
                 <div>
                 {houses.map((house, index) => (
                     <div key={index} className="card">
-                        <img src={house.Ingatlankepeks[0]} alt={house.Cim} />
+                        {house.ingatlankepeks && house.ingatlankepeks.length > 0 ? (
+                            <img src={house.ingatlankepeks[0]} alt={house.cim} />
+                            ) : (
+                            <img src="img/placeholder.jpg" alt="Placeholder" />
+                        )}
                         <div className="card-content">
-                            <h2>{house.Helyszin} <span className="price">{house.Ar}</span></h2>
+                            <h2>{house.helyszin} <span className="price">{house.ar}Ft/éjszaka</span></h2>
                             <div className="TovabbiInformaciok">
-                                <p>{house.Meret}<br />{house.Szolgaltatasok}</p>
+                                <p>{house.meret}m²<br />{house.szolgaltatasok}</p>
                             </div>
-                            <button>További információk</button>
+                            <Link to={"/ingatlanok/" + house.ingatlanId} className='btn btn-primary'><button>További információk</button></Link>
                         </div>
                     </div>
                 ))}</div>)}
