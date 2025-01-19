@@ -1,0 +1,719 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "IngatlanokBackend",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Felhasznalo/login": {
+      "post": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/logout": {
+      "post": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/Register": {
+      "post": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/{loginNev}": {
+      "put": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "parameters": [
+          {
+            "name": "loginNev",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/me/{loginNev}": {
+      "get": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "parameters": [
+          {
+            "name": "loginNev",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/RequestPasswordReset": {
+      "post": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPasswordResetDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPasswordResetDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPasswordResetDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/ResetPassword": {
+      "post": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Felhasznalo/delete/{loginName}": {
+      "delete": {
+        "tags": [
+          "Felhasznalo"
+        ],
+        "parameters": [
+          {
+            "name": "loginName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingatlan/ingatlanok": {
+      "get": {
+        "tags": [
+          "Ingatlan"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ingatlan"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ingatlanok"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ingatlanok"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ingatlanok"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingatlan/ingatlanok/{ingatlanId}": {
+      "get": {
+        "tags": [
+          "Ingatlan"
+        ],
+        "parameters": [
+          {
+            "name": "ingatlanId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingatlan/ingatlanok/{id}": {
+      "put": {
+        "tags": [
+          "Ingatlan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ingatlanok"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ingatlanok"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ingatlanok"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ingatlan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Felhasznalok": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "loginNev": {
+            "type": "string",
+            "nullable": true
+          },
+          "hash": {
+            "type": "string",
+            "nullable": true
+          },
+          "salt": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "profilePicturePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "foglalasoks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Foglalasok"
+            },
+            "nullable": true
+          },
+          "ingatlanoks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ingatlanok"
+            },
+            "nullable": true
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Szerepkorok"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Foglalasok": {
+        "type": "object",
+        "properties": {
+          "foglalasId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingatlanId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "berloId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kezdesDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "befejezesDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "allapot": {
+            "type": "string",
+            "nullable": true
+          },
+          "letrehozasDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "berlo": {
+            "$ref": "#/components/schemas/Felhasznalok"
+          },
+          "ingatlan": {
+            "$ref": "#/components/schemas/Ingatlanok"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ingatlankepek": {
+        "type": "object",
+        "properties": {
+          "kepId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingatlanId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kepUrl": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "feltoltesDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ingatlan": {
+            "$ref": "#/components/schemas/Ingatlanok"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ingatlanok": {
+        "type": "object",
+        "properties": {
+          "ingatlanId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tulajdonosId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cim": {
+            "type": "string",
+            "nullable": true
+          },
+          "leiras": {
+            "type": "string",
+            "nullable": true
+          },
+          "helyszin": {
+            "type": "string",
+            "nullable": true
+          },
+          "ar": {
+            "type": "number",
+            "format": "double"
+          },
+          "meret": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "szolgaltatasok": {
+            "type": "string",
+            "nullable": true
+          },
+          "feltoltesDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "foglalasoks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Foglalasok"
+            },
+            "nullable": true
+          },
+          "ingatlankepeks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ingatlankepek"
+            },
+            "nullable": true
+          },
+          "tulajdonos": {
+            "$ref": "#/components/schemas/Felhasznalok"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Jogosultsagok": {
+        "type": "object",
+        "properties": {
+          "jogosultsagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jogosultsagNev": {
+            "type": "string",
+            "nullable": true
+          },
+          "leiras": {
+            "type": "string",
+            "nullable": true
+          },
+          "szerepkors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Szerepkorok"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "required": [
+          "loginName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "loginName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LogoutDTO": {
+        "type": "object",
+        "properties": {
+          "loginNev": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegistrationDTO": {
+        "type": "object",
+        "properties": {
+          "loginName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RequestPasswordResetDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPasswordDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Szerepkorok": {
+        "type": "object",
+        "properties": {
+          "szerepkorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "szerepkorNev": {
+            "type": "string",
+            "nullable": true
+          },
+          "felhasznaloks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Felhasznalok"
+            },
+            "nullable": true
+          },
+          "jogosultsags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Jogosultsagok"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "profilePicturePath": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
