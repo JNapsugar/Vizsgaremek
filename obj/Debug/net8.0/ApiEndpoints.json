@@ -1,337 +1,45 @@
 [
   {
-    "ContainingType": "IngatlanokBackend.Controllers.IngatlanokController",
-    "Method": "Get",
-    "RelativePath": "api/ingatlanok",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "IngatlanokBackend.Controllers.IngatlanokController",
-    "Method": "Post",
-    "RelativePath": "api/ingatlanok",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "IngatlanId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "TulajdonosId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Cim",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Leiras",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Helyszin",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Ar",
-        "Type": "System.Decimal",
-        "IsRequired": false
-      },
-      {
-        "Name": "Meret",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Szolgaltatasok",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "FeltoltesDatum",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "Foglalasoks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Foglalasok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Ingatlankepeks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Ingatlankepek, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.LoginNev",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Hash",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Salt",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.PermissionId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Active",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.ProfilePicturePath",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Foglalasoks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Foglalasok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Ingatlanoks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Ingatlanok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.SzerepkorId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.SzerepkorNev",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.Felhasznaloks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Felhasznalok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.Jogosultsags",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Jogosultsagok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "IngatlanokBackend.Controllers.IngatlanokController",
-    "Method": "Put",
-    "RelativePath": "api/ingatlanok/{id}",
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Felhasznalo/{loginNev}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "loginNev",
+        "Type": "System.String",
         "IsRequired": true
       },
       {
-        "Name": "IngatlanId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "TulajdonosId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Cim",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Leiras",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Helyszin",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Ar",
-        "Type": "System.Decimal",
-        "IsRequired": false
-      },
-      {
-        "Name": "Meret",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Szolgaltatasok",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "FeltoltesDatum",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "Foglalasoks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Foglalasok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Ingatlankepeks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Ingatlankepek, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.LoginNev",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Hash",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Salt",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.PermissionId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Active",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.ProfilePicturePath",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Foglalasoks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Foglalasok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Ingatlanoks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Ingatlanok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.SzerepkorId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.SzerepkorNev",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.Felhasznaloks",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Felhasznalok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "Tulajdonos.Permission.Jogosultsags",
-        "Type": "System.Collections.Generic.ICollection\u00601[[IngatlanokBackend.Models.Jogosultsagok, IngatlanokBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
+        "Name": "updatedUserData",
+        "Type": "IngatlanokBackend.DTOs.UpdateUserDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "IngatlanokBackend.Controllers.IngatlanokController",
-    "Method": "Delete",
-    "RelativePath": "api/ingatlanok/{id}",
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Felhasznalo/delete/{loginName}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "loginName",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "IngatlanokBackend.Controllers.IngatlanokController",
-    "Method": "Get",
-    "RelativePath": "api/ingatlanok/{ingatlanId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ingatlanId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "IngatlanokBackend.Controllers.LoginController",
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
     "Method": "Login",
-    "RelativePath": "api/Login",
+    "RelativePath": "api/Felhasznalo/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -345,9 +53,41 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "IngatlanokBackend.Controllers.LoginController",
-    "Method": "Register",
-    "RelativePath": "api/Login/Register",
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "Logout",
+    "RelativePath": "api/Felhasznalo/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "logoutDTO",
+        "Type": "IngatlanokBackend.DTOs.LogoutDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "api/Felhasznalo/me/{loginNev}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginNev",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "Register1",
+    "RelativePath": "api/Felhasznalo/Register",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -361,16 +101,111 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "IngatlanokBackend.Controllers.LoginController",
-    "Method": "SaltRequest",
-    "RelativePath": "api/Login/SaltRequest/{LoginNev}",
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "RequestPasswordReset",
+    "RelativePath": "api/Felhasznalo/RequestPasswordReset",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "LoginNev",
-        "Type": "System.String",
+        "Name": "request",
+        "Type": "IngatlanokBackend.DTOs.RequestPasswordResetDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.FelhasznaloController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Felhasznalo/ResetPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "resetPasswordDTO",
+        "Type": "IngatlanokBackend.DTOs.ResetPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.IngatlanController",
+    "Method": "Get",
+    "RelativePath": "api/Ingatlan/ingatlanok",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.IngatlanController",
+    "Method": "Post",
+    "RelativePath": "api/Ingatlan/ingatlanok",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ingatlan",
+        "Type": "IngatlanokBackend.Models.Ingatlanok",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.IngatlanController",
+    "Method": "Put",
+    "RelativePath": "api/Ingatlan/ingatlanok/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "ingatlan",
+        "Type": "IngatlanokBackend.Models.Ingatlanok",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.IngatlanController",
+    "Method": "Delete",
+    "RelativePath": "api/Ingatlan/ingatlanok/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IngatlanokBackend.Controllers.IngatlanController",
+    "Method": "Get",
+    "RelativePath": "api/Ingatlan/ingatlanok/{ingatlanId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ingatlanId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

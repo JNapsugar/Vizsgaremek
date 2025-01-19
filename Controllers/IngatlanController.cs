@@ -1,13 +1,15 @@
 ﻿using IngatlanokBackend.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IngatlanokBackend.Controllers
 {
-    public class IngatlanokController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class IngatlanController : ControllerBase
     {
-  
-        [HttpGet("api/ingatlanok")]
+        [HttpGet("ingatlanok")]
         public async Task<IActionResult> Get()
         {
             using (var cx = new IngatlanberlesiplatformContext())
@@ -23,7 +25,7 @@ namespace IngatlanokBackend.Controllers
             }
         }
 
-        [HttpGet("api/ingatlanok/{ingatlanId}")]
+        [HttpGet("ingatlanok/{ingatlanId}")]
         public async Task<IActionResult> Get(int ingatlanId)
         {
             using (var cx = new IngatlanberlesiplatformContext())
@@ -39,8 +41,8 @@ namespace IngatlanokBackend.Controllers
             }
         }
 
-   
-        [HttpPost("api/ingatlanok")]
+
+        [HttpPost("ingatlanok")]
         public async Task<IActionResult> Post(Ingatlanok ingatlan)
         {
             using (var cx = new IngatlanberlesiplatformContext())
@@ -59,7 +61,7 @@ namespace IngatlanokBackend.Controllers
         }
 
 
-        [HttpPut("api/ingatlanok/{id}")]
+        [HttpPut("ingatlanok/{id}")]
         public async Task<IActionResult> Put(int id, Ingatlanok ingatlan)
         {
             using (var cx = new IngatlanberlesiplatformContext())
@@ -78,7 +80,7 @@ namespace IngatlanokBackend.Controllers
         }
 
 
-        [HttpDelete("api/ingatlanok/{id}")]
+        [HttpDelete("ingatlanok/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             using (var cx = new IngatlanberlesiplatformContext())

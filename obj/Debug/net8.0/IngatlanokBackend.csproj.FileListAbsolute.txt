@@ -252,6 +252,31 @@ C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\obj\Debug\net8.0\Ingatlan
 C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\obj\Debug\net8.0\IngatlanokBackend.genruntimeconfig.cache
 C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\obj\Debug\net8.0\ref\IngatlanokBackend.dll
 C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\obj\Debug\net8.0\IngatlanokBackend.sourcelink.json
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\System.ClientModel.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\varga\OneDrive\Asztali gép\IngatlanokBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\appsettings.json
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\IngatlanokBackend.exe
@@ -259,21 +284,26 @@ C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\IngatlanokBackend.de
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\IngatlanokBackend.runtimeconfig.json
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\IngatlanokBackend.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\IngatlanokBackend.pdb
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Google.Protobuf.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Humanizer.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\K4os.Compression.LZ4.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\K4os.Compression.LZ4.Streams.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\K4os.Hash.xxHash.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
@@ -281,13 +311,23 @@ C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\MySql.Data.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\MySql.EntityFrameworkCore.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.ClientModel.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.CodeDom.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Composition.AttributedModel.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Composition.Convention.dll
@@ -295,6 +335,9 @@ C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Composition.H
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Composition.TypedParts.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Runtime.Caching.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Security.Permissions.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\System.Windows.Extensions.dll
@@ -351,11 +394,18 @@ C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\ru\Microsoft.CodeAna
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x64\native\comerr64.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x64\native\gssapi64.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x64\native\k5sprt64.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x64\native\krb5_64.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win-x64\native\krbcc64.dll
+C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 C:\Users\User\Documents\GitHub\Vizsgaremek\obj\Debug\net8.0\IngatlanokBackend.csproj.AssemblyReference.cache
 C:\Users\User\Documents\GitHub\Vizsgaremek\obj\Debug\net8.0\IngatlanokBackend.GeneratedMSBuildEditorConfig.editorconfig

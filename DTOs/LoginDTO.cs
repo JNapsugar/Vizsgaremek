@@ -1,8 +1,13 @@
-﻿namespace IngatlanokBackend.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace IngatlanokBackend.DTOs
 {
     public class LoginDTO
     {
-        public string LoginName { get; set; }
-        public string TmpHash { get; set; }
+        [Required]
+        public string loginName { get; set; }
+
+        [Required]
+        public string Password { get; set; }
     }
 }
