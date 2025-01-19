@@ -26,7 +26,8 @@ const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-        const response = await axios.post("https://localhost:7079/api/Login/Register", formData);
+        const response = await axios.post("https://localhost:7079/api/Felhasznalo/Register", formData); 
+        
         setResponseMessage(response.data); 
     if (response.status === 200) {
         alert('Sikeres regisztráció!'); 

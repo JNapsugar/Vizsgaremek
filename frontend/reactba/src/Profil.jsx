@@ -16,24 +16,30 @@ const Profil = () => {
         </nav>
     );
 
-    const [userData, setUserData] = useState({
-        username: "Felhasználónév",
-        fullName: "Teljes név",
-        email: "xxxxxxxxxxxxxxx",
-        phone: "xxxxxxxxxxxxxxx",
-        registrationDate: "xxxxxxxxxxxxxxx",
+    const [registrationData, setRegistrationData] = useState({
+        loginName: "Felhasználónév",
+        email: "felhasználó@domain.com",
+        name: "Teljes név",
+        password: "********",
     });
 
     const [properties, setProperties] = useState([]);
 
     useEffect(() => {
-        axios.get('/userData') 
-            .then(res => setUserData(res.data))
-            .catch(error => console.error(error));
-        
-        axios.get('/userProperties') 
-            .then(res => setProperties(res.data))
-            .catch(error => console.error(error));
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("username");
+
+        if (token && username) {
+            axios.get(`https://localhost:7079/api/felhasznalo/me/${username}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then(res => setRegistrationData(res.data))
+            .catch(error => console.error("Error fetching user data:", error));
+        } else {
+            console.error("No token or username found");
+        }
     }, []);
 
     const ProfileHouseCard = ({ image, name, location }) => (
@@ -43,6 +49,41 @@ const Profil = () => {
             <button>Részletek</button>
         </div>
     );
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        window.location.href = "/belepes";
+    };
+
+    const handleDeleteAccount = () => {
+        const confirmation = window.confirm("Biztosan törölni szeretnéd a fiókodat? Ez visszafordíthatatlan művelet.");
+    
+        if (confirmation) {
+            const token = localStorage.getItem("token");
+            const username = localStorage.getItem("username");
+    
+            if (token && username) {
+                axios.delete(`https://localhost:7079/api/Felhasznalo/delete/${username}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then(() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("username");
+                    window.location.href = "/belepes"; 
+                })
+                .catch(error => {
+                    console.error("Hiba történt a fiók törlésekor:", error);
+                    alert("Hiba történt a fiók törlésekor.");
+                });
+            } else {
+                alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
+            }
+        }
+    };
+    
 
     return (
         <div>
@@ -60,8 +101,8 @@ const Profil = () => {
             <div className="profileContent">
                 <div className="profileSide">
                     <img src="img/placeholder.jpg" className="profilePicture" alt="profile" />
-                    <p className="ProfileUsername">{userData.username}</p>
-                    <p className="ProfileFullname">{userData.fullName}</p>
+                    <p className="ProfileUsername">{registrationData.loginName}</p>
+                    <p className="ProfileFullname">{registrationData.name}</p>
                 </div>
                 <div className="profileDetails">
                     <p className="profileTitle">Meghirdetett ingatlanok</p>
@@ -77,12 +118,13 @@ const Profil = () => {
                     </div>
                     <p className="profileTitle">Adatok</p>
                     <div className="profileData">
-                        <p className="profileDataRow">Felhasználónév <span>{userData.username}</span></p>
-                        <p className="profileDataRow">Teljes név <span>{userData.fullName}</span></p>
-                        <p className="profileDataRow">Email <span>{userData.email}</span></p>
+                        <p className="profileDataRow">Felhasználónév <span>{registrationData.loginNev}</span></p>
+                        <p className="profileDataRow">Teljes név <span>{registrationData.name}</span></p>
+                        <p className="profileDataRow">Email <span>{registrationData.email}</span></p>
                         <p className="profileDataRow">Jelszó <span>*********</span></p>
                     </div>
-                    <button className="logOut">Kijelentkezés</button>
+                    <button className="logOut" onClick={handleLogout}>Kijelentkezés</button>
+                    <button className="logOut" onClick={handleDeleteAccount}>Fiók törlése</button> 
                 </div>
             </div>
             <img src="img/city2.png" className="footerImg" alt="footer" />
