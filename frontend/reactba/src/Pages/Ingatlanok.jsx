@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
-import './style.css';
+import '../style.css';
+import Navbar from '../Components/Navbar';
+import PropertyCard from '../Components/PropertyCard';
+import { ClipLoader } from 'react-spinners';
 
-const App = () => {
+const Ingatlanok = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const images = [
         "img/header1.jpg",
@@ -26,27 +29,22 @@ const App = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
 
-    const[houses,setHouses] = useState([]);
+    const[properties,setProperties] = useState([]);
     const[isPending, setPending] = useState(false);
+    const[error, setError] = useState(false);
     
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/ingatlanok')
-        .then(res => setHouses(res.data))
-        .catch(error => console.log(error))
+        .then(res => setProperties(res.data))
+        .catch(error =>{ console.error(error+" mégilyet!");
+                setError(true)})
         .finally(() => setPending(false));
     }, []);
 
     return (
         <div>
-            <nav className="navbar">
-                <Link to={"/home"} className="navItem">Főoldal</Link>
-                <Link to={"/ingatlanok"} className="navItem">Ingatlanok</Link>
-                <Link to={"/kiadas"} className="navItem">Kiadás</Link>
-                <Link to={"/rolunk"} className="navItem">Rólunk</Link>
-                <button className="belepesBtn"><Link to={"/belepes"}>Belépés</Link></button>
-            </nav>
-
+            <Navbar/>
             <header className="smallHeader">
                 <div className="headerImages">
                     {images.map((image, index) => (
@@ -56,7 +54,7 @@ const App = () => {
                 <h1 className="smallHeaderTitle">Ingatlanok</h1>
             </header>
 
-            <div className="filter" id="filter" style={{ height: isFilterExpanded ? '18rem' : '9rem' }}>
+            <div className="filter" id="filter" >
                 <div className="filterRow">
                     <div className="filterSelectContainer">
                         <label>Ország</label>
@@ -102,31 +100,20 @@ const App = () => {
                     <label>Wifi: </label>
                     <input type="checkbox" id="wifiCb" className="filterCheckbox" />
                     <label>Háziállat: </label>
-                    <input type="checkbox" id="wifiCb" className="filterCheckbox" />
+                    <input type="checkbox" id="petCb" className="filterCheckbox" />
                 </div>
             </div>
 
             <div className="gridCards" id="cards">
             {isPending ? (
-                <div className="spinner-border"></div>
+                <ClipLoader color='#e09900' loading={isPending} size={100}/>
+            ) : error ? (<div className="errorMessage">Nem sikerült betölteni az adatokat</div>   
             ) : (
                 <div>
-                {houses.map((house, index) => (
-                    <div key={index} className="card">
-                        {house.ingatlankepeks && house.ingatlankepeks.length > 0 ? (
-                            <img src={house.ingatlankepeks[0]} alt={house.cim} />
-                            ) : (
-                            <img src="img/placeholder.jpg" alt="Placeholder" />
-                        )}
-                        <div className="card-content">
-                            <h2>{house.helyszin} <span className="price">{house.ar}Ft/éjszaka</span></h2>
-                            <div className="TovabbiInformaciok">
-                                <p>{house.meret}m²<br />{house.szolgaltatasok}</p>
-                            </div>
-                            <Link to={"/ingatlanok/" + house.ingatlanId} className='btn btn-primary'><button>További információk</button></Link>
-                        </div>
-                    </div>
-                ))}</div>)}
+                    {properties.map((property) => (
+                        <PropertyCard property={property}/>
+                    ))}
+                </div>)}
             </div>
 
             <img src="img/city2.png" className="footerImg" alt="City view" />
@@ -137,4 +124,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default Ingatlanok;

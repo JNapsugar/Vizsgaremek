@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./style.css";
+import "../style.css";
+import Navbar from "../Components/Navbar";
+
 
 const Profil = () => {
-    const Navbar = () => (
-        <nav className="navbar">
-            <Link to="/home" className="navItem">Főoldal</Link>
-            <Link to="/ingatlanok" className="navItem">Ingatlanok</Link>
-            <Link to="/kiadas" className="navItem">Kiadás</Link>
-            <Link to="/rolunk" className="navItem">Rólunk</Link>
-            <button className="belepesBtn">
-                <Link to="/belepes">Belépés</Link>
-            </button>
-        </nav>
-    );
+
+    const navigate = useNavigate()
 
     const [registrationData, setRegistrationData] = useState({
         loginName: "Felhasználónév",
@@ -53,7 +46,7 @@ const Profil = () => {
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
-        window.location.href = "/belepes";
+        navigate("/")
     };
 
     const handleDeleteAccount = () => {
@@ -72,7 +65,7 @@ const Profil = () => {
                 .then(() => {
                     localStorage.removeItem("token");
                     localStorage.removeItem("username");
-                    window.location.href = "/belepes"; 
+                    navigate("/")
                 })
                 .catch(error => {
                     console.error("Hiba történt a fiók törlésekor:", error);
@@ -87,7 +80,7 @@ const Profil = () => {
 
     return (
         <div>
-            <Navbar />
+            <Navbar/>
             <header className="smallHeader">
                 <div className="headerImages">
                     <img src="img/header1.jpg" className="headerImage active" alt="header" />

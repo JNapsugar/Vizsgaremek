@@ -62,13 +62,19 @@ html, body {
   margin: 0.5rem 1rem 0.5rem auto;
   width: 5rem;
   background-color: transparent;
-  border: 3px solid rgb(51, 51, 51 0.7);
   border-radius: 5px;
   font-family: "Poiret One", sans-serif;
+  font-size: 1.1rem;
   font-weight: 1000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   a{
     color: aliceblue;
     text-decoration: none;
+    margin: 0;
   }
 }
 
@@ -78,6 +84,7 @@ html, body {
 
 }
 /*#endregion Navigacio*/
+
 /*#region Főoldal*/
 /*#region Header*/
 .header {
@@ -218,7 +225,7 @@ html, body {
   background-position: left;
   background-blend-mode: soft-light;
   box-shadow: inset 0 100px 40px 10px rgb(187,187,187);
-  & .sectionTitle{
+  .sectionTitle{
     color: black;
   }
 }
@@ -444,7 +451,6 @@ footer{
 
 /*#endregion Card*/
 
-
 /*#region Bejelentkezés*/
 .Login{
     display: flex;
@@ -568,7 +574,6 @@ footer{
 /*#region filter*/
 .filter{
   background-color: rgba(108, 115, 122, 0.932);
-  height: 10rem;
   width: 80%;
   margin: auto;
   position: relative;
@@ -619,7 +624,7 @@ footer{
 }
 
 .filterMore{
-  margin-top: 3rem;
+  margin-top: 1rem;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -659,6 +664,11 @@ footer{
 }
 /*#endregion filter*/
 
+.errorMessage{
+  color: red;
+  font-size: 1.5rem;
+}
+
 .gridCards{
   display: flex;
   flex-wrap: wrap;
@@ -668,15 +678,16 @@ footer{
 
 
 
+
 /*#endregion Ingatlanok*/
 
-/*region Reszletek*/
-.houseMainContent{
+/*#region Reszletek*/
+.propertyMainContent{
   display: flex;
   flex-direction: row;
 }
 
-.houseCarousel{
+.propertyCarousel{
   width: 50%;
   margin: 2rem;
   margin-left: 4rem;
@@ -692,26 +703,26 @@ footer{
   margin-bottom: 1rem;
 }
 
-.houseTitle{
+.propertyTitle{
   font-size: 3rem;
   margin: 0;
   font-weight: 800;
 }
 
-.houseLocation{
+.propertyLocation{
   font-size: 2rem;
   font-weight: 600;
   color: rgb(147, 147, 147);
 }
 
-.housePrice{
+.propertyPrice{
   text-align: right;
   font-size: 2rem;
   font-weight: 200;
   color: #e09900;
 }
 
-.houseDescription{
+.propertyDescription{
   margin-top: 1rem;
 }
 
@@ -722,7 +733,7 @@ hr{
   margin-bottom: 2rem;
 }
 
-.houseOtherContent {
+.propertyOtherContent {
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
@@ -734,7 +745,7 @@ hr{
   color: white;
 }
 
-.houseDetailsTitle{
+.propertyDetailsTitle{
   color: #e09900;
   font-size: 3rem;
 }
@@ -762,7 +773,7 @@ hr{
   }
 }
 
-.houseContactCard{
+.propertyContactCard{
   background-color: rgb(78, 77, 77);
   border-radius: 2rem;
   height: 22rem;
@@ -791,18 +802,18 @@ hr{
   margin: auto;
 }
 
-.houseContactTitle{
+.propertyContactTitle{
   font-size: 1.5rem;
   text-decoration: underline;
 }
 
-.houseContact{
+.propertyContact{
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
-.houseContactValue{
+.propertyContactValue{
   float: right;
 }
 
@@ -820,9 +831,9 @@ hr{
 
 
 
-/*endregion Reszletek*/
+/*#endregion Reszletek*/
 
-/*region Profil*/
+/*#region Profil*/
 .profileContent{
   color: white;
   display: flex;
@@ -862,7 +873,7 @@ hr{
   font-size: 2rem;
 }
 
-.profileHouses{
+.profileProperties{
   border: 1px rgb(49, 49, 49) solid;
   border-radius: 1rem;
   overflow-y: auto;
@@ -871,7 +882,7 @@ hr{
   width: 75%;
 }
 
-.profileHouseCard{
+.profilePropertyCard{
   height: 8rem;
   display: flex;
   border-bottom: 1px rgb(49, 49, 49) solid;
@@ -953,7 +964,7 @@ hr{
   margin-right: 10px;
 }
 
-/*endreagion Profil*/
+/*#endregion Profil*/
 
 /*#region Reszponzivitas*/
 
@@ -983,7 +994,7 @@ hr{
   width: 100%;
 }
 
-.houseContactCard{
+.propertyContactCard{
   margin: 2rem auto;
 }
 
@@ -1027,6 +1038,10 @@ hr{
     font-size: 7rem;
   }
 
+  .smallHeaderTitle{
+    font-size: 5rem;
+  }
+
   .cityImg{
     height: 10rem;
   }
@@ -1048,7 +1063,7 @@ hr{
     padding: 0;
   }
 
-  .profileHouses, .profileData{
+  .profileProperties, .profileData{
     width: 80%;
     margin: auto;
   }
@@ -1066,12 +1081,12 @@ hr{
   font-size: 7rem;
   }
 
-  .houseMainContent{
+  .propertyMainContent{
     display: flex;
     flex-direction: column;
   }
 
-  .houseCarousel{
+  .propertyCarousel{
     width: 100%;
     margin: 0;
     margin-top: 2rem;

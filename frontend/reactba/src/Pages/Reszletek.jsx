@@ -1,8 +1,9 @@
 
 import React, {useState, useEffect} from 'react';
-import { Link,useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import '../style.css';
+import Navbar from '../Components/Navbar';
 //import Carousel from './Carousel';
 
 const App = () => {
@@ -20,28 +21,21 @@ const App = () => {
                 setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
             }, 3000);
             return () => clearInterval(interval);
-        }, [images.length]);
+        }, []);
 
     const { ingatlanId } = useParams();
-    const[house,setHouse] = useState({});
+    const[property,setProperty] = useState({});
     console.log(ingatlanId);
     
     useEffect(() => {
         axios.get(`https://localhost:7079/api/ingatlanok/${ingatlanId}`)
-            .then(res => setHouse(res.data))
+            .then(res => setProperty(res.data))
             .catch(error => console.log(error));
-    }, [ingatlanId]);
+    }, []);
     
 return (
     <div>
-        <nav className="navbar">
-                <Link to={"/home"} className="navItem">Főoldal</Link>
-                <Link to={"/ingatlanok"} className="navItem">Ingatlanok</Link>
-                <Link to={"/kiadas"} className="navItem">Kiadás</Link>
-                <Link to={"/rolunk"} className="navItem">Rólunk</Link>
-                <button className="belepesBtn"><Link to={"/belepes"}>Belépés</Link></button>
-        </nav>
-
+        <Navbar/>
         <header className="smallHeader">
             <div className="headerImages">
                 {images.map((image, index) => (
@@ -51,29 +45,32 @@ return (
             <h1 className="smallHeaderTitle">Ingatlanok</h1>
         </header>
 
-    <div className="houseMainContent">
-    <img src="/img/placeholder.jpg" alt="Placeholder" className=''/>
-
+    <div className="propertyMainContent">
+    {property.ingatlankepeks && property.ingatlankepeks.length > 0 ? (
+                <img src={property.ingatlankepeks[0]} alt={property.cim} loading="lazy"/>
+            ) : (
+                <img src="/img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
+            )}
         <div className="mainDetails">
-            <p className="houseTitle">{house.cim}</p>
-            <p className="houseLocation">{house.helyszin}</p>
-            <p className="housePrice">{house.ar}Ft/éjszaka</p>
-            <p className="houseShortDescription">{house.leiras}</p>
+            <p className="propertyTitle">{property.cim}</p>
+            <p className="propertyLocation">{property.helyszin}</p>
+            <p className="propertyPrice">{property.ar}Ft/éjszaka</p>
+            <p className="propertyShortDescription">{property.leiras}</p>
         </div> 
     </div>
 
     <hr />
 
-    <div className="houseOtherContent">
+    <div className="propertyOtherContent">
         <div className="otherDetails">
-            <p className="houseDetailsTitle">Részletek</p>
-            <p className="houseLongDescription">
-                Méret: {house.meret}m²<br /><br />
-                Feltöltés dátuma: {house.feltoltesDatum}
+            <p className="propertyDetailsTitle">Részletek</p>
+            <p className="propertyLongDescription">
+                Méret: {property.meret}m²<br /><br />
+                Feltöltés dátuma: {property.feltoltesDatum}
             </p>
-            <p className="houseDetailsTitle">Szolgáltatások</p>
+            <p className="propertyDetailsTitle">Szolgáltatások</p>
             <div className="services">
-            {house.szolgaltatasok && house.szolgaltatasok.split(' ').map((service, index) => (
+            {property.szolgaltatasok && property.szolgaltatasok.split(' ').map((service, index) => (
                 <div key={index} className="service">
                     <img src="/img/icons/plus.svg" alt={service} />
                     {service}
@@ -83,15 +80,15 @@ return (
 
         </div>
 
-        <div className="houseContactCard">
-            <p className="houseContactTitle">Kapcsolat:</p>
-            <img src="img/placeholder.jpg" className="uploaderImg" alt="Uploader" />
-            <a href="" className="uploaderName">Feltöltő neve</a>
-            <div className="houseContact">
-            <span>Telefon:</span><span className="houseContactValue">0000000000</span>
+        <div className="propertyContactCard">
+            <p className="propertyContactTitle">Kapcsolat:</p>
+            <img src="/img/placeholder.jpg" className="uploaderImg" alt="Uploader" />
+            <a className="uploaderName">Feltöltő neve</a>
+            <div className="propertyContact">
+            <span>Telefon:</span><span className="propertyContactValue">0000000000</span>
         </div>
-        <div className="houseContact">
-            <span>Email:</span><span className="houseContactValue">xxxxxxxxxxxxxxxxx</span>
+        <div className="propertyContact">
+            <span>Email:</span><span className="propertyContactValue">xxxxxxxxxxxxxxxxx</span>
         </div>
         </div>
     </div>
