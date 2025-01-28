@@ -3,12 +3,11 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import "../style.css";
 import Navbar from "../Components/Navbar";
-
-
+import { RiseLoader } from "react-spinners";
+import PropertyCard from "../Components/PropertyCard";
 
 const Home = () => {
 
-    
     const images = [
         "./img/header1.jpg",
         "./img/header2.jpg",
@@ -16,40 +15,9 @@ const Home = () => {
         "./img/header4.jpg",
         "./img/header5.jpg"
     ];
-    const cities = [
-        {
-            image:"./img/budapest.jpg",
-            title:"Budapest",
-            description:"Budapest pesti oldala, tele látnivalókkal, mint a Parlament és a Hősök tere. Pezsgő városi élet és sok program várja a látogatókat."
-        },
-        {
-            image:"./img/miskolc.jpg",
-            title:"Miskolc",
-            description:"Miskolc gazdag történelemmel és gyönyörű természeti környezettel várja a látogatókat. A Diósgyőri Vár, a Lillafüredi Palota és a Miskolctapolcai Barlangfürdő népszerű látnivalók. A környező Bükk hegység ideális hely a túrázásra, pihenésre és kikapcsolódásra."
-        },
-        {
-            image:"./img/Debrecen.jpg",
-            title:"Debrecen",
-            description:"Magyarország második legnagyobb városa, híres a Nagytemplomáról és a Virágkarneválról. Az Alföld keleti részén található."
-        },
-        {
-            image:"./img/Szeged.jpg",
-            title:"Szeged",
-            description:"Az Alföld egyik legnagyobb városa, híres a Dómjáról és a Szabadtéri Játékokról. A Tisza partján fekszik, sok napsütéses órával."
-        },
-        {
-            image:"./img/Pecs.jpg",
-            title:"Pécs",
-            description:"A Mecsek lábánál fekvő város, híres a Zsolnay Kulturális Negyedről és mediterrán hangulatáról. Gazdag történelmi örökséggel bír."
-        },
-        {
-            image:"./img/Siofok.png",
-            title:"Siofok",
-            description:"A Balaton egyik legismertebb városa, népszerű strandjaival és nyüzsgő éjszakai életével. Nyáron a vízparti szórakozás központja."
-        },
-    ];
     
     const [activeIndex, setActiveIndex] = useState(0);
+
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
@@ -73,56 +41,63 @@ const Home = () => {
         <section className="citySection">
             <h2 className="sectionTitle">Népszerű városok</h2>
             <div className="cityCards">
-                {cities.map((city) => (
-                    <CityCard city={city}/>
+                {cities.map((city, index) => (
+                    <CityCard key={index} city={city}/>
                 ))}
             </div>
         </section>
     );
-
-    //To-do:Végpont, pending, felhasználói visszajelzés
-    /*
-    const[houses,setHouses] = useState([]);
-    const[isPending, setPending] = useState(false);
+    
+    const [cities,setCities] = useState([]);
+    const [featured,setFeatured] = useState([]);
+    const [isCityPending, setCityPending] = useState(false);
+    const [isFeaturedPending, setFeaturedPending] = useState(false);
+    const [cityError, setCityError] = useState(false);
+    const [featuredError, setFeaturedError] = useState(false);
     
     useEffect(() => {
-        setPending(true);
-        axios.get('https://localhost:7079')
-        .then(res => setHouses(res.data))
-        .catch(error => console.error(error))
-        .finally(() => setPending(false));
+        fetchCities();
+        fetchFeatured();
     }, []);
-    */
-    const FeaturedPropertyCard = ({ image, city, price, services, rooms }) => (
-    <div className="card">
-        <img src={image} alt="ingatlan" loading="lazy"/>
-        <div className="card-content">
-            <h2>{city} <span className="price">{price}</span></h2>
-            <div className="TovabbiInformaciok">
-            <p>{rooms}szoba<br/>{services}</p>
-            </div>
-            <button>További információk</button>
-        </div>
-    </div>
-    );
+
+    const fetchCities = () => {
+        setCityPending(true);
+        setTimeout(() => {
+            axios.get('/data/cities.json')
+        .then(res => setCities(res.data))
+        .catch(error => {
+            setCityError(true);
+            console.error("Hiba a betöltés során: ", error)
+        })
+        .finally(() => setCityPending(false));
+        }, 2000);
+        
+    }
+
+    const fetchFeatured = () => {
+        setFeaturedPending(true);
+        setTimeout(() => {
+        axios.get('/data/featured.json')
+        .then(res => setFeatured(res.data))
+        .catch(error => {
+            setFeaturedError(true);
+            console.error("Hiba a betöltés során: ", error)
+        })
+        .finally(() => setFeaturedPending(false));
+        }, 2000);
+    }
     
     const FeaturedSection = () => (
-    <section className="kiemeltSection">
-        <h2 className="sectionTitle">Kiemelt ingatlanok</h2>
-        <div className="kiemeltCards">
-            <FeaturedPropertyCard image="img/header1.jpg" city="Budapest" price="5000 Ft/ejszaka" rooms="3" services="ingyenes wifi, medence" />
-            <FeaturedPropertyCard image="img/header2.jpg" city="Budapest" price="15000 Ft/ejszaka" rooms="4" services="háziállat" />
-            <FeaturedPropertyCard image="img/header3.jpg" city="Budapest" price="25000 Ft/ejszaka" rooms="2" services="Ingyenes étkezés" />
-            <FeaturedPropertyCard image="img/header1.jpg" city="Budapest" price="5000 Ft/ejszaka" rooms="3" services="ingyenes wifi, medence" />
-            <FeaturedPropertyCard image="img/header2.jpg" city="Budapest" price="15000 Ft/ejszaka" rooms="4" services="háziállat" />
-            <FeaturedPropertyCard image="img/header3.jpg" city="Budapest" price="25000 Ft/ejszaka" rooms="2" services="Ingyenes étkezés" />
-            <FeaturedPropertyCard image="img/header1.jpg" city="Budapest" price="5000 Ft/ejszaka" rooms="3" services="ingyenes wifi, medence" />
-            <FeaturedPropertyCard image="img/header2.jpg" city="Budapest" price="15000 Ft/ejszaka" rooms="4" services="háziállat" />
-            <FeaturedPropertyCard image="img/header3.jpg" city="Budapest" price="25000 Ft/ejszaka" rooms="2" services="Ingyenes étkezés" />
-        </div>
-        <button className="moreBtn">További ingatlanok</button>
-        <img src="./img/city2.png" className="footerImg" alt="footer" />
-    </section>
+        <section className="kiemeltSection">
+            <h2 className="sectionTitle">Kiemelt ingatlanok</h2>
+            <div className="kiemeltCards">
+                {featured.map((property) => (
+                    <PropertyCard key={property.id} property={property}/>
+                ))}
+            </div>
+            <button className="moreBtn">További ingatlanok</button>
+            <img src="./img/city2.png" className="footerImg" alt="footer" />
+        </section>
     );
     
     const Footer = () => (
@@ -145,13 +120,21 @@ const Home = () => {
                     <p className="headerText">
                         Üdvözöljük a Rentify oldalán, ahol az ideális ingatlan megtalálása egyszerű és problémamentes. Fedezze fel változatos ingatlankínálatunkat, amelyek az Ön igényeire és életstílusára szabottak. Kezdje meg az utat következő otthona felé még ma!
                     </p>
-                    <button className="headerBtn"> <Link to="/ingatlanok" className="headerBtnLink"> INGATLAN KERESÉSE </Link></button>
+                    <button className="headerBtn">
+                        <Link to="/ingatlanok" className="headerBtnLink">
+                            INGATLAN KERESÉSE
+                        </Link>
+                    </button>
                 </div>
             </header>
             <div className="homeContent">
+                {isCityPending ? (<div className="loading"><RiseLoader color="#e09900" size={15}/></div>) : cityError ? <p className="errorMessage">Hiba történt a városok betöltése során.</p> : (
                 <CitySection />
+                )}
                 <img src="./img/city.png" className="cityImg" alt="city" />
+                {isFeaturedPending ? (<div className="loading"><RiseLoader color="#e09900" size={15}/></div>) : featuredError ? <p className="errorMessage">Hiba történt az ingatlanok betöltése során.</p> : (
                 <FeaturedSection />
+                )}
             </div>
             <Footer />
         </div>

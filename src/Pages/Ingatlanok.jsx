@@ -21,23 +21,70 @@ const Ingatlanok = () => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
         }, 3000);
         return () => clearInterval(interval);
-    }, [images.length]);
+    }, []);
 
-
+    const [properties,setProperties] = useState([]);
+    const [isPending, setPending] = useState(false);
+    const [error, setError] = useState(false);
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+    const [filters, setFilters] = useState({
+        megye: "Összes",
+        helyszin: "Összes",
+        szobak: "Mindegy",
+        wifiCb: false,
+        petCb: false });   
+
     const toggleFilter = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
 
-    const[properties,setProperties] = useState([]);
-    const[isPending, setPending] = useState(false);
-    const[error, setError] = useState(false);
+    const handleFilterChange = (e) => {
+        const { id, value, type, checked } = e.target;
+
+        setFilters({ ...filters, [id]: type === "checkbox" ? checked : value });
+    };
+
+    const filteredProperties = properties.filter(property => {
+        let megyeHelyszin = "";
+
+        switch (filters.megye) {
+            case "Pest":
+                megyeHelyszin = "Budapest";
+                break;
+            case "Borsod-Abaúj-Zemplén":
+                megyeHelyszin = "Miskolc";
+                break;
+            case "Hajdú-Bihar":
+                megyeHelyszin = "Debrecen";
+                break;
+            case "Csongrád-Csanád":
+                megyeHelyszin = "Szeged";
+                break;
+            case "Baranya":
+                megyeHelyszin = "Pécs";
+                break;
+            case "Somogy":
+                megyeHelyszin = "Siófok";
+                break;
+        }
+        console.log(megyeHelyszin);
+        return (
+            (filters.megye === "Összes" || property.helyszin === megyeHelyszin) &&
+            (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
+            (filters.szobak === "Mindegy" || ((property.szobak <= 3) ? (property.szobak === filters.szobak) : (filters.szobak === "Több mint 3"))) &&
+            (!filters.wifiCb || property.szolgaltatasok.includes("wifi")) &&
+            (!filters.petCb || property.szolgaltatasok.includes("háziállat"))
+        );
+    });
+
+
     
     useEffect(() => {
         setPending(true);
-        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+        //https://localhost:7079/api/Ingatlan/ingatlanok
+        axios.get('/data/featured.json')
         .then(res => setProperties(res.data))
-        .catch(error =>{ console.error(error+" mégilyet!");
+        .catch(error =>{ console.error(error);
                 setError(true)})
         .finally(() => setPending(false));
     }, []);
@@ -58,28 +105,40 @@ const Ingatlanok = () => {
                 <div className="filterRow">
                     <div className="filterSelectContainer">
                         <label>Megye</label>
-                        <select className="filterSelect">
+                        <select id="megye" className="filterSelect" onChange={handleFilterChange}>
                             <option>Összes</option>
-                            <option>valami</option>
+                            <option>Pest</option>
+                            <option>Borsod-Abaúj-Zemplén</option>
+                            <option>Hajdú-Bihar</option>
+                            <option>Csongrád-Csanád</option>
+                            <option>Baranya</option>
+                            <option>Somogy</option>
                         </select>
                     </div>
                     <div className="filterSelectContainer">
                         <label>Város</label>
-                        <select className="filterSelect">
+                        <select id="helyszin" className="filterSelect" onChange={handleFilterChange}>
                             <option>Összes</option>
-                            <option>valami</option>
+                            <option>Budapest</option>
+                            <option>Miskolc</option>
+                            <option>Debrecen</option>
+                            <option>Pécs</option>
+                            <option>Siófok</option>
                         </select>
                     </div>
                     <div className="filterSelectContainer">
-                        <label>Férőhely</label>
-                        <select className="filterSelect">
+                        <label>Szobák</label>
+                        <select id="szobak" className="filterSelect" onChange={handleFilterChange}>
                             <option>Mindegy</option>
-                            <option>valami</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>Több mint 3</option>
                         </select>
                     </div>
                     <div className="filterSelectContainer">
                         <label>Rendezés</label>
-                        <select className="filterSelect">
+                        <select id="rendezes" className="filterSelect">
                             <option>Alapértelmezett</option>
                             <option>valami</option>
                         </select>
@@ -91,9 +150,9 @@ const Ingatlanok = () => {
 
                 <div className={`filterRow filterMore ${isFilterExpanded ? 'expanded' : ''}`} id="filterMore">
                     <label>Wifi: </label>
-                    <input type="checkbox" id="wifiCb" className="filterCheckbox" />
+                    <input type="checkbox" id="wifiCb" className="filterCheckbox" onChange={handleFilterChange}/>
                     <label>Háziállat: </label>
-                    <input type="checkbox" id="petCb" className="filterCheckbox" />
+                    <input type="checkbox" id="petCb" className="filterCheckbox" onChange={handleFilterChange}/>
                 </div>
             </div>
 
@@ -102,9 +161,9 @@ const Ingatlanok = () => {
                 <ClipLoader color='#e09900' loading={isPending} size={100}/>
             ) : error ? (<div className="errorMessage">Nem sikerült betölteni az adatokat</div>   
             ) : (
-                <div>
-                    {properties.map((property) => (
-                        <PropertyCard property={property}/>
+                <div className='kiemeltCards'>
+                    {filteredProperties.map((property) => (
+                        <PropertyCard key={property.id} property={property}/>
                     ))}
                 </div>)}
             </div>

@@ -4,6 +4,7 @@ import {useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../style.css';
 import Navbar from '../Components/Navbar';
+import PropertyCard from '../Components/PropertyCard';
 //import Carousel from './Carousel';
 
 const App = () => {
@@ -25,11 +26,11 @@ const App = () => {
 
     const { ingatlanId } = useParams();
     const[property,setProperty] = useState({});
-    console.log(ingatlanId);
     
+    //https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}
     useEffect(() => {
-        axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}`)
-            .then(res => setProperty(res.data))
+        axios.get(`/data/featured.json`)
+            .then(res => setProperty(res.data[ingatlanId-1]))
             .catch(error => console.log(error));
     }, []);
     
@@ -46,15 +47,17 @@ return (
         </header>
 
     <div className="propertyMainContent">
-    {property.ingatlankepeks && property.ingatlankepeks.length > 0 ? (
-                <img src={property.ingatlankepeks[0]} alt={property.cim} loading="lazy"/>
+    {/* property.ingatlankepeks && property.ingatlankepeks.length > 0  */}
+    
+    {property.kep ? (
+                <img src={"/"+property.kep} alt={property.cim} loading="lazy" style={{width:"20%"}}/>
             ) : (
-                <img src="/img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
+                <img src="img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
             )}
         <div className="mainDetails">
             <p className="propertyTitle">{property.cim}</p>
             <p className="propertyLocation">{property.helyszin}</p>
-            <p className="propertyPrice">{property.ar}Ft/éjszaka</p>
+            <p className="propertyPrice">{property.ar} Ft/éjszaka</p>
             <p className="propertyShortDescription">{property.leiras}</p>
         </div> 
     </div>
@@ -70,7 +73,7 @@ return (
             </p>
             <p className="propertyDetailsTitle">Szolgáltatások</p>
             <div className="services">
-            {property.szolgaltatasok && property.szolgaltatasok.split(' ').map((service, index) => (
+            {property.szolgaltatasok && property.szolgaltatasok.split(', ').map((service, index) => (
                 <div key={index} className="service">
                     <img src="/img/icons/plus.svg" alt={service} />
                     {service}
@@ -95,9 +98,11 @@ return (
 
     <hr />
 
-    <p className="moreRecsTitle">Továbi ajánlatok</p>
+    <p className="moreRecsTitle">További ajánlatok</p>
 
     <div className="moreRecs">
+        {Object.keys(property).length>0 ? <PropertyCard key={2} property={property}/> : ""}
+        
         <div className="card">
             <img src="/img/header1.jpg" alt="Recs 1" />
             <div className="card-content">

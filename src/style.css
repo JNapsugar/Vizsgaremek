@@ -8,13 +8,25 @@
   src: url(PoiretOne-Regular.ttf);
 }
 
-
 html, body {
   background-color: rgb(34, 33, 33);
   margin: 0;
   font-family: "Poiret One", sans-serif;
   font-weight: 400;
   padding: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
+  margin-bottom: 2rem;
+}
+
+.errorMessage{
+  color: red;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 /*#region Navigacio*/
@@ -78,10 +90,9 @@ html, body {
   }
 }
 
-.belepesBtn:hover, .headerBtn:hover, .moreBtn:hover {
+.belepesBtn:hover, .headerBtn:hover, .moreBtn:hover, .card button:hover {
   color: #e09900;
   border-color: #e09900;
-
 }
 /*#endregion Navigacio*/
 
@@ -194,11 +205,11 @@ html, body {
 }
 
 /*#endregion Header*/
+
 .homeContent{
   display: flex;
   flex-direction: column;
 }
-
 
 .sectionTitle{
   font-size: 3rem;
@@ -275,7 +286,6 @@ footer{
   overflow: hidden;
   position: relative;
   box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.375);
-
   img {
       position: absolute;
       object-fit: cover;
@@ -332,10 +342,6 @@ footer{
       inset: auto auto 10px 30px; 
       transition: inset .8s ease-out;
       transition: opacity .5s .1s ease-in;
-      &:hover {
-        color: #e09900;
-        border-color: #e09900;
-      }
   }
 
   .TovabbiInformaciok{
@@ -351,23 +357,22 @@ footer{
       inset: auto auto 90px 30px;
       transition: inset .5s ease-out;
   }
+
   &:hover button {
       opacity: 1;
       transition: opacity .5s .1s ease-in;
   }
+
   &:hover p {
     opacity: 1;
     transition: opacity .5s .1s ease-in;
-}
+  }
 
   &:hover .card-content {
       height: 40%;
       transition: height .3s ease-in-out;
   }
-
 }
-
-
 
 /*Városos*/
 .cityCard {
@@ -381,7 +386,6 @@ footer{
   background-size: cover;
   margin: 1rem;
   position: relative;
-
   img {
     position: absolute;
     object-fit: cover;
@@ -390,7 +394,7 @@ footer{
     top: 0;
     left: 0;
     filter: contrast(80%);
-}
+  }
 
   button {
     background-color:#ffffff64;
@@ -440,7 +444,6 @@ footer{
   color: #333;
   font-weight: 700;
 }
-
 
 .cityCardDescription {
   margin: 10px 0 0;
@@ -560,12 +563,10 @@ footer{
     text-decoration: none;
     font-weight: 600;
   }
-  
-  
+    
   .login-link:hover{
     text-decoration: underline;
   }
-  
 }
 /*#endregion Bejelentkezés*/
 
@@ -593,7 +594,6 @@ footer{
   justify-content: center;
   flex-wrap: wrap;
 }
-
 
 .filterSelectContainer {
   display: flex;
@@ -664,21 +664,12 @@ footer{
 }
 /*#endregion filter*/
 
-.errorMessage{
-  color: red;
-  font-size: 1.5rem;
-}
-
 .gridCards{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 2rem;
 }
-
-
-
-
 /*#endregion Ingatlanok*/
 
 /*#region Reszletek*/
@@ -829,8 +820,6 @@ hr{
   margin-top: 2rem;
 }
 
-
-
 /*#endregion Reszletek*/
 
 /*#region Profil*/
@@ -953,6 +942,7 @@ hr{
   border: #8a2d11 solid 1px;
   border-radius: 0.5rem;
   margin-top: 2rem;
+  margin-right: 10px;
   height: 2rem;
   width: 10rem;
   &:hover{
@@ -960,14 +950,10 @@ hr{
     cursor: pointer;
     box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
   }
-  
-  margin-right: 10px;
 }
-
 /*#endregion Profil*/
 
 /*#region Reszponzivitas*/
-
 
 @media (max-width: 1300px) {
 
@@ -997,7 +983,6 @@ hr{
 .propertyContactCard{
   margin: 2rem auto;
 }
-
 }
 
 
@@ -1095,9 +1080,5 @@ hr{
   .mainDetails{
     width: 100%;
   }
-
-
-
 }
-
 /*#endregion */

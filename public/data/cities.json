@@ -1,0 +1,32 @@
+[
+    {
+        "image": "./img/budapest.jpg",
+        "title": "Budapest",
+        "description": "Budapest pesti oldala, tele látnivalókkal, mint a Parlament és a Hősök tere. Pezsgő városi élet és sok program várja a látogatókat."
+    },
+    {
+        "image": "./img/miskolc.jpg",
+        "title": "Miskolc",
+        "description": "Miskolc gazdag történelemmel és gyönyörű természeti környezettel várja a látogatókat. A Diósgyőri Vár, a Lillafüredi Palota és a Miskolctapolcai Barlangfürdő népszerű látnivalók. A környező Bükk hegység ideális hely a túrázásra, pihenésre és kikapcsolódásra."
+    },
+    {
+        "image": "./img/Debrecen.jpg",
+        "title": "Debrecen",
+        "description": "Magyarország második legnagyobb városa, híres a Nagytemplomáról és a Virágkarneválról. Az Alföld keleti részén található."
+    },
+    {
+        "image": "./img/Szeged.jpg",
+        "title": "Szeged",
+        "description": "Az Alföld egyik legnagyobb városa, híres a Dómjáról és a Szabadtéri Játékokról. A Tisza partján fekszik, sok napsütéses órával."
+    },
+    {
+        "image": "./img/Pecs.jpg",
+        "title": "Pécs",
+        "description": "A Mecsek lábánál fekvő város, híres a Zsolnay Kulturális Negyedről és mediterrán hangulatáról. Gazdag történelmi örökséggel bír."
+    },
+    {
+        "image": "./img/Siofok.png",
+        "title": "Siofok",
+        "description": "A Balaton egyik legismertebb városa, népszerű strandjaival és nyüzsgő éjszakai életével. Nyáron a vízparti szórakozás központja."
+    }
+]
