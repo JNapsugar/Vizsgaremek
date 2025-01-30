@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Dec 13. 08:17
+-- Létrehozás ideje: 2025. Jan 30. 09:28
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -46,7 +46,10 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`Id`, `LoginNev`, `HASH`, `SALT`, `Name`, `PermissionId`, `Active`, `Email`, `ProfilePicturePath`) VALUES
-(1, 'kerenyir', 'd5fe0e517520122f1ab363b6b7ee9ae616e7ad393693ef00d81a7f287a79931a', 'Gm63C4jiWnYvfZfiKUu2cu8AHPNDj8NoHhtQn88yiJhyOunBNSd7tRoWo5wwqg9X', 'Kerényi Róbert', 2, 1, 'kerenyir@kkszki.hu', 'img\\kerenyir.jpg');
+(1, 'kerenyir', 'd5fe0e517520122f1ab363b6b7ee9ae616e7ad393693ef00d81a7f287a79931a', 'Gm63C4jiWnYvfZfiKUu2cu8AHPNDj8NoHhtQn88yiJhyOunBNSd7tRoWo5wwqg9X', 'Kerényi Róbert', 2, 1, 'kerenyir@kkszki.hu', 'default.jpg'),
+(20, 'a', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', 'savdsausdsa', 2, 0, 'dfdsfdsf', 'sdasdasddsadsad'),
+(21, 'aa', 'a4ce4ab00e9eb18792231be5c434019a10570f6f9e9df505a8ab509240394402', 'ux2LyyR7nONgLf4aChUWCOMnisLdG8U4L47CCyw2LfqjaJFDzdKfNKBQne3Pf0zm', 'savdsausdsa', 2, 0, 'aaaaaa', 'aaaaaa'),
+(22, 'aaaaa', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', 'aaa', 2, 0, 'aaa', 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -109,16 +112,17 @@ CREATE TABLE `ingatlanok` (
   `ar` decimal(10,2) NOT NULL,
   `meret` int(11) DEFAULT NULL,
   `szolgaltatasok` text DEFAULT NULL,
-  `feltoltes_datum` timestamp NOT NULL DEFAULT current_timestamp()
+  `feltoltes_datum` timestamp NOT NULL DEFAULT current_timestamp(),
+  `szoba` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `ingatlanok`
 --
 
-INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `helyszin`, `ar`, `meret`, `szolgaltatasok`, `feltoltes_datum`) VALUES
-(1, 1, 'Budapest, Fő utca 1.', 'Tágas 3 szobás lakás a belvárosban', 'Budapest', 250000.00, 80, 'Wi-Fi, parkolás, medence', '2024-12-09 07:15:48'),
-(2, 1, 'Debrecen, Tavasz utca 12.', 'Modern ház kerttel', 'Debrecen', 300000.00, 120, 'Wi-Fi, parkolás, kert, kutya hozható', '2024-12-09 07:15:48');
+INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `helyszin`, `ar`, `meret`, `szolgaltatasok`, `feltoltes_datum`, `szoba`) VALUES
+(1, 1, 'Budapest, Fő utca 1.', 'Tágas 3 szobás lakás a belvárosban', 'Budapest', 250000.00, 80, 'Wi-Fi, parkolás, medence', '2024-12-09 07:15:48', 0),
+(2, 1, 'Debrecen, Tavasz utca 12.', 'Modern ház kerttel', 'Debrecen', 300000.00, 120, 'Wi-Fi, parkolás, kert, kutya hozható', '2024-12-09 07:15:48', 0);
 
 -- --------------------------------------------------------
 
@@ -248,7 +252,7 @@ ALTER TABLE `szerepkorok`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT a táblához `foglalasok`
