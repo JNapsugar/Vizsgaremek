@@ -27,14 +27,14 @@ const App = () => {
     const { ingatlanId } = useParams();
     const[property,setProperty] = useState({});
     
-    //https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}
     useEffect(() => {
-        axios.get(`/data/featured.json`)
-            .then(res => setProperty(res.data[ingatlanId-1]))
+        axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}`)
+            .then(res => {setProperty(res.data);})
             .catch(error => console.log(error));
-    }, []);
+    }, [ingatlanId]);
     
 return (
+    
     <div>
         <Navbar/>
         <header className="smallHeader">
@@ -47,16 +47,10 @@ return (
         </header>
 
     <div className="propertyMainContent">
-    {/* property.ingatlankepeks && property.ingatlankepeks.length > 0  */}
-    
-    {property.kep ? (
-                <img src={"/"+property.kep} alt={property.cim} loading="lazy" style={{width:"20%"}}/>
-            ) : (
-                <img src="img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
-            )}
+        <img src="/img/placeholder.jpg" alt="Placeholder" loading="lazy" className='propertyPlaceholder'/>
         <div className="mainDetails">
-            <p className="propertyTitle">{property.cim}</p>
-            <p className="propertyLocation">{property.helyszin}</p>
+            <p className="propertyTitle">{property.helyszin}</p>
+            <p className="propertyLocation">{property.cim}</p>
             <p className="propertyPrice">{property.ar} Ft/éjszaka</p>
             <p className="propertyShortDescription">{property.leiras}</p>
         </div> 
@@ -68,19 +62,46 @@ return (
         <div className="otherDetails">
             <p className="propertyDetailsTitle">Részletek</p>
             <p className="propertyLongDescription">
-                Méret: {property.meret}m²<br /><br />
+                Méret: {property.meret}m²<br />
+                Szobák száma: {property.szoba} <br />
                 Feltöltés dátuma: {property.feltoltesDatum}
             </p>
             <p className="propertyDetailsTitle">Szolgáltatások</p>
             <div className="services">
-            {property.szolgaltatasok && property.szolgaltatasok.split(', ').map((service, index) => (
-                <div key={index} className="service">
-                    <img src="/img/icons/plus.svg" alt={service} />
-                    {service}
-                </div>
-            ))}
-    </div>
-
+                {property.szolgaltatasok && property.szolgaltatasok.split(', ').map((service, index) => {
+                    let iconSrc;
+                    switch (service) {
+                        case "Wi-Fi": iconSrc = "/img/icons/wifi.svg"; break;
+                        case "kutya hozható": iconSrc = "/img/icons/paw.svg"; break;
+                        case "parkolás": iconSrc = "/img/icons/parking.svg"; break;
+                        case "medence": iconSrc = "/img/icons/pool.svg"; break;
+                        case "kert": iconSrc = "/img/icons/garden.svg"; break;
+                        case "légkondícionálás": iconSrc = "/img/icons/airconditioning.svg"; break;
+                        case "billiárd": iconSrc = "/img/icons/pooltable.svg"; break;
+                        case "ping-pong": iconSrc = "/img/icons/pingpong.svg"; break;
+                        case "akadálymentes": iconSrc = "/img/icons/wheelchair.svg"; break;
+                        case "baba bútorok": iconSrc = "/img/icons/baby.svg"; break;
+                        case "grill": iconSrc = "/img/icons/grill.svg"; break;
+                        case "horgásztó": iconSrc = "/img/icons/fishing.svg"; break;
+                        case "istálló": iconSrc = "/img/icons/stable.svg"; break;
+                        case "erkély/terasz": iconSrc = "/img/icons/balcony.svg"; break;
+                        case "házimozi": iconSrc = "/img/icons/cinema.svg"; break;
+                        case "mosógép": iconSrc = "/img/icons/washingmachine.svg"; break;
+                        case "kávőfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
+                        case "takarítószolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
+                        case "biztonsági kamera": iconSrc = "/img/icons/securitycamera.svg"; break;
+                        case "golfpálya": iconSrc = "/img/icons/golf.svg"; break;
+                        case "spajz": iconSrc = "/img/icons/pantry.svg"; break;
+                        default: iconSrc = "/img/icons/plus.svg"; break;
+                    }
+                    return (
+                        <div key={index} className="service">
+                            <img src={iconSrc} alt={service} />
+                            {service}
+                        </div>
+                    );
+                })}
+            </div>
         </div>
 
         <div className="propertyContactCard">
@@ -102,40 +123,6 @@ return (
 
     <div className="moreRecs">
         {Object.keys(property).length>0 ? <PropertyCard key={2} property={property}/> : ""}
-        
-        <div className="card">
-            <img src="/img/header1.jpg" alt="Recs 1" />
-            <div className="card-content">
-                <h2>Helyszin <span className="price">ft/ejszaka</span></h2>
-                <div className="TovabbiInformaciok">
-                <p>Szobák száma<br />még valamik</p>
-                </div>
-                <br />
-                <button>További információk</button>
-            </div>
-        </div>
-        <div className="card">
-            <img src="/img/header1.jpg" alt="Recs 2" />
-            <div className="card-content">
-                <h2>Helyszin <span className="price">ft/ejszaka</span></h2>
-                <div className="TovabbiInformaciok">
-                    <p>Szobák száma<br />még valamik</p>
-                </div>
-                <br />
-                <button>További információk</button>
-            </div>
-        </div>
-        <div className="card">
-            <img src="/img/header1.jpg" alt="Recs 3" />
-            <div className="card-content">
-                <h2>Helyszin <span className="price">ft/ejszaka</span></h2>
-                <div className="TovabbiInformaciok">
-                    <p>Szobák száma<br />még valamik</p>
-                </div>
-                <br />
-                <button>További információk</button>
-            </div>
-        </div>
     </div>
 
     <img src="/img/city2.png" className="footerImg" alt="City View" />
