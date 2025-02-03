@@ -27,6 +27,8 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
     public virtual DbSet<Szerepkorok> Szerepkoroks { get; set; }
 
+    public virtual DbSet<Telepulesek> Telepuleseks { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySQL("SERVER=localhost;PORT=3306;DATABASE=ingatlanberlesiplatform;USER=root;PASSWORD=;SSL MODE=none;");
@@ -254,6 +256,26 @@ public partial class IngatlanberlesiplatformContext : DbContext
                             .HasColumnType("int(11)")
                             .HasColumnName("jogosultsag_id");
                     });
+        });
+
+        modelBuilder.Entity<Telepulesek>(entity =>
+        {
+            entity.HasKey(e => e.nev).HasName("PRIMARY");
+
+            entity.ToTable("telepulesek");
+
+            entity.Property(e => e.nev)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.megye)
+                .HasMaxLength(100);
+
+            entity.Property(e => e.leiras)
+                .HasColumnType("text");
+
+            entity.Property(e => e.kep)
+                .HasColumnType("text");
         });
 
         OnModelCreatingPartial(modelBuilder);

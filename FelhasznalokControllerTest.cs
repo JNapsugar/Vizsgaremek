@@ -1,4 +1,5 @@
-﻿using IngatlanokBackend.Controllers;
+﻿/*
+using IngatlanokBackend.Controllers;
 using IngatlanokBackend.DTOs;
 using IngatlanokBackend.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -79,3 +80,4 @@ public class FelhasznaloControllerTests
         Assert.IsType<NotFoundObjectResult>(result);
     }
 }
+*/

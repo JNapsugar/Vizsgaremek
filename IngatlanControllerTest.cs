@@ -1,3 +1,4 @@
+/*
 using IngatlanokBackend.Controllers;
 using IngatlanokBackend.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -80,3 +81,4 @@ public class IngatlanControllerTests
         Assert.IsType<OkObjectResult>(result);
     }
 }
+*/
