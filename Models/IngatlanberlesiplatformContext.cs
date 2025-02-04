@@ -187,6 +187,10 @@ public partial class IngatlanberlesiplatformContext : DbContext
                 .HasDefaultValueSql("'NULL'")
                 .HasColumnType("int(11)")
                 .HasColumnName("meret");
+            entity.Property(e => e.Szoba)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnType("int(11)")
+                .HasColumnName("szoba");
             entity.Property(e => e.Szolgaltatasok)
                 .HasDefaultValueSql("'NULL'")
                 .HasColumnType("text")
