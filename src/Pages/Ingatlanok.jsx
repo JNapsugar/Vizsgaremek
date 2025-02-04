@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import '../style.css';
 import Navbar from '../Components/Navbar';
 import PropertyCard from '../Components/PropertyCard';
 import { RiseLoader } from 'react-spinners';
+import { filter } from 'lodash';
 
 const Ingatlanok = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -21,16 +21,17 @@ const Ingatlanok = () => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
         }, 3000);
         return () => clearInterval(interval);
-    }, []);
+    }, [images.length]);
 
     const [properties, setProperties] = useState([]);
+    const [locations, setLocations] = useState([]);
     const [isPending, setPending] = useState(false);
     const [error, setError] = useState(false);
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
     const [filters, setFilters] = useState({
         megye: "Összes",
         helyszin: "Összes",
-        szobak: "Mindegy",
+        szoba: "Mindegy",
         wifiCb: false,
         petCb: false,
         parkolasCb: false,
@@ -54,6 +55,16 @@ const Ingatlanok = () => {
         spajzCb: false
     });
 
+    useEffect(() => {
+        setPending(true);
+        axios.get('https://localhost:7079/api/Telepules/telepulesek')
+            .then(res => setLocations(res.data))
+            .catch(error => { console.error(error); setError(true); })
+            .finally(() => setPending(false));
+    }, []);
+    const counties = Array.from(new Set(locations.map(location => location.megye)));
+    console.log(counties);
+    
     const toggleFilter = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
@@ -61,36 +72,20 @@ const Ingatlanok = () => {
     const handleFilterChange = (e) => {
         const { id, value, type, checked } = e.target;
         setFilters({ ...filters, [id]: type === "checkbox" ? checked : value });
+        if (id === "helyszin") {
+            const selectedCity = locations.find(location => location.nev === value);
+            if (selectedCity) {
+                setFilters(prevFilters => ({ ...prevFilters, megye: selectedCity.megye }));
+                document.getElementById("megye").value = selectedCity.megye;
+            }
+        }
     };
 
-    const filteredProperties = properties.filter(property => {
-        let megyeHelyszin = "";
-
-        switch (filters.megye) {
-            case "Pest":
-                megyeHelyszin = "Budapest";
-                break;
-            case "Borsod-Abaúj-Zemplén":
-                megyeHelyszin = "Miskolc";
-                break;
-            case "Hajdú-Bihar":
-                megyeHelyszin = "Debrecen";
-                break;
-            case "Csongrád-Csanád":
-                megyeHelyszin = "Szeged";
-                break;
-            case "Baranya":
-                megyeHelyszin = "Pécs";
-                break;
-            case "Somogy":
-                megyeHelyszin = "Siófok";
-                break;
-        }
-
+    const filteredProperties = properties.filter(property => {;
         return (
-            (filters.megye === "Összes" || property.helyszin === megyeHelyszin) &&
+            (filters.megye === "Összes" || property.helyszin === filters.megye) &&
             (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
-            (filters.szobak === "Mindegy" || ((property.szobak <= 3) ? (property.szobak === filters.szobak) : (filters.szobak === "Több mint 3"))) &&
+            (filters.szoba === "Mindegy" || ((property.szoba <= 3) ? (property.szoba === filters.szoba) : (filters.szoba === "Több mint 3"))) &&
             (!filters.wifiCb || property.szolgaltatasok.includes("Wi-Fi")) &&
             (!filters.petCb || property.szolgaltatasok.includes("kutya hozható")) &&
             (!filters.parkolasCb || property.szolgaltatasok.includes("parkolás")) &&
@@ -140,28 +135,23 @@ const Ingatlanok = () => {
                         <label>Megye</label>
                         <select id="megye" className="filterSelect" onChange={handleFilterChange}>
                             <option>Összes</option>
-                            <option>Pest</option>
-                            <option>Borsod-Abaúj-Zemplén</option>
-                            <option>Hajdú-Bihar</option>
-                            <option>Csongrád-Csanád</option>
-                            <option>Baranya</option>
-                            <option>Somogy</option>
+                            {counties.map((countie, index) => (
+                                <option key={index} value={countie}>{countie}</option>
+                            ))}
                         </select>
                     </div>
                     <div className="filterSelectContainer">
                         <label>Város</label>
                         <select id="helyszin" className="filterSelect" onChange={handleFilterChange}>
                             <option>Összes</option>
-                            <option>Budapest</option>
-                            <option>Miskolc</option>
-                            <option>Debrecen</option>
-                            <option>Pécs</option>
-                            <option>Siófok</option>
+                            {locations.map((location, index) => (
+                                <option key={index} value={location.nev}>{location.nev}</option>
+                            ))}
                         </select>
                     </div>
                     <div className="filterSelectContainer">
                         <label>Szobák</label>
-                        <select id="szobak" className="filterSelect" onChange={handleFilterChange}>
+                        <select id="szoba" className="filterSelect" onChange={handleFilterChange}>
                             <option>Mindegy</option>
                             <option>1</option>
                             <option>2</option>
