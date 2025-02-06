@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../style.css';
 import Navbar from '../Components/Navbar';
 import PropertyCard from '../Components/PropertyCard';
+import PropertyListItem from '../Components/PropertyListItem';
 import { RiseLoader } from 'react-spinners';
 
 const Ingatlanok = () => {
@@ -33,6 +34,7 @@ const Ingatlanok = () => {
         helyszin: "Összes",
         szoba: "Mindegy",
         rendezes: "Mindegy",
+        nezet: "grid",
         wifiCb: false,
         petCb: false,
         parkolasCb: false,
@@ -81,7 +83,7 @@ const Ingatlanok = () => {
             case "megye":
                 value === "Összes"? setFilteredLocations(locations) : setFilteredLocations(locations.filter(location => location.megye === value))
                 break;
-                case "rendezes":
+            case "rendezes":
                     const orderBy = value.split('-')[0]
                     if (value.split('-')[1] === "asc") {
                         setProperties(prevProperties => {
@@ -92,9 +94,10 @@ const Ingatlanok = () => {
                             return [...prevProperties].sort((a, b) => b[orderBy] - a[orderBy])
                         })
                     }
-                    break;
-                
-                
+                break;  
+            case "nezet":
+                    filters.nezet = value;
+                break;
         };
     };
 
@@ -134,6 +137,14 @@ const Ingatlanok = () => {
             .finally(() => setPending(false));
     }, []);
     
+    const Checkbox = ({ id, label}) => {
+        return (
+            <div className='checkboxContainer'>
+                <label >{label}: </label>
+                <input type="checkbox" id={id} className="filterCheckbox" onChange={handleFilterChange} />
+            </div>
+        );
+    };
 
     return (
         <div>
@@ -194,98 +205,38 @@ const Ingatlanok = () => {
                     <div className="showMoreFilter" id="showMoreFilter" onClick={toggleFilter}>
                         {isFilterExpanded ? 'Kevesebb▲' : 'További▼'}
                     </div>
+                    <div className='viewBtnContainer'>
+                        <div className='viewBtn' onClick={() => handleFilterChange({ target: { id: 'nezet', value: 'grid' } })}><img src="./img/icons/grid.png" alt="grid" /></div>
+                        <div className='viewBtn' onClick={() => handleFilterChange({ target: { id: 'nezet', value: 'list' } })}><img src="./img/icons/list.png" alt="list" /></div>
+                    </div>
                 </div>
 
                 <div className={`filterRow filterMore ${isFilterExpanded ? 'expanded' : ''}`} id="filterMore">
-                    <div className='checkboxContainer'>
-                        <label>Wi-Fi: </label>
-                        <input type="checkbox" id="wifiCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Kutya hozható: </label>
-                        <input type="checkbox" id="petCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Parkolás: </label>
-                        <input type="checkbox" id="parkolasCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Medence: </label>
-                        <input type="checkbox" id="medenceCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Kert: </label>
-                        <input type="checkbox" id="kertCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Légkondícionálás: </label>
-                        <input type="checkbox" id="legkondiCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Billiárd: </label>
-                        <input type="checkbox" id="billiardCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Ping-pong: </label>
-                        <input type="checkbox" id="pingpongCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Akadálymentes: </label>
-                        <input type="checkbox" id="akadalymentesCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Baba bútorok: </label>
-                        <input type="checkbox" id="babaButorokCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Grill: </label>
-                        <input type="checkbox" id="grillCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Horgásztó: </label>
-                        <input type="checkbox" id="horgasztoCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Istálló: </label>
-                        <input type="checkbox" id="istalloCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Erkély/Terasz: </label>
-                        <input type="checkbox" id="erkelyTeraszCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Házimozi: </label>
-                        <input type="checkbox" id="hazimoziCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Mosógép: </label>
-                        <input type="checkbox" id="mosogepCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Kávéfőző: </label>
-                        <input type="checkbox" id="kavefovoCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Takarítószolgálat: </label>
-                        <input type="checkbox" id="takaritokCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Biztonsági kamera: </label>
-                        <input type="checkbox" id="biztonsagiKameraCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Golfpálya: </label>
-                        <input type="checkbox" id="golfpalyCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
-                    <div className='checkboxContainer'>
-                        <label>Spajz: </label>
-                        <input type="checkbox" id="spajzCb" className="filterCheckbox" onChange={handleFilterChange} />
-                    </div>
+                    <Checkbox id="wifiCb" label="Wi-Fi" />
+                    <Checkbox id="petCb" label="Kutya hozható" />
+                    <Checkbox id="parkolasCb" label="Parkolás" />
+                    <Checkbox id="medenceCb" label="Medence" />
+                    <Checkbox id="kertCb" label="Kert"/>
+                    <Checkbox id="legkondiCb" label="Légkondícionálás"/>
+                    <Checkbox id="billiardCb" label="Billiárd"/>
+                    <Checkbox id="pingpongCb" label="Ping-pong"/>
+                    <Checkbox id="akadalymentesCb" label="Akadálymentes"/>
+                    <Checkbox id="babaButorokCb" label="Baba bútorok"/>
+                    <Checkbox id="grillCb" label="Grill"/>
+                    <Checkbox id="horgasztoCb" label="Horgásztó" />
+                    <Checkbox id="istalloCb" label="Istálló"  />
+                    <Checkbox id="erkelyTeraszCb" label="Erkély/Terasz"/>
+                    <Checkbox id="hazimoziCb" label="Házimozi" />
+                    <Checkbox id="mosogepCb" label="Mosógép" />
+                    <Checkbox id="kavefozoCb" label="Kávéfőző" />
+                    <Checkbox id="takaritokCb" label="Takarítószolgálat"  />
+                    <Checkbox id="biztonsagiKameraCb" label="Biztonsági kamera"/>
+                    <Checkbox id="golfpalyaCb" label="Golfpálya"  />
+                    <Checkbox id="spajzCb" label="Spajz"  />
                 </div>
-
             </div>
 
-            <div className="gridCards" id="cards">
+            <div className="cardContainer" id="cards">
                 {isPending ? (
                     <RiseLoader color='#e09900' loading={isPending} size={15} />
                 ) : error ? (
@@ -301,12 +252,14 @@ const Ingatlanok = () => {
                         </div>
                         
                     ) : (
-                        <div className='kiemeltCards'>
+                        <div className='cardContainer'>
                             {filteredProperties.map((property) => (
-                                <PropertyCard key={property.id} property={property} />
+                                filters.nezet === "grid"? 
+                                <PropertyCard key={property.id} property={property} /> :
+                                <PropertyListItem key={property.id} property={property} />
                         ))}
-                    </div>)
-                    
+                        </div>
+                        )
                 )}
             </div>
 

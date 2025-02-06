@@ -51,7 +51,7 @@ return (
         <div className="mainDetails">
             <p className="propertyTitle">{property.helyszin}</p>
             <p className="propertyLocation">{property.cim}</p>
-            <p className="propertyPrice">{property.ar} Ft/éjszaka</p>
+            <p className="propertyPrice">{property.ar} Ft/hónap</p>
             <p className="propertyShortDescription">{property.leiras}</p>
         </div> 
     </div>
