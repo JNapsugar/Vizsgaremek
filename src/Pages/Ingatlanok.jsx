@@ -4,7 +4,6 @@ import '../style.css';
 import Navbar from '../Components/Navbar';
 import PropertyCard from '../Components/PropertyCard';
 import { RiseLoader } from 'react-spinners';
-import { filter } from 'lodash';
 
 const Ingatlanok = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -25,6 +24,7 @@ const Ingatlanok = () => {
 
     const [properties, setProperties] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [filteredLocations, setFilteredLocations] = useState([]);
     const [isPending, setPending] = useState(false);
     const [error, setError] = useState(false);
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
@@ -32,6 +32,7 @@ const Ingatlanok = () => {
         megye: "Összes",
         helyszin: "Összes",
         szoba: "Mindegy",
+        rendezes: "Mindegy",
         wifiCb: false,
         petCb: false,
         parkolasCb: false,
@@ -58,13 +59,11 @@ const Ingatlanok = () => {
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
-            .then(res => setLocations(res.data))
+            .then(res => {setLocations(res.data); setFilteredLocations(res.data)})
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
     }, []);
     const counties = Array.from(new Set(locations.map(location => location.megye)));
-    console.log(counties);
-    
     const toggleFilter = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
@@ -72,20 +71,38 @@ const Ingatlanok = () => {
     const handleFilterChange = (e) => {
         const { id, value, type, checked } = e.target;
         setFilters({ ...filters, [id]: type === "checkbox" ? checked : value });
-        if (id === "helyszin") {
-            const selectedCity = locations.find(location => location.nev === value);
-            if (selectedCity) {
-                setFilters(prevFilters => ({ ...prevFilters, megye: selectedCity.megye }));
-                document.getElementById("megye").value = selectedCity.megye;
-            }
-        }
+        switch (id) {
+            case "helyszin":
+                const selectedCity = locations.find(location => location.nev === value);
+                if (selectedCity) {
+                    setFilters(prevFilters => ({ ...prevFilters, megye: selectedCity.megye }));
+                    document.getElementById("megye").value = selectedCity.megye;}
+                break;
+            case "megye":
+                value === "Összes"? setFilteredLocations(locations) : setFilteredLocations(locations.filter(location => location.megye === value))
+                break;
+                case "rendezes":
+                    const orderBy = value.split('-')[0]
+                    if (value.split('-')[1] === "asc") {
+                        setProperties(prevProperties => {
+                            return [...prevProperties].sort((a, b) => a[orderBy] - b[orderBy])
+                        });
+                    } else if (value.split('-')[1] === "desc") {
+                        setProperties(prevProperties => {
+                            return [...prevProperties].sort((a, b) => b[orderBy] - a[orderBy])
+                        })
+                    }
+                    break;
+                
+                
+        };
     };
 
     const filteredProperties = properties.filter(property => {;
         return (
-            (filters.megye === "Összes" || property.helyszin === filters.megye) &&
+            (filters.megye === "Összes" || filteredLocations.some(location => location.nev === property.helyszin)) &&
             (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
-            (filters.szoba === "Mindegy" || ((property.szoba <= 3) ? (property.szoba === filters.szoba) : (filters.szoba === "Több mint 3"))) &&
+            (filters.szoba === "Mindegy" || ((property.szoba <= 5) ? (property.szoba == filters.szoba) : (filters.szoba === "Több mint 5"))) &&
             (!filters.wifiCb || property.szolgaltatasok.includes("Wi-Fi")) &&
             (!filters.petCb || property.szolgaltatasok.includes("kutya hozható")) &&
             (!filters.parkolasCb || property.szolgaltatasok.includes("parkolás")) &&
@@ -116,6 +133,7 @@ const Ingatlanok = () => {
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
     }, []);
+    
 
     return (
         <div>
@@ -144,8 +162,8 @@ const Ingatlanok = () => {
                         <label>Város</label>
                         <select id="helyszin" className="filterSelect" onChange={handleFilterChange}>
                             <option>Összes</option>
-                            {locations.map((location, index) => (
-                                <option key={index} value={location.nev}>{location.nev}</option>
+                            { filteredLocations.map((location, index) => (
+                                    <option key={index} value={location.nev}>{location.nev}</option>
                             ))}
                         </select>
                     </div>
@@ -156,14 +174,21 @@ const Ingatlanok = () => {
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
-                            <option>Több mint 3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>Több mint 5</option>
                         </select>
                     </div>
                     <div className="filterSelectContainer">
                         <label>Rendezés</label>
-                        <select id="rendezes" className="filterSelect">
-                            <option>Alapértelmezett</option>
-                            <option>valami</option>
+                        <select id="rendezes" className="filterSelect" onChange={handleFilterChange}>
+                            <option>Mindegy</option>
+                            <option value={"ar-asc"}>Ár szerint növekvő</option>
+                            <option value={"ar-desc"}>Ár szerint csökkenő</option>
+                            <option value={"meret-asc"}>Méret szerint növekvő</option>
+                            <option value={"meret-desc"}>Méret szerint csökkenő</option>
+                            <option value={"szoba-asc"}>Szobaszám szerint növekvő</option>
+                            <option value={"szoba-desc"}>Szobaszám szerint csökkenő</option>
                         </select>
                     </div>
                     <div className="showMoreFilter" id="showMoreFilter" onClick={toggleFilter}>
@@ -264,13 +289,24 @@ const Ingatlanok = () => {
                 {isPending ? (
                     <RiseLoader color='#e09900' loading={isPending} size={15} />
                 ) : error ? (
-                    <div className="errorMessage">Nem sikerült betölteni az adatokat</div>
-                ) : (
-                    <div className='kiemeltCards'>
-                        {filteredProperties.map((property) => (
-                            <PropertyCard key={property.id} property={property} />
-                        ))}
+                    <div className="errorMessage">
+                        Nem sikerült betölteni az adatokat
+                        <img src="img/errordog.gif" />
                     </div>
+                ) : (
+                    filteredProperties.length==0? (
+                        <div className="errorMessage">
+                            Nem található ilyen ingatlan
+                            <img src="img/errordog.gif" />
+                        </div>
+                        
+                    ) : (
+                        <div className='kiemeltCards'>
+                            {filteredProperties.map((property) => (
+                                <PropertyCard key={property.id} property={property} />
+                        ))}
+                    </div>)
+                    
                 )}
             </div>
 

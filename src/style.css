@@ -24,9 +24,11 @@ html, body {
 }
 
 .errorMessage{
-  color: red;
+  color: rgb(216, 177, 100);
   font-size: 1.5rem;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*#region Navigacio*/

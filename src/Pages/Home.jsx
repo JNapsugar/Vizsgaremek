@@ -33,7 +33,7 @@ const Home = () => {
                 <p className="cityCardDescription">{city.description}</p>
                 <button>{city.title}i ingatlanok megtekintése</button>
             </div>
-    </div>
+        </div>
     );
 
 
@@ -132,7 +132,7 @@ const Home = () => {
                 <CitySection />
                 )}
                 <img src="./img/city.png" className="cityImg" alt="city" />
-                {isFeaturedPending ? (<div className="loading"><RiseLoader color="#e09900" size={15}/></div>) : featuredError ? <p className="errorMessage">Hiba történt az ingatlanok betöltése során.</p> : (
+                {isFeaturedPending ? (<div className="loading"><RiseLoader color="#e09900" size={15}/></div>) : featuredError ? <p className="errorMessage">Hiba történt az ingatlanok betöltése során. <img src="img/errordog.gif" /></p> : (
                 <FeaturedSection />
                 )}
             </div>
