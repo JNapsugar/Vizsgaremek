@@ -1,19 +1,31 @@
-# Adatbázis Branch
-A Backend rendszerhez kapcsolódva az Adatbázis branch tartalmazza az összes adatkezelési struktúrát.
+# Dokumentáció Branch
+A Dokumentáció branch tartalmazza a fejlesztéssel kapcsolatos minden leírást, vizuális anyagot és egyéb segédleteket.
 
 ## Tartalma:
-### MySQL fáj:
+### UX/UI tervek:
 ##
-- SQL script az ingatlanokat, felhasználókat, foglalásokat és településeket tároló táblák definiáláséra.
-- Kapcsolatok kezelése.
-- Indexek és optimalizációk a gyors lekérdezésekhez.
-- Tesztadatok a fejlesztéshez.
-  
-### Adatbázis leírás:
+- Drótvázak. (Figma)
+- Design képek. (Figma)
+
+### Logikai térkép:
 ##
-- Tartalmazza az adatbázis tábláit, azok oszlopait, adattípusait és kapcsolatait.
-- Meghatározza a kulcsokat.
-  
-### Adatbázisterv séma:
+- A rendszer architektúráját bemutató diagramok.
+
+### In progress dokumentumok:
 ##
-- Az adatmodell vizuális ábrázolása.
+- Fejlesztési jegyzetek.
+- Feladatkiosztások.
+- Sprinttervek.
+
+### Felhasználói dokumentáció:
+##
+- A használt programok és technológiák ismertetése.
+- Az alkalmazás használatát bemutató részletes kézikönyv végfelhasználóknak.
+
+### Prezentáció:
+##
+- A projekt célját és működését bemutató prezentáció (PowerPoint).
+
+### Képernyőképek:
+##
+- platform különböző részeiről készült screenshotok.
