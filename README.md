@@ -27,14 +27,11 @@ A Frontend branch a platform felhasználói felületét (UI) tartalmazza, amely 
 - React komponensek: Az ingatlanok megjelenítéséhez és kereséséhez szükséges komponensek.
 - CSS és styling: Az alkalmazás stílusai, reszponzív dizájn és vizuális elemek.
 - Képek és média: A platformhoz szükséges képek, ikonok és egyéb vizuális tartalmak.
-- Felhasználói fiók kezelése: A regisztrációs és bejelentkezési folyamatok, valamint a felhasználói fiók kezeléséhez szükséges felületek.
 
 ### 2. Backend
 A Backend branch a web API-t tartalmazza, amely az ingatlanbérlési platform működését biztosítja. Ezen a branch-en található:
 ##
 - API fejlesztés: Az ingatlanok, felhasználók, bérlési tranzakciók kezeléséhez szükséges RESTful API.
-- Node.js és Express.js: A backend szerveroldali kódok.
-- Szolgáltatások: Az ingatlanok adatainak kezelése, kapcsolatok, keresési lehetőségek, stb.
 - Felhasználói fiók kezelése: A regisztráció, bejelentkezés, fiók adatok kezelése, valamint a jelszóváltoztatás és fiók biztonság kezelése.
 
 ### 3. Adatbázis
