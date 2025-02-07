@@ -9,11 +9,11 @@ import { RiseLoader } from 'react-spinners';
 const Ingatlanok = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const images = [
-        "img/header1.jpg",
-        "img/header2.jpg",
-        "img/header3.jpg",
-        "img/header4.jpg",
-        "img/header5.jpg"
+        "img/headers/header1.jpg",
+        "img/headers/header2.jpg",
+        "img/headers/header3.jpg",
+        "img/headers/header4.jpg",
+        "img/headers/header5.jpg"
     ];
 
     useEffect(() => {

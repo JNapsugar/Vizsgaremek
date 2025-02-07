@@ -9,11 +9,11 @@ import PropertyCard from "../Components/PropertyCard";
 const Home = () => {
 
     const images = [
-        "./img/header1.jpg",
-        "./img/header2.jpg",
-        "./img/header3.jpg",
-        "./img/header4.jpg",
-        "./img/header5.jpg"
+        "./img/headers/header1.jpg",
+        "./img/headers/header2.jpg",
+        "./img/headers/header3.jpg",
+        "./img/headersheader4.jpg",
+        "./img/headers/header5.jpg"
     ];
     
     const [activeIndex, setActiveIndex] = useState(0);
@@ -27,16 +27,16 @@ const Home = () => {
     
     const CityCard = ({ city }) => (
         <div className="cityCard">
-            <img src={city.image} alt={city.title} loading="lazy"/>
+            <img src={city.kep} alt={city.nev} loading="lazy"/>
             <div className="cityCardContent">
-                <p className="cityCardTitle">{city.title}</p>
-                <p className="cityCardDescription">{city.description}</p>
-                <button>{city.title}i ingatlanok megtekintése</button>
+                <p className="cityCardTitle">{city.nev}</p>
+                <p className="cityCardDescription">{city.leiras}</p>
+                <button>{city.nev}i ingatlanok megtekintése</button>
             </div>
         </div>
     );
 
-
+    const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"]
     const CitySection = () => (
         <section className="citySection">
             <h2 className="sectionTitle">Népszerű városok</h2>
@@ -63,13 +63,16 @@ const Home = () => {
     const fetchCities = () => {
         setCityPending(true);
         setTimeout(() => {
-            axios.get('/data/cities.json')
-        .then(res => setCities(res.data))
-        .catch(error => {
-            setCityError(true);
-            console.error("Hiba a betöltés során: ", error)
+            axios.get('https://localhost:7079/api/Telepules/telepulesek')
+            .then(res => {
+                const popularCities = res.data.filter(city => popularCityNames.includes(city.nev));
+                setCities(popularCities);
+            })
+            .catch(error => {
+                setCityError(true);
+                console.error("Hiba a betöltés során: ", error)
         })
-        .finally(() => setCityPending(false));
+            .finally(() => setCityPending(false));
         }, 2000);
         
     }
@@ -77,8 +80,13 @@ const Home = () => {
     const fetchFeatured = () => {
         setFeaturedPending(true);
         setTimeout(() => {
-        axios.get('/data/featured.json')
-        .then(res => setFeatured(res.data))
+        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+        .then(res => {
+            const randomProperties = res.data.sort(() => Math.random() - 0.5);
+            const featuredProperties = randomProperties.slice(0, 9);
+            setFeatured(featuredProperties);
+        })
+
         .catch(error => {
             setFeaturedError(true);
             console.error("Hiba a betöltés során: ", error)

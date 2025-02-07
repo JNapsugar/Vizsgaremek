@@ -256,6 +256,7 @@ html, body {
   font-family: "Poiret One", sans-serif;
   font-weight: 1000;
   font-size: large;
+  cursor: pointer;
 }
 
 /*#endregion Főoldal*/

@@ -83,11 +83,11 @@ const Profil = () => {
             <Navbar/>
             <header className="smallHeader">
                 <div className="headerImages">
-                    <img src="img/header1.jpg" className="headerImage active" alt="header" />
-                    <img src="img/header2.jpg" className="headerImage" alt="header" />
-                    <img src="img/header3.jpg" className="headerImage" alt="header" />
-                    <img src="img/header4.jpg" className="headerImage" alt="header" />
-                    <img src="img/header5.jpg" className="headerImage" alt="header" />
+                    <img src="img/headers/header1.jpg" className="headerImage active" alt="header" />
+                    <img src="img/headers/header2.jpg" className="headerImage" alt="header" />
+                    <img src="img/headers/header3.jpg" className="headerImage" alt="header" />
+                    <img src="img/headers/header4.jpg" className="headerImage" alt="header" />
+                    <img src="img/headers/header5.jpg" className="headerImage" alt="header" />
                 </div>
                 <h1 className="smallHeaderTitle" id="profileHeaderTitle">Saját profil</h1>
             </header>
