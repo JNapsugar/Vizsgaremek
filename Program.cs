@@ -1,6 +1,7 @@
 using IngatlanokBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MySqlX.XDevAPI;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -94,3 +95,6 @@ namespace IngatlanokBackend
         }
     }
 }
+
+
+//Scaffold-DbContext "SERVER=localhost;PORT=3306;DATABASE=farm;USER=root;PASSWORD=;SSL MODE=none;" mysql.entityframeworkcore -outputdir Models -f
