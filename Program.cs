@@ -97,4 +97,4 @@ namespace IngatlanokBackend
 }
 
 
-//Scaffold-DbContext "SERVER=localhost;PORT=3306;DATABASE=farm;USER=root;PASSWORD=;SSL MODE=none;" mysql.entityframeworkcore -outputdir Models -f
+//Scaffold-DbContext "SERVER=localhost;PORT=3306;DATABASE=ingatlanberlesiplatform;USER=root;PASSWORD=;SSL MODE=none;" mysql.entityframeworkcore -outputdir Models -f
