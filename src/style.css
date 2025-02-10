@@ -403,7 +403,7 @@ footer{
     background-color:#ffffff64;
     border: 1px solid black solid;
     border-radius: 0.4rem;
-    color: inherit;
+    color: black;
     height: 2rem;
     width: 20rem;
     margin-top: 1rem;
@@ -822,10 +822,10 @@ footer{
   }
 }
 
-.propertyPlaceholder{
+.propertyImage{
   margin: 2rem;
   border-radius: 2rem;
-  width: 50%;
+  width: 35%;
 }
 
 .mainDetails{

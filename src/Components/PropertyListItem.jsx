@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function PropertyListItem({key, property}) {
+export default function PropertyListItem({key, property, propertyImg}) {
     const services = property.szolgaltatasok ? property.szolgaltatasok.split(', ') : [];
     const displayedServices = services.length > 4 ? services.slice(0, 4) : services;
 
     return (
         <div key={key} className="propertyListItem">
-            {property.kep ? (
-                <img src={property.kep} alt={property.cim} loading="lazy" />
+            {propertyImg ? (
+                <img src={propertyImg.kepUrl} alt={property.cim} loading="lazy" />
             ) : (
                 <img src="img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
             )}
             <div className='Details'>
                 <h2>{property.cim}</h2>
                 <hr />
-                <p>{property.meret}m²</p>
-                <p>{property.szoba} szoba</p>
+                <p>{property.ar} Ft/hónap</p>
+                <p>{property.meret}m² {property.szoba} szoba</p>
                 <p className="listServices">
                 {displayedServices.map((service, index) => {
                     let iconSrc;

@@ -8,7 +8,9 @@ import PropertyCard from '../Components/PropertyCard';
 const App = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [property, setProperty] = useState({});
+    const [propertyImage, setPropertyImage] = useState({});
     const [properties, setProperties] = useState([]);
+    const [propertyImages, setPropertyImages] = useState([]);
 
     const images = [
         "/img/headers/header1.jpg",
@@ -27,14 +29,26 @@ const App = () => {
     }, [ingatlanId]);
 
     useEffect(() => {
+        axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek/${ingatlanId}`)
+            .then(res => setPropertyImage(res.data))
+            .catch(error => { console.error(error); })
+    }, [ingatlanId]);
+
+    useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
             .then(res => {
                 const randomProperties = res.data.sort(() => Math.random() - 0.5);
                 const otherProperties = randomProperties.slice(0, 3);
-                setProperties(otherProperties); })
+                setProperties(otherProperties);
+            })
             .catch(error => console.log(error));
-    }, []);
+    }, [ingatlanId]);
 
+    useEffect(() => {
+        axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
+            .then(res => setPropertyImages(res.data))
+            .catch(error => { console.error(error); })
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -56,7 +70,7 @@ const App = () => {
             </header>
 
             <div className="propertyMainContent">
-                <img src="/img/placeholder.jpg" alt="Placeholder" loading="lazy" className='propertyPlaceholder' />
+                <img src={propertyImage.kepUrl} alt={property.helyszin} loading="lazy" className='propertyImage' />
                 <div className="mainDetails">
                     <p className="propertyTitle">{property.helyszin}</p>
                     <p className="propertyLocation">{property.cim}</p>
@@ -131,9 +145,10 @@ const App = () => {
             <p className="moreRecsTitle">További ajánlatok</p>
 
             <div className="moreRecs">
-                {properties.map((property, index) => (
-                    <PropertyCard key={index} property={property} />
-                ))}
+                {properties.map((property, index) => {
+                    let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                    return <PropertyCard key={index} property={property} propertyImg={propertyImg}/>;
+                })}
             </div>
 
             <img src="/img/city2.png" className="footerImg" alt="City View" />

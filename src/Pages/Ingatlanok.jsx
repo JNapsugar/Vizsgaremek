@@ -5,6 +5,7 @@ import Navbar from '../Components/Navbar';
 import PropertyCard from '../Components/PropertyCard';
 import PropertyListItem from '../Components/PropertyListItem';
 import { RiseLoader } from 'react-spinners';
+import { useParams, useLocation } from 'react-router-dom';
 
 const Ingatlanok = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -23,19 +24,24 @@ const Ingatlanok = () => {
         return () => clearInterval(interval);
     }, [images.length]);
 
+    
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
     const [locations, setLocations] = useState([]);
     const [filteredLocations, setFilteredLocations] = useState([]);
     const [isPending, setPending] = useState(false);
     const [error, setError] = useState(false);
+    const location = useLocation();
+    const cityName = location.state?.cityName //|| "Összes";
+    //const cityName = useParams();
+    console.log(cityName);
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
     const [filters, setFilters] = useState({
         megye: "Összes",
-        helyszin: "Összes",
+        helyszin: cityName,
         szoba: "Mindegy",
         rendezes: "Mindegy",
-        nezet: "grid",
+        nezet: "list",
         wifiCb: false,
         petCb: false,
         parkolasCb: false,
@@ -137,7 +143,7 @@ const Ingatlanok = () => {
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
     }, []);
-/*
+
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
@@ -145,7 +151,7 @@ const Ingatlanok = () => {
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
     }, []);
-*/ 
+
     const Checkbox = ({ id, label}) => {
         return (
             <div className='checkboxContainer'>
@@ -257,16 +263,19 @@ const Ingatlanok = () => {
                     filteredProperties.length===0? (
                         <div className="errorMessage">
                             Nem található ilyen ingatlan
-                            <img src="img/errordog.gif" alt="error"/>
+                            <img src="img/errordog.gif" alt="hiba"/>
                         </div>
                         
                     ) : (
                         <div className='cardContainer'>
-                            {filteredProperties.map((property) => (
-                                filters.nezet === "grid"? 
-                                <PropertyCard key={property.id} property={property} /> :
-                                <PropertyListItem key={property.id} property={property} />
-                        ))}
+                            {filteredProperties.map((property) => {
+                                let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                                return filters.nezet === "grid" ? (
+                                    <PropertyCard key={property.IngatlanId} property={property} propertyImg={propertyImg}/>
+                                ) : (
+                                    <PropertyListItem key={property.IngatlanId} property={property} propertyImg={propertyImg} />
+                                );
+                        })}
                         </div>
                         )
                 )}

@@ -24,32 +24,11 @@ const Home = () => {
         }, 3000);
         return () => clearInterval(interval);
     },[images.length]);
-    
-    const CityCard = ({ city }) => (
-        <div className="cityCard">
-            <img src={city.kep} alt={city.nev} loading="lazy"/>
-            <div className="cityCardContent">
-                <p className="cityCardTitle">{city.nev}</p>
-                <p className="cityCardDescription">{city.leiras}</p>
-                <button>{city.nev}i ingatlanok megtekintése</button>
-            </div>
-        </div>
-    );
 
-    const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"]
-    const CitySection = () => (
-        <section className="citySection">
-            <h2 className="sectionTitle">Népszerű városok</h2>
-            <div className="cityCards">
-                {cities.map((city, index) => (
-                    <CityCard key={index} city={city}/>
-                ))}
-            </div>
-        </section>
-    );
-    
+
     const [cities,setCities] = useState([]);
     const [featured,setFeatured] = useState([]);
+    const [propertyImages, setPropertyImages] = useState([]);
     const [isCityPending, setCityPending] = useState(false);
     const [isFeaturedPending, setFeaturedPending] = useState(false);
     const [cityError, setCityError] = useState(false);
@@ -62,7 +41,6 @@ const Home = () => {
 
     const fetchCities = () => {
         setCityPending(true);
-        setTimeout(() => {
             axios.get('https://localhost:7079/api/Telepules/telepulesek')
             .then(res => {
                 const popularCities = res.data.filter(city => popularCityNames.includes(city.nev));
@@ -73,13 +51,10 @@ const Home = () => {
                 console.error("Hiba a betöltés során: ", error)
         })
             .finally(() => setCityPending(false));
-        }, 2000);
-        
     }
 
     const fetchFeatured = () => {
         setFeaturedPending(true);
-        setTimeout(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
         .then(res => {
             const randomProperties = res.data.sort(() => Math.random() - 0.5);
@@ -92,18 +67,53 @@ const Home = () => {
             console.error("Hiba a betöltés során: ", error)
         })
         .finally(() => setFeaturedPending(false));
-        }, 2000);
     }
+
+    useEffect(() => {
+        axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
+            .then(res => setPropertyImages(res.data))
+            .catch(error => { console.error(error); })
+    }, []);
+    
+    const CityCard = ({ city }) => (
+        <div className="cityCard">
+            <img src={city.kep} alt={city.nev} loading="lazy"/>
+            <div className="cityCardContent">
+                <p className="cityCardTitle">{city.nev}</p>
+                <p className="cityCardDescription">{city.leiras}</p>
+                <Link 
+                    to={{ pathname: "/ingatlanok", state: { cityName: city.nev } }} 
+                    onClick={() => window.scrollTo({ top: 0 })}>
+                    <button>{city.nev}i ingatlanok megtekintése</button>
+                </Link>
+            </div>
+        </div>
+        
+    );    
+    const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"]
+    const CitySection = () => (
+        <section className="citySection">
+            <h2 className="sectionTitle">Népszerű városok</h2>
+            <div className="cityCards">
+                {cities.map((city, index) => (
+                    <CityCard key={index} city={city}/>
+                ))}
+            </div>
+        </section>
+    );
     
     const FeaturedSection = () => (
         <section className="kiemeltSection">
             <h2 className="sectionTitle">Kiemelt ingatlanok</h2>
             <div className="kiemeltCards">
-                {featured.map((property, index) => (
-                    <PropertyCard key={index} property={property}/>
-                ))}
+                {featured.map((property, index) => {
+                    let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                    return <PropertyCard key={index} property={property} propertyImg={propertyImg}/>
+                })}
             </div>
-            <button className="moreBtn">További ingatlanok</button>
+            <Link to="/ingatlanok" className="headerBtnLink"><button className="moreBtn">
+                További ingatlanok
+            </button></Link>
             <img src="./img/city2.png" className="footerImg" alt="footer" />
         </section>
     );
