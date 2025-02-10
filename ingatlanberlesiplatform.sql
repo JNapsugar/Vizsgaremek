@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 10. 09:42
+-- Létrehozás ideje: 2025. Feb 10. 10:16
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.0.30
 
@@ -2752,7 +2752,7 @@ INSERT INTO `telepulesek` (`nev`, `megye`, `leiras`, `kep`) VALUES
 ('Pázmándfalu', 'Győr-Moson-Sopron', NULL, NULL),
 ('Pécel', 'Pest', NULL, NULL),
 ('Pecöl', 'Vas', NULL, NULL),
-('Pécs', 'Baranya', 'Pécs, a mediterrán hangulatú város, remek választás a bérlők számára, akik szeretnék élvezni a történelem és a modern művészetek keveredését. A város sokszínű ingatlankínálata minden igényt kielégít.', 'http://images.ingatlanok.nhely.hu/http://images.ingatlanok.nhely.hu/Pecs.jpg'),
+('Pécs', 'Baranya', 'Pécs, a mediterrán hangulatú város, remek választás a bérlők számára, akik szeretnék élvezni a történelem és a modern művészetek keveredését. A város sokszínű ingatlankínálata minden igényt kielégít.', 'http://images.ingatlanok.nhely.hu/Pecs.jpg'),
 ('Pécsbagota', 'Baranya', NULL, NULL),
 ('Pécsdevecser', 'Baranya', NULL, NULL),
 ('Pécsely', 'Veszprém', NULL, NULL),
@@ -3159,9 +3159,9 @@ INSERT INTO `telepulesek` (`nev`, `megye`, `leiras`, `kep`) VALUES
 ('Szaporca', 'Baranya', NULL, NULL),
 ('Szár', 'Fejér', NULL, NULL),
 ('Szárász', 'Baranya', NULL, NULL),
-('Szárazd', 'Tolna', NULL, NULL);
+('Szárazd', 'Tolna', NULL, NULL),
+('Szárföld', 'Győr-Moson-Sopron', NULL, NULL);
 INSERT INTO `telepulesek` (`nev`, `megye`, `leiras`, `kep`) VALUES
-('Szárföld', 'Győr-Moson-Sopron', NULL, NULL),
 ('Szárliget', 'Komárom-Esztergom', NULL, NULL),
 ('Szarvas', 'Békés', NULL, NULL),
 ('Szarvasgede', 'Nógrád', NULL, NULL),
