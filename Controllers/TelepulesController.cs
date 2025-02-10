@@ -56,8 +56,5 @@ namespace IngatlanokBackend.Controllers
                 }
             }
         }
-
-
-
     }
 }
