@@ -24,6 +24,7 @@ const Ingatlanok = () => {
     }, [images.length]);
 
     const [properties, setProperties] = useState([]);
+    const [propertyImages, setPropertyImages] = useState([]);
     const [locations, setLocations] = useState([]);
     const [filteredLocations, setFilteredLocations] = useState([]);
     const [isPending, setPending] = useState(false);
@@ -105,7 +106,7 @@ const Ingatlanok = () => {
         return (
             (filters.megye === "Összes" || filteredLocations.some(location => location.nev === property.helyszin)) &&
             (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
-            (filters.szoba === "Mindegy" || ((property.szoba <= 5) ? (property.szoba == filters.szoba) : (filters.szoba === "Több mint 5"))) &&
+            (filters.szoba === "Mindegy" || ((property.szoba <= 5) ? (property.szoba === filters.szoba) : (filters.szoba === "Több mint 5"))) &&
             (!filters.wifiCb || property.szolgaltatasok.includes("Wi-Fi")) &&
             (!filters.petCb || property.szolgaltatasok.includes("kutya hozható")) &&
             (!filters.parkolasCb || property.szolgaltatasok.includes("parkolás")) &&
@@ -136,7 +137,15 @@ const Ingatlanok = () => {
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
     }, []);
-    
+/*
+    useEffect(() => {
+        setPending(true);
+        axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
+            .then(res => setPropertyImages(res.data))
+            .catch(error => { console.error(error); setError(true); })
+            .finally(() => setPending(false));
+    }, []);
+*/ 
     const Checkbox = ({ id, label}) => {
         return (
             <div className='checkboxContainer'>
@@ -242,13 +251,13 @@ const Ingatlanok = () => {
                 ) : error ? (
                     <div className="errorMessage">
                         Nem sikerült betölteni az adatokat
-                        <img src="img/errordog.gif" />
+                        <img src="img/errordog.gif" alt="hiba"/>
                     </div>
                 ) : (
-                    filteredProperties.length==0? (
+                    filteredProperties.length===0? (
                         <div className="errorMessage">
                             Nem található ilyen ingatlan
-                            <img src="img/errordog.gif" />
+                            <img src="img/errordog.gif" alt="error"/>
                         </div>
                         
                     ) : (

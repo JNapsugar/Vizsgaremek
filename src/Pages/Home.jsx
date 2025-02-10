@@ -23,7 +23,7 @@ const Home = () => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
         }, 3000);
         return () => clearInterval(interval);
-    },[]);
+    },[images.length]);
     
     const CityCard = ({ city }) => (
         <div className="cityCard">
@@ -99,8 +99,8 @@ const Home = () => {
         <section className="kiemeltSection">
             <h2 className="sectionTitle">Kiemelt ingatlanok</h2>
             <div className="kiemeltCards">
-                {featured.map((property) => (
-                    <PropertyCard key={property.id} property={property}/>
+                {featured.map((property, index) => (
+                    <PropertyCard key={index} property={property}/>
                 ))}
             </div>
             <button className="moreBtn">További ingatlanok</button>
@@ -140,7 +140,7 @@ const Home = () => {
                 <CitySection />
                 )}
                 <img src="./img/city.png" className="cityImg" alt="city" />
-                {isFeaturedPending ? (<div className="loading"><RiseLoader color="#e09900" size={15}/></div>) : featuredError ? <p className="errorMessage">Hiba történt az ingatlanok betöltése során. <img src="img/errordog.gif" /></p> : (
+                {isFeaturedPending ? (<div className="loading"><RiseLoader color="#e09900" size={15}/></div>) : featuredError ? <p className="errorMessage">Hiba történt az ingatlanok betöltése során. <img src="img/errordog.gif" alt="hiba" /></p> : (
                 <FeaturedSection />
                 )}
             </div>

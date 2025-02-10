@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function PropertyCard({key, property}) {
+export default function PropertyCard({index, property}) {
     const services = property.szolgaltatasok ? property.szolgaltatasok.split(', ') : [];
     const displayedServices = services.length > 5 ? services.slice(0, 5) : services;
     return (
-        <div key={key} className="card">
+        <div key={index} className="card">
             {property.kep ? (
                 <img src={property.kep} alt={property.cim} loading="lazy" />
             ) : (
