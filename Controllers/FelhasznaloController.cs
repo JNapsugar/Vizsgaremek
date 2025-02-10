@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Win32;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -23,7 +25,6 @@ namespace IngatlanokBackend.Controllers
             _configuration = configuration;
             _context = context;
         }
-
         private async Task<string> GenerateJwtTokenAsync(Felhasznalok user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -49,6 +50,62 @@ namespace IngatlanokBackend.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token); 
         }
+        [HttpGet("allUsers")]
+        public async Task<IActionResult> Get()
+        {
+            using (var cx = new IngatlanberlesiplatformContext())
+            {
+                try
+                {
+                    return Ok(await cx.Felhasznaloks.ToListAsync());
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+        }
+        [HttpGet("me/{loginNev}")]
+        public async Task<IActionResult> GetCurrentUser(string loginNev)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(loginNev))
+                {
+                    return BadRequest("A felhasználónév nem lehet üres.");
+                }
+
+                var user = await _context.Felhasznaloks
+                    .Where(u => u.LoginNev == loginNev)
+                    .Select(u => new GetCurrentUserDTO
+                    {
+                        Id = u.Id,
+                        LoginNev = u.LoginNev,
+                        Name = u.Name,
+                        PermissionId = u.PermissionId,
+                        Active = u.Active,
+                        Email = u.Email,
+                        ProfilePicturePath = u.ProfilePicturePath
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (user == null)
+                {
+                    return NotFound("Felhasználó nem található.");
+                }
+
+                if (!user.Active)
+                {
+                    return Unauthorized("A felhasználó inaktív.");
+                }
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Hiba történt az adatok lekérése során: {ex.Message}");
+            }
+        }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
@@ -72,7 +129,6 @@ namespace IngatlanokBackend.Controllers
                     return Unauthorized(new { Message = "Hibás felhasználónév vagy jelszó." });
                 }
 
-                // Frissítjük az Active mezőt
                 loginUser.Active = true;
                 _context.Felhasznaloks.Update(loginUser);
                 await _context.SaveChangesAsync();
@@ -132,13 +188,28 @@ namespace IngatlanokBackend.Controllers
                     return BadRequest("A felhasználónév vagy e-mail már foglalt!");
                 }
 
-                if (!await _context.Jogosultsagoks.AnyAsync(p => p.JogosultsagId == 1))
+                int permissionId = registrationDTO.PermissionId;
+
+                if (permissionId < 1 || permissionId > 3)   
                 {
-                    return BadRequest("Alapértelmezett jogosultság nincs az adatbázisban.");
+                    return BadRequest("Érvénytelen jogosultság ID. Csak 1, 2 vagy 3 engedélyezett.");
+                }
+
+                if (permissionId < 1 || permissionId > 3)
+                {
+                    return BadRequest("A jogosultság ID-nak 1, 2 vagy 3-nak kell lennie.");
+                }
+
+                if (!await _context.Jogosultsagoks.AnyAsync(p => p.JogosultsagId == permissionId))
+                {
+                    return BadRequest($"A megadott jogosultság ({permissionId}) nincs az adatbázisban.");
                 }
 
                 string salt = Program.GenerateSalt();
+                byte[] saltBytes = Encoding.UTF8.GetBytes(salt); 
                 string hash = Program.CreateSHA256(registrationDTO.Password, salt);
+
+
                 var newUser = new Felhasznalok
                 {
                     LoginNev = registrationDTO.LoginName,
@@ -147,7 +218,7 @@ namespace IngatlanokBackend.Controllers
                     Salt = salt,
                     Hash = hash,
                     Active = true,
-                    PermissionId = 1,
+                    PermissionId = permissionId,
                 };
 
                 _context.Felhasznaloks.Add(newUser);
@@ -157,91 +228,7 @@ namespace IngatlanokBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Ismeretlen hiba: {ex.Message}");
-            }
-        }
-
-        [HttpPut("{loginNev}")]
-        public async Task<IActionResult> UpdateUser(string loginNev, [FromBody] UpdateUserDTO updatedUserData)
-        {
-            try
-            {
-                var user = await _context.Felhasznaloks.FirstOrDefaultAsync(u => u.LoginNev == loginNev);
-                if (user == null)
-                {
-                    return NotFound("A megadott felhasználónév nem található.");
-                }
-
-                if (!string.IsNullOrEmpty(updatedUserData.Name))
-                {
-                    user.Name = updatedUserData.Name;
-                }
-
-                if (!string.IsNullOrEmpty(updatedUserData.Email))
-                {
-                    user.Email = updatedUserData.Email;
-                }
-
-                if (updatedUserData.PermissionId.HasValue)
-                {
-                    user.PermissionId = updatedUserData.PermissionId.Value;
-                }
-
-                if (!string.IsNullOrEmpty(updatedUserData.ProfilePicturePath))
-                {
-                    user.ProfilePicturePath = updatedUserData.ProfilePicturePath;
-                }
-
-                _context.Felhasznaloks.Update(user);
-                await _context.SaveChangesAsync();
-
-                return Ok("A felhasználói adatok sikeresen frissítve.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Hiba történt a felhasználói adatok frissítése során: {ex.Message}");
-            }
-        }
-
-        [HttpGet("me/{loginNev}")]
-        public async Task<IActionResult> GetCurrentUser(string loginNev)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(loginNev))
-                {
-                    return BadRequest("A felhasználónév nem lehet üres.");
-                }
-
-                var user = await _context.Felhasznaloks
-                    .Where(u => u.LoginNev == loginNev)
-                    .Select(u => new GetCurrentUserDTO
-                    {
-                        Id = u.Id,
-                        LoginNev = u.LoginNev,
-                        Name = u.Name,
-                        PermissionId = u.PermissionId,
-                        Active = u.Active,
-                        Email = u.Email,
-                        ProfilePicturePath = u.ProfilePicturePath
-                    })
-                    .FirstOrDefaultAsync();
-
-                if (user == null)
-                {
-                    return NotFound("Felhasználó nem található.");
-                }
-
-                if (!user.Active)
-                {
-                    return Unauthorized("A felhasználó inaktív.");
-                }
-
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Hiba történt az adatok lekérése során: {ex.Message}");
+                return StatusCode(500, $"Hiba történt: {ex.Message}. További részletek: {ex.StackTrace}");
             }
         }
 
@@ -302,6 +289,48 @@ namespace IngatlanokBackend.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Hiba történt: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{loginNev}")]
+        public async Task<IActionResult> UpdateUser(string loginNev, [FromBody] UpdateUserDTO updatedUserData)
+        {
+            try
+            {
+                var user = await _context.Felhasznaloks.FirstOrDefaultAsync(u => u.LoginNev == loginNev);
+                if (user == null)
+                {
+                    return NotFound("A megadott felhasználónév nem található.");
+                }
+
+                if (!string.IsNullOrEmpty(updatedUserData.Name))
+                {
+                    user.Name = updatedUserData.Name;
+                }
+
+                if (!string.IsNullOrEmpty(updatedUserData.Email))
+                {
+                    user.Email = updatedUserData.Email;
+                }
+
+                if (updatedUserData.PermissionId.HasValue)
+                {
+                    user.PermissionId = updatedUserData.PermissionId.Value;
+                }
+
+                if (!string.IsNullOrEmpty(updatedUserData.ProfilePicturePath))
+                {
+                    user.ProfilePicturePath = updatedUserData.ProfilePicturePath;
+                }
+
+                _context.Felhasznaloks.Update(user);
+                await _context.SaveChangesAsync();
+
+                return Ok("A felhasználói adatok sikeresen frissítve.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Hiba történt a felhasználói adatok frissítése során: {ex.Message}");
             }
         }
 
