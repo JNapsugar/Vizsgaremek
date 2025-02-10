@@ -3,99 +3,125 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../style.css';
 
-
 const RegistrationForm = () => {
-const [formData, setFormData] = useState({
-    name: "",
-    loginName: "",
-    email: "",
-    password: "",
-});
+    const [formData, setFormData] = useState({
+        name: "",
+        loginName: "",
+        email: "",
+        password: "",
+        role: "berlo", 
+    });
 
-const [responseMessage, setResponseMessage] = useState("");
-const navigate = useNavigate();
-const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-    }));
-};
+    const [responseMessage, setResponseMessage] = useState("");
+    const navigate = useNavigate();
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-    try {
-        const response = await axios.post("https://localhost:7079/api/Felhasznalo/Register", formData); 
-        
-        setResponseMessage(response.data); 
-    if (response.status === 200) {
-        alert('Sikeres regisztráció!'); 
-        navigate('/profil')
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("https://localhost:7079/api/Felhasznalo/Register", formData);
+
+            if (response.status === 200) {
+                const { token, username } = response.data; 
+
+                localStorage.setItem("token", token);
+                localStorage.setItem("username", username);
+
+                navigate('/profil');
+            }
+        } catch (error) {
+            if (error.response) {
+                setResponseMessage(error.response.data);
+            } else {
+                setResponseMessage("Hiba történt a regisztráció során.");
+            }
         }
-    } catch (error) {
-        if (error.response) {
-        setResponseMessage(error.response.data); 
-    } else {
-        setResponseMessage("Hiba történt a regisztráció során.");
-    }
-    }
-};
+    };
 
     return (
-    <div className='Login'>
-        <div className='wrapper'>
-        <h2 className='registerh2'>Regisztráció</h2>  
-    <form onSubmit={handleSubmit}>
-        <div className='input-box'>
-            <input
-            placeholder='Név' 
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            />
+        <div className='Login'>
+            <div className='wrapper'>
+                <h2 className='registerh2'>Regisztráció</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className='input-box'>
+                        <input
+                            placeholder='Név'
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-box">
+                        <input
+                            placeholder='Felhasználónév'
+                            type="text"
+                            id="loginName"
+                            name="loginName"
+                            value={formData.loginName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-box">
+                        <input
+                            placeholder='Email'
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-box">
+                        <input
+                            placeholder='Jelszó'
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="radio-group">
+                        <label>
+                            <input
+                                type="radio"
+                                name="role"
+                                value="berlo"
+                                checked={formData.role === "berlo"}
+                                onChange={handleChange}
+                            />
+                            Bérlő
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="role"
+                                value="kiado"
+                                checked={formData.role === "kiado"}
+                                onChange={handleChange}
+                            />
+                            Kiadó
+                        </label>
+                    </div>
+                    <button type="submit" className='btn'>Regisztráció</button>
+                </form>
+                {responseMessage && <p>{responseMessage}</p>}
+            </div>
         </div>
-        <div className="input-box">
-            <input
-            placeholder='Felhasználónév'
-            type="text"
-            id="loginName"
-            name="loginName"
-            value={formData.loginName}
-            onChange={handleChange}
-            required
-            />
-        </div>
-        <div className="input-box">
-            <input
-            placeholder='Email'
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            />
-        </div>
-        <div className="input-box">
-            <input
-            placeholder='Jelszó'
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            />
-        </div>
-        <button type="submit" className='btn'>Regisztráció</button>
-    </form>
-        {responseMessage && <p>{responseMessage}</p>}
-    </div>
-    </div>
     );
 };
 

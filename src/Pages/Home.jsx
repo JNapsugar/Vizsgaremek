@@ -12,7 +12,7 @@ const Home = () => {
         "./img/headers/header1.jpg",
         "./img/headers/header2.jpg",
         "./img/headers/header3.jpg",
-        "./img/headersheader4.jpg",
+        "./img/headers/header4.jpg",
         "./img/headers/header5.jpg"
     ];
     
