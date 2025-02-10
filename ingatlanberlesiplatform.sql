@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 10. 09:30
+-- Létrehozás ideje: 2025. Feb 10. 09:42
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.0.30
 
@@ -2752,7 +2752,7 @@ INSERT INTO `telepulesek` (`nev`, `megye`, `leiras`, `kep`) VALUES
 ('Pázmándfalu', 'Győr-Moson-Sopron', NULL, NULL),
 ('Pécel', 'Pest', NULL, NULL),
 ('Pecöl', 'Vas', NULL, NULL),
-('Pécs', 'Baranya', 'Pécs, a mediterrán hangulatú város, remek választás a bérlők számára, akik szeretnék élvezni a történelem és a modern művészetek keveredését. A város sokszínű ingatlankínálata minden igényt kielégít.', 'http://images.ingatlanok.nhely.hu/http://images.ingatlanok.nhely.hu/P%c3%a9cs.jpg'),
+('Pécs', 'Baranya', 'Pécs, a mediterrán hangulatú város, remek választás a bérlők számára, akik szeretnék élvezni a történelem és a modern művészetek keveredését. A város sokszínű ingatlankínálata minden igényt kielégít.', 'http://images.ingatlanok.nhely.hu/http://images.ingatlanok.nhely.hu/Pecs.jpg'),
 ('Pécsbagota', 'Baranya', NULL, NULL),
 ('Pécsdevecser', 'Baranya', NULL, NULL),
 ('Pécsely', 'Veszprém', NULL, NULL),
@@ -3034,7 +3034,7 @@ INSERT INTO `telepulesek` (`nev`, `megye`, `leiras`, `kep`) VALUES
 ('Simonfa', 'Somogy', NULL, NULL),
 ('Simontornya', 'Tolna', NULL, NULL),
 ('Sióagárd', 'Tolna', NULL, NULL),
-('Siófok', 'Somogy', 'Siófok, a Balaton partján fekvő város, ideális hely a vízparti ingatlanok szerelmeseinek. A nyári szezonban a Balaton közelsége és a szórakozási lehetőségek vonzó választássá teszik a bérlést.', 'http://images.ingatlanok.nhely.hu/Si%c3%b3fok.jpg'),
+('Siófok', 'Somogy', 'Siófok, a Balaton partján fekvő város, ideális hely a vízparti ingatlanok szerelmeseinek. A nyári szezonban a Balaton közelsége és a szórakozási lehetőségek vonzó választássá teszik a bérlést.', 'http://images.ingatlanok.nhely.hu/Siofok.jpg'),
 ('Siójut', 'Somogy', NULL, NULL),
 ('Sirok', 'Heves', NULL, NULL),
 ('Sitke', 'Vas', NULL, NULL),
