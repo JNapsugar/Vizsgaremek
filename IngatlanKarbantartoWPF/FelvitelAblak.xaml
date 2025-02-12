@@ -1,0 +1,51 @@
+﻿<Window x:Class="IngatlanKarbantartoWPF.FelvitelAblak"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IngatlanKarbantartoWPF"
+        mc:Ignorable="d"
+        Title="FelvitelAblak" Height="350" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Új beviteli mező a tulajdonos ID számára az első sorban -->
+        <TextBlock Text="Tulajdonos ID:" Grid.Row="1" Margin="5" />
+        <TextBox x:Name="TulajdonosIdTextBox" Grid.Row="1" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Cím:" Grid.Row="2" Margin="5" />
+        <TextBox x:Name="CimTextBox" Grid.Row="2" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Leírás:" Grid.Row="3" Margin="5" />
+        <TextBox x:Name="LeirasTextBox" Grid.Row="3" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Helyszín:" Grid.Row="4" Margin="5" />
+        <TextBox x:Name="HelyszinTextBox" Grid.Row="4" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Ár:" Grid.Row="5" Margin="5" />
+        <TextBox x:Name="ArTextBox" Grid.Row="5" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Méret:" Grid.Row="6" Margin="5" />
+        <TextBox x:Name="MeretTextBox" Grid.Row="6" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Szolgáltatások:" Grid.Row="7" Margin="5" />
+        <TextBox x:Name="SzolgaltatasokTextBox" Grid.Row="7" Margin="120,5,5,5" Width="250" />
+
+        <TextBlock Text="Szoba:" Grid.Row="8" Margin="5" />
+        <TextBox x:Name="SzobaTextBox" Grid.Row="8" Margin="120,5,5,5" Width="250" />
+
+        <Button Content="Küldés" Grid.Row="9" HorizontalAlignment="Right" Margin="5" Width="100" Click="Submit_Click" />
+    </Grid>
+</Window>
