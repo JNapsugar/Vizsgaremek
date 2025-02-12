@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfLoginApp;
+using static IngatlanKarbantartoWPF.MainWindow;
 using static WpfLoginApp.Login;
 
 namespace IngatlanKarbantartoWPF
@@ -139,15 +140,16 @@ namespace IngatlanKarbantartoWPF
                 return;
             }
 
-            if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
+            var ingatlanId = (dtg.SelectedItem as Ingatlanok).IngatlanId;
+            if(!(ingatlanId>=0))
             {
-                var modositAblak = new ModositAblak(path, selectedIngatlan.IngatlanId);
-                modositAblak.ShowDialog();
+                MessageBox.Show("Hiba!");
+                #warning Majd ezt úgy nem ártana módosítani valami informativabbra
             }
-            else
-            {
-                MessageBox.Show("Kérlek, válassz egy ingatlant a frissítéshez!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+
+            var modositAblak = new ModositAblak(ingatlanId, path);
+            modositAblak.ShowDialog();
+
         }
         // INGATLANOK CRUD kérésének vége
     }
