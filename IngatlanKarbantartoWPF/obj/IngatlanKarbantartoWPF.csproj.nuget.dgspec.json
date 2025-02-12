@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\katonaa\\Documents\\Projektmunka\\4_sprint\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj": {}
+    "C:\\Users\\katonaa\\Documents\\GitHub\\Vizsgaremek\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\katonaa\\Documents\\Projektmunka\\4_sprint\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj": {
+    "C:\\Users\\katonaa\\Documents\\GitHub\\Vizsgaremek\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\katonaa\\Documents\\Projektmunka\\4_sprint\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj",
+        "projectUniqueName": "C:\\Users\\katonaa\\Documents\\GitHub\\Vizsgaremek\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj",
         "projectName": "IngatlanKarbantartoWPF",
-        "projectPath": "C:\\Users\\katonaa\\Documents\\Projektmunka\\4_sprint\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj",
+        "projectPath": "C:\\Users\\katonaa\\Documents\\GitHub\\Vizsgaremek\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF.csproj",
         "packagesPath": "C:\\Users\\katonaa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\katonaa\\Documents\\Projektmunka\\4_sprint\\IngatlanKarbantartoWPF\\IngatlanKarbantartoWPF\\obj\\",
+        "outputPath": "C:\\Users\\katonaa\\Documents\\GitHub\\Vizsgaremek\\IngatlanKarbantartoWPF\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

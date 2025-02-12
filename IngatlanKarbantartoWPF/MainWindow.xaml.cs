@@ -79,7 +79,6 @@ namespace IngatlanKarbantartoWPF
                 string responseContent = await response.Content.ReadAsStringAsync();
                 var ingatlanok = JsonSerializer.Deserialize<List<Ingatlanok>>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                // Adatok megjelenítése a DataGrid-ben
                 dtg.ItemsSource = ingatlanok;
             }
             catch (Exception ex)
@@ -100,16 +99,56 @@ namespace IngatlanKarbantartoWPF
             felvitelAblak.ShowDialog();
         }
 
-        private void DELETE_Click(object sender, RoutedEventArgs e)
+        private async void DELETE_Click(object sender, RoutedEventArgs e)
         {
-            
+            try
+            {
+                if (string.IsNullOrEmpty(path))
+                {
+                    MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
+                {
+                    string url = $"https://localhost:7079/api/{path}/{selectedIngatlan.IngatlanId}";
+                    HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+                    response.EnsureSuccessStatusCode();
+
+                    MessageBox.Show("Sikeres törlés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    GET_Click(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Kérlek, válassz egy ingatlant a törléshez!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void PUT_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
+            {
+                var modositAblak = new ModositAblak(path, selectedIngatlan.IngatlanId);
+                modositAblak.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Kérlek, válassz egy ingatlant a frissítéshez!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
-
         // INGATLANOK CRUD kérésének vége
     }
 }
