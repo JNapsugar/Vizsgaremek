@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MUz/RUhYrV46l6vwLJvRDgVbf+HV2IgMWgq2PcOVl+Db+PbR4IqJWOAHRsGwiNXCUXDmuorc+GrqFozgHyTCrA==",
+  "dgSpecHash": "i0VCLXmxY7BgQB+2ZWYCNk99wDxLBd7BJL+NmLawWjJnoBikOx/b0G1oXDJ86tZd9mv4ZOcf/Kz95xTBks86qA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\IngatlanokBackend.csproj",
+  "projectFilePath": "D:\\Frontend\\Vizsgaremek\\IngatlanokBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jancsurakN\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\jancsurakN\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

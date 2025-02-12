@@ -9,7 +9,7 @@ public partial class Ingatlankepek
 
     public int IngatlanId { get; set; }
 
-    public byte[] KepUrl { get; set; } = null!;
+    public string KepUrl { get; set; } = null!;
 
     public DateTime FeltoltesDatum { get; set; }
 

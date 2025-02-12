@@ -146,7 +146,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("ingatlan_id");
             entity.Property(e => e.KepUrl)
-                .HasColumnType("blob")
+                .HasColumnType("text")
                 .HasColumnName("kep_url");
 
             entity.HasOne(d => d.Ingatlan).WithMany(p => p.Ingatlankepeks)

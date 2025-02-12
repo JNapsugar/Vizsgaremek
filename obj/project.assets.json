@@ -5190,11 +5190,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\IngatlanokBackend.csproj",
+      "projectUniqueName": "D:\\Frontend\\Vizsgaremek\\IngatlanokBackend.csproj",
       "projectName": "IngatlanokBackend",
-      "projectPath": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\IngatlanokBackend.csproj",
+      "projectPath": "D:\\Frontend\\Vizsgaremek\\IngatlanokBackend.csproj",
       "packagesPath": "C:\\Users\\jancsurakN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\obj\\",
+      "outputPath": "D:\\Frontend\\Vizsgaremek\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
