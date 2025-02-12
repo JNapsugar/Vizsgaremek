@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Navbar from '../Components/Navbar';
 import "../style.css";
 
 const Profil = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const images = [
+        "img/headers/header1.jpg",
+        "img/headers/header2.jpg",
+        "img/headers/header3.jpg",
+        "img/headers/header4.jpg",
+        "img/headers/header5.jpg"
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [images.length]);
+
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
     const [registrationData, setRegistrationData] = useState({
         loginNev: "Felhasználónév",
@@ -39,26 +56,6 @@ const Profil = () => {
             console.error("No token or username found");
         }
     }, []);
-
-    const Navbar = () => (
-        <nav className="navbar">
-            <Link to="/home" className="navItem">Főoldal</Link>
-            <Link to="/ingatlanok" className="navItem">Ingatlanok</Link>
-            {(registrationData.PermissionId === 2) && (
-                <Link to="/kiadas" className="navItem">Kiadás</Link>
-            )}
-            <Link to="/rolunk" className="navItem">Rólunk</Link>
-            {isLoggedIn ? (
-                <button className="kilepesBtn" onClick={handleLogout}>
-                    Kijelentkezés
-                </button>
-            ) : (
-                <button className="belepesBtn">
-                    <Link to="/belepes">Belépés</Link>
-                </button>
-            )}
-        </nav>
-    );
 
     const ProfileHouseCard = ({ image, name, location }) => (
         <div className="profileHouseCard">
@@ -120,6 +117,11 @@ const Profil = () => {
         <div>
             <Navbar />
             <header className="smallHeader">
+                <div className="headerImages">
+                    {images.map((image, index) => (
+                        <img key={index} src={image} className={`headerImage ${index === activeIndex ? 'active' : ''}`} alt={`Header ${index + 1}`} />
+                    ))}
+                </div>
                 <h1 className="smallHeaderTitle" id="profileHeaderTitle">Saját profil</h1>
             </header>
             <div className="profileContent">
@@ -151,10 +153,9 @@ const Profil = () => {
                         <p className="profileDataRow">Email <span>{registrationData.email}</span></p>
                         <p className="profileDataRow">Jelszó <span>*********</span></p>
                     </div>
-                    <button className="logOut" onClick={handleLogout}>Kijelentkezés</button>
-                    <button className="logOut" onClick={handleDeleteAccount}>Fiók törlése</button>
-                    <Link to="/profil-modositas"><button className="modify">Adatok módosítása</button>
-                    </Link>
+                    <Link to="/profil-modositas"><button className="ProfileEditBtn">Adatok módosítása</button></Link>
+                    <button className="profileRedBtn" onClick={handleLogout}>Kijelentkezés</button>
+                    <button className="profileRedBtn" onClick={handleDeleteAccount}>Fiók törlése</button>    
                 </div>
             </div>
         </div>

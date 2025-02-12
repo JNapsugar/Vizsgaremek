@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Navbar from '../Components/Navbar';
 import "../style.css";
 
 const IngatlanForm = () => {
@@ -80,29 +81,6 @@ const IngatlanForm = () => {
             alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
         }
     };
-
-    const Navbar = () => (
-        <nav className="navbar">
-            <Link to="/home" className="navItem">Főoldal</Link>
-            <Link to="/ingatlanok" className="navItem">Ingatlanok</Link>
-            {isLoggedIn && (
-                <Link to="/kiadas" className="navItem">Kiadás</Link>
-            )}
-            <Link to="/rolunk" className="navItem">Rólunk</Link>
-            {isLoggedIn ? (
-                <>
-                    <Link to="/profil" className="navItem">Profil</Link>
-                    <button className="kilepesBtn" onClick={handleLogout}>
-                        Kijelentkezés
-                    </button>
-                </>
-            ) : (
-                <button className="belepesBtn">
-                    <Link to="/belepes">Belépés</Link>
-                </button>
-            )}
-        </nav>
-    );
 
     const handleLogout = () => {
         localStorage.removeItem("token");

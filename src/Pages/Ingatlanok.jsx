@@ -32,9 +32,9 @@ const Ingatlanok = () => {
     const [isPending, setPending] = useState(false);
     const [error, setError] = useState(false);
     const location = useLocation();
-    const cityName = location.state?.cityName //|| "Összes";
+    const cityName = location.state?.cityName || "Összes";
     //const cityName = useParams();
-    console.log(cityName);
+    //console.log(cityName);
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
     const [filters, setFilters] = useState({
         megye: "Összes",

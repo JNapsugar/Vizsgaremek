@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LoginPage() {
     const [username, setUsername] = useState("");
@@ -30,10 +31,11 @@ function LoginPage() {
             }
 
             const data = await response.json();
-
             localStorage.setItem("token", data.token); 
             localStorage.setItem("username", username); 
-
+            axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`)
+                    .then(res => {sessionStorage.setItem("permission", res.data.permissionId); })
+                    .catch(error => console.log(error));
             navigate("/profil");
         } catch (error) {
             console.error("Login error:", error.message);
