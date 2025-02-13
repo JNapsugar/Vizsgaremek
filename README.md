@@ -1,50 +1,21 @@
-# Rentify - Ingatlanbérlési Platform
-A projekt célja egy modern ingatlanbérlési platform megvalósítása, amely lehetővé teszi a bérlők számára, hogy ingatlanokat böngésszenek és részletes információkat tekintsenek meg róluk. 
-Ezen kívül a tulajdonosok számára biztosítja, hogy feltöltsenek ingatlanokat és kezeljék azokat a platformon. 
-A platform lehetőséget biztosít a felhasználók számára, hogy fiókot hozzanak létre és nyomon követhessék bérléseikkel kapcsolatos információikat.
-A rendszer frontend, backend és adatbázis szinten is teljes funkcionalitást biztosít.
-## Funkciók
+# Karbantartó Branch
+A karbantartó branch tartalmazza az ingatlanbérlési platform adminjainak készült karbantartó felületét, amely egy WPF alapú alkalmazás.
+Ez a felület lehetőséget biztosít a platformhoz kapcsolódó adatok karbantartására.
 
-### Bérlők számára:
+## WPF alkalmazás tartalma:
+
+### Felhasználók kezelése
 ##
-- Könnyen kezelhető felhasználói felületet.
-- Lehetővé teszi az ingatlanok keresését és szűrését különböző paraméterek alapján.
-- Részletes információkat biztosít az ingatlanokról, beleértve azok jellemzőit, szolgáltatásait és árát.
-- Felhasználói fiók létrehozásának lehetősége a személyes adatok kezelésére és nyomon követésére.
+- Az adminisztrátorok képesek új felhasználói fiókok létrehozására és törlésére
+- Meglévő felhasználók adatainak módosítása
 
-### Tulajdonosok számára:
+### Ingatlanok kezelése
 ##
-- Biztosítja, hogy ingatlanokat töltsenek fel a platformra.
-- Lehetővé teszi az ingatlanok kezelését, módosítását, és azok elérhetőségének frissítését.
-- Felhasználói fiók kezelését és az ingatlanok adminisztrációját biztosítja.
+- Az adminisztrátorok új ingatlanokat tudnak hozzáadni a rendszerhez.
+- A meglévő ingatlanok adatai is módosíthatók.
+- Képek kezelése: Az ingatlanhoz kapcsolódó képek feltöltése, törlése, módosítása.
 
-## Branch-ek
-A projekt négy fő branch-ra van felosztva, amelyek a következőket tartalmazzák:
-
-### 1. Frontend
-A Frontend branch a platform felhasználói felületét (UI) tartalmazza, amely React-alapú alkalmazás. Ez a branch tartalmazza:
+### Bérlések kezelése
 ##
-- React komponensek: Az ingatlanok megjelenítéséhez és kereséséhez szükséges komponensek.
-- CSS és styling: Az alkalmazás stílusai, reszponzív dizájn és vizuális elemek.
-- Képek és média: A platformhoz szükséges képek, ikonok és egyéb vizuális tartalmak.
-
-### 2. Backend
-A Backend branch a web API-t tartalmazza, amely az ingatlanbérlési platform működését biztosítja. Ezen a branch-en található:
-##
-- API fejlesztés: Az ingatlanok, felhasználók, bérlési tranzakciók kezeléséhez szükséges RESTful API.
-- Felhasználói fiók kezelése: A regisztráció, bejelentkezés, fiók adatok kezelése, valamint a jelszóváltoztatás és fiók biztonság kezelése.
-
-### 3. Adatbázis
-Az Adatbázis branch a platform adatbázis struktúráját tartalmazza. Ez a branch a következőket tartalmazza:
-##
-- MySQL adatbázis fájlok: Az adatbázis séma és a táblák definíciói, amelyek az ingatlanok, felhasználók és egyéb adatokat tárolják.
-- Adatbázisterv: Az adatbázis struktúráját leíró dokumentáció, amely tartalmazza a táblák kapcsolatát, a fő kulcsokat és az adatbázis optimalizálását.
-
-### 4. Dokumentáció
-A Dokumentáció branch az összes projektmunkával kapcsolatos dokumentációt tartalmazza. Ezen a branch-en található:
-##
-- UX/UI képek: Az alkalmazás felhasználói élményéhez és felhasználói felületéhez tartozó design képek.
-- Logikai térkép: A rendszer logikai felépítését bemutató diagramok.
-- In progress dokumentumok: A projekt fejlesztésének aktuális állapotát és a már elvégzett munkákat tartalmazó dokumentációk.
-- Felhasználói dokumentáció: Az alkalmazás használatát bemutató kézikönyv a végfelhasználók számára.
-- Prezentáció: A projekt bemutatásához készített prezentáció a projekt céljáról, funkcióiról és megoldásairól.
+- Az adminisztrátorok képesek manuálisan foglalásokat létrehozni és lemondani, ha valaki telefonon vagy más módon keresett.
+- A foglalások részletei (bérlési időszak, felhasználó, ingatlan) módosíthatók.
