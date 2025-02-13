@@ -29,26 +29,57 @@ namespace IngatlanKarbantartoWPF
             {
                 string url = $"https://localhost:7079/api/{path}/{ingatlanId}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"A szerver hibás választ adott: {response.StatusCode} - {response.ReasonPhrase}");
+                }
 
                 string responseContent = await response.Content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    throw new Exception("A szerver üres választ adott az ingatlan adatainak lekérésekor.");
+                }
+
                 var ingatlan = JsonSerializer.Deserialize<Ingatlanok>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                if (ingatlan != null)
+                if (ingatlan == null)
                 {
-                    loadedIngatlan = ingatlan;
-                    CimTextBox.Text = loadedIngatlan.Cim;
-                    LeirasTextBox.Text = loadedIngatlan.Leiras ?? string.Empty;
-                    HelyszinTextBox.Text = loadedIngatlan.Helyszin ?? string.Empty;
-                    ArTextBox.Text = loadedIngatlan.Ar.ToString();
-                    MeretTextBox.Text = loadedIngatlan.Meret?.ToString() ?? string.Empty;
-                    SzobaTextBox.Text = loadedIngatlan.Szoba.ToString();
+                    throw new JsonException("A JSON deszerializálás sikertelen. Az adatok formátuma nem megfelelő.");
                 }
+
+                loadedIngatlan = ingatlan;
+
+                // Az UI frissítése
+                CimTextBox.Text = loadedIngatlan.Cim;
+                LeirasTextBox.Text = loadedIngatlan.Leiras ?? string.Empty;
+                HelyszinTextBox.Text = loadedIngatlan.Helyszin ?? string.Empty;
+                ArTextBox.Text = loadedIngatlan.Ar.ToString();
+                MeretTextBox.Text = loadedIngatlan.Meret.ToString() ?? string.Empty;
+                SzobaTextBox.Text = loadedIngatlan.Szoba.ToString();
+            }
+            catch (HttpRequestException httpEx)
+            {
+                MessageBox.Show($"Hálózati hiba történt: {httpEx.Message}\nEllenőrizze az internetkapcsolatot és a szerver elérhetőségét.",
+                    "Hálózati hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (JsonException jsonEx)
+            {
+                MessageBox.Show($"Adatfeldolgozási hiba: {jsonEx.Message}\nA szerver nem megfelelő formátumban küldte az adatokat.",
+                    "Adatfeldolgozási hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Az adatok lekérése időtúllépés miatt sikertelen.\nPróbálja meg később újra.",
+                    "Időtúllépés", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hiba történt az ingatlan adatainak betöltésekor: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Váratlan hiba történt: {ex.Message}\nPróbálja újra később, vagy forduljon a rendszergazdához.",
+                    "Ismeretlen hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -62,7 +93,7 @@ namespace IngatlanKarbantartoWPF
                     Leiras = LeirasTextBox.Text,
                     Helyszin = HelyszinTextBox.Text,
                     Ar = decimal.Parse(ArTextBox.Text),
-                    Meret = string.IsNullOrEmpty(MeretTextBox.Text) ? (int?)null : int.Parse(MeretTextBox.Text),
+                    Meret =  int.Parse(MeretTextBox.Text),
                     Szoba = int.Parse(SzobaTextBox.Text)
                 };
 
