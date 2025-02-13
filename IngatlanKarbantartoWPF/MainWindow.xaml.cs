@@ -34,7 +34,7 @@ namespace IngatlanKarbantartoWPF
             {
                 this.Close();
             }
-                
+
             InitializeComponent();
 
             endpointsList.ItemsSource = endpoints;
@@ -108,13 +108,7 @@ namespace IngatlanKarbantartoWPF
                 var felvitelAblak = new FelvitelAblak(path);
                 if (felvitelAblak.ShowDialog() == true)
                 {
-                    Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;
-
-                    if (ingatlanLista.Any(ingatlan => ingatlan.TulajdonosId == ujIngatlan.TulajdonosId))
-                    {
-                        MessageBox.Show("Már létezik ilyen ID!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
+                    IngatlanDTO ujIngatlan = felvitelAblak.UjIngatlan;
 
                     string json = JsonSerializer.Serialize(ujIngatlan);
                     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -176,22 +170,33 @@ namespace IngatlanKarbantartoWPF
 
         private void PUT_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(path))
+            try
             {
-                MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+                if (string.IsNullOrEmpty(path))
+                {
+                    MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-            var ingatlanId = (dtg.SelectedItem as Ingatlanok).IngatlanId;
-            if(!(ingatlanId>=0))
+                if (dtg.SelectedItem is not Ingatlanok selectedIngatlan)
+                {
+                    MessageBox.Show("Kérlek, válassz ki egy ingatlant a listából!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (selectedIngatlan.IngatlanId < 0)
+                {
+                    MessageBox.Show("Érvénytelen ingatlan azonosító!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var modositAblak = new ModositAblak(selectedIngatlan.IngatlanId, path);
+                modositAblak.ShowDialog();
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Hiba!");
-                #warning Majd ezt úgy nem ártana módosítani valami informativabbra
+                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            var modositAblak = new ModositAblak(ingatlanId, path);
-            modositAblak.ShowDialog();
-
         }
         // INGATLANOK CRUD kérésének vége
     }

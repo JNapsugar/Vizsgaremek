@@ -86,35 +86,29 @@ namespace IngatlanKarbantartoWPF
         {
             try
             {
-                var updatedIngatlan = new Ingatlanok
+                var updatedIngatlanDTO = new IngatlanDTO
                 {
-                    IngatlanId = ingatlanId,
                     Cim = CimTextBox.Text,
                     Leiras = LeirasTextBox.Text,
                     Helyszin = HelyszinTextBox.Text,
                     Ar = decimal.Parse(ArTextBox.Text),
-                    Meret =  int.Parse(MeretTextBox.Text),
-                    Szoba = int.Parse(SzobaTextBox.Text)
+                    Meret = int.Parse(MeretTextBox.Text),
+                    Szolgaltatasok = "bence volt", // Ha van ilyen mező az API-ban
+                    FeltoltesDatum = DateTime.UtcNow, // Ha szükséges
+                    TulajdonosId = loadedIngatlan.TulajdonosId // Ezt is kell küldeni, ha kötelező
                 };
 
-                bool hasChanges = !AreObjectsEqual(loadedIngatlan, updatedIngatlan);
+                string url = $"https://localhost:7079/api/{path}/{ingatlanId}";
+                string jsonContent = JsonSerializer.Serialize(updatedIngatlanDTO);
+                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                if (hasChanges)
-                {
-                    string url = $"https://localhost:7079/api/{path}/{ingatlanId}";
-                    string jsonContent = JsonSerializer.Serialize(updatedIngatlan);
-                    StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PutAsync(url, content);
+                response.EnsureSuccessStatusCode();
 
-                    HttpResponseMessage response = await _httpClient.PutAsync(url, content);
-                    response.EnsureSuccessStatusCode();
+                MessageBox.Show("Sikeres frissítés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
 
-                    MessageBox.Show("Sikeres frissítés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Nincs változás az adatokban.", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+
             }
             catch (Exception ex)
             {
@@ -131,5 +125,18 @@ namespace IngatlanKarbantartoWPF
                    original.Meret == updated.Meret &&
                    original.Szoba == updated.Szoba;
         }
+    }
+    public class IngatlanDTO
+    {
+        public int IngatlanId { get; set; }
+        public string Cim { get; set; } = null!;
+        public string? Leiras { get; set; }
+        public string? Helyszin { get; set; }
+        public decimal Ar { get; set; }
+        public int Meret { get; set; }
+        public string Szolgaltatasok { get; set; }
+        public DateTime FeltoltesDatum { get; set; }
+        public int Szoba { get; set; }
+        public int TulajdonosId { get; set; }
     }
 }

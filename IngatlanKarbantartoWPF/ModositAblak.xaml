@@ -1,7 +1,7 @@
 ﻿<Window x:Class="IngatlanKarbantartoWPF.ModositAblak"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Ingatlan frissítése" Height="450" Width="400">
+        Title="Rentify ingatlan frissítése" Height="450" Width="400">
     <Grid>
         <TextBlock Text="Cím" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" />
         <TextBox x:Name="CimTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0" Width="350"/>

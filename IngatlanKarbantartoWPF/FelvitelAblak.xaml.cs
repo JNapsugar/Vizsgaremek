@@ -12,7 +12,7 @@ namespace IngatlanKarbantartoWPF
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly string _path;
 
-        public Ingatlanok UjIngatlan { get; private set; }
+        public IngatlanDTO UjIngatlan { get; private set; }
 
         public FelvitelAblak(string path)
         {
@@ -49,7 +49,7 @@ namespace IngatlanKarbantartoWPF
                 return;
             }
 
-            UjIngatlan = new Ingatlanok
+            UjIngatlan = new IngatlanDTO
             {
                 Cim = CimTextBox.Text,
                 Leiras = LeirasTextBox.Text,
@@ -59,6 +59,7 @@ namespace IngatlanKarbantartoWPF
                 Szolgaltatasok = SzolgaltatasokTextBox.Text,
                 Szoba = szoba,
                 TulajdonosId = tulajdonosId
+
             };
 
             this.DialogResult = true;
