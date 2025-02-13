@@ -88,16 +88,48 @@ namespace IngatlanKarbantartoWPF
             }
         }
 
-        private void POST_Click(object sender, RoutedEventArgs e)
+        private async void POST_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(path))
+            try
             {
-                MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+                if (string.IsNullOrEmpty(path))
+                {
+                    MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-            var felvitelAblak = new FelvitelAblak(path);
-            felvitelAblak.ShowDialog();
+                string url = $"https://localhost:7079/api/{path}";
+                HttpResponseMessage response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var ingatlanLista = JsonSerializer.Deserialize<List<Ingatlanok>>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                var felvitelAblak = new FelvitelAblak(path);
+                if (felvitelAblak.ShowDialog() == true)
+                {
+                    Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;
+
+                    if (ingatlanLista.Any(ingatlan => ingatlan.TulajdonosId == ujIngatlan.TulajdonosId))
+                    {
+                        MessageBox.Show("Már létezik ilyen ID!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    string json = JsonSerializer.Serialize(ujIngatlan);
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    HttpResponseMessage postResponse = await _httpClient.PostAsync(url, content);
+                    postResponse.EnsureSuccessStatusCode();
+
+                    MessageBox.Show("Sikeres mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    GET_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void DELETE_Click(object sender, RoutedEventArgs e)
@@ -112,6 +144,17 @@ namespace IngatlanKarbantartoWPF
 
                 if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
                 {
+                    MessageBoxResult result = MessageBox.Show(
+                        "Biztosan törölni akarod ezt az adatot?",
+                        "Megerősítés",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+
                     string url = $"https://localhost:7079/api/{path}/{selectedIngatlan.IngatlanId}";
                     HttpResponseMessage response = await _httpClient.DeleteAsync(url);
                     response.EnsureSuccessStatusCode();
@@ -130,7 +173,6 @@ namespace IngatlanKarbantartoWPF
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
         private void PUT_Click(object sender, RoutedEventArgs e)
         {

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
+using static IngatlanKarbantartoWPF.MainWindow;
 
 namespace IngatlanKarbantartoWPF
 {
@@ -10,6 +11,8 @@ namespace IngatlanKarbantartoWPF
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly string _path;
+
+        public Ingatlanok UjIngatlan { get; private set; }
 
         public FelvitelAblak(string path)
         {
@@ -38,59 +41,27 @@ namespace IngatlanKarbantartoWPF
                 return;
             }
 
-            if (!int.TryParse(MeretTextBox.Text, out var meret))
+            if (!int.TryParse(MeretTextBox.Text, out var meret) ||
+                !int.TryParse(SzobaTextBox.Text, out var szoba) ||
+                !int.TryParse(TulajdonosIdTextBox.Text, out var tulajdonosId))
             {
-                MessageBox.Show("A méret érvénytelen. Kérjük, adjon meg egy helyes számot.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Érvénytelen számformátum!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (!int.TryParse(SzobaTextBox.Text, out var szoba))
-            {
-                MessageBox.Show("A szoba érvénytelen. Kérjük, adjon meg egy helyes számot.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (!int.TryParse(TulajdonosIdTextBox.Text, out var tulajdonosId))
-            {
-                MessageBox.Show("A tulajdonos ID érvénytelen. Kérjük, adjon meg egy helyes számot.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            var ujIngatlan = new
+            UjIngatlan = new Ingatlanok
             {
                 Cim = CimTextBox.Text,
                 Leiras = LeirasTextBox.Text,
                 Helyszin = HelyszinTextBox.Text,
                 Ar = ar,
-                Meret = meret,  
+                Meret = meret,
                 Szolgaltatasok = SzolgaltatasokTextBox.Text,
                 Szoba = szoba,
-                TulajdonosId = tulajdonosId 
+                TulajdonosId = tulajdonosId
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(ujIngatlan), Encoding.UTF8, "application/json");
-
-            string url = $"https://localhost:7079/api/{_path}";
-
-            try
-            {
-                HttpResponseMessage response = await _httpClient.PostAsync(url, content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Sikeresen mentve!", "Információ", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    string errorMessage = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Hiba történt! Státuszkód: {response.StatusCode}\nÜzenet: {errorMessage}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Hiba történt a kérés küldése közben: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
+            this.DialogResult = true;
             this.Close();
         }
     }
