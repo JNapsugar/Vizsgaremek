@@ -9,6 +9,7 @@
         public decimal Ar { get; set; }
         public int Meret { get; set; }
         public string Szolgaltatasok { get; set; }
+        public int Szoba { get; set; }
         public DateTime FeltoltesDatum { get; set; }
         public int TulajdonosId { get; set; }  
     }
