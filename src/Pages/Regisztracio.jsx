@@ -9,7 +9,7 @@ const RegistrationForm = () => {
         loginName: "",
         email: "",
         password: "",
-        role: "berlo", 
+        permissionId: 3, 
     });
 
     const [responseMessage, setResponseMessage] = useState("");
@@ -21,6 +21,7 @@ const RegistrationForm = () => {
             ...prevData,
             [name]: value,
         }));
+        console.log(formData.permissionId);
     };
 
     const handleSubmit = async (e) => {
@@ -35,7 +36,7 @@ const RegistrationForm = () => {
                 localStorage.setItem("token", token);
                 localStorage.setItem("username", username);
 
-                navigate('/profil');
+                navigate('/belepes');
             }
         } catch (error) {
             if (error.response) {
@@ -99,19 +100,18 @@ const RegistrationForm = () => {
                         <label>
                             <input
                                 type="radio"
-                                name="role"
-                                value="berlo"
-                                checked={formData.role === "berlo"}
+                                name="permissionId"
+                                value="3"
                                 onChange={handleChange}
+                                checked
                             />
                             Bérlő
                         </label>
                         <label>
                             <input
                                 type="radio"
-                                name="role"
-                                value="kiado"
-                                checked={formData.role === "kiado"}
+                                name="permissionId"
+                                value="2"
                                 onChange={handleChange}
                             />
                             Kiadó

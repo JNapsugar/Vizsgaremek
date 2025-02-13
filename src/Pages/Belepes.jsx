@@ -34,7 +34,9 @@ function LoginPage() {
             localStorage.setItem("token", data.token); 
             localStorage.setItem("username", username); 
             axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`)
-                    .then(res => {sessionStorage.setItem("permission", res.data.permissionId); })
+                    .then(res => {sessionStorage.setItem("permission", res.data.permissionId);
+                                    sessionStorage.setItem("userId", res.data.id);
+                    })
                     .catch(error => console.log(error));
             navigate("/profil");
         } catch (error) {

@@ -68,9 +68,9 @@ const Profil = () => {
     const handleLogout = () => {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
-    
+        
         if (token && username) {
-            axios.post(`https://localhost:7079/api/Felhasznalo/logout` + localStorage.getItem("username"), {}, {
+            axios.post(`https://localhost:7079/api/Felhasznalo/logout/`,{ LoginNev: username }, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then(() => {

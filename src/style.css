@@ -157,36 +157,6 @@ html, body {
   color: white;
 }
 
-.headerBtn {
-  margin-top: 1rem;
-  min-height: 5rem;
-  min-width: 50%;
-  background-color: transparent;
-  border: 3px solid rgba(255, 255, 255, 0.7);
-  border-radius: 0.5rem;
-  color: white;
-  transition: color 0.3s ease, border-color 0.3s ease;
-  padding: 0.5rem;
-  padding-top: 1rem;
-  font-family: "Poiret One", sans-serif;
-  font-weight: 1000;
-  font-size: 2rem;
-  text-decoration: none;
-  text-align: center;
-}
-
-.headerBtnLink {
-  color: white; 
-  text-decoration: none; 
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-
-.headerBtnLink:hover {
-  color: white;
-}
-
 .smallHeader{
   height: 40vh;
   position: relative;
@@ -1113,6 +1083,242 @@ hr{
 }
 /*#endregion Profil*/
 
+/*#region Kiadás*/
+.uploadForm{
+  width: 80%;
+  background-color:#333;
+  display: block;
+  margin: 2rem auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px rgb(49, 49, 49) solid;
+  border-radius: 1.5rem;
+  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+
+  hr{
+    border:#222 1px solid;
+  }
+
+  .uploadRow{
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.uploadLabel{
+  float: left;
+  color: white;
+  font-size: 2rem;
+  margin-left: 3rem;
+}
+
+input, select, textarea{
+  float: right;
+  width: 70%;
+  background-color: #888;
+  height: 2rem;
+  border-radius: 0.5rem;
+}
+
+textarea{
+  height: 4rem;
+}
+
+.uploadServiceContainer{
+  width: 70%;
+  float: right;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  .checkboxContainer{
+    width: 30%;
+  }
+}
+
+.uploadCheckbox{
+  width: 20%;   
+}
+}
+
+.succesfulUpload{
+  margin-top: 3rem;
+  color: #eca40a;
+  font-size: 2rem;
+  text-align: center;
+
+  button{
+    width: 15rem;
+  }
+}
+
+
+/*#endregion Kiadás*/
+
+/*#region Egyéb*/
+.starBtn {
+  width: 50%;
+  display: block;
+  margin: 2rem auto;
+  position: relative;
+  padding: 12px 35px;
+  background:#eeb53a;
+  font-size: 17px;
+  font-weight: 500;
+  color: #181818;
+  border: 3px solid #eca40a;
+  border-radius: 8px;
+  box-shadow: 0 0 0 #fec1958c;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.starBtn a {
+  color: #181818;
+  text-decoration: none;
+}
+
+.starBtn:hover a {
+  color: #eeb53a;
+}
+
+
+.star-1 {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 25px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 1s cubic-bezier(0.05, 0.83, 0.43, 0.96);
+}
+
+.star-2 {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 1s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-3 {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 1s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-4 {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  width: 8px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.8s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-5 {
+  position: absolute;
+  top: 25%;
+  left: 45%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.6s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-6 {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.8s ease;
+}
+
+.starBtn:hover {
+  background: transparent;
+  color: #eeb53a !important;
+  box-shadow: 0 0 25px #fec1958c;
+}
+
+.starBtn:hover .star-1 {
+  position: absolute;
+  top: -80%;
+  left: -30%;
+  width: 25px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.starBtn:hover .star-2 {
+  position: absolute;
+  top: -25%;
+  left: 10%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.starBtn:hover .star-3 {
+  position: absolute;
+  top: 55%;
+  left: 25%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.starBtn:hover .star-4 {
+  position: absolute;
+  top: 30%;
+  left: 80%;
+  width: 8px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.starBtn:hover .star-5 {
+  position: absolute;
+  top: 25%;
+  left: 115%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.starBtn:hover .star-6 {
+  position: absolute;
+  top: 5%;
+  left: 60%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fil0 {
+  fill: #fffdef;
+}
+/*#endregion Egyéb*/
+
 /*#region Reszponzivitas*/
 
 @media (max-width: 1300px) {
@@ -1241,4 +1447,4 @@ hr{
     width: 100%;
   }
 }
-/*#endregion */
+/*#endregion Reszponzivitas*/
