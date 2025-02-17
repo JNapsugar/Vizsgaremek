@@ -67,6 +67,7 @@ namespace IngatlanokBackend.Controllers
                         Leiras = ingatlanDTO.Leiras,
                         Helyszin = ingatlanDTO.Helyszin,
                         Ar = ingatlanDTO.Ar,
+                        Szoba = ingatlanDTO.Szoba,
                         Meret = ingatlanDTO.Meret,
                         Szolgaltatasok = ingatlanDTO.Szolgaltatasok,
                         FeltoltesDatum = DateTime.UtcNow,
