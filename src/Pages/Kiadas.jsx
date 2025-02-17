@@ -26,6 +26,7 @@ const IngatlanForm = () => {
         leiras: '',
         helyszin: '',
         ar: '',
+        szoba: '',
         meret: '',
         szolgaltatasok: '',
         tulajdonosId: sessionStorage.getItem("userId"),
@@ -78,6 +79,7 @@ const IngatlanForm = () => {
                     Leiras: formData.leiras,
                     Helyszin: formData.helyszin,
                     Ar: parseFloat(formData.ar),
+                    Szoba: parseInt(formData.szoba),
                     Meret: parseInt(formData.meret),
                     Szolgaltatasok: formData.szolgaltatasok,
                     TulajdonosId: parseInt(formData.tulajdonosId),
@@ -97,6 +99,7 @@ const IngatlanForm = () => {
                     leiras: '',
                     helyszin: '',
                     ar: '',
+                    szoba: '',
                     meret: '',
                     szolgaltatasok: '',
                     tulajdonosId: '',
@@ -192,6 +195,18 @@ const IngatlanForm = () => {
                             type="number"
                             name="ar"
                             value={formData.ar}
+                            onChange={handleChange}
+                            required
+                            className="uploadInput"
+                        />
+                    </div>
+                    <hr />
+                    <div className="uploadRow">
+                        <label className="uploadLabel">Szobák száma:</label>
+                        <input
+                            type="number"
+                            name="szoba"
+                            value={formData.szoba}
                             onChange={handleChange}
                             required
                             className="uploadInput"

@@ -76,6 +76,7 @@ const Profil = () => {
             .then(() => {
                 localStorage.removeItem("token");
                 localStorage.removeItem("username");
+                sessionStorage.removeItem("permission");
                 setIsLoggedIn(false);
                 window.location.href = "/belepes";
             })
