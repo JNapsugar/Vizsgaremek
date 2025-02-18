@@ -989,35 +989,48 @@ hr{
 .profilePropertyCard{
   height: 8rem;
   display: flex;
+  align-items: center;
   border-bottom: 1px rgb(49, 49, 49) solid;
   margin: 0 1rem;
+  
   img{
     height: 7rem;
     width: 7rem;
     border-radius: 1rem;
     margin: 0.5rem 2rem 0 2rem; 
+    object-fit: cover;
   }
+
   p{
     font-size: 1.5rem;
+    margin: 0;
   }
+
   span{
     font-size: 1rem;
   }
+
   button{
     height: 3rem;
     width: 8rem;
     margin-top: 2.5rem;
-    margin-left: 40%;
     background-color: #e09900;
     border: #c98a02 solid 2px;
     border-radius: 0.5rem;
+    margin-left: auto;
     &:hover{
       background-color: #ffbc2b;
       cursor: pointer;
       box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
     }
   }
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
 }
+
 
 ::-webkit-scrollbar {
   width: 8px;

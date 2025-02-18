@@ -30,7 +30,9 @@ const IngatlanForm = () => {
         meret: '',
         szolgaltatasok: '',
         tulajdonosId: sessionStorage.getItem("userId"),
+        kep:''
     });
+    
     const [succesful, setSuccesful] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
@@ -59,6 +61,7 @@ const IngatlanForm = () => {
             ...prevData,
             [name]: value, 
         }));
+        console.log(formData.kep.toString());
     };
 
     const handleSubmit = async (e) => {
@@ -71,7 +74,6 @@ const IngatlanForm = () => {
 
         
         try {
-            console.log(formData);
             const response = await axios.post(
                 'https://localhost:7079/api/Ingatlan/ingatlanok',
                 {
@@ -91,8 +93,23 @@ const IngatlanForm = () => {
                     },
                 }
             );
+            //először ftp szerverre
+            const imgResponse = await axios.post(
+                'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
+                {
+                    Cim: formData.cim,
+                    kepUrl: formData.kep,
+                    ingatlanId: 0,
+                    FeltoltesDatum: new Date().toISOString(),
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
-            if (response.status === 200 || response.status === 201) {
+            if ((response.status === 200 && imgResponse === 200)|| (response.status === 201 && imgResponse === 201)) {
                 setSuccesful(true)
                 setFormData({
                     cim: '',
@@ -103,6 +120,7 @@ const IngatlanForm = () => {
                     meret: '',
                     szolgaltatasok: '',
                     tulajdonosId: '',
+                    kep: ''
                 });
             }
         } catch (error) {
@@ -249,6 +267,16 @@ const IngatlanForm = () => {
                     </div>
                     <hr />
                     <div className="uploadRow">
+                        <label className="uploadLabel">Kép:</label>
+                        <input
+                            type="file"
+                            name="kep"
+                            onChange={handleChange}
+                            className="uploadInput"
+                        />
+                    </div>
+                    <hr />
+                    <div className="uploadRow">
                         <label className="uploadLabel">Szolgáltatások:</label>
                         <div className="uploadServiceContainer">
                             <Checkbox id="wifiCb" label="Wi-fi" checked={formData.szolgaltatasok.includes("Wi-fi")} onChange={handleCheckboxChange} />
@@ -273,8 +301,8 @@ const IngatlanForm = () => {
                             <Checkbox id="golfpalyaCb" label="golfpálya" checked={formData.szolgaltatasok.includes("golfpálya")} onChange={handleCheckboxChange} />
                             <Checkbox id="spajzCb" label="spájz" checked={formData.szolgaltatasok.includes("spájz")} onChange={handleCheckboxChange} />
                         </div>
-
                     </div>
+                    
                     <button className="starBtn relative px-6 py-3 text-white font-bold bg-blue-600 rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                     Ingatlan feltöltése
                     {[...Array(6)].map((_, i) => (

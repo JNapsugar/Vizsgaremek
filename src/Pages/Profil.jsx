@@ -29,39 +29,56 @@ const Profil = () => {
         PermissionId: 0
     });
     const [properties, setProperties] = useState([]);
+    const [propertyImages, setPropertyImages] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
-
+    
         if (token && username) {
             setIsLoggedIn(true);
+    
             axios
                 .get(`https://localhost:7079/api/felhasznalo/me/${username}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((res) => {
                     setRegistrationData(res.data);
-                    if (res.data.PermissionId === 2 || res.data.PermissionId === 3) {   
-                        axios
-                            .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
-                                headers: { Authorization: `Bearer ${token}` },
-                            })
-                            .then((response) => setProperties(response.data))
-                            .catch((error) => console.error("Error fetching properties:", error));
-                    }
                 })
-                .catch((error) => console.error("Error fetching user data:", error));
+                .catch((error) => console.error("Hiba az adatok betöltésekor:", error));
         } else {
-            console.error("No token or username found");
+            console.error("Hibás felhasználó");
         }
     }, []);
+    
+    useEffect(() => {
+        if (registrationData.permissionId === 2 || registrationData.permissionId === 3) {
+            const token = localStorage.getItem("token");     
+            axios .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
+                    headers: { Authorization: `Bearer ${token}` }, })
+                .then((response) => {
+                    const filteredProperties = response.data.filter(property => property.tulajdonosId === registrationData.id);
+                    setProperties(filteredProperties);
+                })
+                .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
 
-    const ProfileHouseCard = ({ image, name, location }) => (
-        <div className="profileHouseCard">
-            <img src={image} alt="property" />
-            <p>{name}<br /><span>{location}</span></p>
-            <button>Részletek</button>
+                axios .get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
+                    headers: { Authorization: `Bearer ${token}` }, })
+                .then((response) => {setPropertyImages(response.data);})
+                .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
+        }
+    }, [registrationData.id]);
+    
+
+    const ProfilePropertyCard = ({ id, kep, cim, location }) => (
+        <div className="profilePropertyCard">
+            <img src={kep} alt="property" />
+            <p>{location}<br /><span>{cim}</span></p>
+            <button>
+            <Link to={"/ingatlanok/" + id}>
+                További információk  
+            </Link>
+            </button>
         </div>
     );
 
@@ -132,21 +149,35 @@ const Profil = () => {
                     <p className="ProfileFullname">{registrationData.name}</p>
                 </div>
                 <div className="profileDetails">
-                    {registrationData.PermissionId === 2 && (
-                        <>
-                            <p className="profileTitle">Meghirdetett ingatlanok</p>
-                            <div className="profileHouses">
-                                {properties.map((property, index) => (
-                                    <ProfileHouseCard
-                                        key={index}
-                                        image={property.image}
-                                        name={property.name}
-                                        location={property.location}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    )}
+                {registrationData.permissionId === 2 && (
+                    <>
+                        <p className="profileTitle">Meghirdetett ingatlanok</p>
+                        <div className="profileProperties">
+                        {properties.length > 0 ? (
+                                properties.map((property, index) => {
+                                    let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                                    const imageSrc = propertyImg ? propertyImg.KepUrl : "img/placeholder.jpg"; 
+                                    return (
+                                        <ProfilePropertyCard
+                                            key={index}
+                                            id={property.ingatlanId}
+                                            kep={imageSrc}
+                                            cim={property.cim}
+                                            location={property.helyszin}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <div className="errorMessage">
+                                    Nincsenek feltöltött ingatlanok
+                                    <img src="img/errordog.gif" alt="hiba" width={170}/>
+                                </div>
+                                
+                            )}
+                        </div>
+                    </>
+                )}
+
                     <p className="profileTitle">Adatok</p>
                     <div className="profileData">
                         <p className="profileDataRow">Felhasználónév <span>{registrationData.loginNev}</span></p>
