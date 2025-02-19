@@ -313,14 +313,18 @@ namespace IngatlanokBackend.Controllers
                     user.Email = updatedUserData.Email;
                 }
 
-                if (!string.IsNullOrEmpty(updatedUserData.loginNev))
+                if (!string.IsNullOrEmpty(updatedUserData.LoginNev))
                 {
-                    user.Email = updatedUserData.loginNev;
+                    user.LoginNev = updatedUserData.LoginNev;
                 }
 
                 if (!string.IsNullOrEmpty(updatedUserData.Password))
                 {
-                    user.Email = updatedUserData.Password;
+                    string newSalt = Program.GenerateSalt();
+                    string newHash = Program.CreateSHA256(updatedUserData.Password, newSalt);
+
+                    user.Salt = newSalt;
+                    user.Hash = newHash; 
                 }
 
                 if (updatedUserData.PermissionId.HasValue)
@@ -343,6 +347,7 @@ namespace IngatlanokBackend.Controllers
                 return StatusCode(500, $"Hiba történt a felhasználói adatok frissítése során: {ex.Message}");
             }
         }
+
 
         [HttpDelete("delete/{loginName}")]
         public async Task<IActionResult> DeleteUser(string loginName)
