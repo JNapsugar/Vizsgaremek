@@ -5,6 +5,8 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public int? PermissionId { get; set; } 
+        public string loginNev { get; set; }
+        public string Password { get; set; }
         public string ProfilePicturePath { get; set; } 
     }
 }
