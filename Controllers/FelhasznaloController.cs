@@ -313,6 +313,16 @@ namespace IngatlanokBackend.Controllers
                     user.Email = updatedUserData.Email;
                 }
 
+                if (!string.IsNullOrEmpty(updatedUserData.loginNev))
+                {
+                    user.Email = updatedUserData.loginNev;
+                }
+
+                if (!string.IsNullOrEmpty(updatedUserData.Password))
+                {
+                    user.Email = updatedUserData.Password;
+                }
+
                 if (updatedUserData.PermissionId.HasValue)
                 {
                     user.PermissionId = updatedUserData.PermissionId.Value;

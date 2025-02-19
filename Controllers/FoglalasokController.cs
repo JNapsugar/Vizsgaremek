@@ -53,7 +53,7 @@ namespace IngatlanokBackend.Controllers
 
             var response = new BookingResponseDTO
             {
-                Id = booking.FoglalasId,
+                FoglalasId = booking.FoglalasId,
                 IngatlanId = booking.IngatlanId,
                 BerloId = booking.BerloId,
                 KezdesDatum = booking.KezdesDatum,
@@ -71,7 +71,7 @@ namespace IngatlanokBackend.Controllers
                 .Where(b => b.BerloId == userId)
                 .Select(b => new BookingResponseDTO
                 {
-                    Id = b.FoglalasId,
+                    FoglalasId = b.FoglalasId,
                     IngatlanId = b.IngatlanId,
                     BerloId = b.BerloId,
                     KezdesDatum = b.KezdesDatum,
