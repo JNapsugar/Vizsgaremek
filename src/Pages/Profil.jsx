@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from '../Components/Navbar';
+import Footer from "../Components/Footer";
 import "../style.css";
 
 const Profil = () => {
@@ -30,6 +31,7 @@ const Profil = () => {
     });
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
+    const [isEditView, setIsEditView] = useState(false); 
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -82,9 +84,32 @@ const Profil = () => {
         </div>
     );
 
-    const handleLogout = () => {
+    const handleSave = () => {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
+    
+        if (token && username) {
+            console.log(registrationData);
+            axios
+                .put(`https://localhost:7079/api/Felhasznalo/${username}`, registrationData, {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+                .then((response) => {
+                    setIsEditView(false);
+                })
+                .catch((error) => {
+                    console.error("Hiba a profil mentésekor:", error);
+                    alert("Hiba történt a profil mentésekor.");
+                });
+        } else {
+            alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
+        }
+    };
+    
+
+    const handleLogout = () => {
+        const token = localStorage.getItem("token");
+        const username = registrationData.loginNev;
         
         if (token && username) {
             axios.post(`https://localhost:7079/api/Felhasznalo/logout/`,{ LoginNev: username }, {
@@ -179,17 +204,36 @@ const Profil = () => {
                 )}
 
                     <p className="profileTitle">Adatok</p>
+                    {isEditView? <div className="profileData">
+                        <p className="profileDataRow">Felhasználónév
+                            <input type="text" value={registrationData.loginNev} onChange={(e) => setRegistrationData({ ...registrationData, loginNev: e.target.value })} />
+                        </p>
+                        <p className="profileDataRow">Teljes név
+                            <input type="text" value={registrationData.name} onChange={(e) => setRegistrationData({ ...registrationData, name: e.target.value })} />
+                        </p>
+                        <p className="profileDataRow">Email
+                            <input type="text" value={registrationData.email} onChange={(e) => setRegistrationData({ ...registrationData, email: e.target.value })} />
+                        </p>
+                        <p className="profileDataRow">Jelszó
+                            <input type="password" value={registrationData.password} onChange={(e) => setRegistrationData({ ...registrationData, password: e.target.value })} />
+                        </p>
+                    </div>
+                    :
                     <div className="profileData">
-                        <p className="profileDataRow">Felhasználónév <span>{registrationData.loginNev}</span></p>
+                        <p className="profileDataRow">Felhasználónév<span>{registrationData.loginNev}</span></p>
                         <p className="profileDataRow">Teljes név <span>{registrationData.name}</span></p>
                         <p className="profileDataRow">Email <span>{registrationData.email}</span></p>
                         <p className="profileDataRow">Jelszó <span>*********</span></p>
-                    </div>
-                    <Link to="/profil-modositas"><button className="ProfileEditBtn">Adatok módosítása</button></Link>
+                    </div>}
+                    {isEditView?
+                    <button className="ProfileEditBtn" onClick={handleSave}>Mentés</button> : 
+                    <button className="ProfileEditBtn" onClick={() => setIsEditView(true)}>Adatok módosítása</button> }
                     <button className="profileRedBtn" onClick={handleLogout}>Kijelentkezés</button>
                     <button className="profileRedBtn" onClick={handleDeleteAccount}>Fiók törlése</button>    
                 </div>
             </div>
+            <img src="/img/city2.png" className="footerImg" alt="City View" />
+            <Footer />
         </div>
     );
 };

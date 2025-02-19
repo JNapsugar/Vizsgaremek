@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from '../Components/Navbar';
+import Footer from "../Components/Footer";
+
 import "../style.css";
 
 const IngatlanForm = () => {
@@ -93,7 +95,7 @@ const IngatlanForm = () => {
                     },
                 }
             );
-            //először ftp szerverre
+            /*
             const imgResponse = await axios.post(
                 'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
                 {
@@ -108,8 +110,8 @@ const IngatlanForm = () => {
                     },
                 }
             );
-
-            if ((response.status === 200 && imgResponse === 200)|| (response.status === 201 && imgResponse === 201)) {
+                */
+            if (response.status === 200 || response.status === 201) {
                 setSuccesful(true)
                 setFormData({
                     cim: '',
@@ -128,6 +130,7 @@ const IngatlanForm = () => {
             alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
         }
     };
+    
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -323,6 +326,8 @@ const IngatlanForm = () => {
 
                 </form>
             )}
+            <img src="/img/city2.png" className="footerImg" alt="City View" />
+            <Footer/>
         </div>
     );
 };

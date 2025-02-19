@@ -4,6 +4,7 @@ import '../style.css';
 import Navbar from '../Components/Navbar';
 import PropertyCard from '../Components/PropertyCard';
 import PropertyListItem from '../Components/PropertyListItem';
+import Footer from "../Components/Footer";
 import { RiseLoader } from 'react-spinners';
 import { useParams, useLocation } from 'react-router-dom';
 
@@ -282,9 +283,7 @@ const Ingatlanok = () => {
             </div>
 
             <img src="img/city2.png" className="footerImg" alt="City view" />
-            <footer>
-                <h3>Elérhetőségek</h3>
-            </footer>
+            <Footer />
         </div>
     );
 };

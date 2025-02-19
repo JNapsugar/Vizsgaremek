@@ -5,6 +5,7 @@ import "../style.css";
 import Navbar from "../Components/Navbar";
 import { RiseLoader } from "react-spinners";
 import PropertyCard from "../Components/PropertyCard";
+import Footer from "../Components/Footer";
 
 const Home = () => {
 
@@ -116,12 +117,6 @@ const Home = () => {
             </button></Link>
             <img src="./img/city2.png" className="footerImg" alt="footer" />
         </section>
-    );
-    
-    const Footer = () => (
-        <footer>
-            <h3>Elérhetőségek</h3>
-        </footer>
     );
     
     return (

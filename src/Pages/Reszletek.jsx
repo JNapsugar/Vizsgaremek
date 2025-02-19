@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../style.css';
 import Navbar from '../Components/Navbar';
+import Footer from "../Components/Footer";
 import PropertyCard from '../Components/PropertyCard';
 
 const App = () => {
@@ -152,9 +153,7 @@ const App = () => {
             </div>
 
             <img src="/img/city2.png" className="footerImg" alt="City View" />
-            <footer>
-                <h3>Elérhetőségek</h3>
-            </footer>
+            <Footer/>
         </div>
     );
 };
