@@ -104,6 +104,7 @@ namespace IngatlanokBackend.Controllers
                     ingatlan.Cim = ingatlanDTO.Cim;
                     ingatlan.Leiras = ingatlanDTO.Leiras;
                     ingatlan.Helyszin = ingatlanDTO.Helyszin;
+                    ingatlan.Szoba = ingatlanDTO.Szoba;
                     ingatlan.Ar = ingatlanDTO.Ar;
                     ingatlan.Meret = ingatlanDTO.Meret;
                     ingatlan.Szolgaltatasok = ingatlanDTO.Szolgaltatasok;
