@@ -82,14 +82,12 @@ const Home = () => {
             <div className="cityCardContent">
                 <p className="cityCardTitle">{city.nev}</p>
                 <p className="cityCardDescription">{city.leiras}</p>
-                <Link 
-                    to={{ pathname: "/ingatlanok", state: { cityName: city.nev } }} 
-                    onClick={() => window.scrollTo({ top: 0 })}>
+                <Link to={`/ingatlanok?city=${encodeURIComponent(city.nev)}`} onClick={() => window.scrollTo({ top: 0 })}>
                     <button>{city.nev}i ingatlanok megtekintése</button>
                 </Link>
+
             </div>
-        </div>
-        
+        </div>      
     );    
     const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"]
     const CitySection = () => (

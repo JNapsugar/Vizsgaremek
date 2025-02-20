@@ -7,6 +7,7 @@ import Regisztracio from './Pages/Regisztracio';
 import ElfelejtettJelszo from './Pages/ElfelejtettJelszo';
 import Profil from './Pages/Profil';
 import Kiadas from './Pages/Kiadas';
+import IngatlanKezeles from './Pages/IngatlanKezeles';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/elfelejtettjelszo" element={<ElfelejtettJelszo />} />
         <Route path = "/profil" element = {<Profil/>}/>
         <Route path="/kiadas" element={<Kiadas />} />
+        <Route path="/ingatlanKezeles/:ingatlanId" element={<IngatlanKezeles />} />
       </Routes>
     </Router>
   );

@@ -76,13 +76,17 @@ const Profil = () => {
         <div className="profilePropertyCard">
             <img src={kep} alt="property" />
             <p>{location}<br /><span>{cim}</span></p>
-            <button>
-            <Link to={"/ingatlanok/" + id}>
-                További információk  
-            </Link>
-            </button>
+            <div className="buttonContainer">
+                <button>
+                    <Link to={"/ingatlanok/" + id}>Részletek</Link>
+                </button>
+                <button>
+                    <Link to={"/ingatlanKezeles/" + id}>Kezelés</Link>
+                </button>
+            </div>
         </div>
     );
+
 
     const handleSave = () => {
         const token = localStorage.getItem("token");

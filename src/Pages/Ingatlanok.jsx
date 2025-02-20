@@ -6,7 +6,7 @@ import PropertyCard from '../Components/PropertyCard';
 import PropertyListItem from '../Components/PropertyListItem';
 import Footer from "../Components/Footer";
 import { RiseLoader } from 'react-spinners';
-import { useParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from "react-router-dom";
 
 const Ingatlanok = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -32,10 +32,8 @@ const Ingatlanok = () => {
     const [filteredLocations, setFilteredLocations] = useState([]);
     const [isPending, setPending] = useState(false);
     const [error, setError] = useState(false);
-    const location = useLocation();
-    const cityName = location.state?.cityName || "Összes";
-    //const cityName = useParams();
-    //console.log(cityName);
+    const [searchParams] = useSearchParams();
+    const cityName = searchParams.get("city") || "Összes";
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
     const [filters, setFilters] = useState({
         megye: "Összes",
@@ -78,36 +76,57 @@ const Ingatlanok = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
 
+    useEffect(() => {
+        if (cityName !== "Összes") {
+            handleFilterChange({ 
+                target: { id: "helyszin", value: cityName } 
+            });
+        }
+    }, [cityName, locations]);
+    
+
     const handleFilterChange = (e) => {
         const { id, value, type, checked } = e.target;
-        setFilters({ ...filters, [id]: type === "checkbox" ? checked : value });
-        switch (id) {
-            case "helyszin":
-                const selectedCity = locations.find(location => location.nev === value);
-                if (selectedCity) {
-                    setFilters(prevFilters => ({ ...prevFilters, megye: selectedCity.megye }));
-                    document.getElementById("megye").value = selectedCity.megye;}
-                break;
-            case "megye":
-                value === "Összes"? setFilteredLocations(locations) : setFilteredLocations(locations.filter(location => location.megye === value))
-                break;
-            case "rendezes":
-                    const orderBy = value.split('-')[0]
+    
+        setFilters(prevFilters => {
+            switch (id) {
+                case "helyszin":
+                    const selectedCity = locations.find(location => location.nev === value);
+                    return {
+                        ...prevFilters,
+                        helyszin: value,
+                        megye: selectedCity ? selectedCity.megye : prevFilters.megye
+                    };
+                case "megye":
+                    document.getElementById("helyszin").value = "Összes";
+                    setFilteredLocations(
+                        value === "Összes" ? locations : locations.filter(location => location.megye === value)
+                    );
+                    return {
+                        ...prevFilters,
+                        megye: value,
+                        helyszin: "Összes"
+                    };
+                case "rendezes":
+                    const orderBy = value.split('-')[0];
                     if (value.split('-')[1] === "asc") {
-                        setProperties(prevProperties => {
-                            return [...prevProperties].sort((a, b) => a[orderBy] - b[orderBy])
-                        });
+                        setProperties(prevProperties =>
+                            [...prevProperties].sort((a, b) => a[orderBy] - b[orderBy])
+                        );
                     } else if (value.split('-')[1] === "desc") {
-                        setProperties(prevProperties => {
-                            return [...prevProperties].sort((a, b) => b[orderBy] - a[orderBy])
-                        })
+                        setProperties(prevProperties =>
+                            [...prevProperties].sort((a, b) => b[orderBy] - a[orderBy])
+                        );
                     }
-                break;  
-            case "nezet":
-                    filters.nezet = value;
-                break;
-        };
+                    return { ...prevFilters, rendezes: value };
+                case "nezet":
+                    return { ...prevFilters, nezet: value };
+                default:
+                    return { ...prevFilters, [id]: type === "checkbox" ? checked : value };
+            }
+        });
     };
+    
 
     const filteredProperties = properties.filter(property => {;
         return (
@@ -178,7 +197,7 @@ const Ingatlanok = () => {
                 <div className="filterRow">
                     <div className="filterSelectContainer">
                         <label>Megye</label>
-                        <select id="megye" className="filterSelect" onChange={handleFilterChange}>
+                        <select id="megye" className="filterSelect" onChange={handleFilterChange} value={filters.megye}>
                             <option>Összes</option>
                             {counties.map((countie, index) => (
                                 <option key={index} value={countie}>{countie}</option>
@@ -187,7 +206,7 @@ const Ingatlanok = () => {
                     </div>
                     <div className="filterSelectContainer">
                         <label>Város</label>
-                        <select id="helyszin" className="filterSelect" onChange={handleFilterChange}>
+                        <select id="helyszin" className="filterSelect" onChange={handleFilterChange} value={filters.helyszin}>
                             <option>Összes</option>
                             { filteredLocations.map((location, index) => (
                                     <option key={index} value={location.nev}>{location.nev}</option>

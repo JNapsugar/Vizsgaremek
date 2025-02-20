@@ -34,7 +34,7 @@ const App = () => {
             .then(res => setPropertyImage(res.data))
             .catch(error => { console.error(error); })
     }, [ingatlanId]);
-
+    
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
             .then(res => {

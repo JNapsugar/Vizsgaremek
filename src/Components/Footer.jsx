@@ -26,8 +26,8 @@ export default function Footer() {
             <div class="footer-col">
                 <h4>Dokumentáció</h4>
                 <div class="social-links">
-                    <a href="https://github.com/JNapsugar/Vizsgaremek" target='_blank'><img src="./img/icons/github.png" alt="github"/></a>
-                    <a href="https://trello.com/w/vizsgaremek22" target='_blank'><img src="./img/icons/trello.png" alt="trello"/></a>
+                    <a href="https://github.com/JNapsugar/Vizsgaremek" target='_blank'><img src="/img/icons/github.png" alt="github"/></a>
+                    <a href="https://trello.com/w/vizsgaremek22" target='_blank'><img src="/img/icons/trello.png" alt="trello"/></a>
                 </div>
             </div>
         </div>
