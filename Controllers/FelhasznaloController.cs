@@ -65,6 +65,37 @@ namespace IngatlanokBackend.Controllers
                 }
             }
         }
+
+        [HttpGet("felhasznalo/{userId}")]
+        public async Task<IActionResult> Get(int userId)
+        {
+            using (var cx = new IngatlanberlesiplatformContext())
+            {
+                try
+                {
+                    var user = await cx.Felhasznaloks
+                        .Where(f => f.Id == userId)
+                        .Select(f => new
+                        {
+                            f.LoginNev,
+                            f.Name,
+                            f.Email,
+                            f.ProfilePicturePath
+                        })
+                        .FirstOrDefaultAsync();
+
+                    if (user == null)
+                        return NotFound("Felhasználó nem található.");
+
+                    return Ok(user);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+        }
+
         [HttpGet("me/{loginNev}")]
         public async Task<IActionResult> GetCurrentUser(string loginNev)
         {
@@ -79,11 +110,9 @@ namespace IngatlanokBackend.Controllers
                     .Where(u => u.LoginNev == loginNev)
                     .Select(u => new GetCurrentUserDTO
                     {
-                        Id = u.Id,
+                        
                         LoginNev = u.LoginNev,
                         Name = u.Name,
-                        PermissionId = u.PermissionId,
-                        Active = u.Active,
                         Email = u.Email,
                         ProfilePicturePath = u.ProfilePicturePath
                     })
@@ -154,7 +183,6 @@ namespace IngatlanokBackend.Controllers
                 return StatusCode(500, new { Message = "Hiba történt a bejelentkezés során.", Error = ex.Message });
             }
         }
-
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutDTO logoutDTO)
