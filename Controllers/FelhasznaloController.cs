@@ -110,10 +110,11 @@ namespace IngatlanokBackend.Controllers
                     .Where(u => u.LoginNev == loginNev)
                     .Select(u => new GetCurrentUserDTO
                     {
-                        
+                        Id = u.Id,
                         LoginNev = u.LoginNev,
                         Name = u.Name,
                         Email = u.Email,
+                        PermissionId = u.PermissionId,
                         ProfilePicturePath = u.ProfilePicturePath,
                         Active = u.Active
                         
