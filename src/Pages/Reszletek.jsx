@@ -10,6 +10,7 @@ const App = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [property, setProperty] = useState({});
     const [propertyImage, setPropertyImage] = useState({});
+    const [owner, setOwner] = useState({});
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
 
@@ -34,6 +35,12 @@ const App = () => {
             .then(res => setPropertyImage(res.data))
             .catch(error => { console.error(error); })
     }, [ingatlanId]);
+
+    useEffect(() => {
+        axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${property.tulajdonosId}`)
+            .then(res => setOwner(res.data))
+            .catch(error => { console.error(error); })
+    }, [property.tulajdonosId]);
     
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
@@ -130,13 +137,18 @@ const App = () => {
 
                 <div className="propertyContactCard">
                     <p className="propertyContactTitle">Kapcsolat:</p>
-                    <img src="/img/placeholder.jpg" className="uploaderImg" alt="Uploader" />
-                    <a className="uploaderName">Feltöltő neve</a>
+                    <img 
+                        src={owner.ProfilePicturePath ? owner.ProfilePicturePath : "/img/defaultPfp.jpg"} 
+                        className="uploaderImg" alt="Uploader" loading="lazy"
+                        onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
+                    />
+
+                    <a className="uploaderName">{owner.loginNev}</a>
                     <div className="propertyContact">
-                        <span>Telefon:</span><span className="propertyContactValue">0000000000</span>
+                        <span>Név:</span><span className="propertyContactValue">{owner.name}</span>
                     </div>
                     <div className="propertyContact">
-                        <span>Email:</span><span className="propertyContactValue">xxxxxxxxxxxxxxxxx</span>
+                        <span>Email:</span><span className="propertyContactValue">{owner.email}</span>
                     </div>
                 </div>
             </div>

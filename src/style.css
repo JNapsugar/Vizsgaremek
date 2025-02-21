@@ -1248,8 +1248,6 @@ textarea{
     width: 15rem;
   }
 }
-
-
 /*#endregion Kiadás*/
 
 /*#region Egyéb*/
@@ -1415,6 +1413,22 @@ textarea{
 .fil0 {
   fill: #fffdef;
 }
+
+.deleteBtn{
+  background:#d15220;
+  border: 3px solid #bf4a1c;
+  margin-top: 0.5rem;
+}
+
+.deleteBtn:hover {
+  background: transparent;
+  color: #d15220 !important;
+}
+
+a{
+  text-decoration: none;
+}
+
 /*#endregion Egyéb*/
 
 /*#region Reszponzivitas*/

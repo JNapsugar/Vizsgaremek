@@ -192,7 +192,7 @@ const IngatlanForm = () => {
             {succesful? (
                 <div className="succesfulUpload">
                     <p>Ingatlan sikeresen hozzáadva!</p>
-                    <button className="starBtn"><Link to={"/"}>Vissza a főoldalra</Link></button>
+                    <Link to={"/"}><button className="starBtn">Vissza a főoldalra</button></Link>
                     <button className="starBtn" onClick={handleSucces}>Új ingatlan feltöltése</button>
                 </div>
             ) : (
@@ -306,7 +306,7 @@ const IngatlanForm = () => {
                         </div>
                     </div>
                     
-                    <button className="starBtn relative px-6 py-3 text-white font-bold bg-blue-600 rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                    <button className="starBtn">
                     Ingatlan feltöltése
                     {[...Array(6)].map((_, i) => (
                         <div key={i} className={`absolute star-${i + 1} animate-spin-slow`}>

@@ -173,7 +173,11 @@ const Profil = () => {
             </header>
             <div className="profileContent">
                 <div className="profileSide">
-                    <img src="img/placeholder.jpg" className="profilePicture" alt="profile" />
+                    <img 
+                        src={registrationData.ProfilePicturePath ? registrationData.ProfilePicturePath : "/img/defaultPfp.jpg"} 
+                        className="profilePicture" alt="Uploader" loading="lazy"
+                        onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
+                    />
                     <p className="ProfileUsername">{registrationData.loginNev}</p>
                     <p className="ProfileFullname">{registrationData.name}</p>
                 </div>

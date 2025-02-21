@@ -22,7 +22,7 @@ function App() {
         <Route path="/elfelejtettjelszo" element={<ElfelejtettJelszo />} />
         <Route path = "/profil" element = {<Profil/>}/>
         <Route path="/kiadas" element={<Kiadas />} />
-        <Route path="/ingatlanKezeles/:ingatlanId" element={<IngatlanKezeles />} />
+        <Route path="/ingatlanKezeles/:id" element={<IngatlanKezeles/>} />
       </Routes>
     </Router>
   );

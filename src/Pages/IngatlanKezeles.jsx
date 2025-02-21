@@ -6,7 +6,7 @@ import Footer from "../Components/Footer";
 
 import "../style.css";
 
-const IngatlanKezelesForm = () => {
+const IngatlanKezeles = () => {
     const { id } = useParams(); 
     const [activeIndex, setActiveIndex] = useState(0);
     const images = [
@@ -17,6 +17,7 @@ const IngatlanKezelesForm = () => {
         "/img/headers/header5.jpg"
     ];
     
+    console.log(id);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -157,6 +158,31 @@ const IngatlanKezelesForm = () => {
         });
     };
 
+    const handleDelete = async () => {
+        if (!window.confirm("Biztosan törölni szeretnéd az ingatlant? Ez a művelet nem visszavonható!")) {
+            return;
+        }
+    
+        try {
+            const response = await axios.delete(`https://localhost:7079/api/Ingatlan/ingatlanok/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            if (response.status === 200 || response.status === 204) {
+                alert("Ingatlan sikeresen törölve!");
+                setSuccesful(true);
+            } else {
+                alert("Nem sikerült törölni az ingatlant. Próbáld újra később.");
+            }
+        } catch (error) {
+            console.error("Hiba történt az ingatlan törlése során:", error);
+            alert("Nem sikerült törölni az ingatlant. Próbáld újra később.");
+        }
+    };
+    
+
     const handleSucces = (e) => {
         setSuccesful(false);
     };
@@ -175,7 +201,8 @@ const IngatlanKezelesForm = () => {
             {succesful ? (
                 <div className="succesfulUpload">
                     <p>Ingatlan sikeresen módosítva!</p>
-                    <button className="starBtn"><Link to={"/profil"}>Vissza a profilomra</Link></button>
+                    <Link to={"/profil"}><button className="starBtn">Vissza a profilomra</button></Link>
+                    <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="uploadForm">
@@ -288,8 +315,11 @@ const IngatlanKezelesForm = () => {
                         </div>
                     </div>
 
-                    <button type="submit" className="starBtn relative px-6 py-3 text-white font-bold bg-blue-600 rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                    <button type="submit" className="starBtn">
                         Ingatlan módosítása
+                    </button>
+                    <button className="starBtn deleteBtn">
+                        Ingatlan törlése
                     </button>
                 </form>
             )}
@@ -299,4 +329,4 @@ const IngatlanKezelesForm = () => {
     );
 };
 
-export default IngatlanKezelesForm;
+export default IngatlanKezeles;
