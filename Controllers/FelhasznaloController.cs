@@ -114,7 +114,9 @@ namespace IngatlanokBackend.Controllers
                         LoginNev = u.LoginNev,
                         Name = u.Name,
                         Email = u.Email,
-                        ProfilePicturePath = u.ProfilePicturePath
+                        ProfilePicturePath = u.ProfilePicturePath,
+                        Active = u.Active
+                        
                     })
                     .FirstOrDefaultAsync();
 
