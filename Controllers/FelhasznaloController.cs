@@ -263,63 +263,67 @@ namespace IngatlanokBackend.Controllers
             }
         }
 
-        [HttpPost("RequestPasswordReset")]
-        public async Task<IActionResult> RequestPasswordReset([FromBody] RequestPasswordResetDTO request)
+        [HttpPost("ResetPassword/{loginName},{newPassword}")]
+        public async Task<IActionResult> JelszoMosositas(string loginName, string newPassword)
         {
             try
             {
-                var user = await _context.Felhasznaloks.FirstOrDefaultAsync(f => f.Email == request.Email);
-                if (user == null)
+                using (var context = new IngatlanberlesiplatformContext())
                 {
-                    return BadRequest("Az e-mail cím nem található!");
+                    var user = context.Felhasznaloks.FirstOrDefault(f => f.LoginNev == loginName);
+                    if (user != null)
+                    {
+                        user.Hash = Program.CreateSHA256(newPassword, user.Salt);
+                        context.Felhasznaloks.Update(user);
+                        await context.SaveChangesAsync();
+                        return Ok("A jelszó módosítása sikeresen megtörtént.");
+                    }
+                    else
+                    {
+                        return BadRequest("Nincs ilyen nevű felhasználó!");
+                    }
                 }
-
-                string token = Guid.NewGuid().ToString();
-                resetTokens[request.Email] = token;
-
-                return Ok(new
-                {
-                    Message = "Az alábbi tokennel állíthatja vissza a jelszavát.",
-                    Token = token
-                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Hiba történt: {ex.Message}");
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
+        [HttpPost("RequestPassword/{Email}")]
+        public async Task<IActionResult> ElfelejtettJelszo(string Email)
         {
-            try
+            using (var context = new IngatlanberlesiplatformContext())
             {
-                if (!resetTokens.ContainsKey(resetPasswordDTO.Email) || resetTokens[resetPasswordDTO.Email] != resetPasswordDTO.Token)
+                try
                 {
-                    return BadRequest("Érvénytelen vagy lejárt token!");
-                }
+                    var user = context.Felhasznaloks.FirstOrDefault(f => f.Email == Email);
+                    if (user != null)
+                    {
+                        string jelszo = Program.GenerateSalt().Substring(0, 16);
+                        user.Hash = Program.CreateSHA256(jelszo, user.Salt);
+                        context.Felhasznaloks.Update(user);
+                        await context.SaveChangesAsync();
 
-                var user = await _context.Felhasznaloks.FirstOrDefaultAsync(f => f.Email == resetPasswordDTO.Email);
-                if (user == null)
+                        Program.SendEmail(user.Email, "Elfelejtett jelszó",
+                        $"Kedves {user.Name}!\n\n" +
+                        "A jelszóhelyreállításhoz egy új jelszót generáltunk. Az új jelszavad az alábbi:\n\n" +
+                        $"Új jelszó: {jelszo}\n\n" +
+                        "Kérjük, jelentkezz be a rendszerbe az új jelszóval. Amennyiben nem te kérted a jelszó módosítását, kérjük, vedd fel velünk a kapcsolatot.\n\n" +
+                        "Köszönjük, hogy használod szolgáltatásainkat!\n\n" +
+                        "Üdvözlettel,\n" +
+                        "A Rentify csapata");
+                        return Ok("E-mail küldése megtörtént.");
+                    }
+                    else
+                    {
+                        return StatusCode(210, "Nincs ilyen e-Mail cím!");
+                    }
+                }
+                catch (Exception ex)
                 {
-                    return BadRequest("Felhasználó nem található!");
+                    return StatusCode(211, ex.Message);
                 }
-
-                string newSalt = Program.GenerateSalt();
-                string newHash = Program.CreateSHA256(resetPasswordDTO.NewPassword, newSalt);
-
-                user.Salt = newSalt;
-                user.Hash = newHash;
-                _context.Felhasznaloks.Update(user);
-                await _context.SaveChangesAsync();
-
-                resetTokens.Remove(resetPasswordDTO.Email);
-
-                return Ok("A jelszó sikeresen frissítve.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Hiba történt: {ex.Message}");
             }
         }
 
