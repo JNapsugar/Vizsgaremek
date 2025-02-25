@@ -93,7 +93,7 @@ namespace IngatlanKarbantartoWPF
                     Helyszin = HelyszinTextBox.Text,
                     Ar = decimal.Parse(ArTextBox.Text),
                     Meret = int.Parse(MeretTextBox.Text),
-                    Szolgaltatasok = "bence volt", // Ha van ilyen mező az API-ban
+                    Szolgaltatasok = "---", // Ha van ilyen mező az API-ban
                     FeltoltesDatum = DateTime.UtcNow, // Ha szükséges
                     TulajdonosId = loadedIngatlan.TulajdonosId // Ezt is kell küldeni, ha kötelező
                 };
