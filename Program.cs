@@ -2,6 +2,7 @@ using IngatlanokBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySqlX.XDevAPI;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -9,6 +10,10 @@ namespace IngatlanokBackend
 {
     public class Program
     {
+        public static string ftpUrl = "ftp.nethely.hu";
+        public static string ftpUserName = "ingatlan";
+        public static string ftpPassword = "Ingatlanok12345";
+
         public static int SaltLength = 64;
 
         public static Dictionary<string, Felhasznalok> LoggedInUsers = new Dictionary<string, Felhasznalok>();
@@ -23,6 +28,26 @@ namespace IngatlanokBackend
                 salt.Append(karakterek[random.Next(karakterek.Length)]);
             }
             return salt.ToString();
+        }
+
+        public static async Task SendEmail(string mailAddressTo, string subject, string body)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            mail.From = new MailAddress("ingatlanberlesiplatform@gmail.com");
+            mail.To.Add(mailAddressTo);
+            mail.Subject = subject;
+            mail.Body = body;
+
+            /*System.Net.Mail.Attachment attachment;
+            attachment = new System.Net.Mail.Attachment("");
+            mail.Attachments.Add(attachment);*/
+
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("ingatlanberlesiplatform@gmail.com","mhwhbcbihzzozqvc");
+            SmtpServer.EnableSsl = true;
+            await SmtpServer.SendMailAsync(mail);
+
         }
 
         public static string CreateSHA256(string input, string salt)
@@ -40,7 +65,7 @@ namespace IngatlanokBackend
         }
 
         public static void Main(string[] args)
-        {
+        {   
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
