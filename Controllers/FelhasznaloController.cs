@@ -18,7 +18,7 @@ namespace IngatlanokBackend.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IngatlanberlesiplatformContext _context;
-        private static Dictionary<string, string> resetTokens = new Dictionary<string, string>();
+
 
         public FelhasznaloController(IConfiguration configuration, IngatlanberlesiplatformContext context)
         {
@@ -138,6 +138,55 @@ namespace IngatlanokBackend.Controllers
                 return StatusCode(500, $"Hiba történt az adatok lekérése során: {ex.Message}");
             }
         }
+
+        [HttpPost("addUser")]
+        public async Task<IActionResult> AddUser([FromBody] userCreateDTO userCreateDTO) 
+        {
+            try
+            {
+                if (await _context.Felhasznaloks.AnyAsync(f => f.LoginNev == userCreateDTO.LoginNev || f.Email == userCreateDTO.Email))
+                {
+                    return BadRequest("A felhasználónév vagy e-mail már foglalt!");
+                }
+
+                if (userCreateDTO.PermissionId < 1 || userCreateDTO.PermissionId > 3)
+                {
+                    return BadRequest("Érvénytelen jogosultság ID. Csak 1, 2 vagy 3 engedélyezett.");
+                }
+
+                if (!await _context.Jogosultsagoks.AnyAsync(p => p.JogosultsagId == userCreateDTO.PermissionId))
+                {
+                    return BadRequest($"A megadott jogosultság ({userCreateDTO.PermissionId}) nincs az adatbázisban.");
+                }
+
+                string salt = Program.GenerateSalt();
+                byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+                string hash = Program.CreateSHA256(userCreateDTO.Password, salt);
+
+
+                var newUser = new Felhasznalok
+                {
+                    LoginNev = userCreateDTO.LoginNev,
+                    Name = userCreateDTO.Name,
+                    Email = userCreateDTO.Email,
+                    Salt = salt,
+                    Hash = hash,
+                    Active = true, 
+                    PermissionId = userCreateDTO.PermissionId,
+                };
+
+                _context.Felhasznaloks.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                return Ok("A felhasználó sikeresen hozzáadva!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Hiba történt: {ex.Message}");
+            }
+        }
+
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
@@ -304,15 +353,20 @@ namespace IngatlanokBackend.Controllers
                         user.Hash = Program.CreateSHA256(jelszo, user.Salt);
                         context.Felhasznaloks.Update(user);
                         await context.SaveChangesAsync();
+                        string logoUrl = "http://images.ingatlanok.nhely.hu/Rentify%20-%20Log%c3%b3.jpg"; 
 
-                        Program.SendEmail(user.Email, "Elfelejtett jelszó",
-                        $"Kedves {user.Name}!\n\n" +
-                        "A jelszóhelyreállításhoz egy új jelszót generáltunk. Az új jelszavad az alábbi:\n\n" +
-                        $"Új jelszó: {jelszo}\n\n" +
-                        "Kérjük, jelentkezz be a rendszerbe az új jelszóval. Amennyiben nem te kérted a jelszó módosítását, kérjük, vedd fel velünk a kapcsolatot.\n\n" +
-                        "Köszönjük, hogy használod szolgáltatásainkat!\n\n" +
-                        "Üdvözlettel,\n" +
-                        "A Rentify csapata");
+                        string emailContent = $"<html><body>" +
+                                              $"<img src='{logoUrl}' alt='Logo' style='max-width: 200px; margin-bottom: 20px;'/>" +
+                                              $"<p>Kedves {user.Name}!</p>" +
+                                              $"<p>A jelszóhelyreállításhoz egy új jelszót generáltunk. Az új jelszavad az alábbi:</p>" +
+                                              $"<p><strong>Új jelszó: {jelszo}</strong></p>" +
+                                              $"<p>Kérjük, jelentkezz be a rendszerbe az új jelszóval. " +
+                                              $"Amennyiben nem te kérted a jelszó módosítását, kérjük, vedd fel velünk a kapcsolatot.</p>" +
+                                              $"<p>Köszönjük, hogy használod szolgáltatásainkat!</p>" +
+                                              $"<p>Üdvözlettel,<br/>A Rentify csapata</p>" +
+                                              $"</body></html>";
+
+                        Program.SendEmail(user.Email, "Elfelejtett jelszó", emailContent, true);
                         return Ok("E-mail küldése megtörtént.");
                     }
                     else
