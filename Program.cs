@@ -30,25 +30,22 @@ namespace IngatlanokBackend
             return salt.ToString();
         }
 
-        public static async Task SendEmail(string mailAddressTo, string subject, string body)
-        {
-            MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            mail.From = new MailAddress("ingatlanberlesiplatform@gmail.com");
-            mail.To.Add(mailAddressTo);
-            mail.Subject = subject;
-            mail.Body = body;
+    public static async Task SendEmail(string mailAddressTo, string subject, string body, bool isHtml = false)
+    {
+         MailMessage mail = new MailMessage();
+         SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+         mail.From = new MailAddress("ingatlanberlesiplatform@gmail.com");
+         mail.To.Add(mailAddressTo);
+         mail.Subject = subject;
+         mail.Body = body;
+         mail.IsBodyHtml = isHtml; 
+    
+         SmtpServer.Port = 587;
+         SmtpServer.Credentials = new System.Net.NetworkCredential("ingatlanberlesiplatform@gmail.com", "mhwhbcbihzzozqvc");
+         SmtpServer.EnableSsl = true;
 
-            /*System.Net.Mail.Attachment attachment;
-            attachment = new System.Net.Mail.Attachment("");
-            mail.Attachments.Add(attachment);*/
-
-            SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("ingatlanberlesiplatform@gmail.com","mhwhbcbihzzozqvc");
-            SmtpServer.EnableSsl = true;
-            await SmtpServer.SendMailAsync(mail);
-
-        }
+         await SmtpServer.SendMailAsync(mail);
+    }
 
         public static string CreateSHA256(string input, string salt)
         {
