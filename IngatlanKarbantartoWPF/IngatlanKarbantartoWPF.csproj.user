@@ -10,13 +10,16 @@
     <Compile Update="FelhasznaloFelvitelAblak.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="FelvitelAblak.xaml.cs">
+    <Compile Update="FelhasznaloModositAblak.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IngatlanFelvitelAblak.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Login.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ModositAblak.xaml.cs">
+    <Compile Update="IngatlanModositAblak.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -24,7 +27,10 @@
     <Page Update="FelhasznaloFelvitelAblak.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="FelvitelAblak.xaml">
+    <Page Update="FelhasznaloModositAblak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="IngatlanFelvitelAblak.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Login.xaml">
@@ -33,7 +39,7 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ModositAblak.xaml">
+    <Page Update="IngatlanModositAblak.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

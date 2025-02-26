@@ -84,7 +84,6 @@ namespace IngatlanKarbantartoWPF
         }
         // INGATLANOK
 
-
         //CRUD KÉRÉSEK kezdete a Felhasznalok, Ingatlanok és a Foglalasok táblához
         private async void GET_Click(object sender, RoutedEventArgs e)
         {
@@ -121,7 +120,6 @@ namespace IngatlanKarbantartoWPF
             }
         }
 
-
         private async void POST_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -154,6 +152,9 @@ namespace IngatlanKarbantartoWPF
                 else if (path == "Felhasznalo/allUsers")
                 {
                     var felhasznaloAblak = new FelhasznaloFelvitelAblak();
+
+                    felhasznaloAblak.FelhasznaloHozzaadva += () => GET_Click(sender, e);
+
                     if (felhasznaloAblak.ShowDialog() == true)
                     {
                         FelhasznaloDTO ujFelhasznalo = felhasznaloAblak.UjFelhasznalo;
@@ -179,7 +180,6 @@ namespace IngatlanKarbantartoWPF
             }
         }
 
-
         private async void DELETE_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -190,10 +190,11 @@ namespace IngatlanKarbantartoWPF
                     return;
                 }
 
-                if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
+                // Ha a kiválasztott típus "Felhasznalo", akkor a törlés a loginName alapján történik
+                if (dtg.SelectedItem is Felhasznalok selectedFelhasznalo)
                 {
                     MessageBoxResult result = MessageBox.Show(
-                        "Biztosan törölni akarod ezt az adatot?",
+                        $"Biztosan törölni akarod a felhasználót: {selectedFelhasznalo.LoginNev}?",
                         "Megerősítés",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Question);
@@ -203,17 +204,41 @@ namespace IngatlanKarbantartoWPF
                         return;
                     }
 
-                    string url = $"https://localhost:7079/api/{path}/{selectedIngatlan.IngatlanId}";
+                    // Az URL, amely a felhasználó törléséhez szükséges, a loginName-t használja
+                    string url = $"https://localhost:7079/api/Felhasznalo/delete/{selectedFelhasznalo.LoginNev}";
                     HttpResponseMessage response = await _httpClient.DeleteAsync(url);
                     response.EnsureSuccessStatusCode();
 
+                    // Ha sikerült a törlés, frissítjük az adatokat
                     MessageBox.Show("Sikeres törlés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                    GET_Click(sender, e);
+                }
+                // Ha a kiválasztott típus "Ingatlan", akkor az ingatlan törlésére kerül sor
+                else if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
+                {
+                    MessageBoxResult result = MessageBox.Show(
+                        $"Biztosan törölni akarod az ingatlant: {selectedIngatlan.Cim}?",
+                        "Megerősítés",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
 
+                    if (result == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+
+                    // Az URL, amely az ingatlan törléséhez szükséges, az ingatlan ID-t használja
+                    string url = $"https://localhost:7079/api/ingatlan/ingatlanok/{selectedIngatlan.IngatlanId}";
+                    HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+                    response.EnsureSuccessStatusCode();
+
+                    // Ha sikerült a törlés, frissítjük az adatokat
+                    MessageBox.Show("Sikeres törlés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
                     GET_Click(sender, e);
                 }
                 else
                 {
-                    MessageBox.Show("Kérlek, válassz egy ingatlant a törléshez!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Kérlek, válassz egy felhasználót vagy ingatlant a törléshez!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)

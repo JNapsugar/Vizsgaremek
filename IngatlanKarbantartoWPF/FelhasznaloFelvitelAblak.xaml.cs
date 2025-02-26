@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -8,8 +9,13 @@ namespace IngatlanKarbantartoWPF
 {
     public partial class FelhasznaloFelvitelAblak : Window
     {
-        private readonly HttpClient _httpClient = new HttpClient();
-        private readonly string _path = "https://localhost:7079/api/Felhasznalo";
+        /*private readonly HttpClient _httpClient = new HttpClient();
+        private readonly string _path;*/
+
+        private readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("https://localhost:7079/") };
+        private readonly string _path = "api/Felhasznalo/addUser";
+
+        public event Action FelhasznaloHozzaadva;
 
         public FelhasznaloDTO UjFelhasznalo { get; private set; }
 
@@ -56,7 +62,7 @@ namespace IngatlanKarbantartoWPF
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Felhasználó sikeresen hozzáadva!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.DialogResult = true;
+                    FelhasznaloHozzaadva?.Invoke();
                     this.Close();
                 }
                 else
