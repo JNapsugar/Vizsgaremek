@@ -37,15 +37,15 @@ namespace IngatlanokBackend.Controllers
             {
                 try
                 {
-                    var telepules = await cx.Telepuleseks.FirstOrDefaultAsync(f => f.nev == nev);
+                    var telepules = await cx.Telepuleseks.FirstOrDefaultAsync(f => f.Nev == nev);
                     if (telepules == null)
                     {
                         return NotFound($"A {nev} település nem található.");
                     }
 
-                    if (telepules.kep == null)
+                    if (telepules.Kep == null)
                     {
-                        return Ok(new { telepules.nev, telepules.megye, telepules.leiras, kep = "Nincs kép" });
+                        return Ok(new { telepules.Nev, telepules.Megye, telepules.Leiras, kep = "Nincs kép" });
                     }
 
                     return Ok(telepules);

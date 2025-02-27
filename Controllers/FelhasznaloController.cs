@@ -50,6 +50,10 @@ namespace IngatlanokBackend.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token); 
         }
+
+       
+
+
         [HttpGet("allUsers")]
         public async Task<IActionResult> Get()
         {
@@ -299,6 +303,7 @@ namespace IngatlanokBackend.Controllers
                     Hash = hash,
                     Active = true,
                     PermissionId = permissionId,
+                    ProfilePicturePath = registrationDTO.ProfilePicturePath
                 };
 
                 _context.Felhasznaloks.Add(newUser);
