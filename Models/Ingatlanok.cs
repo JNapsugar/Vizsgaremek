@@ -21,8 +21,9 @@ public partial class Ingatlanok
 
     public string? Szolgaltatasok { get; set; }
 
-    public DateTime FeltoltesDatum { get; set; }
     public int Szoba { get; set; }
+
+    public DateTime FeltoltesDatum { get; set; }
 
     public virtual ICollection<Foglalasok> Foglalasoks { get; set; } = new List<Foglalasok>();
 

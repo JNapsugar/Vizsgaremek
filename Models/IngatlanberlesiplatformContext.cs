@@ -31,7 +31,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySQL("SERVER=localhost;PORT=3306;DATABASE=ingatlanberlesiplatform;USER=root;PASSWORD=;SSL MODE=none;");
+        => optionsBuilder.UseMySQL("server=localhost;database=ingatlanberlesiplatform;user=root;password=;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,45 +42,26 @@ public partial class IngatlanberlesiplatformContext : DbContext
             entity.ToTable("felhasznalok");
 
             entity.HasIndex(e => e.Email, "Email").IsUnique();
-            entity.HasIndex(e => e.LoginNev, "LoginNev").IsUnique();
+
             entity.HasIndex(e => e.PermissionId, "Jog");
 
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)");
+            entity.HasIndex(e => e.LoginNev, "LoginNev").IsUnique();
 
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasMaxLength(64);
-
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+            entity.Property(e => e.Email).HasMaxLength(64);
             entity.Property(e => e.Hash)
                 .HasMaxLength(64)
                 .HasColumnName("HASH");
-
-            entity.Property(e => e.LoginNev)
-                .IsRequired()
-                .HasMaxLength(16);
-
-            entity.Property(e => e.Name)
-                .HasMaxLength(64);
-
-            entity.Property(e => e.PermissionId)
-                .IsRequired() 
-                .HasColumnType("int(11)");
-
-            entity.Property(e => e.ProfilePicturePath)
-                .HasMaxLength(64)
-                .IsRequired()
-                .HasDefaultValue("");
-
+            entity.Property(e => e.LoginNev).HasMaxLength(16);
+            entity.Property(e => e.Name).HasMaxLength(64);
+            entity.Property(e => e.PermissionId).HasColumnType("int(11)");
+            entity.Property(e => e.ProfilePicturePath).HasMaxLength(64);
             entity.Property(e => e.Salt)
                 .HasMaxLength(64)
                 .HasColumnName("SALT");
 
-            entity.HasOne(d => d.Permission)
-                .WithMany(p => p.Felhasznaloks)
+            entity.HasOne(d => d.Permission).WithMany(p => p.Felhasznaloks)
                 .HasForeignKey(d => d.PermissionId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired() 
                 .HasConstraintName("felhasznalok_ibfk_1");
         });
 
@@ -160,7 +141,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
             entity.ToTable("ingatlanok");
 
-            entity.HasIndex(e => e.TulajdonosId, "tulajdonos_id");
+            entity.HasIndex(e => e.TulajdonosId, "ingatlanok_ibfk_1");
 
             entity.Property(e => e.IngatlanId)
                 .HasColumnType("int(11)")
@@ -188,8 +169,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("meret");
             entity.Property(e => e.Szoba)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("int(11)")
+                .HasColumnType("int(10)")
                 .HasColumnName("szoba");
             entity.Property(e => e.Szolgaltatasok)
                 .HasDefaultValueSql("'NULL'")
@@ -264,22 +244,24 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
         modelBuilder.Entity<Telepulesek>(entity =>
         {
-            entity.HasKey(e => e.nev).HasName("PRIMARY");
+            entity.HasKey(e => e.Nev).HasName("PRIMARY");
 
             entity.ToTable("telepulesek");
 
-            entity.Property(e => e.nev)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            entity.Property(e => e.megye)
-                .HasMaxLength(100);
-
-            entity.Property(e => e.leiras)
-                .HasColumnType("text");
-
-            entity.Property(e => e.kep)
-                .HasColumnType("text");
+            entity.Property(e => e.Nev)
+                .HasMaxLength(20)
+                .HasColumnName("nev");
+            entity.Property(e => e.Kep)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnType("text")
+                .HasColumnName("kep");
+            entity.Property(e => e.Leiras)
+                .HasMaxLength(300)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnName("leiras");
+            entity.Property(e => e.Megye)
+                .HasMaxLength(25)
+                .HasColumnName("megye");
         });
 
         OnModelCreatingPartial(modelBuilder);

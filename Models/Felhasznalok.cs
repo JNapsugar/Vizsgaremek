@@ -15,13 +15,13 @@ public partial class Felhasznalok
 
     public string Name { get; set; } = null!;
 
-    public int? PermissionId { get; set; }
+    public int PermissionId { get; set; }
 
     public bool Active { get; set; }
 
     public string Email { get; set; } = null!;
 
-    public string ProfilePicturePath { get; set; } = null!;
+    public string ProfilePicturePath { get; set; }
 
     public virtual ICollection<Foglalasok> Foglalasoks { get; set; } = new List<Foglalasok>();
 
