@@ -274,10 +274,6 @@ namespace IngatlanokBackend.Controllers
 
                 int permissionId = registrationDTO.PermissionId;
 
-                if (permissionId < 1 || permissionId > 3)   
-                {
-                    return BadRequest("Érvénytelen jogosultság ID. Csak 1, 2 vagy 3 engedélyezett.");
-                }
 
                 if (permissionId < 1 || permissionId > 3)
                 {
@@ -303,7 +299,7 @@ namespace IngatlanokBackend.Controllers
                     Hash = hash,
                     Active = true,
                     PermissionId = permissionId,
-                    ProfilePicturePath = registrationDTO.ProfilePicturePath
+                    ProfilePicturePath = registrationDTO.ProfilePicturePath ?? ""
                 };
 
                 _context.Felhasznaloks.Add(newUser);
