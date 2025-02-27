@@ -12,7 +12,7 @@ namespace IngatlanKarbantartoWPF
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly string _path;
 
-        public IngatlanDTO UjIngatlan { get; private set; }
+        public Ingatlanok UjIngatlan { get; private set; }
 
         public FelvitelAblak(string path)
         {
@@ -49,7 +49,7 @@ namespace IngatlanKarbantartoWPF
                 return;
             }
 
-            UjIngatlan = new IngatlanDTO
+            UjIngatlan = new Ingatlanok
             {
                 Cim = CimTextBox.Text,
                 Leiras = LeirasTextBox.Text,

@@ -51,7 +51,6 @@ namespace IngatlanKarbantartoWPF
 
                 loadedIngatlan = ingatlan;
 
-                // Az UI frissítése
                 CimTextBox.Text = loadedIngatlan.Cim;
                 LeirasTextBox.Text = loadedIngatlan.Leiras ?? string.Empty;
                 HelyszinTextBox.Text = loadedIngatlan.Helyszin ?? string.Empty;
@@ -93,9 +92,9 @@ namespace IngatlanKarbantartoWPF
                     Helyszin = HelyszinTextBox.Text,
                     Ar = decimal.Parse(ArTextBox.Text),
                     Meret = int.Parse(MeretTextBox.Text),
-                    Szolgaltatasok = "---", // Ha van ilyen mező az API-ban
-                    FeltoltesDatum = DateTime.UtcNow, // Ha szükséges
-                    TulajdonosId = loadedIngatlan.TulajdonosId // Ezt is kell küldeni, ha kötelező
+                    Szolgaltatasok = "---", 
+                    FeltoltesDatum = DateTime.UtcNow,
+                    TulajdonosId = loadedIngatlan.TulajdonosId
                 };
 
                 string url = $"https://localhost:7079/api/{path}/{ingatlanId}";
@@ -105,10 +104,14 @@ namespace IngatlanKarbantartoWPF
                 HttpResponseMessage response = await _httpClient.PutAsync(url, content);
                 response.EnsureSuccessStatusCode();
 
+                CimTextBox.Text = updatedIngatlanDTO.Cim;
+                LeirasTextBox.Text = updatedIngatlanDTO.Leiras;
+                HelyszinTextBox.Text = updatedIngatlanDTO.Helyszin;
+                ArTextBox.Text = updatedIngatlanDTO.Ar.ToString();
+                MeretTextBox.Text = updatedIngatlanDTO.Meret.ToString();
+
                 MessageBox.Show("Sikeres frissítés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-
-
             }
             catch (Exception ex)
             {
@@ -116,27 +119,18 @@ namespace IngatlanKarbantartoWPF
             }
         }
 
-        private bool AreObjectsEqual(Ingatlanok original, Ingatlanok updated)
+        public class IngatlanDTO
         {
-            return original.Cim == updated.Cim &&
-                   original.Leiras == updated.Leiras &&
-                   original.Helyszin == updated.Helyszin &&
-                   original.Ar == updated.Ar &&
-                   original.Meret == updated.Meret &&
-                   original.Szoba == updated.Szoba;
+            public int IngatlanId { get; set; }
+            public string Cim { get; set; } = null!;
+            public string? Leiras { get; set; }
+            public string? Helyszin { get; set; }
+            public decimal Ar { get; set; }
+            public int Meret { get; set; }
+            public string Szolgaltatasok { get; set; }
+            public DateTime FeltoltesDatum { get; set; }
+            public int Szoba { get; set; }
+            public int TulajdonosId { get; set; }
         }
-    }
-    public class IngatlanDTO
-    {
-        public int IngatlanId { get; set; }
-        public string Cim { get; set; } = null!;
-        public string? Leiras { get; set; }
-        public string? Helyszin { get; set; }
-        public decimal Ar { get; set; }
-        public int Meret { get; set; }
-        public string Szolgaltatasok { get; set; }
-        public DateTime FeltoltesDatum { get; set; }
-        public int Szoba { get; set; }
-        public int TulajdonosId { get; set; }
     }
 }

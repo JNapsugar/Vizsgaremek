@@ -137,7 +137,7 @@ namespace IngatlanKarbantartoWPF
                     var felvitelAblak = new FelvitelAblak(path);
                     if (felvitelAblak.ShowDialog() == true)
                     {
-                        IngatlanDTO ujIngatlan = felvitelAblak.UjIngatlan;
+                        Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;
 
                         string json = JsonSerializer.Serialize(ujIngatlan);
                         StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -257,27 +257,43 @@ namespace IngatlanKarbantartoWPF
                     return;
                 }
 
-                if (dtg.SelectedItem is not Ingatlanok selectedIngatlan)
+                // Ha egy ingatlan van kiválasztva
+                if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
                 {
-                    MessageBox.Show("Kérlek, válassz ki egy ingatlant a listából!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (selectedIngatlan.IngatlanId < 0)
+                    {
+                        MessageBox.Show("Érvénytelen ingatlan azonosító!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    var modositAblak = new ModositAblak(selectedIngatlan.IngatlanId, path);
+                    modositAblak.ShowDialog();
                     return;
                 }
 
-                if (selectedIngatlan.IngatlanId < 0)
+                // Ha egy felhasználó van kiválasztva
+                if (dtg.SelectedItem is Felhasznalok selectedUser)
                 {
-                    MessageBox.Show("Érvénytelen ingatlan azonosító!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (string.IsNullOrEmpty(selectedUser.LoginNev))
+                    {
+                        MessageBox.Show("Érvénytelen felhasználónév!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    var modositFelhasznaloAblak = new FelhasznaloModositAblak(selectedUser.LoginNev, path, selectedUser.Id);
+
+                    modositFelhasznaloAblak.ShowDialog();
                     return;
                 }
 
-                var modositAblak = new ModositAblak(selectedIngatlan.IngatlanId, path);
-                modositAblak.ShowDialog();
+                MessageBox.Show("Kérlek, válassz ki egy ingatlant vagy felhasználót a listából!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-    }
 
-    //CRUD KÉRÉSEK vége a Felhasznalok, Ingatlanok és a Foglalasok táblához
+    }
+        //CRUD KÉRÉSEK vége a Felhasznalok, Ingatlanok és a Foglalasok táblához
 }
