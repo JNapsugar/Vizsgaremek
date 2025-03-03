@@ -14,14 +14,14 @@ const Profil = () => {
         "img/headers/header4.jpg",
         "img/headers/header5.jpg"
     ];
-/*
+
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
         }, 3000);
         return () => clearInterval(interval);
     }, [images.length]);
-*/
+
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
     const [registrationData, setRegistrationData] = useState({
         loginNev: "Felhasználónév",

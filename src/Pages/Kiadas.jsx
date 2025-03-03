@@ -213,9 +213,6 @@ const IngatlanForm = () => {
         });
     };
 
-    const handleSucces = (e) => {
-        setSuccesful(false);
-    };
 
     return (
         <div>
@@ -232,7 +229,8 @@ const IngatlanForm = () => {
                 <div className="succesfulUpload">
                     <p>Ingatlan sikeresen hozzáadva!</p>
                     <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
-                    <button className="starBtn" onClick={handleSucces}>Új ingatlan feltöltése</button>
+                    <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
+                    
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="uploadForm">
