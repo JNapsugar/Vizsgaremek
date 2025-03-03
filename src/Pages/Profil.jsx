@@ -14,14 +14,14 @@ const Profil = () => {
         "img/headers/header4.jpg",
         "img/headers/header5.jpg"
     ];
-
+/*
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
         }, 3000);
         return () => clearInterval(interval);
     }, [images.length]);
-
+*/
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
     const [registrationData, setRegistrationData] = useState({
         loginNev: "Felhasználónév",
@@ -189,7 +189,7 @@ const Profil = () => {
                         {properties.length > 0 ? (
                                 properties.map((property, index) => {
                                     let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                                    const imageSrc = propertyImg ? propertyImg.KepUrl : "img/placeholder.jpg"; 
+                                    const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg"; 
                                     return (
                                         <ProfilePropertyCard
                                             key={index}

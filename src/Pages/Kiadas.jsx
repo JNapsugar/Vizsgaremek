@@ -23,7 +23,16 @@ const IngatlanForm = () => {
         return () => clearInterval(interval);
     }, [images.length]);
 
+    const [properties, setProperties] = useState([]);
+    useEffect(() => {
+        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+            .then(res => setProperties(res.data))
+            .catch(error => { console.error(error); })
+    }, []);
+
+
     const [formData, setFormData] = useState({
+        ingatlanId: 0,
         cim: '',
         leiras: '',
         helyszin: '',
@@ -32,14 +41,13 @@ const IngatlanForm = () => {
         meret: '',
         szolgaltatasok: '',
         tulajdonosId: sessionStorage.getItem("userId"),
-        kep:''
+        kep:''   
     });
     
     const [succesful, setSuccesful] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
 
-    
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         if (storedToken) {
@@ -53,17 +61,37 @@ const IngatlanForm = () => {
     const [locations, setLocations] = useState([]);
     useEffect(() => {
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
-            .then(res => {setLocations(res.data);})
+            .then(res => { setLocations(res.data); })
             .catch(error => { console.error(error); })
     }, []);
 
+    useEffect(() => {
+        if (properties.length > 0) {
+            const newIngatlanId = properties[properties.length - 1].ingatlanId + 1;
+            setFormData((prevData) => ({
+                ...prevData,
+                ingatlanId: newIngatlanId
+            }));
+        }
+    }, [properties]);
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value, 
-        }));
-        console.log(formData.kep.toString());
+        const { name, type } = e.target;
+        if (type === "file") {
+            const file = e.target.files[0];
+            if (file) {
+                const renamedFile = new File([file], `${formData.ingatlanId}.png`, { type: file.type });
+                setFormData((prevData) => ({
+                    ...prevData,
+                    [name]: renamedFile,
+                }));
+            }
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: e.target.value,
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -74,11 +102,11 @@ const IngatlanForm = () => {
             return;
         }
 
-        
         try {
             const response = await axios.post(
                 'https://localhost:7079/api/Ingatlan/ingatlanok',
                 {
+                    IngatlanId: formData.ingatlanId,
                     Cim: formData.cim,
                     Leiras: formData.leiras,
                     Helyszin: formData.helyszin,
@@ -95,24 +123,38 @@ const IngatlanForm = () => {
                     },
                 }
             );
-            /*
+            
+            const fileData = new FormData();
+            fileData.append("file", formData.kep);
+
+            const fileUploadResponse = await axios.post(
+                'https://localhost:7079/api/FileUpload/FtpServer',
+                fileData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
             const imgResponse = await axios.post(
                 'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
                 {
-                    Cim: formData.cim,
-                    kepUrl: formData.kep,
-                    ingatlanId: 0,
-                    FeltoltesDatum: new Date().toISOString(),
+                    kepUrl: `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`,
+                    ingatlanId: formData.ingatlanId,
+                    feltoltesDatum: new Date().toISOString(),
                 },
                 {
                     headers: {
+                        'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,
                     },
                 }
             );
-                */
+
             if (response.status === 200 || response.status === 201) {
-                setSuccesful(true)
+                setSuccesful(true);
                 setFormData({
                     cim: '',
                     leiras: '',
@@ -130,7 +172,6 @@ const IngatlanForm = () => {
             alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
         }
     };
-    
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -176,8 +217,6 @@ const IngatlanForm = () => {
         setSuccesful(false);
     };
 
-    
-
     return (
         <div>
             <Navbar />
@@ -189,10 +228,10 @@ const IngatlanForm = () => {
                 </div>
                 <h1 className="smallHeaderTitle">Ingatlan feltöltés</h1>
             </header>
-            {succesful? (
+            {succesful ? (
                 <div className="succesfulUpload">
                     <p>Ingatlan sikeresen hozzáadva!</p>
-                    <Link to={"/"}><button className="starBtn">Vissza a főoldalra</button></Link>
+                    <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
                     <button className="starBtn" onClick={handleSucces}>Új ingatlan feltöltése</button>
                 </div>
             ) : (
@@ -253,8 +292,8 @@ const IngatlanForm = () => {
                             value={formData.helyszin}
                             onChange={handleChange}>
                             <option value=""></option>
-                            { locations.map((location, index) => (
-                                    <option key={index} value={location.nev}>{location.nev}</option>
+                            {locations.map((location, index) => (
+                                <option key={index} value={location.nev}>{location.nev}</option>
                             ))}
                         </select>
                     </div>
@@ -323,13 +362,11 @@ const IngatlanForm = () => {
                         </div>
                     ))}
                     </button>
-
                 </form>
             )}
-            <img src="/img/city2.png" className="footerImg" alt="City View" />
-            <Footer/>
+            <Footer />
         </div>
     );
-};
+}
 
 export default IngatlanForm;

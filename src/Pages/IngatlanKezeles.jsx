@@ -5,6 +5,7 @@ import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 
 import "../style.css";
+import { set } from "lodash";
 
 const IngatlanKezeles = () => {
     const { id } = useParams(); 
@@ -121,7 +122,6 @@ const IngatlanKezeles = () => {
             }
         } catch (error) {
             console.error("Hiba történt az ingatlan adatainak módosítása során:", error);
-            alert("Nem sikerült módosítani az ingatlant. Ellenőrizd az adatokat és próbáld újra.");
         }
     };
 
@@ -169,16 +169,12 @@ const IngatlanKezeles = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-    
-            if (response.status === 200 || response.status === 204) {
-                alert("Ingatlan sikeresen törölve!");
+
+            if (response.status === 200) {
                 setSuccesful(true);
-            } else {
-                alert("Nem sikerült törölni az ingatlant. Próbáld újra később.");
             }
         } catch (error) {
             console.error("Hiba történt az ingatlan törlése során:", error);
-            alert("Nem sikerült törölni az ingatlant. Próbáld újra később.");
         }
     };
     
@@ -200,7 +196,7 @@ const IngatlanKezeles = () => {
             </header>
             {succesful ? (
                 <div className="succesfulUpload">
-                    <p>Ingatlan sikeresen módosítva!</p>
+                    <p>Sikeres művelet!</p>
                     <Link to={"/profil"}><button className="starBtn">Vissza a profilomra</button></Link>
                     <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
                 </div>
@@ -318,7 +314,7 @@ const IngatlanKezeles = () => {
                     <button type="submit" className="starBtn">
                         Ingatlan módosítása
                     </button>
-                    <button className="starBtn deleteBtn">
+                    <button className="starBtn deleteBtn" onClick={handleDelete}>
                         Ingatlan törlése
                     </button>
                 </form>
