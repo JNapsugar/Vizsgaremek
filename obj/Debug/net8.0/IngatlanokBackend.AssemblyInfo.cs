@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IngatlanokBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43e2453ffed3833a9e2a53ec93e3d4c040e7f75c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("IngatlanokBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IngatlanokBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

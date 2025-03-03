@@ -43,7 +43,7 @@ namespace IngatlanokBackend.Controllers
 
 
         [HttpPost("ingatlankepek")]
-        public async Task<IActionResult> Post([FromBody]Ingatlankepek ingatlankep)
+        public async Task<IActionResult> Post([FromBody] Ingatlankepek ingatlankep)
         {
             using (var cx = new IngatlanberlesiplatformContext())
             {

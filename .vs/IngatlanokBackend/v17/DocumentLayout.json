@@ -3,28 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\models\\telepulesek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:models\\telepulesek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\controllers\\ingatlankepekcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:controllers\\ingatlankepekcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\controllers\\felhasznalocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:controllers\\felhasznalocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\controllers\\ingatlancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:controllers\\ingatlancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\models\\ingatlanok.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:models\\ingatlanok.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\models\\ingatlanberlesiplatformcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:models\\ingatlanberlesiplatformcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|c:\\users\\jancsurakn\\desktop\\vizsgaremek-backend\\vizsgaremek-backend\\models\\ingatlankepek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E229E12B-E38B-44E2-9DB0-AA5E277F55F5}|IngatlanokBackend.csproj|solutionrelative:models\\ingatlankepek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Telepulesek.cs",
-              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\Telepulesek.cs",
-              "RelativeDocumentMoniker": "Models\\Telepulesek.cs",
-              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\Telepulesek.cs",
-              "RelativeToolTip": "Models\\Telepulesek.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:56:42.257Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IngatlanberlesiplatformContext.cs",
-              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\IngatlanberlesiplatformContext.cs",
-              "RelativeDocumentMoniker": "Models\\IngatlanberlesiplatformContext.cs",
-              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\IngatlanberlesiplatformContext.cs",
-              "RelativeToolTip": "Models\\IngatlanberlesiplatformContext.cs",
-              "ViewState": "AQIAAM4AAAAAAAAAAAAAAN8AAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:51:21.548Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Ingatlanok.cs",
-              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\Ingatlanok.cs",
-              "RelativeDocumentMoniker": "Models\\Ingatlanok.cs",
-              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\Ingatlanok.cs",
-              "RelativeToolTip": "Models\\Ingatlanok.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAA0wBgAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:50:15.698Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IngatlanController.cs",
-              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Controllers\\IngatlanController.cs",
-              "RelativeDocumentMoniker": "Controllers\\IngatlanController.cs",
-              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Controllers\\IngatlanController.cs",
-              "RelativeToolTip": "Controllers\\IngatlanController.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAAAGUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-18T20:11:42.41Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FelhasznaloController.cs",
-              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Controllers\\FelhasznaloController.cs",
-              "RelativeDocumentMoniker": "Controllers\\FelhasznaloController.cs",
-              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Controllers\\FelhasznaloController.cs",
-              "RelativeToolTip": "Controllers\\FelhasznaloController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFIBAAAJAAAA",
+              "Title": "Ingatlankepek.cs",
+              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\Ingatlankepek.cs",
+              "RelativeDocumentMoniker": "Models\\Ingatlankepek.cs",
+              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Models\\Ingatlankepek.cs",
+              "RelativeToolTip": "Models\\Ingatlankepek.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-18T19:40:54.979Z",
+              "WhenOpened": "2025-03-03T08:10:27.231Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "IngatlankepekController.cs",
+              "DocumentMoniker": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Controllers\\IngatlankepekController.cs",
+              "RelativeDocumentMoniker": "Controllers\\IngatlankepekController.cs",
+              "ToolTip": "C:\\Users\\jancsurakN\\Desktop\\Vizsgaremek-backend\\Vizsgaremek-backend\\Controllers\\IngatlankepekController.cs",
+              "RelativeToolTip": "Controllers\\IngatlankepekController.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAAC0AAABTAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-18T11:39:28.795Z",
+              "WhenOpened": "2025-03-03T08:02:43.708Z",
               "EditorCaption": ""
             }
           ]

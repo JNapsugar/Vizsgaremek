@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace IngatlanokBackend.Models;
 
@@ -14,5 +15,5 @@ public partial class Ingatlankepek
     public DateTime FeltoltesDatum { get; set; }
 
     [JsonIgnore]
-    public virtual Ingatlanok Ingatlan { get; set; } = null!;
+    public virtual Ingatlanok? Ingatlan { get; set; } = null!;
 }
