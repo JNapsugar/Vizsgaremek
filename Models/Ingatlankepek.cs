@@ -13,5 +13,6 @@ public partial class Ingatlankepek
 
     public DateTime FeltoltesDatum { get; set; }
 
+    [JsonIgnore]
     public virtual Ingatlanok Ingatlan { get; set; } = null!;
 }
