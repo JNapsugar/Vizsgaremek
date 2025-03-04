@@ -8,7 +8,7 @@ import ElfelejtettJelszo from './Pages/ElfelejtettJelszo';
 import Profil from './Pages/Profil';
 import Kiadas from './Pages/Kiadas';
 import IngatlanKezeles from './Pages/IngatlanKezeles';
- 
+
 function App() {
   return (
     <Router>
