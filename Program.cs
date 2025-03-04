@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace IngatlanokBackend
-{
+{  
     public class Program
     {
         public static string ftpUrl = "ftp.nethely.hu";
