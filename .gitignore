@@ -8,7 +8,7 @@
 /obj
 /bin
 /.vs
-/obj
+
 # testing
 /coverage
 
