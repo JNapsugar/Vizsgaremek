@@ -28,7 +28,7 @@ namespace IngatlanKarbantartoWPF
         {
             "Felhasznalo/allUsers",
             "ingatlan/ingatlanok",
-            "Foglalasok",
+            "Foglalasok/user",
         };
 
         public static string path = string.Empty;
@@ -100,18 +100,19 @@ namespace IngatlanKarbantartoWPF
                 response.EnsureSuccessStatusCode();
 
                 string responseContent = await response.Content.ReadAsStringAsync();
+                //MessageBox.Show(responseContent, "Kapott válasz", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 if (path == "ingatlan/ingatlanok")
                 {
-                    var ingatlanok = JsonSerializer.Deserialize<List<Ingatlanok>>(responseContent,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    dtg.ItemsSource = ingatlanok;
+                    dtg.ItemsSource = JsonSerializer.Deserialize<List<Ingatlanok>>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 }
                 else if (path == "Felhasznalo/allUsers")
                 {
-                    var felhasznalok = JsonSerializer.Deserialize<List<Felhasznalok>>(responseContent,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    dtg.ItemsSource = felhasznalok;
+                    dtg.ItemsSource = JsonSerializer.Deserialize<List<Felhasznalok>>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                }
+                else
+                {
+                    MessageBox.Show("Ismeretlen végpont!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -268,6 +269,7 @@ namespace IngatlanKarbantartoWPF
 
                     var modositAblak = new ModositAblak(selectedIngatlan.IngatlanId, path);
                     modositAblak.ShowDialog();
+                    GET_Click(sender, e);
                     return;
                 }
 
@@ -281,8 +283,8 @@ namespace IngatlanKarbantartoWPF
                     }
 
                     var modositFelhasznaloAblak = new FelhasznaloModositAblak(selectedUser.LoginNev, path, selectedUser.Id);
-
                     modositFelhasznaloAblak.ShowDialog();
+                    GET_Click(sender, e);
                     return;
                 }
 
