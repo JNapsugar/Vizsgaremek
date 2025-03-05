@@ -276,21 +276,21 @@ namespace IngatlanKarbantartoWPF
                 // Ha egy felhasználó van kiválasztva
                 if (dtg.SelectedItem is Felhasznalok selectedUser)
                 {
-                    if (string.IsNullOrEmpty(selectedUser.LoginNev))
+                    if (selectedUser.Id <= 0)
                     {
-                        MessageBox.Show("Érvénytelen felhasználónév!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Érvénytelen felhasználó azonosító!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    var modositFelhasznaloAblak = new FelhasznaloModositAblak(selectedUser.LoginNev, path, selectedUser.Id);
+                    var modositFelhasznaloAblak = new FelhasznaloModositAblak(selectedUser.Id);
                     modositFelhasznaloAblak.ShowDialog();
                     GET_Click(sender, e);
                     return;
                 }
 
-                MessageBox.Show("Kérlek, válassz ki egy ingatlant vagy felhasználót a listából!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Kérlek, válassz ki egy felhasználót vagy ingatlant a listából!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception ex)
+            catch (Exception ex) // IDE KERÜLT A CATCH!
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
