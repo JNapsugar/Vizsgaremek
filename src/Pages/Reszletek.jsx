@@ -37,10 +37,13 @@ const App = () => {
     }, [ingatlanId]);
 
     useEffect(() => {
-        axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${property.tulajdonosId}`)
-            .then(res => setOwner(res.data))
-            .catch(error => { console.error(error); })
+        if (property.tulajdonosId) {
+            axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${property.tulajdonosId}`)
+                .then(res => setOwner(res.data))
+                .catch(error => { console.error(error); });
+        }
     }, [property.tulajdonosId]);
+    
     
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
