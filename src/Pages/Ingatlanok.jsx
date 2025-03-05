@@ -291,7 +291,7 @@ const Ingatlanok = () => {
                             {filteredProperties.map((property, index) => {
                                 let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
                                 return filters.nezet === "grid" ? (
-                                <PropertyListItem
+                                <PropertyCard
                                     key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
                                     property={property}
                                     propertyImg={propertyImg}
