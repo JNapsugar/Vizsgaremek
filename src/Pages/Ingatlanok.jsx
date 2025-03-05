@@ -288,14 +288,22 @@ const Ingatlanok = () => {
                         
                     ) : (
                         <div className='cardContainer'>
-                            {filteredProperties.map((property) => {
+                            {filteredProperties.map((property, index) => {
                                 let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
                                 return filters.nezet === "grid" ? (
-                                    <PropertyCard key={property.IngatlanId} property={property} propertyImg={propertyImg}/>
+                                <PropertyListItem
+                                    key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
+                                    property={property}
+                                    propertyImg={propertyImg}
+                                />
                                 ) : (
-                                    <PropertyListItem key={property.IngatlanId} property={property} propertyImg={propertyImg} />
+                                <PropertyListItem
+                                    key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
+                                    property={property}
+                                    propertyImg={propertyImg}
+                                />
                                 );
-                        })}
+                            })}
                         </div>
                         )
                 )}
