@@ -91,15 +91,17 @@ const Profil = () => {
     const handleSave = () => {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
-    
+        const userId = sessionStorage.getItem("userId");
+        
         if (token && username) {
             console.log(registrationData);
             axios
-                .put(`https://localhost:7079/api/Felhasznalo/${username}`, registrationData, {
+                .put(`https://localhost:7079/api/Felhasznalo/${userId}`, registrationData, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
                     setIsEditView(false);
+                    localStorage.setItem("username", registrationData.loginNev);
                 })
                 .catch((error) => {
                     console.error("Hiba a profil mentésekor:", error);
@@ -109,6 +111,7 @@ const Profil = () => {
             alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
         }
     };
+    
     
 
     const handleLogout = () => {
