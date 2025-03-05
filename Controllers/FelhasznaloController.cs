@@ -84,7 +84,7 @@ namespace IngatlanokBackend.Controllers
                             f.LoginNev,
                             f.Name,
                             f.Email,
-                            f.ProfilePicturePath
+                            f.ProfilePicturePath,
                         })
                         .FirstOrDefaultAsync();
 
@@ -382,12 +382,12 @@ namespace IngatlanokBackend.Controllers
             }
         }
 
-        [HttpPut("{loginNev}")]
-        public async Task<IActionResult> UpdateUser(string loginNev, [FromBody] UpdateUserDTO updatedUserData)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody] UpdateUserDTO updatedUserData)
         {
             try
             {
-                var user = await _context.Felhasznaloks.FirstOrDefaultAsync(u => u.LoginNev == loginNev);
+                var user = await _context.Felhasznaloks.FirstOrDefaultAsync(u => u.Id == userId);
                 if (user == null)
                 {
                     return NotFound("A megadott felhasználónév nem található.");
@@ -414,7 +414,7 @@ namespace IngatlanokBackend.Controllers
                     string newHash = Program.CreateSHA256(updatedUserData.Password, newSalt);
 
                     user.Salt = newSalt;
-                    user.Hash = newHash; 
+                    user.Hash = newHash;
                 }
 
                 if (updatedUserData.PermissionId.HasValue)
@@ -437,6 +437,7 @@ namespace IngatlanokBackend.Controllers
                 return StatusCode(500, $"Hiba történt a felhasználói adatok frissítése során: {ex.Message}");
             }
         }
+
 
 
         [HttpDelete("delete/{loginName}")]
