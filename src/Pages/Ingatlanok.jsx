@@ -132,7 +132,7 @@ const Ingatlanok = () => {
         return (
             (filters.megye === "Összes" || filteredLocations.some(location => location.nev === property.helyszin)) &&
             (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
-            (filters.szoba === "Mindegy" || ((property.szoba <= 5) ? (property.szoba === filters.szoba) : (filters.szoba === "Több mint 5"))) &&
+            (filters.szoba === "Mindegy" || (filters.szoba === "Több mint 5" ? property.szoba > 5 : property.szoba === parseInt(filters.szoba))) &&
             (!filters.wifiCb || property.szolgaltatasok.includes("Wi-Fi")) &&
             (!filters.petCb || property.szolgaltatasok.includes("kutya hozható")) &&
             (!filters.parkolasCb || property.szolgaltatasok.includes("parkolás")) &&
@@ -175,11 +175,11 @@ const Ingatlanok = () => {
     const Checkbox = ({ id, label}) => {
         return (
             <div className='checkboxContainer'>
-                <label >{label}: </label>
-                <input type="checkbox" id={id} className="filterCheckbox" onChange={handleFilterChange} />
+                <label>{label}: </label>
+                <input type="checkbox" id={id} className="filterCheckbox" onChange={handleFilterChange} checked={filters[id]} />
             </div>
         );
-    };
+    };   
 
     return (
         <div>
@@ -291,7 +291,7 @@ const Ingatlanok = () => {
                             {filteredProperties.map((property, index) => {
                                 let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
                                 return filters.nezet === "grid" ? (
-                                <PropertyListItem
+                                <PropertyCard
                                     key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
                                     property={property}
                                     propertyImg={propertyImg}
