@@ -62,7 +62,7 @@ namespace IngatlanokBackend.Controllers
 
             bool isAvailable = !_context.Foglalasoks
                 .Any(b => b.IngatlanId == request.IngatlanId &&
-                          b.Allapot == "Confirmed" &&
+                          b.Allapot == "elfogadva" &&
                           b.KezdesDatum < request.BefejezesDatum &&
                           b.BefejezesDatum > request.KezdesDatum);
 
@@ -77,7 +77,7 @@ namespace IngatlanokBackend.Controllers
                 BerloId = request.BerloId,
                 KezdesDatum = request.KezdesDatum,
                 BefejezesDatum = request.BefejezesDatum,
-                Allapot = "Pending"
+                Allapot = "függőben"
             };
 
             _context.Foglalasoks.Add(booking);
