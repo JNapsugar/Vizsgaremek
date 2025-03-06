@@ -996,6 +996,102 @@ hr{
   float: right;
 }
 
+.calendarSection {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+}
+
+.calendarContainer, .datesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 2rem;
+  width: 100%;
+
+  h1{
+    color: #e09900;
+    font-weight: 100;
+  }
+
+  .starBtn{
+    margin: 5rem;
+    margin-bottom: 0;
+    border-radius: 1.5rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-family: Poiret One;
+  }
+}
+
+.dateInput{
+  width: 15rem;
+  height: 3rem;
+  margin: 0.5rem;
+  background-color: #888;
+  border-radius: 1rem;
+  text-align: center;
+  color: black;
+  border: 1px solid black;
+  font-size: 1rem;
+}
+
+.dateInput::placeholder {
+  color:#555;
+}
+
+.calendar {
+  border: none;
+  background-color: #333 !important;
+  color: #ffffff;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+}
+
+.react-calendar {
+  width: 30rem !important;
+}
+
+.react-calendar__tile {
+  background: transparent;
+  color: #ffffff;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  height: 3rem;
+}
+
+.react-calendar__tile:hover {
+  background: rgb(64, 64, 64) !important;
+}
+
+.react-calendar__tile:disabled{
+  background: rgba(30, 30, 30, 0.7) !important;
+}
+
+
+.react-calendar__navigation button, .react-calendar__navigation button:disabled {
+  background: none !important;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:hover {
+  color: #ffa500 !important;
+  background: none !important;
+}
+
+.highlighted {
+  background-color: rgba(233, 167, 45, 0.511) !important;
+  color: white;
+}
+
+
+
 .moreRecs{
   margin-left: 5rem;
   display: flex;
@@ -1461,6 +1557,16 @@ a{
 .propertyContactCard{
   margin: 2rem auto;
 }
+
+.calendarSection {
+  flex-direction: column;
+}
+
+.calendarContainer, .datesContainer {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
 }
 
 

@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react'
 import { Link } from 'react-router-dom'
+import 'react-calendar/dist/Calendar.css';
 
 export default function PropertyCard({index, property, propertyImg}) {
     const services = property.szolgaltatasok ? property.szolgaltatasok.split(', ') : [];
@@ -10,7 +11,7 @@ export default function PropertyCard({index, property, propertyImg}) {
             {propertyImg ? (
                 <img src={propertyImg.kepUrl} alt={property.cim} loading="lazy" />
             ) : (
-                <img src="img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
+                <img src="/img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
             )}
             <div className="card-content">
                 <h2>{property.helyszin} <span className="price">{property.ar} Ft/hónap</span></h2>

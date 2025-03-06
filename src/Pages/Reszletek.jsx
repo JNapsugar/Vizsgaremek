@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import 'react-calendar/dist/Calendar.css';
 import '../style.css';
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import PropertyCard from '../Components/PropertyCard';
+import Calendar from 'react-calendar'
 
 const App = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -13,6 +15,14 @@ const App = () => {
     const [owner, setOwner] = useState({});
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
+    const { ingatlanId } = useParams();
+    const permission = sessionStorage.getItem("permission");
+    const userId = sessionStorage.getItem("userId");
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [selectingStart, setSelectingStart] = useState(true);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     const images = [
         "/img/headers/header1.jpg",
@@ -22,7 +32,12 @@ const App = () => {
         "/img/headers/header5.jpg"
     ];
 
-    const { ingatlanId } = useParams();
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}`)
@@ -43,8 +58,7 @@ const App = () => {
                 .catch(error => { console.error(error); });
         }
     }, [property.tulajdonosId]);
-    
-    
+
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
             .then(res => {
@@ -61,12 +75,55 @@ const App = () => {
             .catch(error => { console.error(error); })
     }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
+    const handleDateChange = (date) => {
+        if (selectingStart) {
+            if (date > today) {
+                setStartDate(date);
+                setEndDate(null);
+                setSelectingStart(false);
+            } else {
+                alert("Csak a mai nap utáni dátumokat választhatod kezdő dátumként!");
+            }
+        } else if (!startDate || date > startDate) {
+            setEndDate(date);
+            setSelectingStart(true);
+        } else {
+            alert("A végdátumnak későbbinek kell lennie, mint a kezdődátum!");
+        }
+    };
+    const isBetween = (date) => {
+        return startDate && endDate && date > startDate && date < endDate;
+    };
+
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month' && isBetween(date)) {
+            return 'highlighted';
+        }
+        return '';
+    };
+
+    const handleBooking = () => {
+        if (!startDate || !endDate) {
+            alert("Kérlek válassz kezdő és végdátumot!");
+            return;
+        }
+
+        const bookingData = {
+            ingatlanId: property.ingatlanId,
+            berloId: userId,
+            kezdesDatum: startDate.toISOString(),
+            befejezesDatum: endDate.toISOString()
+        };
+
+        axios.post('https://localhost:7079/api/Foglalasok', bookingData)
+            .then(response => {
+                document.getElementById('bookingResponse').innerText = "Foglalási kérelem sikeresen elküldve!";
+            })
+            .catch(error => {
+                console.error("Hiba történt a foglalás során", error);
+                document.getElementById('bookingResponse').innerText = "Hiba történt a foglalási kérelem elküldésekor!";
+            });
+    };
 
     return (
         <div>
@@ -140,8 +197,8 @@ const App = () => {
 
                 <div className="propertyContactCard">
                     <p className="propertyContactTitle">Kapcsolat:</p>
-                    <img 
-                        src={owner.ProfilePicturePath ? owner.ProfilePicturePath : "/img/defaultPfp.jpg"} 
+                    <img
+                        src={owner.ProfilePicturePath ? owner.ProfilePicturePath : "/img/defaultPfp.jpg"}
                         className="uploaderImg" alt="Uploader" loading="lazy"
                         onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
                     />
@@ -156,19 +213,58 @@ const App = () => {
                 </div>
             </div>
 
-            <hr />
+            {permission === '3' ? (
+                <div>
+                    <hr />
+                    <div className='calendarSection'>
+                        <div className='calendarContainer'>
+                            <Calendar
+                                onChange={handleDateChange}
+                                value={selectingStart ? startDate : endDate}
+                                minDate={selectingStart ? new Date(today.getTime() + 86400000) : startDate}
+                                className="calendar" tileClassName={tileClassName}
+                            />
+                        </div>
+                        <div className="datesContainer">
+                            <h1>{selectingStart ? "Válasszon kezdődátumot" : "Válasszon végdátumot"}</h1>
+                            <input type="text" id="startDate" className='dateInput'
+                                value={startDate ? startDate.toLocaleDateString() : ""}
+                                placeholder="Válasszon dátumot" readOnly
+                            /><br />
+                            <input type="text" id="endDate" className='dateInput'
+                                value={endDate ? endDate.toLocaleDateString() : ""}
+                                placeholder="Válaszzon dátumot" readOnly
+                            />
+                            <button className="starBtn" onClick={handleBooking}>
+                                Foglalás
+                                {[...Array(6)].map((_, i) => (
+                                    <div key={i} className={`absolute star-${i + 1} animate-spin-slow`}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" className="w-6 h-6 text-yellow-400">
+                                            <path fill="currentColor" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/>
+                                        </svg>
+                                    </div>
+                                ))}
+                            </button>
+                            <p id='bookingResponse' className='errorMessage'></p>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <p className='errorMessage'>Foglaláshoz jelentkezzen be egy bérlő fiókba</p>
+            )}
 
+            <hr />
             <p className="moreRecsTitle">További ajánlatok</p>
 
             <div className="moreRecs">
                 {properties.map((property, index) => {
                     let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                    return <PropertyCard key={index} property={property} propertyImg={propertyImg}/>;
+                    return <PropertyCard key={index} property={property} propertyImg={propertyImg} />;
                 })}
             </div>
 
             <img src="/img/city2.png" className="footerImg" alt="City View" />
-            <Footer/>
+            <Footer />
         </div>
     );
 };
