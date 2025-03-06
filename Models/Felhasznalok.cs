@@ -21,9 +21,11 @@ public partial class Felhasznalok
 
     public string Email { get; set; } = null!;
 
-    public string ProfilePicturePath { get; set; }
+    public string ProfilePicturePath { get; set; } = null!;
 
-    public virtual ICollection<Foglalasok> Foglalasoks { get; set; } = new List<Foglalasok>();
+    public virtual ICollection<Foglalasok> FoglalasokBerlos { get; set; } = new List<Foglalasok>();
+
+    public virtual ICollection<Foglalasok> FoglalasokTulajdonos { get; set; } = new List<Foglalasok>();
 
     public virtual ICollection<Ingatlanok> Ingatlanoks { get; set; } = new List<Ingatlanok>();
 

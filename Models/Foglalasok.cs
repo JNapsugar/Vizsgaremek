@@ -19,7 +19,11 @@ public partial class Foglalasok
 
     public DateTime LetrehozasDatum { get; set; }
 
+    public int? TulajdonosId { get; set; }
+
     public virtual Felhasznalok Berlo { get; set; } = null!;
 
     public virtual Ingatlanok Ingatlan { get; set; } = null!;
+
+    public virtual Felhasznalok? Tulajdonos { get; set; }
 }
