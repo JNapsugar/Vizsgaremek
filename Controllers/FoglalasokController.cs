@@ -129,6 +129,37 @@ namespace IngatlanokBackend.Controllers
             });
         }
 
+        [HttpPut("modositas/{foglalasId}")]
+        public async Task<IActionResult> UpdateBooking(int foglalasId, [FromBody] BookingRequestDTO updatedBooking)
+        {
+            var booking = await _context.Foglalasoks.FindAsync(foglalasId);
+            if (booking == null)
+            {
+                return NotFound("A foglalás nem található.");
+            }
+
+            bool isAvailable = !_context.Foglalasoks
+                .Any(b => b.IngatlanId == booking.IngatlanId &&
+                          b.FoglalasId != foglalasId &&
+                          b.KezdesDatum < updatedBooking.BefejezesDatum &&
+                          b.BefejezesDatum > updatedBooking.KezdesDatum);
+
+            if (!isAvailable)
+            {
+                return BadRequest("Az ingatlan a kiválasztott időszakban már foglalt.");
+            }
+
+            booking.KezdesDatum = updatedBooking.KezdesDatum;
+            booking.BefejezesDatum = updatedBooking.BefejezesDatum;
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                Message = "A foglalás sikeresen módosítva.",
+                BookingId = booking.FoglalasId
+            });
+        }
+
 
         [HttpDelete("{foglalasId}")]
         public async Task<IActionResult> DeleteBooking(int foglalasId)
