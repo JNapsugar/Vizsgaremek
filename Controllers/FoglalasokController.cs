@@ -161,6 +161,8 @@ namespace IngatlanokBackend.Controllers
         }
 
 
+
+
         [HttpDelete("{foglalasId}")]
         public async Task<IActionResult> DeleteBooking(int foglalasId)
         {
