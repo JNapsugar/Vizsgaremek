@@ -73,6 +73,8 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
             entity.HasIndex(e => e.BerloId, "berlo_id");
 
+            entity.HasIndex(e => e.TulajdonosId, "fk_tulajdonos");
+
             entity.HasIndex(e => e.IngatlanId, "ingatlan_id");
 
             entity.Property(e => e.FoglalasId)
@@ -98,14 +100,23 @@ public partial class IngatlanberlesiplatformContext : DbContext
                 .HasDefaultValueSql("'current_timestamp()'")
                 .HasColumnType("timestamp")
                 .HasColumnName("letrehozas_datum");
+            entity.Property(e => e.TulajdonosId)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnType("int(11)")
+                .HasColumnName("tulajdonos_id");
 
-            entity.HasOne(d => d.Berlo).WithMany(p => p.Foglalasoks)
+            entity.HasOne(d => d.Berlo).WithMany(p => p.FoglalasokBerlos)
                 .HasForeignKey(d => d.BerloId)
                 .HasConstraintName("foglalasok_ibfk_2");
 
             entity.HasOne(d => d.Ingatlan).WithMany(p => p.Foglalasoks)
                 .HasForeignKey(d => d.IngatlanId)
                 .HasConstraintName("foglalasok_ibfk_1");
+
+            entity.HasOne(d => d.Tulajdonos).WithMany(p => p.FoglalasokTulajdonos)
+                .HasForeignKey(d => d.TulajdonosId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_tulajdonos");
         });
 
         modelBuilder.Entity<Ingatlankepek>(entity =>
@@ -218,28 +229,6 @@ public partial class IngatlanberlesiplatformContext : DbContext
             entity.Property(e => e.SzerepkorNev)
                 .HasMaxLength(50)
                 .HasColumnName("szerepkor_nev");
-
-            entity.HasMany(d => d.Jogosultsags).WithMany(p => p.Szerepkors)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Szerepkorjogosultsagok",
-                    r => r.HasOne<Jogosultsagok>().WithMany()
-                        .HasForeignKey("JogosultsagId")
-                        .HasConstraintName("szerepkorjogosultsagok_ibfk_2"),
-                    l => l.HasOne<Szerepkorok>().WithMany()
-                        .HasForeignKey("SzerepkorId")
-                        .HasConstraintName("szerepkorjogosultsagok_ibfk_1"),
-                    j =>
-                    {
-                        j.HasKey("SzerepkorId", "JogosultsagId").HasName("PRIMARY");
-                        j.ToTable("szerepkorjogosultsagok");
-                        j.HasIndex(new[] { "JogosultsagId" }, "jogosultsag_id");
-                        j.IndexerProperty<int>("SzerepkorId")
-                            .HasColumnType("int(11)")
-                            .HasColumnName("szerepkor_id");
-                        j.IndexerProperty<int>("JogosultsagId")
-                            .HasColumnType("int(11)")
-                            .HasColumnName("jogosultsag_id");
-                    });
         });
 
         modelBuilder.Entity<Telepulesek>(entity =>

@@ -50,8 +50,63 @@ namespace IngatlanokBackend.Controllers
             });
         }
 
+        [HttpGet("tulajdonos/{tulajdonosId}/pending")]
+        public async Task<IActionResult> GetPendingBookingsForOwner(int tulajdonosId)
+        {
+            var pendingBookings = await _context.Foglalasoks
+                .Where(b => b.Allapot == "függőben" && _context.Ingatlanoks
+                    .Any(i => i.IngatlanId == b.IngatlanId && i.TulajdonosId == tulajdonosId))
+                .Select(b => new BookingResponseDTO
+                {
+                    FoglalasId = b.FoglalasId,
+                    IngatlanId = b.IngatlanId,
+                    BerloId = b.BerloId,
+                    KezdesDatum = b.KezdesDatum,
+                    BefejezesDatum = b.BefejezesDatum,
+                    Allapot = b.Allapot
+                })
+                .ToListAsync();
 
-        [HttpPost]
+            return Ok(pendingBookings);
+        }
+
+        [HttpGet("tulajdonos/{tulajdonosId}")]
+        public async Task<IActionResult> GetOwnerBookings(int tulajdonosId)
+        {
+            var ownerBookings = await _context.Foglalasoks
+                .Where(b => _context.Ingatlanoks
+                    .Any(i => i.IngatlanId == b.IngatlanId && i.TulajdonosId == tulajdonosId))
+                .Select(b => new BookingResponseDTO
+                {
+                    FoglalasId = b.FoglalasId,
+                    IngatlanId = b.IngatlanId,
+                    BerloId = b.BerloId,
+                    KezdesDatum = b.KezdesDatum,
+                    BefejezesDatum = b.BefejezesDatum,
+                    Allapot = b.Allapot
+                })
+                .ToListAsync();
+
+            return Ok(ownerBookings);
+        }
+
+        [HttpGet("ingatlan/{ingatlanId}/tulajdonos")]
+        public async Task<IActionResult> GetPropertyOwner(int ingatlanId)
+        {
+            var property = await _context.Ingatlanoks
+                .Where(i => i.IngatlanId == ingatlanId)
+                .Select(i => new { i.TulajdonosId })
+                .FirstOrDefaultAsync();
+
+            if (property == null)
+            {
+                return NotFound("Az ingatlan nem található.");
+            }
+
+            return Ok(property);
+        }
+
+        [HttpPost("addBooking")]
         public async Task<IActionResult> CreateBooking([FromBody] BookingRequestDTO request)
         {
             var property = await _context.Ingatlanoks.FindAsync(request.IngatlanId);
@@ -77,6 +132,7 @@ namespace IngatlanokBackend.Controllers
                 BerloId = request.BerloId,
                 KezdesDatum = request.KezdesDatum,
                 BefejezesDatum = request.BefejezesDatum,
+                TulajdonosId = request.TulajdonosId,
                 Allapot = "függőben"
             };
 
@@ -94,40 +150,9 @@ namespace IngatlanokBackend.Controllers
             });
         }
 
-        [HttpPut("valasz/{foglalasId}/{tulajdonosId}")]
-        public async Task<IActionResult> RespondToBooking(int foglalasId, int tulajdonosId, [FromBody] BookingResponseDTO response)
-        {
-            var booking = await _context.Foglalasoks.FindAsync(foglalasId);
-            if (booking == null)
-            {
-                return NotFound("A foglalás nem található.");
-            }
 
-            var property = await _context.Ingatlanoks.FindAsync(booking.IngatlanId);
-            if (property == null)
-            {
-                return NotFound("Az ingatlan nem található.");
-            }
 
-            if (property.TulajdonosId != tulajdonosId)
-            {
-                return Unauthorized("Nem vagy jogosult ezt a foglalást kezelni.");
-            }
 
-            if (response.Allapot != "Elfogadva" && response.Allapot != "Elutasítva")
-            {
-                return BadRequest("Csak 'Elfogadva' vagy 'Elutasítva' állapot adható meg.");
-            }
-
-            booking.Allapot = response.Allapot;
-            await _context.SaveChangesAsync();
-
-            return Ok(new
-            {
-                Message = $"A foglalás állapota {response.Allapot} lett.",
-                BookingId = booking.FoglalasId
-            });
-        }
 
         [HttpPut("modositas/{foglalasId}")]
         public async Task<IActionResult> UpdateBooking(int foglalasId, [FromBody] BookingRequestDTO updatedBooking)
