@@ -25,7 +25,6 @@ namespace IngatlanokBackend.Controllers
 
         [Route("FtpServer")]
         [HttpPost]
-
         public async Task<IActionResult> FileUploadFtp()
         {
             try
@@ -36,6 +35,26 @@ namespace IngatlanokBackend.Controllers
                 string subFolder = "/";
 
                 var url = "ftp://ftp.nethely.hu" + subFolder + "/" + fileName;
+
+                bool fileExists = false;
+                try
+                {
+                    FtpWebRequest checkRequest = (FtpWebRequest)WebRequest.Create(url);
+                    checkRequest.Credentials = new NetworkCredential("ingatlan", "Ingatlanok12345");
+                    checkRequest.Method = WebRequestMethods.Ftp.GetFileSize;
+                    using (FtpWebResponse response = (FtpWebResponse)checkRequest.GetResponse())
+                    {
+                        fileExists = true;
+                    }
+                }
+                catch (WebException ex)
+                {
+                    if (((FtpWebResponse)ex.Response).StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        fileExists = false;
+                    }
+                }
+
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
                 request.Credentials = new NetworkCredential("ingatlan", "Ingatlanok12345");
                 request.Method = WebRequestMethods.Ftp.UploadFile;
@@ -43,13 +62,14 @@ namespace IngatlanokBackend.Controllers
                 {
                     postedFile.CopyTo(ftpStream);
                 }
-                return Ok(fileName);
 
+                return Ok(fileName);
             }
             catch (Exception)
             {
                 return Ok("default.jpg");
             }
         }
+
     }
 }
