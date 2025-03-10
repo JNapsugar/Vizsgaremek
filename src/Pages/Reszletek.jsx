@@ -115,7 +115,7 @@ const App = () => {
             befejezesDatum: endDate.toISOString()
         };
 
-        axios.post('https://localhost:7079/api/Foglalasok', bookingData)
+        axios.post('https://localhost:7079/api/Foglalasok/addBooking', bookingData)
             .then(response => {
                 document.getElementById('bookingResponse').innerText = "Foglalási kérelem sikeresen elküldve!";
             })

@@ -28,7 +28,8 @@ const Profil = () => {
         loginNev: "Felhasználónév",
         email: "felhasználó@domain.com",
         name: "Teljes név",
-        PermissionId: 0
+        PermissionId: 0,
+        profilePicturePath: "",
     });
     const userId = sessionStorage.getItem("userId");
     const [properties, setProperties] = useState([]);
@@ -54,6 +55,7 @@ const Profil = () => {
         } else {
             console.error("Hibás felhasználó");
         }
+        
     }, []);
     
     useEffect(() => {
@@ -148,29 +150,68 @@ const Profil = () => {
         }
     }
 
+    
     const handleSave = () => {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
         const userId = sessionStorage.getItem("userId");
-        
-        if (token && username) {
-            console.log(registrationData);
-            axios
-                .put(`https://localhost:7079/api/Felhasznalo/${userId}`, registrationData, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((response) => {
-                    setIsEditView(false);
-                    localStorage.setItem("username", registrationData.loginNev);
-                })
-                .catch((error) => {
-                    console.error("Hiba a profil mentésekor:", error);
-                    alert("Hiba történt a profil mentésekor.");
-                });
-        } else {
+    
+        if (!token || !username) {
             alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
+            return;
         }
-    };
+    
+        const uploadImage = async () => {
+            try {
+                if (!registrationData.profilePicturePath || !(registrationData.profilePicturePath instanceof File)) {
+                    return `http://images.ingatlanok.nhely.hu/${userId}pfp.png`;
+                }
+    
+                const file = registrationData.profilePicturePath;
+                const renamedFile = new File([file], `${userId}pfp.png`, { type: file.type });
+    
+                const formData = new FormData();
+                formData.append("file", renamedFile);
+    
+                const fileUploadResponse = await axios.post(
+                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data",
+                        }
+                    }
+                );
+    
+                const newProfilePicturePath = fileUploadResponse.data;
+                return newProfilePicturePath;
+    
+            } catch (error) {
+                console.error("Hiba történt a kép feltöltésekor:", error);
+                throw new Error("Hiba történt a kép feltöltésekor.");
+            }
+        };
+    
+        uploadImage()
+            .then(async (newProfilePicturePath) => {
+                const updatedData = { 
+                    ...registrationData, 
+                    profilePicturePath: `http://images.ingatlanok.nhely.hu/${userId}pfp.png`
+                };
+    
+                await axios.put(`https://localhost:7079/api/Felhasznalo/${userId}`, updatedData, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+    
+                setIsEditView(false);
+                localStorage.setItem("username", registrationData.loginNev);
+            })
+            .catch((error) => {
+                console.error("Hiba a profil mentésekor:", error);
+                alert("Hiba történt a profil mentésekor.");
+            });
+    };        
     
     
 
@@ -223,6 +264,8 @@ const Profil = () => {
         }
     };
 
+    console.log(registrationData);
+    
     return (
         <div>
             <Navbar />
@@ -237,8 +280,8 @@ const Profil = () => {
             <div className="profileContent">
                 <div className="profileSide">
                     <img 
-                        src={registrationData.ProfilePicturePath ? registrationData.ProfilePicturePath : "/img/defaultPfp.jpg"} 
-                        className="profilePicture" alt="Uploader" loading="lazy"
+                        src={registrationData.profilePicturePath ? registrationData.profilePicturePath : "/img/defaultPfp.jpg"}
+                        className="profilePicture" alt="profilePicture" loading="lazy"
                         onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
                     />
                     <p className="ProfileUsername">{registrationData.loginNev}</p>
@@ -252,7 +295,8 @@ const Profil = () => {
                         {properties.length > 0 ? (
                                 properties.map((property, index) => {
                                     let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                                    const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg"; 
+                                    const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg";
+                                    const foglalasok = bookings.filter(booking => booking.ingatlanId === property.ingatlanId);
                                     return (
                                         <ProfilePropertyCard
                                             key={index}
@@ -321,6 +365,11 @@ const Profil = () => {
                         <p className="profileDataRow">Jelszó
                             <input type="password" value={registrationData.password} onChange={(e) => setRegistrationData({ ...registrationData, password: e.target.value })} />
                         </p>
+                        <p className="profileDataRow">Profilkép
+                        <input type="file" onChange={(e) => setRegistrationData({ ...registrationData, profilePicturePath: e.target.files[0] })}
+                        />
+                        </p>
+
                     </div>
                     :
                     <div className="profileData">
