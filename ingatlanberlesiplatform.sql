@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 10. 10:16
+-- Létrehozás ideje: 2025. Már 10. 09:36
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.0.30
 
@@ -46,7 +46,7 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`Id`, `LoginNev`, `HASH`, `SALT`, `Name`, `PermissionId`, `Active`, `Email`, `ProfilePicturePath`) VALUES
-(23, 'user1', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'salt1', 'User One', 2, 1, 'user1@example.com', 'profile1.jpg'),
+(23, 'user1', '4f3494a11ecd7f122e94108052c10a9dd57985ab072a3185b21ebc7a5d0af56f', 'YzuUynmZPgLnODLsPBmyTElvx2b4usZlRfYa35melyr6KygkdzzkvrY8Q6sAjbBF', 'User One', 2, 1, 'user1@example.com', 'profile1.jpg'),
 (24, 'user2', '6dcd4ce23d88e2ee9568ba546c007c63b2992cc9', 'salt2', 'User Two', 2, 1, 'user2@example.com', 'profile2.jpg'),
 (25, 'user3', 'd2d2d2d2c8d37c7a8fb319f9057f8977d9233a29', 'salt3', 'User Three', 2, 1, 'user3@example.com', 'profile3.jpg'),
 (26, 'user4', 'd41d8cd98f00b204e9800998ecf8427e', 'salt4', 'User Four', 2, 1, 'user4@example.com', 'profile4.jpg'),
@@ -147,7 +147,8 @@ INSERT INTO `felhasznalok` (`Id`, `LoginNev`, `HASH`, `SALT`, `Name`, `Permissio
 (121, 'user99', '75895375dbd5fd0fe4b70343678c6f87', 'salt99', 'User Ninety-Nine', 2, 1, 'user99@example.com', 'profile99.jpg'),
 (122, 'user100', '9f86d081884c7d659a2feaa0d3b073b8', 'salt100', 'User One Hundred', 2, 1, 'user100@example.com', 'profile100.jpg'),
 (123, 'kerenyir', 'jQGX8grO1yjNqhiZbtROcseiqj1NVZJd2iqlfxPx1GKLJ9H8smnLJ9dloScCK6Zp', 'dcedbd2d352d19c6eae0dfb12271b74d985c825b8d774afd2abd0d101b6e57ef', 'Kerényi Róbert', 2, 1, 'kerenyir@kkszki.hu', 'https://images.pexels.com/photos/7681362/pexels-photo-7681362.jp'),
-(544, 'string', '36509d6b74401e733c85e4f7af7a66b0e48d527a3bf2c159ffd0133c48990f4c', 'C80dWX7roX28fUL3bK3EaLTZbBCL4WxyRplWeYCd2zNbbeoNJRBvvYYlsh9gbOIG', 'string', 1, 1, 'string', '');
+(544, 'katonaa', 'c49bb918c17ade13881de6abc5991a378bb270b39efdcc8ab658ce88d4ae4fef', 'oLQRGx12BUjvtAqgUjm2Fa19YsIhz5bDQcD4S3bhCpZityWbydOPw0rYHgVFYnDb', 'Katona Alexandra', 1, 1, 'katonaa@gmail.com', 'string'),
+(551, 'string', '60457cd960b6fa2da4d24554b2f93d6a77e5f99dc6d7d3e6d50259161c5ac431', 'GvnwoDzqKtD90nICxZ3PNDebkTfZCkC1AmcfKokuO9iPomubqeZEW6ZkHItoIi1k', 'string', 1, 0, 'string@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -170,9 +171,6 @@ CREATE TABLE `foglalasok` (
 --
 
 INSERT INTO `foglalasok` (`foglalas_id`, `ingatlan_id`, `berlo_id`, `kezdes_datum`, `befejezes_datum`, `allapot`, `letrehozas_datum`) VALUES
-(303, 41, 23, '2025-01-05', '2025-01-10', 'függőben', '2025-01-01 09:00:00'),
-(304, 42, 24, '2025-01-15', '2025-01-20', 'elfogadva', '2025-01-01 09:05:00'),
-(305, 43, 25, '2025-02-01', '2025-02-07', 'elfogadva', '2025-01-02 11:00:00'),
 (306, 44, 26, '2025-03-10', '2025-03-15', 'függőben', '2025-01-03 08:30:00'),
 (307, 45, 27, '2025-04-01', '2025-04-10', 'elutasítva', '2025-01-04 14:45:00'),
 (308, 46, 28, '2025-02-10', '2025-02-15', 'függőben', '2025-01-05 12:00:00'),
@@ -289,9 +287,6 @@ CREATE TABLE `ingatlankepek` (
 --
 
 INSERT INTO `ingatlankepek` (`kep_id`, `ingatlan_id`, `kep_url`, `feltoltes_datum`) VALUES
-(5, 41, 'http://images.ingatlanok.nhely.hu/41.png', '2025-02-03 07:34:01'),
-(6, 42, 'http://images.ingatlanok.nhely.hu/42.png', '2025-02-03 07:34:02'),
-(7, 43, 'http://images.ingatlanok.nhely.hu/43.png', '2025-02-03 07:34:03'),
 (8, 44, 'http://images.ingatlanok.nhely.hu/44.png', '2025-02-03 07:34:04'),
 (9, 45, 'http://images.ingatlanok.nhely.hu/45.png', '2025-02-03 07:34:05'),
 (10, 46, 'http://images.ingatlanok.nhely.hu/46.png', '2025-02-03 07:34:06'),
@@ -414,16 +409,13 @@ CREATE TABLE `ingatlanok` (
 --
 
 INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `helyszin`, `ar`, `meret`, `szolgaltatasok`, `szoba`, `feltoltes_datum`) VALUES
-(41, 23, 'Budapest, Fő utca 1.', 'Tágas 3 szobás lakás a belvárosban', 'Budapest', 250000.00, 80, 'Wi-Fi, parkolás, medence', 3, '2025-02-03 07:37:01'),
-(42, 24, 'Debrecen, Tavasz utca 12.', 'Modern ház kerttel', 'Debrecen', 300000.00, 120, 'Wi-Fi, parkolás, kert, kutya hozható', 4, '2025-02-03 07:37:02'),
-(43, 25, 'Pécs, Zöld liget 5.', 'Családi ház, nagy kerttel és garázzsal', 'Pécs', 350000.00, 140, 'Wi-Fi, garázs, kert, kutya hozható', 5, '2025-02-03 07:37:03'),
-(44, 26, 'Szeged, Központi utca 10.', 'Újépítésű lakás, csendes környéken', 'Szeged', 280000.00, 95, 'Wi-Fi, parkolás, billiárd', 2, '2025-02-03 07:37:04'),
+(44, 26, 'Szeged, Központi utca 12.', 'Újépítésű lakás, csendes környéken', 'Szeged', 280000.00, 95, '---', 0, '2025-02-28 08:00:46'),
 (45, 27, 'Nyíregyháza, Arany János utca 8.', 'Kis lakás egyedülálló bérlőknek', 'Nyíregyháza', 150000.00, 40, 'Wi-Fi, házi mozi, mosógép', 1, '2025-02-03 07:37:05'),
 (46, 28, 'Budapest, Hősök tere 23.', 'Luxuslakás a belváros szívében', 'Budapest', 600000.00, 200, 'Wi-Fi, medence, parkolóhely', 6, '2025-02-03 07:37:06'),
-(47, 29, 'Veszprém, Fő tér 1.', 'Szép, felújított lakás, közvetlenül a központban', 'Veszprém', 220000.00, 75, 'Wi-Fi, parkolás, akadálymentes', 3, '2025-02-03 07:37:07'),
+(47, 29, 'Veszprém, Fő tér 1.', 'Szép, felújított lakás, közvetlenül a központban', 'Veszprém', 220000.00, 75, 'bence volt', 3, '2025-02-13 08:58:44'),
 (48, 30, 'Eger, Rózsadomb utca 5.', 'Hegyvidéki panorámás ház', 'Eger', 400000.00, 130, 'Wi-Fi, kert, medence, parkoló', 4, '2025-02-03 07:37:08'),
-(49, 31, 'Zalaegerszeg, Tavaszi utca 3.', 'Csendes lakás a zöldövezetben', 'Zalaegerszeg', 210000.00, 85, 'Wi-Fi, parkolás, grill', 2, '2025-02-03 07:37:09'),
-(50, 32, 'Szombathely, Munkás utca 2.', 'Modern stílusú lakás, közvetlen kapcsolat a közlekedéssel', 'Szombathely', 180000.00, 70, 'Wi-Fi, erkély/terasz, takarítószolgálat', 2, '2025-02-03 07:37:10'),
+(49, 31, 'Zalaegerszeg, Tavaszi utca 3.', 'Csendes lakás a zöldövezetben', 'Zalaegerszeg', 210000.00, 85, '---', 0, '2025-02-27 08:23:06'),
+(50, 32, 'Szombathely, Munkás utca 2.', 'Modern stílusú lakás, közvetlen kapcsolat a közlekedéssel', 'Szombathely', 180001.00, 70, '---', 0, '2025-02-27 07:57:18'),
 (51, 33, 'Váci utca 14.', 'Tágas lakás, jól felszerelt', 'Budapest', 350000.00, 110, 'Wi-Fi, medence, kávéfőző', 4, '2025-02-03 07:37:11'),
 (52, 34, 'Szentendre, Kossuth Lajos utca 9.', 'Kis ház, ideális családoknak', 'Szentendre', 230000.00, 95, 'Wi-Fi, parkolás, horgászási lehetőség', 3, '2025-02-03 07:37:12'),
 (53, 35, 'Kaposvár, Dózsa György utca 6.', 'Tökéletes ház vidéki élethez', 'Kaposvár', 275000.00, 120, 'Wi-Fi, kert, medence', 4, '2025-02-03 07:37:13'),
@@ -481,7 +473,7 @@ INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `hely
 (105, 87, 'Miskolc, Váci utca 9.', 'Kis lakás, zöldövezetben', 'Miskolc', 190000.00, 60, 'Wi-Fi, grill, kutya hozható', 2, '2025-02-03 07:38:05'),
 (106, 88, 'Kecskemét, Hunyadi utca 6.', 'Tágas lakás, kiváló közlekedéssel', 'Kecskemét', 270000.00, 90, 'Wi-Fi, parkolás, akadálymentes', 3, '2025-02-03 07:38:06'),
 (107, 89, 'Pécs, Hunyadi utca 9.', 'Új lakás, központ közelében', 'Pécs', 310000.00, 115, 'Wi-Fi, medence, légkondícionálás', 4, '2025-02-03 07:38:07'),
-(108, 90, 'Budapest, Margit körút 6.', 'Tágas belvárosi lakás', 'Budapest', 400000.00, 140, 'Wi-Fi, parkolás, kutya hozható', 4, '2025-02-03 07:38:08'),
+(108, 90, 'Budapest, Margit körút 8.', 'Tágas belvárosi lakás', 'Budapest', 400000.00, 140, '---', 0, '2025-03-04 07:56:06'),
 (109, 91, 'Szentendre, Római part 3.', 'Kis ház a folyópart közelében', 'Szentendre', 350000.00, 130, 'Wi-Fi, horgászási lehetőség, erkély/terasz', 4, '2025-02-03 07:38:09'),
 (110, 92, 'Zalaegerszeg, Arany János utca 7.', 'Kényelmes, két szobás lakás', 'Zalaegerszeg', 220000.00, 75, 'Wi-Fi, házi mozi, mosógép', 2, '2025-02-03 07:38:10'),
 (111, 93, 'Szombathely, Vasvári Pál utca 10.', 'Új építésű lakás, központ közelében', 'Szombathely', 330000.00, 120, 'Wi-Fi, parkolás, légkondícionálás', 3, '2025-02-03 07:38:11'),
@@ -513,7 +505,9 @@ INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `hely
 (137, 119, 'Szombathely, Béke utca 7.', 'Családi ház, kényelmes kerttel', 'Szombathely', 350000.00, 140, 'Wi-Fi, parkolás, grill', 4, '2025-02-03 07:38:37'),
 (138, 120, 'Kaposvár, Munkácsy utca 2.', 'Új lakás, világos szobákkal', 'Kaposvár', 250000.00, 90, 'Wi-Fi, házi mozi, takarítószolgálat', 3, '2025-02-03 07:38:38'),
 (139, 121, 'Eger, Jókai utca 12.', 'Tágas, napfényes lakás', 'Eger', 300000.00, 110, 'Wi-Fi, parkolás, kávéfőző', 3, '2025-02-03 07:38:39'),
-(140, 122, 'Visegrád, Király utca 7.', 'Családi ház, csodás kilátással', 'Visegrád', 450000.00, 160, 'Wi-Fi, medence, házi mozi', 5, '2025-02-03 07:38:40');
+(140, 122, 'Visegrád, Király utca 7.', 'Családi ház, csodás kilátással', 'Visegrád', 450000.00, 160, 'Wi-Fi, medence, házi mozi', 5, '2025-02-03 07:38:40'),
+(148, 544, 'Kurityán, Kossuth Lajos út 11', 'Csendes családias környék', 'Kurityán', 125000.00, 85, 'Wi-fi, kutya hozható', 3, '2025-03-05 06:53:51'),
+(151, 544, 'Kazincbarcika, Augusztus 20 tér 6/5 emelet 1 ajtó', 'Tér', 'Kazincbarcika', 110000.00, 60, '---', 0, '2025-03-05 08:10:07');
 
 -- --------------------------------------------------------
 
@@ -537,31 +531,6 @@ INSERT INTO `jogosultsagok` (`jogosultsag_id`, `jogosultsag_nev`, `leiras`) VALU
 (3, 'Tulajdonos jogosultság', 'Ingatlanok kezelésére jogosultság'),
 (4, 'Rendszergazda jogosultság', 'Rendszerbeállítások módosítása'),
 (5, 'Felhasználói jogosultság', 'Felhasználók kezelése');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `szerepkorjogosultsagok`
---
-
-CREATE TABLE `szerepkorjogosultsagok` (
-  `szerepkor_id` int(11) NOT NULL,
-  `jogosultsag_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `szerepkorjogosultsagok`
---
-
-INSERT INTO `szerepkorjogosultsagok` (`szerepkor_id`, `jogosultsag_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(2, 2),
-(3, 1),
-(3, 3);
 
 -- --------------------------------------------------------
 
@@ -3825,13 +3794,6 @@ ALTER TABLE `jogosultsagok`
   ADD UNIQUE KEY `jogosultsag_nev` (`jogosultsag_nev`);
 
 --
--- A tábla indexei `szerepkorjogosultsagok`
---
-ALTER TABLE `szerepkorjogosultsagok`
-  ADD PRIMARY KEY (`szerepkor_id`,`jogosultsag_id`),
-  ADD KEY `jogosultsag_id` (`jogosultsag_id`);
-
---
 -- A tábla indexei `szerepkorok`
 --
 ALTER TABLE `szerepkorok`
@@ -3852,25 +3814,25 @@ ALTER TABLE `telepulesek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=545;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=553;
 
 --
 -- AUTO_INCREMENT a táblához `foglalasok`
 --
 ALTER TABLE `foglalasok`
-  MODIFY `foglalas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
+  MODIFY `foglalas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=404;
 
 --
 -- AUTO_INCREMENT a táblához `ingatlankepek`
 --
 ALTER TABLE `ingatlankepek`
-  MODIFY `kep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `kep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT a táblához `ingatlanok`
 --
 ALTER TABLE `ingatlanok`
-  MODIFY `ingatlan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `ingatlan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT a táblához `jogosultsagok`
@@ -3912,15 +3874,32 @@ ALTER TABLE `ingatlankepek`
 --
 ALTER TABLE `ingatlanok`
   ADD CONSTRAINT `ingatlanok_ibfk_1` FOREIGN KEY (`tulajdonos_id`) REFERENCES `felhasznalok` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Megkötések a táblához `szerepkorjogosultsagok`
---
-ALTER TABLE `szerepkorjogosultsagok`
-  ADD CONSTRAINT `szerepkorjogosultsagok_ibfk_1` FOREIGN KEY (`szerepkor_id`) REFERENCES `szerepkorok` (`szerepkor_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `szerepkorjogosultsagok_ibfk_2` FOREIGN KEY (`jogosultsag_id`) REFERENCES `jogosultsagok` (`jogosultsag_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Trigger hozzáadása
+
+DELIMITER $$
+
+CREATE TRIGGER prevent_same_renter_owner
+BEFORE INSERT ON foglalasok
+FOR EACH ROW
+BEGIN
+    DECLARE tulajdonos INT;
+
+    -- Lekérdezzük az ingatlan tulajdonosának ID-ját
+    SELECT tulajdonos_id INTO tulajdonos
+    FROM ingatlanok
+    WHERE ingatlan_id = NEW.ingatlan_id;
+
+    -- Ha a bérlő és a tulajdonos ugyanaz, hibaüzenetet dobunk
+    IF NEW.berlo_id = tulajdonos THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'A bérlő nem lehet az ingatlan tulajdonosa!';
+    END IF;
+END$$
+
+DELIMITER ;
