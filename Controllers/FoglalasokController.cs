@@ -51,7 +51,7 @@ namespace IngatlanokBackend.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("addBooking")]
         public async Task<IActionResult> CreateBooking([FromBody] BookingRequestDTO request)
         {
             var property = await _context.Ingatlanoks.FindAsync(request.IngatlanId);
