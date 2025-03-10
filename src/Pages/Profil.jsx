@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import "../style.css";
+import { property } from "lodash";
 
 const Profil = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -29,7 +30,9 @@ const Profil = () => {
         name: "Teljes név",
         PermissionId: 0
     });
+    const userId = sessionStorage.getItem("userId");
     const [properties, setProperties] = useState([]);
+    const [bookings, setBookings] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
     const [isEditView, setIsEditView] = useState(false); 
 
@@ -54,7 +57,7 @@ const Profil = () => {
     }, []);
     
     useEffect(() => {
-        if (registrationData.permissionId === 2 || registrationData.permissionId === 3) {
+        if (registrationData.permissionId === 2) {
             const token = localStorage.getItem("token");     
             axios .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
                     headers: { Authorization: `Bearer ${token}` }, })
@@ -67,15 +70,32 @@ const Profil = () => {
                 axios .get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
                     headers: { Authorization: `Bearer ${token}` }, })
                 .then((response) => {setPropertyImages(response.data);})
-                .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
+                .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
+        }
+        if (registrationData.permissionId === 3) {
+            const token = localStorage.getItem("token");     
+            axios .get(`https://localhost:7079/api/Foglalasok/user/${userId}`, {
+                    headers: { Authorization: `Bearer ${token}` }, })
+                .then((response) => {setBookings(response.data);})
+                .catch((error) => console.error("Hiba a foglalások betöltésekor:", error));
+
+            axios .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
+                    headers: { Authorization: `Bearer ${token}` }, })
+                .then((response) => {setProperties(response.data);})
+                .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
+
+            axios .get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
+                    headers: { Authorization: `Bearer ${token}` }, })
+                .then((response) => {setPropertyImages(response.data);})
+                .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
         }
     }, [registrationData.id]);
     
 
-    const ProfilePropertyCard = ({ id, kep, cim, location }) => (
+    const ProfilePropertyCard = ({ id, kep, cim, helyszin }) => (
         <div className="profilePropertyCard">
             <img src={kep} alt="property" />
-            <p>{location}<br /><span>{cim}</span></p>
+            <p>{helyszin}<br /><span>{cim}</span></p>
             <div className="buttonContainer">
                 <button>
                     <Link to={"/ingatlanok/" + id}>Részletek</Link>
@@ -86,7 +106,47 @@ const Profil = () => {
             </div>
         </div>
     );
+    const ProfileBookingCard = ({id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
+        <div className="profileBookingCard">
+            <img src={kep} alt="property" />
+            <p>{helyszin}<br /><span>{allapot}</span></p>
+            <div className="bookingDatesContainer">
+                <p>Kezdés: {kezdesDatum}</p>
+                <p>Befejezés: {befejezesDatum}</p>
+            </div>
+            <div className="buttonContainer">
+                <button>
+                    <Link to={"/ingatlanok/" + ingatlanId}>Részletek</Link>
+                </button>
+                <button onClick={() => handleDeleteBooking(id)}>
+                    Foglalás törlése
+                </button>
+            </div>
+        </div>
+    );
 
+    const handleDeleteBooking = (id) => {
+        const confirmation = window.confirm("Biztosan törölni szeretnéd a foglalást?");
+        if (confirmation) {
+            const token = localStorage.getItem("token");
+            const username = localStorage.getItem("username");
+            if (token && username) {
+                axios.delete(`https://localhost:7079/api/Foglalasok/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+                .then(() => {
+                    const newBookings = bookings.filter(booking => booking.foglalasId !== id);
+                    setBookings(newBookings);
+                })
+                .catch(error => {
+                    console.error("Hiba történt a foglalás törlésekor:", error);
+                    alert("Hiba történt a foglalás törlésekor.");
+                });
+            } else {
+                alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
+            }
+        }
+    }
 
     const handleSave = () => {
         const token = localStorage.getItem("token");
@@ -199,13 +259,46 @@ const Profil = () => {
                                             id={property.ingatlanId}
                                             kep={imageSrc}
                                             cim={property.cim}
-                                            location={property.helyszin}
+                                            helyszin={property.helyszin}
                                         />
                                     );
                                 })
                             ) : (
                                 <div className="errorMessage">
                                     Nincsenek feltöltött ingatlanok
+                                    <img src="img/errordog.gif" alt="hiba" width={170}/>
+                                </div>
+                                
+                            )}
+                        </div>
+                    </>
+                )}
+                {registrationData.permissionId === 3 && (
+                    <>
+                        <p className="profileTitle">Foglalásaim</p>
+                        <div className="profileProperties">
+                        {bookings.length > 0 ? (
+                                bookings.map((booking, index) => {
+                                    let property = properties.find(property => property.ingatlanId === booking.ingatlanId);
+                                    let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                                    const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg"; 
+                                    
+                                    return (
+                                        <ProfileBookingCard
+                                            key={index}
+                                            id={booking.foglalasId}
+                                            kep={imageSrc}
+                                            helyszin={property.helyszin}
+                                            kezdesDatum={booking.kezdesDatum}
+                                            befejezesDatum={booking.befejezesDatum}
+                                            allapot={booking.allapot}
+                                            ingatlanId={booking.ingatlanId}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <div className="errorMessage">
+                                    Nincsenek foglalások
                                     <img src="img/errordog.gif" alt="hiba" width={170}/>
                                 </div>
                                 
