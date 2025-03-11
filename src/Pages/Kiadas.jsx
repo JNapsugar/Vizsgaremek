@@ -96,12 +96,12 @@ const IngatlanForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!isLoggedIn) {
             alert("Kérlek jelentkezz be!");
             return;
         }
-
+    
         try {
             const response = await axios.post(
                 'https://localhost:7079/api/Ingatlan/ingatlanok',
@@ -123,36 +123,38 @@ const IngatlanForm = () => {
                     },
                 }
             );
-            
-            const fileData = new FormData();
-            fileData.append("file", formData.kep);
-
-            const fileUploadResponse = await axios.post(
-                'https://localhost:7079/api/FileUpload/FtpServer',
-                fileData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
+    
+            if (formData.kep) {
+                const fileData = new FormData();
+                fileData.append("file", formData.kep);
+    
+                await axios.post(
+                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    fileData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+    
+                await axios.post(
+                    'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
+                    {
+                        kepUrl: `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`,
+                        ingatlanId: formData.ingatlanId,
+                        feltoltesDatum: new Date().toISOString(),
                     },
-                }
-            );
-
-            const imgResponse = await axios.post(
-                'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
-                {
-                    kepUrl: `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`,
-                    ingatlanId: formData.ingatlanId,
-                    feltoltesDatum: new Date().toISOString(),
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+            }
+    
             if (response.status === 200 || response.status === 201) {
                 setSuccesful(true);
                 setFormData({
@@ -172,6 +174,7 @@ const IngatlanForm = () => {
             alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
         }
     };
+    
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -362,6 +365,7 @@ const IngatlanForm = () => {
                     </button>
                 </form>
             )}
+            <img src="/img/city2.png" className="footerImg" alt="City View" />
             <Footer />
         </div>
     );

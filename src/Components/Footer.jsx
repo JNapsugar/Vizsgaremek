@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="footer-col">
                 <h4>Szolgáltatásaink</h4>
                 <ul>
-                    <li><Link to={"/regisztracio"} onClick={() => window.scrollTo({ top: 0 })}>Profil készítés</Link></li>  
+                    <li><Link to={"/regisztracio"} onClick={() => window.scrollTo({ top: 0 })}>Új profil készítés</Link></li>  
                     <li><Link to={"/ingatlanok"} onClick={() => window.scrollTo({ top: 0 })}>Ingatlan keresés</Link></li> 
                     {permission == 2? (
                         <li><Link to={"/kiadas"} onClick={() => window.scrollTo({ top: 0 })}>Kiadás</Link></li> ):""}  
