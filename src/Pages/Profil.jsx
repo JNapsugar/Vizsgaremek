@@ -4,7 +4,6 @@ import axios from "axios";
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import "../style.css";
-import { property } from "lodash";
 
 const Profil = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -263,8 +262,6 @@ const Profil = () => {
             }
         }
     };
-
-    console.log(registrationData);
     
     return (
         <div>
