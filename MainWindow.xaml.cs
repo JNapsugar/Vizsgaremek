@@ -100,7 +100,6 @@ namespace IngatlanKarbantartoWPF
                 response.EnsureSuccessStatusCode();
 
                 string responseContent = await response.Content.ReadAsStringAsync();
-                //MessageBox.Show(responseContent, "Kapott válasz", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 if (path == "ingatlan/ingatlanok")
                 {
@@ -290,7 +289,7 @@ namespace IngatlanKarbantartoWPF
 
                 MessageBox.Show("Kérlek, válassz ki egy felhasználót vagy ingatlant a listából!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception ex) // IDE KERÜLT A CATCH!
+            catch (Exception ex)
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
