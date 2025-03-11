@@ -319,31 +319,32 @@ const Profil = () => {
                         <p className="profileTitle">Foglalásaim</p>
                         <div className="profileProperties">
                         {bookings.length > 0 ? (
-                                bookings.map((booking, index) => {
-                                    let property = properties.find(property => property.ingatlanId === booking.ingatlanId);
-                                    let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                                    const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg"; 
-                                    
-                                    return (
-                                        <ProfileBookingCard
-                                            key={index}
-                                            id={booking.foglalasId}
-                                            kep={imageSrc}
-                                            helyszin={property.helyszin}
-                                            kezdesDatum={booking.kezdesDatum}
-                                            befejezesDatum={booking.befejezesDatum}
-                                            allapot={booking.allapot}
-                                            ingatlanId={booking.ingatlanId}
-                                        />
-                                    );
-                                })
-                            ) : (
-                                <div className="errorMessage">
-                                    Nincsenek foglalások
-                                    <img src="img/errordog.gif" alt="hiba" width={170}/>
-                                </div>
+                            bookings.map((booking, index) => {
+                                let property = properties.find(property => property.ingatlanId === booking.ingatlanId);
+                                if (!property) return null;
+                                let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                                const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg"; 
                                 
-                            )}
+                                return (
+                                    <ProfileBookingCard
+                                        key={index}
+                                        id={booking.foglalasId}
+                                        kep={imageSrc}
+                                        helyszin={property.helyszin}
+                                        kezdesDatum={booking.kezdesDatum}
+                                        befejezesDatum={booking.befejezesDatum}
+                                        allapot={booking.allapot}
+                                        ingatlanId={booking.ingatlanId}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <div className="errorMessage">
+                                Nincsenek foglalások
+                                <img src="img/errordog.gif" alt="hiba" width={170} />
+                            </div>
+                        )}
+
                         </div>
                     </>
                 )}
