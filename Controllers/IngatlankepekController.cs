@@ -1,4 +1,5 @@
-﻿using IngatlanokBackend.Models;
+﻿using IngatlanokBackend.DTOs;
+using IngatlanokBackend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -61,15 +62,25 @@ namespace IngatlanokBackend.Controllers
         }
 
 
-        [HttpPut("ingatlankepek/{id}")]
-        public async Task<IActionResult> Put(int id, Ingatlankepek ingatlankep)
+        [HttpPut("ingatlankepek/{ingatlanId}")]
+        public async Task<IActionResult> Put([FromBody] IngatlankepUpdateDTO request)
         {
             using (var cx = new IngatlanberlesiplatformContext())
             {
                 try
                 {
+                    var ingatlankep = await cx.Ingatlankepeks.FirstOrDefaultAsync(k => k.IngatlanId == request.IngatlanId);
+                    if (ingatlankep == null)
+                    {
+                        return NotFound("Nem található ingatlankép a megadott ingatlan ID-val.");
+                    }
+
+                    ingatlankep.KepUrl = request.KepUrl;
+                    ingatlankep.FeltoltesDatum = request.FeltoltesDatum;
+
                     cx.Update(ingatlankep);
                     await cx.SaveChangesAsync();
+
                     return Ok("Ingatlan adatai módosítva");
                 }
                 catch (Exception ex)
@@ -78,6 +89,8 @@ namespace IngatlanokBackend.Controllers
                 }
             }
         }
+
+
 
 
         [HttpDelete("ingatlankepek/{id}")]

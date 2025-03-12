@@ -79,8 +79,9 @@ namespace IngatlanokBackend
                 options.AddPolicy("AllowSpecificOrigin", builder =>
                 {
                     builder.WithOrigins("http://localhost:3000")
-                                 .AllowAnyMethod()        
-                                 .AllowAnyHeader();       
+                                 .AllowAnyMethod()
+                                 .AllowAnyHeader()
+                                 .AllowAnyOrigin();
                 });
             });
 
