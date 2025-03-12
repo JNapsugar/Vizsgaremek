@@ -17,8 +17,6 @@ const IngatlanKezeles = () => {
         "/img/headers/header4.jpg",
         "/img/headers/header5.jpg"
     ];
-    
-    console.log(id);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -71,8 +69,7 @@ const IngatlanKezeles = () => {
                     szoba: res.data.szoba,
                     meret: res.data.meret,
                     szolgaltatasok: res.data.szolgaltatasok,
-                    tulajdonosId: res.data.tulajdonosId,
-                    kep: res.data.kep
+                    tulajdonosId: res.data.tulajdonosId
                 });
             })
             .catch(error => {
@@ -81,12 +78,24 @@ const IngatlanKezeles = () => {
     }, [id]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+        const { name, type } = e.target;
+        if (type === "file") {
+            const file = e.target.files[0];
+            if (file) {
+                const renamedFile = new File([file], `${id}.png`, { type: file.type });
+                setFormData((prevData) => ({
+                    ...prevData,
+                    [name]: renamedFile,
+                }));
+            }
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: e.target.value,
+            }));
+        }
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -109,7 +118,6 @@ const IngatlanKezeles = () => {
                     Szolgaltatasok: formData.szolgaltatasok,
                     TulajdonosId: parseInt(formData.tulajdonosId),
                     FeltoltesDatum: new Date().toISOString(),
-                    Kep: formData.kep,
                 },
                 {
                     headers: {
@@ -117,6 +125,35 @@ const IngatlanKezeles = () => {
                     },
                 }
             );
+            if (formData.kep) {
+                const fileData = new FormData();
+                fileData.append("file", formData.kep);
+                await axios.post(
+                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    fileData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+                await axios.put(
+                    `https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`,
+                    {
+                        KepUrl: `http://images.ingatlanok.nhely.hu/${id}.png`,
+                        IngatlanId: id,
+                        FeltoltesDatum: new Date().toISOString(),
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+            }
+
             if (response.status === 200 || response.status === 204) {
                 setSuccesful(true);
             }
@@ -182,7 +219,7 @@ const IngatlanKezeles = () => {
     const handleSucces = (e) => {
         setSuccesful(false);
     };
-
+    
     return (
         <div>
             <Navbar />

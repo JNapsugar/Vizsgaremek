@@ -123,7 +123,8 @@ const IngatlanForm = () => {
                     },
                 }
             );
-    
+            
+            let kepUrl = "";
             if (formData.kep) {
                 const fileData = new FormData();
                 fileData.append("file", formData.kep);
@@ -138,22 +139,25 @@ const IngatlanForm = () => {
                         },
                     }
                 );
-    
-                await axios.post(
-                    'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
-                    {
-                        kepUrl: `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`,
-                        ingatlanId: formData.ingatlanId,
-                        feltoltesDatum: new Date().toISOString(),
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                kepUrl = `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`;
             }
+            else{
+                kepUrl = "img/placeholder.jpg";
+            }
+            await axios.post(
+                'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
+                {
+                    kepUrl: kepUrl,
+                    ingatlanId: formData.ingatlanId,
+                    feltoltesDatum: new Date().toISOString(),
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
     
             if (response.status === 200 || response.status === 201) {
                 setSuccesful(true);
