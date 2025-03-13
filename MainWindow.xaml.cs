@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Data;
+using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
@@ -57,13 +59,13 @@ namespace IngatlanKarbantartoWPF
         // FELHASZNALOK
         public class Felhasznalok
         {
-            public int Id { get; set; }
-            public string LoginNev { get; set; } = null!;
-            public string Name { get; set; } = null!;
-            public int? PermissionId { get; set; }
-            public bool Active { get; set; }
-            public string Email { get; set; } = null!;
-            public string ProfilePicturePath { get; set; } = null!;
+            public int id { get; set; }
+            public string loginNev { get; set; } = null!;
+            public string name { get; set; } = null!;
+            public int? permissionId { get; set; }
+            public bool active { get; set; }
+            public string email { get; set; } = null!;
+            public string profilePicturePath { get; set; } = null!;
         }
 
         // FELHASZNALOK
@@ -96,6 +98,7 @@ namespace IngatlanKarbantartoWPF
                 }
 
                 string url = $"https://localhost:7079/api/{path}";
+
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
@@ -112,6 +115,12 @@ namespace IngatlanKarbantartoWPF
                 else
                 {
                     MessageBox.Show("Ismeretlen végpont!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                if (endpointsList.SelectedIndex == -1 && endpointsList.Items.Count > 0)
+                {
+                    endpointsList.SelectedIndex = 0;
+                    path = endpointsList.SelectedItem.ToString();
                 }
             }
             catch (Exception ex)
@@ -141,18 +150,17 @@ namespace IngatlanKarbantartoWPF
 
                         string json = JsonSerializer.Serialize(ujIngatlan);
                         StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
                         HttpResponseMessage postResponse = await _httpClient.PostAsync(url, content);
                         postResponse.EnsureSuccessStatusCode();
 
                         MessageBox.Show("Sikeres ingatlan mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-
                         GET_Click(sender, e);
                     }
                 }
-                else if (path == "Felhasznalo/allUsers")
+                else if (path == "Felhasznalo/addUser")
                 {
                     var felhasznaloAblak = new FelhasznaloFelvitelAblak();
-
                     felhasznaloAblak.FelhasznaloHozzaadva += () => GET_Click(sender, e);
 
                     if (felhasznaloAblak.ShowDialog() == true)
@@ -161,11 +169,11 @@ namespace IngatlanKarbantartoWPF
 
                         string json = JsonSerializer.Serialize(ujFelhasznalo);
                         StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
                         HttpResponseMessage postResponse = await _httpClient.PostAsync(url, content);
                         postResponse.EnsureSuccessStatusCode();
 
                         MessageBox.Show("Sikeres felhasználó mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-
                         GET_Click(sender, e);
                     }
                 }
@@ -194,7 +202,7 @@ namespace IngatlanKarbantartoWPF
                 if (dtg.SelectedItem is Felhasznalok selectedFelhasznalo)
                 {
                     MessageBoxResult result = MessageBox.Show(
-                        $"Biztosan törölni akarod a felhasználót: {selectedFelhasznalo.LoginNev}?",
+                        $"Biztosan törölni akarod a felhasználót: {selectedFelhasznalo.loginNev}?",
                         "Megerősítés",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Question);
@@ -205,7 +213,7 @@ namespace IngatlanKarbantartoWPF
                     }
 
                     // Az URL, amely a felhasználó törléséhez szükséges, a loginName-t használja
-                    string url = $"https://localhost:7079/api/Felhasznalo/delete/{selectedFelhasznalo.LoginNev}";
+                    string url = $"https://localhost:7079/api/Felhasznalo/delete/{selectedFelhasznalo.loginNev}";
                     HttpResponseMessage response = await _httpClient.DeleteAsync(url);
                     response.EnsureSuccessStatusCode();
 
@@ -258,7 +266,7 @@ namespace IngatlanKarbantartoWPF
                 }
 
                 // Ha egy ingatlan van kiválasztva
-                if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
+                if (dtg.SelectedItem is Ingatlanok selectedIngatlan && selectedIngatlan.IngatlanId > 0)
                 {
                     if (selectedIngatlan.IngatlanId < 0)
                     {
@@ -273,15 +281,15 @@ namespace IngatlanKarbantartoWPF
                 }
 
                 // Ha egy felhasználó van kiválasztva
-                if (dtg.SelectedItem is Felhasznalok selectedUser)
+                if (dtg.SelectedItem is Felhasznalok selectedUser && selectedUser.id > 0)
                 {
-                    if (selectedUser.Id <= 0)
+                    if (selectedUser.id <= 0)
                     {
                         MessageBox.Show("Érvénytelen felhasználó azonosító!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    var modositFelhasznaloAblak = new FelhasznaloModositAblak(selectedUser.Id);
+                    var modositFelhasznaloAblak = new FelhasznaloModositAblak(selectedUser.id);
                     modositFelhasznaloAblak.ShowDialog();
                     GET_Click(sender, e);
                     return;

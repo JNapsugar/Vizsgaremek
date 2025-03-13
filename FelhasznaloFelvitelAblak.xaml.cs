@@ -9,19 +9,17 @@ namespace IngatlanKarbantartoWPF
 {
     public partial class FelhasznaloFelvitelAblak : Window
     {
-        /*private readonly HttpClient _httpClient = new HttpClient();
-        private readonly string _path;*/
-
-        private readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("https://localhost:7079/") };
-        private readonly string _path = "api/Felhasznalo/addUser";
-
-        public event Action FelhasznaloHozzaadva;
+        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly string _path;
 
         public FelhasznaloDTO UjFelhasznalo { get; private set; }
+
+        public event Action FelhasznaloHozzaadva;
 
         public FelhasznaloFelvitelAblak()
         {
             InitializeComponent();
+            _path = _path;
         }
 
         private async void Submit_Click(object sender, RoutedEventArgs e)
