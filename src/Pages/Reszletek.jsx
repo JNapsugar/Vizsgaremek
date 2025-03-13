@@ -96,8 +96,16 @@ const App = () => {
     };
 
     const tileClassName = ({ date, view }) => {
-        if (view === 'month' && isBetween(date)) {
+        if (view === 'month') {
+        if (startDate && date.getTime() === startDate.getTime()) {
+            return 'react-calendar__tile--start';
+        }
+        if (endDate && date.getTime() === endDate.getTime()) {
+            return 'react-calendar__tile--end';
+        }
+        if (isBetween(date)) {
             return 'highlighted';
+        }
         }
         return '';
     };
@@ -143,7 +151,7 @@ const App = () => {
                     <p className="propertyTitle">{property.helyszin}</p>
                     <p className="propertyLocation">{property.cim}</p>
                     <p className="propertyPrice">{property.ar} Ft/hónap</p>
-                    <p className="propertyShortDescription">{property.leiras}</p>
+                    <p className="propertyDescription">{property.leiras}</p>
                 </div>
             </div>
 
@@ -151,13 +159,13 @@ const App = () => {
 
             <div className="propertyOtherContent">
                 <div className="otherDetails">
-                    <p className="propertyDetailsTitle">Részletek</p>
-                    <p className="propertyLongDescription">
+                    <p className="title">Részletek</p>
+                    <p className="propertyDetails">
                         Méret: {property.meret}m²<br />
                         Szobák száma: {property.szoba} <br />
                         Feltöltés dátuma: {property.feltoltesDatum}
                     </p>
-                    <p className="propertyDetailsTitle">Szolgáltatások</p>
+                    <p className="title">Szolgáltatások</p>
                     <div className="services">
                         {property.szolgaltatasok && property.szolgaltatasok.split(', ').map((service, index) => {
                             let iconSrc;
@@ -222,7 +230,7 @@ const App = () => {
                                 onChange={handleDateChange}
                                 value={selectingStart ? startDate : endDate}
                                 minDate={selectingStart ? new Date(today.getTime() + 86400000) : startDate}
-                                className="calendar" tileClassName={tileClassName}
+                                tileClassName={tileClassName}
                             />
                         </div>
                         <div className="datesContainer">
@@ -254,7 +262,7 @@ const App = () => {
             )}
 
             <hr />
-            <p className="moreRecsTitle">További ajánlatok</p>
+            <p className="title moreRecsTitle">További ajánlatok</p>
 
             <div className="moreRecs">
                 {properties.map((property, index) => {

@@ -16,21 +16,6 @@ html, body {
   padding: 0;
 }
 
-.loading {
-  display: flex;
-  justify-content: center;
-  padding-top: 5%;
-  margin-bottom: 2rem;
-}
-
-.errorMessage{
-  color: rgb(216, 177, 100);
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /*#region Navigacio*/
 .navbar{
   width: 100%;
@@ -317,6 +302,7 @@ html, body {
   width: 100%;
   height: 10rem;
   margin-bottom: -1rem;
+  object-fit: cover;
 }
 
 /*#endregion footer*/
@@ -856,15 +842,6 @@ html, body {
   flex-direction: row;
 }
 
-.propertyCarousel{
-  width: 50%;
-  margin: 2rem;
-  margin-left: 4rem;
-  & img{
-    border-radius: 1rem;
-  }
-}
-
 .propertyImage{
   margin: 2rem;
   border-radius: 2rem;
@@ -899,6 +876,7 @@ html, body {
 
 .propertyDescription{
   margin-top: 1rem;
+  font-size: 1.2rem;
 }
 
 hr{
@@ -912,20 +890,16 @@ hr{
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
+  justify-content: space-between;
 }
 
 .otherDetails{
-  width: 60%;
+  width: 50%;
   padding: 2rem 7rem 2rem 5rem;
   color: white;
 }
 
-.propertyDetailsTitle{
-  color: #e09900;
-  font-size: 3rem;
-}
-
-.propertyLongDescription{
+.propertyDetails{
   line-height: 2.5rem;
 }
 
@@ -952,7 +926,7 @@ hr{
   }
 }
 
-.propertyContactCard{
+.propertyContactCard {
   background-color: rgb(78, 77, 77);
   border-radius: 2rem;
   height: 22rem;
@@ -964,6 +938,8 @@ hr{
   color: black;
   text-align: center;
   padding: 2rem 2rem;
+  float: right;
+  margin: 0 2rem;
 }
 
 .uploaderName{
@@ -1041,7 +1017,7 @@ hr{
   color:#555;
 }
 
-.calendar {
+.react-calendar {
   border: none;
   background-color: #333 !important;
   color: #ffffff;
@@ -1049,10 +1025,7 @@ hr{
   padding: 1rem;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
-}
-
-.react-calendar {
-  width: 30rem !important;
+  width: 35rem !important;
 }
 
 .react-calendar__tile {
@@ -1061,6 +1034,7 @@ hr{
   border-radius: 6px;
   transition: all 0.3s ease;
   height: 3rem;
+  border: 2px #333 solid !important;
 }
 
 .react-calendar__tile:hover {
@@ -1071,6 +1045,24 @@ hr{
   background: rgba(30, 30, 30, 0.7) !important;
 }
 
+.react-calendar__tile--start {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.react-calendar__tile--end {
+  background-color: rgba(255, 99, 71, 0.7) !important;
+  color: white !important;
+}
+
+.highlighted {
+  background-color: rgb(120, 120, 119) !important;
+  color: white;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: white !important;
+}
 
 .react-calendar__navigation button, .react-calendar__navigation button:disabled {
   background: none !important;
@@ -1085,21 +1077,12 @@ hr{
   background: none !important;
 }
 
-.highlighted {
-  background-color: rgba(233, 167, 45, 0.511) !important;
-  color: white;
-}
-
-
-
 .moreRecs{
   margin-left: 5rem;
   display: flex;
 }
 
 .moreRecsTitle{
-  color: #e09900;
-  font-size: 3rem;
   margin-left: 5rem;
   margin-top: 2rem;
 }
@@ -1255,9 +1238,10 @@ hr{
   background-color: #c24925cc;
   border: #8a2d11 solid 1px;
   border-radius: 0.5rem;
-  margin-right: 10px;
+  margin: 0.5rem;
   height: 2rem;
   width: 10rem;
+  
   &:hover{
     background-color: #973517;
     cursor: pointer;
@@ -1269,8 +1253,7 @@ hr{
   background-color: #df8e2dcc;
   border: #b46c13cc solid 1px;
   border-radius: 0.5rem;
-  margin-top: 2rem;
-  margin-right: 10px;
+  margin: 0.5rem;
   height: 2rem;
   width: 10rem;
   &:hover{
@@ -1328,13 +1311,11 @@ textarea{
   color: white;
   display: flex;
   flex-wrap: wrap;
-  .checkboxContainer{
-    width: 30%;
-  }
 }
 
-.uploadCheckbox{
-  width: 20%;   
+.uploadCheckbox {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 }
 
@@ -1351,6 +1332,27 @@ textarea{
 /*#endregion Kiadás*/
 
 /*#region Egyéb*/
+
+.title{
+  color: #e09900;
+  font-size: 3rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
+  margin-bottom: 2rem;
+}
+
+.errorMessage{
+  color: rgb(216, 177, 100);
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .starBtn {
   width: 50%;
   display: block;
@@ -1554,6 +1556,23 @@ a{
   font-size: 1rem;
 }
 
+.propertyMainContent{
+  display: flex;
+  flex-direction: column;
+}
+
+.propertyImage{
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.mainDetails{
+  display: block;
+  margin: auto;
+}
+
 .otherDetails{
   width: 100%;
 }
@@ -1568,9 +1587,16 @@ a{
 
 .calendarContainer, .datesContainer {
   width: 100%;
-  margin-bottom: 1rem;
+  padding: 0;
 }
 
+.react-calendar {
+  width: 70% !important;
+}
+
+.react-calendar__tile {
+  height: 5rem;
+}
 }
 
 
@@ -1654,19 +1680,32 @@ a{
   font-size: 7rem;
   }
 
-  .propertyMainContent{
-    display: flex;
-    flex-direction: column;
-  }
-
-  .propertyCarousel{
-    width: 100%;
-    margin: 0;
-    margin-top: 2rem;
-  }
-
   .mainDetails{
+    width: 90%;
+  }
+
+  .react-calendar__tile {
+    height: 10%;
+  }
+
+  .uploadServiceContainer {
+    width: 70%;
+    float: right;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .checkboxContainer {
     width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .uploadCheckbox {
+    width: 1.2rem;
+    height: 1.2rem;
   }
 }
 /*#endregion Reszponzivitas*/

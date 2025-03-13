@@ -35,6 +35,7 @@ const Ingatlanok = () => {
     const [searchParams] = useSearchParams();
     const cityName = searchParams.get("city") || "Összes";
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+    const [isListDisabled, setIsListDisabled] = useState(window.innerWidth < 1300);
     const [filters, setFilters] = useState({
         megye: "Összes",
         helyszin: cityName,
@@ -157,6 +158,20 @@ const Ingatlanok = () => {
     });
 
     useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1300) {
+                setFilters(prevFilters => ({ ...prevFilters, nezet: "grid" }));
+                setIsListDisabled(true);
+            } else {
+                setIsListDisabled(false);
+            }
+        };
+    
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
             .then(res => setProperties(res.data))
@@ -241,8 +256,14 @@ const Ingatlanok = () => {
                         {isFilterExpanded ? 'Kevesebb▲' : 'További▼'}
                     </div>
                     <div className='viewBtnContainer'>
-                        <div className='viewBtn' onClick={() => handleFilterChange({ target: { id: 'nezet', value: 'grid' } })}><img src="./img/icons/grid.png" alt="grid" /></div>
-                        <div className='viewBtn' onClick={() => handleFilterChange({ target: { id: 'nezet', value: 'list' } })}><img src="./img/icons/list.png" alt="list" /></div>
+                        <div className='viewBtn' onClick={() => handleFilterChange({ target: { id: 'nezet', value: 'grid' } })}>
+                            <img src="./img/icons/grid.png" alt="grid" />
+                        </div>
+                        <div className={`viewBtn ${isListDisabled ? 'disabled' : ''}`} 
+                            onClick={!isListDisabled ? () => handleFilterChange({ target: { id: 'nezet', value: 'list' } }) : null}
+                            title={isListDisabled ? "A lista nézet csak nagyobb képernyőkön elérhető" : ""}>
+                            <img src="./img/icons/list.png" alt="list" style={{ opacity: isListDisabled ? 0.5 : 1 }} />
+                        </div>
                     </div>
                 </div>
 
