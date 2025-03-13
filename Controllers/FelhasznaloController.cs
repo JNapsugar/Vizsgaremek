@@ -145,7 +145,7 @@ namespace IngatlanokBackend.Controllers
 
 
         [HttpPost("addUser")]
-        public async Task<IActionResult> AddUser([FromBody] userCreateDTO userCreateDTO) 
+        public async Task<IActionResult> AddUser([FromBody] userCreateDTO userCreateDTO)
         {
             try
             {
@@ -153,21 +153,17 @@ namespace IngatlanokBackend.Controllers
                 {
                     return BadRequest("A felhasználónév vagy e-mail már foglalt!");
                 }
-
                 if (userCreateDTO.PermissionId < 1 || userCreateDTO.PermissionId > 3)
                 {
                     return BadRequest("Érvénytelen jogosultság ID. Csak 1, 2 vagy 3 engedélyezett.");
                 }
-
                 if (!await _context.Jogosultsagoks.AnyAsync(p => p.JogosultsagId == userCreateDTO.PermissionId))
                 {
                     return BadRequest($"A megadott jogosultság ({userCreateDTO.PermissionId}) nincs az adatbázisban.");
                 }
-
                 string salt = Program.GenerateSalt();
                 byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
                 string hash = Program.CreateSHA256(userCreateDTO.Password, salt);
-
 
                 var newUser = new Felhasznalok
                 {
@@ -176,8 +172,9 @@ namespace IngatlanokBackend.Controllers
                     Email = userCreateDTO.Email,
                     Salt = salt,
                     Hash = hash,
-                    Active = true, 
+                    Active = true,
                     PermissionId = userCreateDTO.PermissionId,
+                    ProfilePicturePath = userCreateDTO.ProfilePicturePath ?? ""
                 };
 
                 _context.Felhasznaloks.Add(newUser);
@@ -187,7 +184,7 @@ namespace IngatlanokBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Hiba történt: {ex.Message}");
+                return StatusCode(500, $"Hiba történt: {ex.Message}. További részletek: {ex.StackTrace}");
             }
         }
 
