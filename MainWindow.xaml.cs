@@ -131,60 +131,76 @@ namespace IngatlanKarbantartoWPF
 
         private async void POST_Click(object sender, RoutedEventArgs e)
         {
-            try
             {
-                if (string.IsNullOrEmpty(path))
+                try
                 {
-                    MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                string url = $"https://localhost:7079/api/{path}";
-
-                if (path == "ingatlan/ingatlanok")
-                {
-                    var felvitelAblak = new FelvitelAblak(path);
-                    if (felvitelAblak.ShowDialog() == true)
+                    if (string.IsNullOrEmpty(path))
                     {
-                        Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;
+                        MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
 
-                        string json = JsonSerializer.Serialize(ujIngatlan);
-                        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    string url = $"https://localhost:7079/api/{path}";
 
-                        HttpResponseMessage postResponse = await _httpClient.PostAsync(url, content);
-                        postResponse.EnsureSuccessStatusCode();
+                    if (path == "ingatlan/ingatlanok")
+                    {
+                        var felvitelAblak = new FelvitelAblak(path);
+                        if (felvitelAblak.ShowDialog() == true)
+                        {
+                            Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;
 
-                        MessageBox.Show("Sikeres ingatlan mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                        GET_Click(sender, e);
+                            string json = JsonSerializer.Serialize(ujIngatlan);
+                            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                            HttpResponseMessage postResponse = await _httpClient.PostAsync(url, content);
+                            postResponse.EnsureSuccessStatusCode();
+
+                            MessageBox.Show("Sikeres ingatlan mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                            GET_Click(sender, e);
+                        }
+                    }
+                    else if (path == "Felhasznalo/allUsers")
+                    {
+                        var felhasznaloAblak = new FelhasznaloFelvitelAblak(path);
+                        if (felhasznaloAblak.ShowDialog() == true)
+                        {
+                            FelhasznaloDTO ujFelhasznalo = felhasznaloAblak.UjFelhasznalo;
+
+                            string json = JsonSerializer.Serialize(ujFelhasznalo);
+                            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                            string requestUrl = $"https://localhost:7079/api/{path}";
+
+                            try
+                            {
+                                HttpResponseMessage postResponse = await _httpClient.PostAsync(requestUrl, content);
+
+                                if (postResponse.IsSuccessStatusCode)
+                                {
+                                    MessageBox.Show("Sikeres felhasználó mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    this.Close();
+                                    GET_Click(sender, e);
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Hiba történt: {postResponse.StatusCode}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ismeretlen végpont!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else if (path == "Felhasznalo/addUser")
+                catch (Exception ex)
                 {
-                    var felhasznaloAblak = new FelhasznaloFelvitelAblak();
-                    felhasznaloAblak.FelhasznaloHozzaadva += () => GET_Click(sender, e);
-
-                    if (felhasznaloAblak.ShowDialog() == true)
-                    {
-                        FelhasznaloDTO ujFelhasznalo = felhasznaloAblak.UjFelhasznalo;
-
-                        string json = JsonSerializer.Serialize(ujFelhasznalo);
-                        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                        HttpResponseMessage postResponse = await _httpClient.PostAsync(url, content);
-                        postResponse.EnsureSuccessStatusCode();
-
-                        MessageBox.Show("Sikeres felhasználó mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                        GET_Click(sender, e);
-                    }
+                    MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                else
-                {
-                    MessageBox.Show("Ismeretlen végpont!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
