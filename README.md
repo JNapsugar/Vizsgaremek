@@ -7,16 +7,17 @@ A rendszer frontend, backend és adatbázis szinten is teljes funkcionalitást b
 
 ### Bérlők számára:
 ##
-- Könnyen kezelhető felhasználói felületet.
 - Lehetővé teszi az ingatlanok keresését és szűrését különböző paraméterek alapján.
 - Részletes információkat biztosít az ingatlanokról, beleértve azok jellemzőit, szolgáltatásait és árát.
-- Felhasználói fiók létrehozásának lehetősége a személyes adatok kezelésére és nyomon követésére.
+- Foglalási ajánlatok küldése a tulajdonosoknak, illetve szükség esetén a foglalások törlése.
+- Profil a foglalások megtekintésére és a személyes adatok kezelésére.
 
 ### Tulajdonosok számára:
 ##
 - Biztosítja, hogy ingatlanokat töltsenek fel a platformra.
-- Lehetővé teszi az ingatlanok kezelését, módosítását, és azok elérhetőségének frissítését.
-- Felhasználói fiók kezelését és az ingatlanok adminisztrációját biztosítja.
+- Lehetővé teszi az ingatlanok, és azok elérhetőségének frissítését.
+- Az ingatlanokhoz érkező foglalási ajánlatok elfogadását és elutasítása.
+- Profil azt feltöltött ingatlanok adminisztrációjához és a személyes adatok kezeléhez.
 
 ## Branch-ek
 A projekt négy fő branch-ra van felosztva, amelyek a következőket tartalmazzák:
@@ -25,7 +26,7 @@ A projekt négy fő branch-ra van felosztva, amelyek a következőket tartalmazz
 A Frontend branch a platform felhasználói felületét (UI) tartalmazza, amely React-alapú alkalmazás. Ez a branch tartalmazza:
 ##
 - React komponensek: Az ingatlanok megjelenítéséhez és kereséséhez szükséges komponensek.
-- CSS és styling: Az alkalmazás stílusai, reszponzív dizájn és vizuális elemek.
+- CSS stílusok: Az alkalmazás stílusai, reszponzív dizájn és vizuális elemek.
 - Képek és média: A platformhoz szükséges képek, ikonok és egyéb vizuális tartalmak.
 
 ### 2. Backend
@@ -40,7 +41,20 @@ Az Adatbázis branch a platform adatbázis struktúráját tartalmazza. Ez a bra
 - MySQL adatbázis fájlok: Az adatbázis séma és a táblák definíciói, amelyek az ingatlanok, felhasználók és egyéb adatokat tárolják.
 - Adatbázisterv: Az adatbázis struktúráját leíró dokumentáció, amely tartalmazza a táblák kapcsolatát, a fő kulcsokat és az adatbázis optimalizálását.
 
-### 4. Dokumentáció
+### 4. Karbantartó
+A Karbantartó branch a platform karbantartó felületét tartalmazza. Ez a branch a következőket tartalmazza:
+##
+- WPF alkalmazás a felhasználók, ingatlanok és foglalások kezeléséhez.
+
+### 5. Teszt
+A Teszt branch a rendszer minőségének ellenőrzését végző automatikus és manuális teszteket. Ez a branch a következőket tartalmazza:
+##
+- Egységtesztelés a Jest keretrendszerrel a frontend komponensek ellenőrzésére.
+- Backend API tesztelése Postman és Jest segítségével.
+- Tesztdokumentáció
+
+  
+### 6. Dokumentáció
 A Dokumentáció branch az összes projektmunkával kapcsolatos dokumentációt tartalmazza. Ezen a branch-en található:
 ##
 - UX/UI képek: Az alkalmazás felhasználói élményéhez és felhasználói felületéhez tartozó design képek.
