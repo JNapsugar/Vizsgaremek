@@ -143,13 +143,9 @@ namespace IngatlanokBackend.Controllers
             }
         }
 
-<<<<<<< HEAD
-        [HttpPost("allUser")]
-        public async Task<IActionResult> AddUser([FromBody] userCreateDTO userCreateDTO)
-=======
+
         [HttpPost("addUser")]
         public async Task<IActionResult> AddUser([FromBody] userCreateDTO userCreateDTO) 
->>>>>>> parent of 2f57f5b2 (V4.5.3 - AddUser)
         {
             try
             {
