@@ -31,8 +31,8 @@ function LoginPage() {
             }
 
             const data = await response.json();
-            localStorage.setItem("token", data.token); 
-            localStorage.setItem("username", username); 
+            sessionStorage.setItem("token", data.token); 
+            sessionStorage.setItem("username", username); 
             axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`)
                     .then(res => {sessionStorage.setItem("permission", res.data.permissionId);
                                     sessionStorage.setItem("userId", res.data.id);
