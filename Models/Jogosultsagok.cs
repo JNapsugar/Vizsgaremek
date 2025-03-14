@@ -10,6 +10,4 @@ public partial class Jogosultsagok
     public string JogosultsagNev { get; set; } = null!;
 
     public string? Leiras { get; set; }
-
-    public virtual ICollection<Szerepkorok> Szerepkors { get; set; } = new List<Szerepkorok>();
 }

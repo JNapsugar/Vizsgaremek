@@ -218,28 +218,6 @@ public partial class IngatlanberlesiplatformContext : DbContext
             entity.Property(e => e.SzerepkorNev)
                 .HasMaxLength(50)
                 .HasColumnName("szerepkor_nev");
-
-            entity.HasMany(d => d.Jogosultsags).WithMany(p => p.Szerepkors)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Szerepkorjogosultsagok",
-                    r => r.HasOne<Jogosultsagok>().WithMany()
-                        .HasForeignKey("JogosultsagId")
-                        .HasConstraintName("szerepkorjogosultsagok_ibfk_2"),
-                    l => l.HasOne<Szerepkorok>().WithMany()
-                        .HasForeignKey("SzerepkorId")
-                        .HasConstraintName("szerepkorjogosultsagok_ibfk_1"),
-                    j =>
-                    {
-                        j.HasKey("SzerepkorId", "JogosultsagId").HasName("PRIMARY");
-                        j.ToTable("szerepkorjogosultsagok");
-                        j.HasIndex(new[] { "JogosultsagId" }, "jogosultsag_id");
-                        j.IndexerProperty<int>("SzerepkorId")
-                            .HasColumnType("int(11)")
-                            .HasColumnName("szerepkor_id");
-                        j.IndexerProperty<int>("JogosultsagId")
-                            .HasColumnType("int(11)")
-                            .HasColumnName("jogosultsag_id");
-                    });
         });
 
         modelBuilder.Entity<Telepulesek>(entity =>
