@@ -33,8 +33,8 @@ const RegistrationForm = () => {
             if (response.status === 200) {
                 const { token, username } = response.data; 
 
-                localStorage.setItem("token", token);
-                localStorage.setItem("username", username);
+                sessionStorage.setItem("token", token);
+                sessionStorage.setItem("username", username);
 
                 navigate('/belepes');
             }

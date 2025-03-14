@@ -717,6 +717,8 @@ html, body {
   flex-wrap: wrap;
   justify-content: center;
   padding: 1rem;
+  width: 96%;
+  margin: auto;
 }
 
 .propertyListItem {
@@ -1026,6 +1028,7 @@ hr{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
   width: 35rem !important;
+  min-height: 27rem !important;
 }
 
 .react-calendar__tile {
@@ -1041,7 +1044,7 @@ hr{
   background: rgb(64, 64, 64) !important;
 }
 
-.react-calendar__tile:disabled{
+.react-calendar__tile:disabled, .react-calendar__tile--disabled{
   background: rgba(30, 30, 30, 0.7) !important;
 }
 
@@ -1060,9 +1063,6 @@ hr{
   color: white;
 }
 
-.react-calendar__month-view__days__day--weekend {
-  color: white !important;
-}
 
 .react-calendar__navigation button, .react-calendar__navigation button:disabled {
   background: none !important;
@@ -1129,14 +1129,15 @@ hr{
   font-size: 2rem;
 }
 
-.profileProperties{
+.profileProperties, .profileData{
+  width: 80%;
   border: 1px rgb(49, 49, 49) solid;
   border-radius: 1rem;
-  overflow-y: auto;
   box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+  overflow-y: auto;
   height: 20rem;
-  width: 75%;
 }
+
 
 .profilePropertyCard, .profileBookingCard{
   height: 8rem;
@@ -1209,12 +1210,6 @@ hr{
   background: #888;
 }
 
-.profileData{
-  border: 1px rgb(49, 49, 49) solid;
-  border-radius: 1rem;
-  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
-  width: 75%;
-}
 .profileDataRow{
   height: 3rem;
   display: flex;
@@ -1276,6 +1271,100 @@ hr{
   border: 1px rgb(49, 49, 49) solid;
   border-radius: 1.5rem;
   box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.274);
+
+  .title{
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .errordog{
+    width: 10%;
+  }
+
+  .bookingsContainer {
+    width: 100%;
+    margin: 1rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #555;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .bookingsHeader {
+      display: flex;
+      background-color: #222;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      text-align: center;
+  }
+
+  .bookingsHeader div {
+      flex: 1;
+      padding: 0.5rem;
+  }
+
+  .bookingRow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      border-bottom: 1px solid black;
+      transition: background-color 0.3s ease;
+  }
+
+  .bookingRow:nth-of-type(even) {
+      background-color: #444;
+  }
+
+  .bookingRow:hover {
+      background-color: #333;
+  }
+
+  .bookingCell {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .bookingPfp {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      border: 2px solid #222;
+      object-fit: cover;
+  }
+
+  .bookingActions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+  }
+
+  .bookingActions svg {
+      width: 2rem;
+      height: 2rem;
+      cursor: pointer;
+  }
+
+  .bookingActions svg:first-of-type {
+      color: #4CAF50;
+  }
+
+  .bookingActions svg:last-of-type {
+      color: #ff4444;
+  }
+
+  .bookingActions svg:hover {
+      opacity: 0.7;
+  }
 
   hr{
     border:#222 1px solid;
@@ -1676,7 +1765,7 @@ a{
   margin: 2rem auto;
   }
 
-#profileHeaderTitle{
+  #profileHeaderTitle{
   font-size: 7rem;
   }
 
@@ -1687,6 +1776,24 @@ a{
   .react-calendar__tile {
     height: 10%;
   }
+
+  .bookingRow {
+      flex-wrap: wrap;
+  }
+
+  .bookingCell {
+      flex: 1 1 20%;
+  }
+
+  .bookingActions {
+      flex: 1 1 100%;
+      padding-top: 0.5rem;
+  }
+
+  .bookingsHeader div:last-child {
+    display: none;
+}
+
 
   .uploadServiceContainer {
     width: 70%;

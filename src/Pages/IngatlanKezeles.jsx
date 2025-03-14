@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { XCircle, Check2Circle } from 'react-bootstrap-icons';
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
-
 import "../style.css";
-import { set } from "lodash";
 
 const IngatlanKezeles = () => {
     const { id } = useParams(); 
@@ -42,7 +41,7 @@ const IngatlanKezeles = () => {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token");
+        const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
             setIsLoggedIn(true);
             setToken(storedToken);
@@ -50,6 +49,61 @@ const IngatlanKezeles = () => {
             setIsLoggedIn(false);
         }
     }, []);
+
+    
+    const [bookings, setBookings] = useState([]);
+    const [berloNevek, setBerloNevek] = useState({});
+    const [berloKepek, setBerloKepek] = useState({});
+    
+    useEffect(() => {
+        axios.get(`https://localhost:7079/api/Foglalasok/ingatlan/${id}`)
+            .then(res => { 
+                setBookings(res.data);
+                res.data.bookings.forEach(booking => {
+                    axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${booking.berloId}`)
+                        .then(response => {
+                            setBerloNevek(prevState => ({
+                                ...prevState,
+                                [booking.berloId]: response.data.name
+                            }));
+                            setBerloKepek(prevState => ({
+                                ...prevState,
+                                [booking.berloId]: response.data.profilePicturePath
+                            }));
+                        })
+                        .catch(error => {
+                            console.error("Hiba történt a bérlő adatainak lekérése során:", error);
+                        });
+                });
+            })
+            .catch(error => { console.error(error); });
+    }, [id]);
+
+    const handleBookingResponse = async (bookingId, status) => {
+        try {
+            const response = await axios.put(
+                `https://localhost:7079/api/Foglalasok/valasz/${bookingId}`,
+                status, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if (response.status === 200) {
+                setBookings(prevBookings => ({
+                    ...prevBookings,
+                    bookings: prevBookings.bookings.map(booking =>
+                        booking.foglalasId === bookingId ? { ...booking, allapot: status } : booking
+                    ),
+                }));
+            }
+        } catch (error) {
+            console.error(`Hiba történt a foglalás állapotának módosítása során:`, error);
+        }
+    };
+    
 
     const [locations, setLocations] = useState([]);
     useEffect(() => {
@@ -231,6 +285,52 @@ const IngatlanKezeles = () => {
                 </div>
                 <h1 className="smallHeaderTitle">Ingatlan kezelés</h1>
             </header>
+            <div className="uploadForm">
+                <p className="title">Foglaláskezelés</p>
+                {bookings.hasBookings? (
+                    <div className="bookingsContainer">
+                    <div className="bookingsHeader">
+                        <div>Bérlő</div>
+                        <div>Kezdés dátuma</div>
+                        <div>Befejezés dátuma</div>
+                        <div>Foglalás dátuma</div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    {bookings.bookings.map((booking, index) => (
+                    <div className="bookingRow" key={index}>
+                        <div className="bookingCell">
+                            <img className="bookingPfp" src={berloKepek[booking.berloId]} alt="profile"/>
+                            {berloNevek[booking.berloId]}
+                        </div>
+                        <div className="bookingCell">
+                            {new Date(booking.kezdesDatum).toLocaleDateString()}
+                        </div>
+                        <div className="bookingCell">
+                            {new Date(booking.befejezesDatum).toLocaleDateString()}
+                        </div>
+                        <div className="bookingCell">
+                            {new Date(booking.letrehozasDatum).toLocaleDateString()}
+                        </div>
+                        <div className="bookingCell">{booking.allapot}</div>
+                        <div className="bookingActions">
+                        {booking.allapot === "függőben" && (
+                            <>
+                            <Check2Circle title="Elfogadás" onClick={() => handleBookingResponse(booking.foglalasId, "Elfogadva")}/>
+                            <XCircle title="Elutasítás" onClick={() => handleBookingResponse(booking.foglalasId, "Elutasítva")}/>
+                            </>
+                        )}
+                        </div>
+                    </div>
+                    ))}
+                </div>
+                ) : (
+                    <div className="errorMessage">
+                        Még nincsenek foglalások
+                        <img src="/img/errordog.gif" alt="hiba" className="errordog"/>
+                    </div>
+                )}
+            </div>
             {succesful ? (
                 <div className="succesfulUpload">
                     <p>Sikeres művelet!</p>
@@ -239,7 +339,7 @@ const IngatlanKezeles = () => {
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="uploadForm">
-
+                    <p className="title">Adatszerkesztés</p>
                     <div className="uploadRow">
                         <label className="uploadLabel">Cím:</label>
                         <input

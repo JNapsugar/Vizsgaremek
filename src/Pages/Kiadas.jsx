@@ -49,7 +49,7 @@ const IngatlanForm = () => {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token");
+        const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
             setIsLoggedIn(true);
             setToken(storedToken);
@@ -181,8 +181,8 @@ const IngatlanForm = () => {
     
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("username");
         setIsLoggedIn(false);
         window.location.href = "/belepes";
     };

@@ -37,8 +37,8 @@ const Profil = () => {
     const [isEditView, setIsEditView] = useState(false); 
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        const username = localStorage.getItem("username");
+        const token = sessionStorage.getItem("token");
+        const username = sessionStorage.getItem("username");
     
         if (token && username) {
             setIsLoggedIn(true);
@@ -59,7 +59,7 @@ const Profil = () => {
     
     useEffect(() => {
         if (registrationData.permissionId === 2) {
-            const token = localStorage.getItem("token");     
+            const token = sessionStorage.getItem("token");     
             axios .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
                     headers: { Authorization: `Bearer ${token}` }, })
                 .then((response) => {
@@ -74,7 +74,7 @@ const Profil = () => {
                 .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
         }
         if (registrationData.permissionId === 3) {
-            const token = localStorage.getItem("token");     
+            const token = sessionStorage.getItem("token");     
             axios .get(`https://localhost:7079/api/Foglalasok/user/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` }, })
                 .then((response) => {setBookings(response.data);})
@@ -112,8 +112,8 @@ const Profil = () => {
             <img src={kep} alt="property" />
             <p>{helyszin}<br /><span>{allapot}</span></p>
             <div className="bookingDatesContainer">
-                <p>Kezdés: {kezdesDatum}</p>
-                <p>Befejezés: {befejezesDatum}</p>
+                <p>Kezdés: {new Date(kezdesDatum).toLocaleDateString()}</p>
+                <p>Befejezés: {new Date(befejezesDatum).toLocaleDateString()}</p>
             </div>
             <div className="buttonContainer">
                 <button>
@@ -129,8 +129,8 @@ const Profil = () => {
     const handleDeleteBooking = (id) => {
         const confirmation = window.confirm("Biztosan törölni szeretnéd a foglalást?");
         if (confirmation) {
-            const token = localStorage.getItem("token");
-            const username = localStorage.getItem("username");
+            const token = sessionStorage.getItem("token");
+            const username = sessionStorage.getItem("username");
             if (token && username) {
                 axios.delete(`https://localhost:7079/api/Foglalasok/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
@@ -151,8 +151,8 @@ const Profil = () => {
 
     
     const handleSave = () => {
-        const token = localStorage.getItem("token");
-        const username = localStorage.getItem("username");
+        const token = sessionStorage.getItem("token");
+        const username = sessionStorage.getItem("username");
         const userId = sessionStorage.getItem("userId");
     
         if (!token || !username) {
@@ -204,7 +204,7 @@ const Profil = () => {
                 });
     
                 setIsEditView(false);
-                localStorage.setItem("username", registrationData.loginNev);
+                sessionStorage.setItem("username", registrationData.loginNev);
             })
             .catch((error) => {
                 console.error("Hiba a profil mentésekor:", error);
@@ -215,7 +215,7 @@ const Profil = () => {
     
 
     const handleLogout = () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const username = registrationData.loginNev;
         
         if (token && username) {
@@ -223,8 +223,8 @@ const Profil = () => {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then(() => {
-                localStorage.removeItem("token");
-                localStorage.removeItem("username");
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("username");
                 sessionStorage.removeItem("permission");
                 setIsLoggedIn(false);
                 window.location.href = "/belepes";
@@ -241,15 +241,15 @@ const Profil = () => {
     const handleDeleteAccount = () => {
         const confirmation = window.confirm("Biztosan törölni szeretnéd a fiókodat? Ez visszafordíthatatlan művelet.");
         if (confirmation) {
-            const token = localStorage.getItem("token");
-            const username = localStorage.getItem("username");
+            const token = sessionStorage.getItem("token");
+            const username = sessionStorage.getItem("username");
             if (token && username) {
                 axios.delete(`https://localhost:7079/api/Felhasznalo/delete/${username}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then(() => {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("username");
+                    sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("username");
                     setIsLoggedIn(false);
                     window.location.href = "/belepes";
                 })

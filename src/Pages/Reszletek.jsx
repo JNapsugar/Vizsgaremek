@@ -6,7 +6,7 @@ import '../style.css';
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import PropertyCard from '../Components/PropertyCard';
-import Calendar from 'react-calendar'
+import Calendar from 'react-calendar';
 
 const App = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -21,6 +21,7 @@ const App = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [selectingStart, setSelectingStart] = useState(true);
+    const [bookedDates, setBookedDates] = useState([]);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -75,44 +76,88 @@ const App = () => {
             .catch(error => { console.error(error); })
     }, []);
 
+    useEffect(() => {
+        axios.get(`https://localhost:7079/api/Foglalasok/ingatlan/${ingatlanId}`)
+            .then(res => {
+                const bookings = res.data.bookings || [];
+                const acceptedBookings = bookings.filter(booking => booking.allapot === "elfogadva");
+    
+                const dates = acceptedBookings.map(booking => ({
+                    start: new Date(booking.kezdesDatum),
+                    end: new Date(booking.befejezesDatum)
+                }));
+    
+                const allBookedDates = [];
+                dates.forEach(({ start, end }) => {
+                    let currentDate = new Date(start);
+                    while (currentDate <= end) {
+                        allBookedDates.push(currentDate.toISOString().split('T')[0]);
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                });
+                setBookedDates(allBookedDates);
+            })
+            .catch(error => console.error(error));
+    }, [ingatlanId]);
+    
+
     const handleDateChange = (date) => {
         if (selectingStart) {
-            if (date > today) {
-                setStartDate(date);
+            setStartDate(date);
+            setEndDate(null);
+            setSelectingStart(false);
+            document.getElementById('bookingResponse').innerText = "";
+        } else {
+            const selectedDates = getDateRange(startDate, date);
+            const isConflict = selectedDates.some(d => bookedDates.includes(d));
+            if (isConflict) {
+                document.getElementById('bookingResponse').innerText = "A választott időszak már foglalt időpontot tartalmaz!";
+                setStartDate(null);
                 setEndDate(null);
-                setSelectingStart(false);
-            } else {
-                alert("Csak a mai nap utáni dátumokat választhatod kezdő dátumként!");
+                setSelectingStart(true);
+                return;
             }
-        } else if (!startDate || date > startDate) {
             setEndDate(date);
             setSelectingStart(true);
-        } else {
-            alert("A végdátumnak későbbinek kell lennie, mint a kezdődátum!");
         }
     };
+    const getDateRange = (start, end) => {
+        const dates = [];
+        let currentDate = new Date(start);
+        while (currentDate <= end) {
+            dates.push(currentDate.toISOString().split('T')[0]);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        return dates;
+    };
+    
     const isBetween = (date) => {
         return startDate && endDate && date > startDate && date < endDate;
     };
 
+    const tileDisabled = ({ date }) => {
+        const dateStr = date.toISOString().split('T')[0];
+        return bookedDates.includes(dateStr); 
+    };
+
     const tileClassName = ({ date, view }) => {
         if (view === 'month') {
-        if (startDate && date.getTime() === startDate.getTime()) {
-            return 'react-calendar__tile--start';
-        }
-        if (endDate && date.getTime() === endDate.getTime()) {
-            return 'react-calendar__tile--end';
-        }
-        if (isBetween(date)) {
-            return 'highlighted';
-        }
+            if (startDate && date.getTime() === startDate.getTime()) {
+                return 'react-calendar__tile--start';
+            }
+            if (endDate && date.getTime() === endDate.getTime()) {
+                return 'react-calendar__tile--end';
+            }
+            if (isBetween(date)) {
+                return 'highlighted';
+            }
         }
         return '';
     };
 
     const handleBooking = () => {
         if (!startDate || !endDate) {
-            alert("Kérlek válassz kezdő és végdátumot!");
+            document.getElementById('bookingResponse').innerText = "Kérlek válassz kezdő és végdátumot!";
             return;
         }
 
@@ -133,6 +178,8 @@ const App = () => {
             });
     };
 
+    console.log(bookedDates);
+    
     return (
         <div>
             <Navbar />
@@ -150,7 +197,7 @@ const App = () => {
                 <div className="mainDetails">
                     <p className="propertyTitle">{property.helyszin}</p>
                     <p className="propertyLocation">{property.cim}</p>
-                    <p className="propertyPrice">{property.ar} Ft/hónap</p>
+                    <p className="propertyPrice">{property.ar} Ft/éjszaka</p>
                     <p className="propertyDescription">{property.leiras}</p>
                 </div>
             </div>
@@ -163,14 +210,14 @@ const App = () => {
                     <p className="propertyDetails">
                         Méret: {property.meret}m²<br />
                         Szobák száma: {property.szoba} <br />
-                        Feltöltés dátuma: {property.feltoltesDatum}
+                        Feltöltés dátuma: {new Date(property.feltoltesDatum).toLocaleDateString()}
                     </p>
                     <p className="title">Szolgáltatások</p>
                     <div className="services">
                         {property.szolgaltatasok && property.szolgaltatasok.split(', ').map((service, index) => {
                             let iconSrc;
                             switch (service) {
-                                case "Wi-Fi": iconSrc = "/img/icons/wifi.svg"; break;
+                                case "Wi-fi": iconSrc = "/img/icons/wifi.svg"; break;
                                 case "kutya hozható": iconSrc = "/img/icons/paw.svg"; break;
                                 case "parkolás": iconSrc = "/img/icons/parking.svg"; break;
                                 case "medence": iconSrc = "/img/icons/pool.svg"; break;
@@ -230,7 +277,7 @@ const App = () => {
                                 onChange={handleDateChange}
                                 value={selectingStart ? startDate : endDate}
                                 minDate={selectingStart ? new Date(today.getTime() + 86400000) : startDate}
-                                tileClassName={tileClassName}
+                                tileClassName={tileClassName} tileDisabled={tileDisabled}
                             />
                         </div>
                         <div className="datesContainer">
@@ -246,7 +293,7 @@ const App = () => {
                             <button className="starBtn" onClick={handleBooking}>
                                 Foglalás
                                 {[...Array(6)].map((_, i) => (
-                                    <div key={i} className={`absolute star-${i + 1} animate-spin-slow`}>
+                                    <div key={i} className={`absolute star-${i + 1} animate-spin-slow`}> 
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" className="w-6 h-6 text-yellow-400">
                                             <path fill="currentColor" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/>
                                         </svg>
