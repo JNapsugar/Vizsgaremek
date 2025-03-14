@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 13. 10:07
+-- Létrehozás ideje: 2025. Már 14. 07:28
 -- Kiszolgáló verziója: 10.4.32-MariaDB
--- PHP verzió: 8.2.12
+-- PHP verzió: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `ingatlanberlesiplatform`
 --
-CREATE DATABASE IF NOT EXISTS `ingatlanberlesiplatform` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_hungarian_ci;
+CREATE DATABASE IF NOT EXISTS `ingatlanberlesiplatform` DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 USE `ingatlanberlesiplatform`;
 
 -- --------------------------------------------------------
@@ -285,6 +285,27 @@ INSERT INTO `foglalasok` (`foglalas_id`, `ingatlan_id`, `berlo_id`, `kezdes_datu
 (425, 42, 551, '2025-03-10', '2025-03-17', 'függőben', '2025-03-10 12:08:47'),
 (426, 50, 100, '2025-03-10', '2025-03-10', 'függőben', '2025-03-10 12:11:33'),
 (427, 42, 551, '2025-03-12', '2025-03-21', 'függőben', '2025-03-10 12:12:23');
+
+--
+-- Eseményindítók `foglalasok`
+--
+DELIMITER $$
+CREATE TRIGGER `prevent_same_renter_owner` BEFORE INSERT ON `foglalasok` FOR EACH ROW BEGIN
+    DECLARE tulajdonos INT;
+
+    -- Lekérdezzük az ingatlan tulajdonosának ID-ját
+    SELECT tulajdonos_id INTO tulajdonos
+    FROM ingatlanok
+    WHERE ingatlan_id = NEW.ingatlan_id;
+
+    -- Ha a bérlő és a tulajdonos ugyanaz, hibaüzenetet dobunk
+    IF NEW.berlo_id = tulajdonos THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'A bérlő nem lehet az ingatlan tulajdonosa!';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -562,31 +583,6 @@ INSERT INTO `jogosultsagok` (`jogosultsag_id`, `jogosultsag_nev`, `leiras`) VALU
 (3, 'Tulajdonos jogosultság', 'Ingatlanok kezelésére jogosultság'),
 (4, 'Rendszergazda jogosultság', 'Rendszerbeállítások módosítása'),
 (5, 'Felhasználói jogosultság', 'Felhasználók kezelése');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `szerepkorjogosultsagok`
---
-
-CREATE TABLE `szerepkorjogosultsagok` (
-  `szerepkor_id` int(11) NOT NULL,
-  `jogosultsag_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `szerepkorjogosultsagok`
---
-
-INSERT INTO `szerepkorjogosultsagok` (`szerepkor_id`, `jogosultsag_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(2, 2),
-(3, 1),
-(3, 3);
 
 -- --------------------------------------------------------
 
@@ -3850,13 +3846,6 @@ ALTER TABLE `jogosultsagok`
   ADD UNIQUE KEY `jogosultsag_nev` (`jogosultsag_nev`);
 
 --
--- A tábla indexei `szerepkorjogosultsagok`
---
-ALTER TABLE `szerepkorjogosultsagok`
-  ADD PRIMARY KEY (`szerepkor_id`,`jogosultsag_id`),
-  ADD KEY `jogosultsag_id` (`jogosultsag_id`);
-
---
 -- A tábla indexei `szerepkorok`
 --
 ALTER TABLE `szerepkorok`
@@ -3937,13 +3926,6 @@ ALTER TABLE `ingatlankepek`
 --
 ALTER TABLE `ingatlanok`
   ADD CONSTRAINT `ingatlanok_ibfk_1` FOREIGN KEY (`tulajdonos_id`) REFERENCES `felhasznalok` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Megkötések a táblához `szerepkorjogosultsagok`
---
-ALTER TABLE `szerepkorjogosultsagok`
-  ADD CONSTRAINT `szerepkorjogosultsagok_ibfk_1` FOREIGN KEY (`szerepkor_id`) REFERENCES `szerepkorok` (`szerepkor_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `szerepkorjogosultsagok_ibfk_2` FOREIGN KEY (`jogosultsag_id`) REFERENCES `jogosultsagok` (`jogosultsag_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
