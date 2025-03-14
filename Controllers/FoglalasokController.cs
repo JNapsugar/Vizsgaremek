@@ -15,7 +15,26 @@ namespace IngatlanokBackend.Controllers
         public FoglalasokController(IngatlanberlesiplatformContext context)
         {
             _context = context;
-        }      
+        }
+
+
+
+        [HttpGet("allBookings")]
+        public async Task<IActionResult> Get()
+        {
+            using (var cx = new IngatlanberlesiplatformContext())
+            {
+                try
+                {
+                    return Ok(await cx.Foglalasoks.ToListAsync());
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+        }
+
 
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserBookings(int userId)
