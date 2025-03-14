@@ -26,7 +26,7 @@ namespace IngatlanokBackend.Controllers
             {
                 try
                 {
-                    return Ok(await cx.Foglalasoks.ToListAsync());
+                    return Ok(await cx.Foglalasoks  .ToListAsync());
                 }
                 catch (Exception ex)
                 {
@@ -112,9 +112,8 @@ namespace IngatlanokBackend.Controllers
                 Allapot = booking.Allapot
             });
         }
-
-        [HttpPut("valasz/{foglalasId}/{tulajdonosId}")]
-        public async Task<IActionResult> RespondToBooking(int foglalasId, int tulajdonosId, [FromBody] BookingResponseDTO response)
+        [HttpPut("valasz/{foglalasId}")]
+        public async Task<IActionResult> RespondToBooking(int foglalasId, [FromBody] string allapot)
         {
             var booking = await _context.Foglalasoks.FindAsync(foglalasId);
             if (booking == null)
@@ -122,63 +121,20 @@ namespace IngatlanokBackend.Controllers
                 return NotFound("A foglalás nem található.");
             }
 
-            var property = await _context.Ingatlanoks.FindAsync(booking.IngatlanId);
-            if (property == null)
-            {
-                return NotFound("Az ingatlan nem található.");
-            }
-
-            if (property.TulajdonosId != tulajdonosId)
-            {
-                return Unauthorized("Nem vagy jogosult ezt a foglalást kezelni.");
-            }
-
-            if (response.Allapot != "Elfogadva" && response.Allapot != "Elutasítva")
+            if (allapot != "Elfogadva" && allapot != "Elutasítva")
             {
                 return BadRequest("Csak 'Elfogadva' vagy 'Elutasítva' állapot adható meg.");
             }
 
-            booking.Allapot = response.Allapot;
+            booking.Allapot = allapot;
             await _context.SaveChangesAsync();
 
             return Ok(new
             {
-                Message = $"A foglalás állapota {response.Allapot} lett.",
+                Message = $"A foglalás állapota {allapot} lett.",
                 BookingId = booking.FoglalasId
             });
         }
-
-        [HttpPut("modositas/{foglalasId}")]
-        public async Task<IActionResult> UpdateBooking(int foglalasId, [FromBody] BookingRequestDTO updatedBooking)
-        {
-            var booking = await _context.Foglalasoks.FindAsync(foglalasId);
-            if (booking == null)
-            {
-                return NotFound("A foglalás nem található.");
-            }
-
-            bool isAvailable = !_context.Foglalasoks
-                .Any(b => b.IngatlanId == booking.IngatlanId &&
-                          b.FoglalasId != foglalasId &&
-                          b.KezdesDatum < updatedBooking.BefejezesDatum &&
-                          b.BefejezesDatum > updatedBooking.KezdesDatum);
-
-            if (!isAvailable)
-            {
-                return BadRequest("Az ingatlan a kiválasztott időszakban már foglalt.");
-            }
-
-            booking.KezdesDatum = updatedBooking.KezdesDatum;
-            booking.BefejezesDatum = updatedBooking.BefejezesDatum;
-            await _context.SaveChangesAsync();
-
-            return Ok(new
-            {
-                Message = "A foglalás sikeresen módosítva.",
-                BookingId = booking.FoglalasId
-            });
-        }
-
 
 
 
