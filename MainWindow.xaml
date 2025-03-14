@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IngatlanKarbantartoWPF"
         mc:Ignorable="d"
-        Title="Rentify adminisztráció" Height="450" Width="800">
+        Title="Rentify adminisztráció" Height="450" Width="900">
 
     <Grid>
         <Grid.RowDefinitions>

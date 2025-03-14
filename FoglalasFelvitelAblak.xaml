@@ -1,0 +1,41 @@
+﻿<Window x:Class="IngatlanKarbantartoWPF.FoglalasFelvitelAblak"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IngatlanKarbantartoWPF"
+        mc:Ignorable="d"
+        Title="FoglalasFelvitelAblak" Height="265" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Ingatlan ID:" Grid.Row="0" Margin="5"/>
+        <TextBox x:Name="IngatlanIdTextBox" Grid.Row="0" Margin="120,5,5,5" Width="200"/>
+
+        <TextBlock Text="Bérlő ID:" Grid.Row="1" Margin="5"/>
+        <TextBox x:Name="BerloIdTextBox" Grid.Row="1" Margin="120,5,5,5" Width="200"/>
+
+        <TextBlock Text="Kezdés dátuma:" Grid.Row="2" Margin="5"/>
+        <DatePicker x:Name="KezdesDatumPicker" Grid.Row="2" Margin="120,5,5,5" Width="200"/>
+
+        <TextBlock Text="Befejezés dátuma:" Grid.Row="3" Margin="5"/>
+        <DatePicker x:Name="BefejezesDatumPicker" Grid.Row="3" Margin="120,5,5,5" Width="200"/>
+
+        <TextBlock Text="Állapot:" Grid.Row="4" Margin="5"/>
+        <ComboBox x:Name="AllapotComboBox" Grid.Row="4" Margin="120,5,5,5" Width="200">
+            <ComboBoxItem Content="Függőben" IsSelected="True"/>
+            <ComboBoxItem Content="Elfogadva"/>
+            <ComboBoxItem Content="Elutasítva"/>
+        </ComboBox>
+
+        <Button Content="Mentés" Grid.Row="5" HorizontalAlignment="Right" Margin="5" Width="100" Click="Submit_Click"/>
+    </Grid>
+</Window>

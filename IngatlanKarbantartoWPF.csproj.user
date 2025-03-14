@@ -13,6 +13,12 @@
     <Compile Update="FelhasznaloModositAblak.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="FoglalasFelvitelAblak.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FoglalasModositAblak.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="IngatlanFelvitelAblak.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +34,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="FelhasznaloModositAblak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FoglalasFelvitelAblak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FoglalasModositAblak.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="IngatlanFelvitelAblak.xaml">
