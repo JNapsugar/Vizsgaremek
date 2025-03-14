@@ -8,6 +8,7 @@ import ElfelejtettJelszo from './Pages/ElfelejtettJelszo';
 import Profil from './Pages/Profil';
 import Kiadas from './Pages/Kiadas';
 import IngatlanKezeles from './Pages/IngatlanKezeles';
+import Rolunk from './Pages/Rolunk';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path = "/profil" element = {<Profil/>}/>
         <Route path="/kiadas" element={<Kiadas />} />
         <Route path="/ingatlanKezeles/:id" element={<IngatlanKezeles/>} />
+        <Route path="/rolunk" element={<Rolunk />} />
       </Routes>
     </Router>
   );

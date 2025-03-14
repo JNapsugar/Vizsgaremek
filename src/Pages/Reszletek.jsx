@@ -165,7 +165,8 @@ const App = () => {
             ingatlanId: property.ingatlanId,
             berloId: userId,
             kezdesDatum: startDate.toISOString(),
-            befejezesDatum: endDate.toISOString()
+            befejezesDatum: endDate.toISOString(),
+            allapot: "függőben"
         };
 
         axios.post('https://localhost:7079/api/Foglalasok/addBooking', bookingData)
