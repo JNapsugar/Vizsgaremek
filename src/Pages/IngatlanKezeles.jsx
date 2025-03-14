@@ -316,8 +316,8 @@ const IngatlanKezeles = () => {
                         <div className="bookingActions">
                         {booking.allapot === "függőben" && (
                             <>
-                            <Check2Circle title="Elfogadás" onClick={() => handleBookingResponse(booking.foglalasId, "Elfogadva")}/>
-                            <XCircle title="Elutasítás" onClick={() => handleBookingResponse(booking.foglalasId, "Elutasítva")}/>
+                            <Check2Circle title="Elfogadás" onClick={() => handleBookingResponse(booking.foglalasId, "elfogadva")}/>
+                            <XCircle title="Elutasítás" onClick={() => handleBookingResponse(booking.foglalasId, "elutasítva")}/>
                             </>
                         )}
                         </div>
