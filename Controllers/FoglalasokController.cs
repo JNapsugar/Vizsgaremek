@@ -206,18 +206,31 @@ namespace IngatlanokBackend.Controllers
 
             if (allapot != "elfogadva" && allapot != "elutasítva")
             {
-                return BadRequest("Csak 'Elfogadva' vagy 'Elutasítva' állapot adható meg.");
+                return BadRequest("Csak 'elfogadva' vagy 'elutasítva' állapot adható meg.");
             }
 
             booking.Allapot = allapot;
             await _context.SaveChangesAsync();
 
+            var tenant = await _context.Felhasznaloks.FindAsync(booking.BerloId);
+            if (tenant != null)
+            {
+                string subject = allapot == "elfogadva" ? "Foglalás elfogadva" : "Foglalás elutasítva";
+                string body = $"Kedves {tenant.Name},\n\n" +
+                              $"Foglalásának állapota megváltozott: {allapot}.\n\n" +
+                              $"📅 Időszak: {booking.KezdesDatum:yyyy.MM.dd} - {booking.BefejezesDatum:yyyy.MM.dd}\n\n" +
+                              $"Kérdés esetén lépjen kapcsolatba a rendszer üzemeltetőivel.\n\n" +
+                              $"Üdvözlettel,\nRentify csapata";
+
+                await SendEmail(tenant.Email, subject, body);
+            }
             return Ok(new
             {
                 Message = $"A foglalás állapota {allapot} lett.",
                 BookingId = booking.FoglalasId
             });
         }
+
 
 
         [HttpDelete("{foglalasId}")]
