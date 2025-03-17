@@ -54,11 +54,16 @@ const IngatlanKezeles = () => {
     const [bookings, setBookings] = useState([]);
     const [berloNevek, setBerloNevek] = useState({});
     const [berloKepek, setBerloKepek] = useState({});
+    const [approvedBookings, setApprovedBookings] = useState([]);
+
     
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Foglalasok/ingatlan/${id}`)
             .then(res => { 
+                const allBookings = res.data.bookings;
+                const accepted = allBookings.filter(booking => booking.allapot === "elfogadva");
                 setBookings(res.data);
+                setApprovedBookings(accepted);
                 res.data.bookings.forEach(booking => {
                     axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${booking.berloId}`)
                         .then(response => {
@@ -79,6 +84,13 @@ const IngatlanKezeles = () => {
             .catch(error => { console.error(error); });
     }, [id]);
 
+    const isOverlapping = (newBooking) => {
+        return approvedBookings.some(existing => 
+            new Date(newBooking.kezdesDatum) < new Date(existing.befejezesDatum) &&
+            new Date(newBooking.befejezesDatum) > new Date(existing.kezdesDatum)
+        );
+    };
+
     const handleBookingResponse = async (bookingId, status) => {
         try {
             const response = await axios.put(
@@ -97,7 +109,15 @@ const IngatlanKezeles = () => {
                     bookings: prevBookings.bookings.map(booking =>
                         booking.foglalasId === bookingId ? { ...booking, allapot: status } : booking
                     ),
+                    
                 }));
+                setApprovedBookings(prevApprovedBookings => {
+                    if (status === "elfogadva") {
+                        const newBooking = bookings.bookings.find(booking => booking.foglalasId === bookingId);
+                        return [...prevApprovedBookings, newBooking];
+                    }
+                    return prevApprovedBookings;
+                });
             }
         } catch (error) {
             console.error(`Hiba történt a foglalás állapotának módosítása során:`, error);
@@ -316,8 +336,15 @@ const IngatlanKezeles = () => {
                         <div className="bookingActions">
                         {booking.allapot === "függőben" && (
                             <>
-                            <Check2Circle title="Elfogadás" onClick={() => handleBookingResponse(booking.foglalasId, "elfogadva")}/>
-                            <XCircle title="Elutasítás" onClick={() => handleBookingResponse(booking.foglalasId, "elutasítva")}/>
+                                <Check2Circle
+                                    title={isDisabled ? "Már foglalt időpont" : "Elfogadás"}
+                                    onClick={isOverlapping(booking)? null : () => handleBookingResponse(booking.foglalasId, "elfogadva")}
+                                    className={isOverlapping(booking) ? "disabled" : ""}
+                                />
+                                <XCircle
+                                    title="Elutasítás"
+                                    onClick={() => handleBookingResponse(booking.foglalasId, "elutasítva")}
+                                />
                             </>
                         )}
                         </div>

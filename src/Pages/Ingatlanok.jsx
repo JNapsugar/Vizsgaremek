@@ -41,7 +41,7 @@ const Ingatlanok = () => {
         helyszin: cityName,
         szoba: "Mindegy",
         rendezes: "Mindegy",
-        nezet: "list",
+        nezet: window.innerWidth < 1300 ? "grid" : "list",
         wifiCb: false,
         petCb: false,
         parkolasCb: false,
@@ -195,7 +195,7 @@ const Ingatlanok = () => {
             </div>
         );
     };   
-
+    
     return (
         <div>
             <Navbar />

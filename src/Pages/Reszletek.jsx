@@ -43,7 +43,7 @@ const App = () => {
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}`)
             .then(res => { setProperty(res.data); })
-            .catch(error => console.log(error));
+            .catch(error => console.error(error));
     }, [ingatlanId]);
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const App = () => {
                 const otherProperties = randomProperties.slice(0, 3);
                 setProperties(otherProperties);
             })
-            .catch(error => console.log(error));
+            .catch(error => console.error(error));
     }, [ingatlanId]);
 
     useEffect(() => {
@@ -148,18 +148,19 @@ const App = () => {
 
     const tileClassName = ({ date, view }) => {
         if (view === 'month') {
-            if (startDate && date.getTime() === startDate.getTime()) {
-                return 'react-calendar__tile--start';
+            if (date.toDateString() === startDate?.toDateString()) {
+                return 'startDateTile';
             }
-            if (endDate && date.getTime() === endDate.getTime()) {
-                return 'react-calendar__tile--end';
+            if (date.toDateString() === endDate?.toDateString()) {
+                return 'endDateTile';
             }
             if (isBetween(date)) {
                 return 'highlighted';
             }
         }
         return '';
-    };
+    };    
+    
 
     const handleBooking = () => {
         if (!startDate || !endDate) {
@@ -186,8 +187,6 @@ const App = () => {
 
             console.log(bookingData);
     };
-
-    console.log(bookedDates);
     
     return (
         <div>
@@ -242,11 +241,11 @@ const App = () => {
                                 case "erkély/terasz": iconSrc = "/img/icons/balcony.svg"; break;
                                 case "házimozi": iconSrc = "/img/icons/cinema.svg"; break;
                                 case "mosógép": iconSrc = "/img/icons/washingmachine.svg"; break;
-                                case "kávőfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
+                                case "kávéfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
                                 case "takarítószolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
                                 case "biztonsági kamera": iconSrc = "/img/icons/securitycamera.svg"; break;
                                 case "golfpálya": iconSrc = "/img/icons/golf.svg"; break;
-                                case "spajz": iconSrc = "/img/icons/pantry.svg"; break;
+                                case "spájz": iconSrc = "/img/icons/pantry.png"; break;
                                 default: iconSrc = "/img/icons/plus.svg"; break;
                             }
                             return (

@@ -21,7 +21,7 @@ export default function PropertyListItem({ property, propertyImg }) {
                     {displayedServices.map((service, index) => {
                         let iconSrc;
                         switch (service) {
-                            case "Wi-Fi": iconSrc = "/img/icons/wifi.svg"; break;
+                            case "Wi-fi": iconSrc = "/img/icons/wifi.svg"; break;
                             case "kutya hozható": iconSrc = "/img/icons/paw.svg"; break;
                             case "parkolás": iconSrc = "/img/icons/parking.svg"; break;
                             case "medence": iconSrc = "/img/icons/pool.svg"; break;
@@ -37,11 +37,11 @@ export default function PropertyListItem({ property, propertyImg }) {
                             case "erkély/terasz": iconSrc = "/img/icons/balcony.svg"; break;
                             case "házimozi": iconSrc = "/img/icons/cinema.svg"; break;
                             case "mosógép": iconSrc = "/img/icons/washingmachine.svg"; break;
-                            case "kávőfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
+                            case "kávéfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
                             case "takarítószolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
                             case "biztonsági kamera": iconSrc = "/img/icons/securitycamera.svg"; break;
                             case "golfpálya": iconSrc = "/img/icons/golf.svg"; break;
-                            case "spajz": iconSrc = "/img/icons/pantry.svg"; break;
+                            case "spájz": iconSrc = "/img/icons/pantry.png"; break;
                             default: iconSrc = "/img/icons/plus.svg"; break;
                         }
                         return (

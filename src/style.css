@@ -1048,14 +1048,14 @@ hr{
   background: rgba(30, 30, 30, 0.7) !important;
 }
 
-.react-calendar__tile--start {
-  background-color: #007bff !important;
-  color: white !important;
+.startDateTile {
+  background-color: rgb(13, 125, 190) !important;
+  color: white;
 }
 
-.react-calendar__tile--end {
-  background-color: rgba(255, 99, 71, 0.7) !important;
-  color: white !important;
+.endDateTile {
+  background-color: rgb(223, 94, 94) !important;
+  color: white;
 }
 
 .highlighted {
@@ -1352,6 +1352,11 @@ hr{
       width: 2rem;
       height: 2rem;
       cursor: pointer;
+  }
+
+  .bookingActions .disabled {
+    cursor: not-allowed;
+    color: gray !important;
   }
 
   .bookingActions svg:first-of-type {
