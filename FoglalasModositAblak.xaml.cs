@@ -31,59 +31,83 @@ namespace IngatlanKarbantartoWPF
         {
             InitializeComponent();
             this.foglalasId = foglalasId;
+            this._FoglalasId = foglalasId; // Helyesen beállítjuk az _FoglalasId-t is
             _httpClient = new HttpClient();
             LoadFoglalasData();
         }
 
         private async void LoadFoglalasData()
         {
-            // API hívás, hogy betöltsük a foglalás adatokat
-            string url = $"https://localhost:7079/api/Foglalasok//{_FoglalasId}";
-            HttpResponseMessage response = await _httpClient.GetAsync(url);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var foglalas = await response.Content.ReadFromJsonAsync<FoglalasDTO>();
+                // Helyes URL használata (dupla perjel eltávolítása)
+                string url = $"https://localhost:7079/api/Foglalasok/{foglalasId}";
+                HttpResponseMessage response = await _httpClient.GetAsync(url);
 
-                // Adatok betöltése a megfelelő mezőkbe
-                FoglalasIdTextBox.Text = foglalas.FoglalasId.ToString();
-                IngatlanIdTextBox.Text = foglalas.IngatlanId.ToString();
-                BerloIdTextBox.Text = foglalas.BerloId.ToString();
-                KezdesDatumDatePicker.SelectedDate = foglalas.KezdesDatum;
-                BefejezesDatumDatePicker.SelectedDate = foglalas.BefejezesDatum;
-                AllapotComboBox.SelectedItem = foglalas.Allapot;
+                if (response.IsSuccessStatusCode)
+                {
+                    var foglalas = await response.Content.ReadFromJsonAsync<FoglalasDTO>();
+
+                    if (foglalas != null)
+                    {
+                        MessageBox.Show($"Foglalás betöltve: ID = {foglalas.FoglalasId}, IngatlanID = {foglalas.IngatlanId}");
+
+                        // Adatok betöltése a megfelelő mezőkbe
+                        FoglalasIdTextBox.Text = foglalas.FoglalasId.ToString();
+                        IngatlanIdTextBox.Text = foglalas.IngatlanId.ToString();
+                        BerloIdTextBox.Text = foglalas.BerloId.ToString();
+                        KezdesDatumDatePicker.SelectedDate = foglalas.KezdesDatum;
+                        BefejezesDatumDatePicker.SelectedDate = foglalas.BefejezesDatum;
+                        AllapotComboBox.SelectedItem = foglalas.Allapot;
+                    }
+                    else
+                    {
+                        MessageBox.Show("A foglalás adatai üresek.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nem sikerült betölteni a foglalás adatokat.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Nem sikerült betölteni a foglalás adatokat.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Hiba történt az adatok betöltése során: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            // A módosított foglalás adatainak összegyűjtése
-            var updatedFoglalas = new FoglalasDTO
+            try
             {
-                FoglalasId = this.foglalasId,
-                IngatlanId = int.Parse(IngatlanIdTextBox.Text),
-                BerloId = int.Parse(BerloIdTextBox.Text),
-                KezdesDatum = KezdesDatumDatePicker.SelectedDate ?? DateTime.Now,
-                BefejezesDatum = BefejezesDatumDatePicker.SelectedDate ?? DateTime.Now,
-                Allapot = ((ComboBoxItem)AllapotComboBox.SelectedItem)?.Content.ToString()
-            };
+                // A módosított foglalás adatainak összegyűjtése
+                var updatedFoglalas = new FoglalasDTO
+                {
+                    FoglalasId = this.foglalasId,
+                    IngatlanId = int.Parse(IngatlanIdTextBox.Text),
+                    BerloId = int.Parse(BerloIdTextBox.Text),
+                    KezdesDatum = KezdesDatumDatePicker.SelectedDate ?? DateTime.Now,
+                    BefejezesDatum = BefejezesDatumDatePicker.SelectedDate ?? DateTime.Now,
+                    Allapot = (AllapotComboBox.SelectedItem as ComboBoxItem)?.Content.ToString()
+                };
 
-            // API hívás a módosított adat frissítésére
-            string url = $"https://localhost:7079/api/Foglalasok/{foglalasId}";
-            HttpResponseMessage response = await _httpClient.PutAsJsonAsync(url, updatedFoglalas);
+                // API hívás a módosított adat frissítésére
+                string url = $"https://localhost:7079/api/Foglalasok/{foglalasId}";
+                HttpResponseMessage response = await _httpClient.PutAsJsonAsync(url, updatedFoglalas);
 
-            if (response.IsSuccessStatusCode)
-            {
-                MessageBox.Show("A foglalás sikeresen frissítve.", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close(); // Zárja be az ablakot
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("A foglalás sikeresen frissítve.", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close(); // Zárja be az ablakot
+                }
+                else
+                {
+                    MessageBox.Show("A foglalás frissítése nem sikerült.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("A foglalás frissítése nem sikerült.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Hiba történt a frissítés során: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
