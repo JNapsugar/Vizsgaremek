@@ -1259,6 +1259,102 @@ hr{
 }
 /*#endregion Profil*/
 
+/*#region Rolunk*/
+
+.aboutUs {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #1e1e1e, #2c2c2c);
+}
+
+.aboutUsLogo {
+  width: 30%;
+  animation: glowEffect 5s ease-in-out infinite;
+  text-align: center;
+}
+
+@keyframes glowEffect {
+  0% {
+      filter: drop-shadow(0 0 5px #d3932bd0);
+  }
+  50% {
+      filter: drop-shadow(0 0 10px #d3932bd0) drop-shadow(0 0 30px #d3932bd0);
+  }
+  100% {
+      filter: drop-shadow(0 0 5px #d3932bd0);
+  }
+}
+
+
+.aboutUsTextContainer {
+  padding: 2rem;
+  background: #1e1e1e;
+}
+
+.aboutUsText {
+  color: white;
+  margin: 6rem 3rem;
+  font-size: 1.5rem;
+  width: 45%;
+  float: right;
+}
+
+.aboutUsValues {
+  background: url('../public/img/headers/header1.jpg') center center / cover no-repeat;
+  padding: 2rem;
+  position: relative;
+}
+
+.aboutUsValues::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(to bottom, #1e1e1e, transparent);
+}
+
+.valueCardContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+  margin: 1rem auto;
+}
+
+.valueCard {
+  background-color: #181818cc;
+  color: white;
+  width: 30%;
+  float: left;
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  transition:all 0.5s ease;
+}
+
+.valueCard h1 {
+  font-size: 1.5rem;
+  color: #eeb53a;
+}
+
+.valueCard svg {
+  color: white;
+  height: 3rem;
+  width: 3rem;
+}
+
+.valueCard:hover {
+  transform: scale(1.05);
+}
+
+.aboutUsTeam{
+  
+}
+
+/*#endregion Rolunk*/
+
 /*#region Kiadás*/
 .uploadForm{
   width: 80%;

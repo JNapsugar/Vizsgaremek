@@ -337,7 +337,7 @@ const IngatlanKezeles = () => {
                         {booking.allapot === "függőben" && (
                             <>
                                 <Check2Circle
-                                    title={isDisabled ? "Már foglalt időpont" : "Elfogadás"}
+                                    title={isOverlapping(booking)? "Már foglalt időpont" : "Elfogadás"}
                                     onClick={isOverlapping(booking)? null : () => handleBookingResponse(booking.foglalasId, "elfogadva")}
                                     className={isOverlapping(booking) ? "disabled" : ""}
                                 />
