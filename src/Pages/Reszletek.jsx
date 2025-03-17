@@ -102,14 +102,18 @@ const App = () => {
     
 
     const handleDateChange = (date) => {
+        const adjustedDate = new Date(date);
+        adjustedDate.setHours(12, 0, 0, 0);
+    
         if (selectingStart) {
-            setStartDate(date);
+            setStartDate(adjustedDate);
             setEndDate(null);
             setSelectingStart(false);
             document.getElementById('bookingResponse').innerText = "";
         } else {
-            const selectedDates = getDateRange(startDate, date);
+            const selectedDates = getDateRange(startDate, adjustedDate);
             const isConflict = selectedDates.some(d => bookedDates.includes(d));
+    
             if (isConflict) {
                 document.getElementById('bookingResponse').innerText = "A választott időszak már foglalt időpontot tartalmaz!";
                 setStartDate(null);
@@ -117,10 +121,12 @@ const App = () => {
                 setSelectingStart(true);
                 return;
             }
-            setEndDate(date);
+    
+            setEndDate(adjustedDate);
             setSelectingStart(true);
         }
     };
+    
     const getDateRange = (start, end) => {
         const dates = [];
         let currentDate = new Date(start);
@@ -177,6 +183,8 @@ const App = () => {
                 console.error("Hiba történt a foglalás során", error);
                 document.getElementById('bookingResponse').innerText = "Hiba történt a foglalási kérelem elküldésekor!";
             });
+
+            console.log(bookingData);
     };
 
     console.log(bookedDates);
