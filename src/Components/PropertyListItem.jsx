@@ -15,7 +15,7 @@ export default function PropertyListItem({ property, propertyImg }) {
             <div className='Details'>
                 <h2>{property.cim}</h2>
                 <hr />
-                <p>{property.ar} Ft/hónap</p>
+                <p>{property.ar} Ft/éjszaka</p>
                 <p>{property.meret}m² {property.szoba} szoba</p>
                 <div className="listServices">
                     {displayedServices.map((service, index) => {

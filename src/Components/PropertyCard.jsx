@@ -14,7 +14,7 @@ export default function PropertyCard({index, property, propertyImg}) {
                 <img src="/img/placeholder.jpg" alt="Placeholder" loading="lazy"/>
             )}
             <div className="card-content">
-                <h2>{property.helyszin} <span className="price">{property.ar} Ft/hónap</span></h2>
+                <h2>{property.helyszin} <span className="price">{property.ar} Ft/éjszaka</span></h2>
                 <div className="TovabbiInformaciok">
                     <p>
                         {property.meret} m², {property.szoba} szoba<br />
