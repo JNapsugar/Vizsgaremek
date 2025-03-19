@@ -4,12 +4,12 @@ import axios from 'axios';
 import 'react-calendar/dist/Calendar.css';
 import '../style.css';
 import Navbar from '../Components/Navbar';
+import SmallHeader from '../Components/SmallHeader';
 import Footer from "../Components/Footer";
 import PropertyCard from '../Components/PropertyCard';
 import Calendar from 'react-calendar';
 
 const App = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
     const [property, setProperty] = useState({});
     const [propertyImage, setPropertyImage] = useState({});
     const [owner, setOwner] = useState({});
@@ -24,21 +24,6 @@ const App = () => {
     const [bookedDates, setBookedDates] = useState([]);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    const images = [
-        "/img/headers/header1.jpg",
-        "/img/headers/header2.jpg",
-        "/img/headers/header3.jpg",
-        "/img/headers/header4.jpg",
-        "/img/headers/header5.jpg"
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
 
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}`)
@@ -191,15 +176,7 @@ const App = () => {
     return (
         <div>
             <Navbar />
-            <header className="smallHeader">
-                <div className="headerImages">
-                    {images.map((image, index) => (
-                        <img key={index} src={image} className={`headerImage ${index === activeIndex ? 'active' : ''}`} alt={`Header ${index + 1}`} />
-                    ))}
-                </div>
-                <h1 className="smallHeaderTitle">Ingatlanok</h1>
-            </header>
-
+            <SmallHeader title="Részletek" />
             <div className="propertyMainContent">
                 <img src={propertyImage.kepUrl} alt={property.helyszin} loading="lazy" className='propertyImage' />
                 <div className="mainDetails">
@@ -225,7 +202,7 @@ const App = () => {
                         {property.szolgaltatasok && property.szolgaltatasok.split(', ').map((service, index) => {
                             let iconSrc;
                             switch (service) {
-                                case "Wi-fi": iconSrc = "/img/icons/wifi.svg"; break;
+                                case "Wi-Fi": iconSrc = "/img/icons/wifi.svg"; break;
                                 case "kutya hozható": iconSrc = "/img/icons/paw.svg"; break;
                                 case "parkolás": iconSrc = "/img/icons/parking.svg"; break;
                                 case "medence": iconSrc = "/img/icons/pool.svg"; break;
@@ -237,12 +214,12 @@ const App = () => {
                                 case "baba bútorok": iconSrc = "/img/icons/baby.svg"; break;
                                 case "grill": iconSrc = "/img/icons/grill.svg"; break;
                                 case "horgásztó": iconSrc = "/img/icons/fishing.svg"; break;
-                                case "istálló": iconSrc = "/img/icons/stable.svg"; break;
+                                case "garázs": iconSrc = "/img/icons/garage.svg"; break;
                                 case "erkély/terasz": iconSrc = "/img/icons/balcony.svg"; break;
-                                case "házimozi": iconSrc = "/img/icons/cinema.svg"; break;
+                                case "házi mozi": iconSrc = "/img/icons/cinema.svg"; break;
                                 case "mosógép": iconSrc = "/img/icons/washingmachine.svg"; break;
                                 case "kávéfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
-                                case "takarítószolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
+                                case "takarító szolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
                                 case "biztonsági kamera": iconSrc = "/img/icons/securitycamera.svg"; break;
                                 case "golfpálya": iconSrc = "/img/icons/golf.svg"; break;
                                 case "spájz": iconSrc = "/img/icons/pantry.png"; break;
@@ -266,7 +243,7 @@ const App = () => {
                         onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
                     />
 
-                    <a className="uploaderName">{owner.loginNev}</a>
+                    <p className="uploaderName">{owner.loginNev}</p>
                     <div className="propertyContact">
                         <span>Név:</span><span className="propertyContactValue">{owner.name}</span>
                     </div>

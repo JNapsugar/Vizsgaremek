@@ -1,38 +1,15 @@
-import React, { useState, useEffect } from 'react';
 import '../style.css';
 import Navbar from '../Components/Navbar';
+import SmallHeader from '../Components/SmallHeader';
 import Footer from "../Components/Footer";
 import { Lightbulb, ShieldShaded, People } from 'react-bootstrap-icons';
 
 
 const Ingatlanok = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const images = [
-        "img/headers/header1.jpg",
-        "img/headers/header2.jpg",
-        "img/headers/header3.jpg",
-        "img/headers/header4.jpg",
-        "img/headers/header5.jpg"
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [images.length]);
-
     return (
         <div>
             <Navbar />
-            <header className="smallHeader">
-                <div className="headerImages">
-                    {images.map((image, index) => (
-                        <img key={index} src={image} className={`headerImage ${index === activeIndex ? 'active' : ''}`} alt={`Header ${index + 1}`} />
-                    ))}
-                </div>
-                <h1 className="smallHeaderTitle">Rólunk</h1>
-            </header>
+            <SmallHeader title="Rólunk" />
             <div className='aboutUs'>
                 <div className='aboutUsTextContainer'>
                     <img src="./img/Logo.png" alt="Rentify" className='aboutUsLogo'/>
@@ -70,7 +47,7 @@ const Ingatlanok = () => {
                 <div className='teamCardContainer'>
                     <div className="teamCard">
                     <div className="teamCardContent">
-                        <img src="./img/people/JancsurakNapsugar.jpg" alt="" className='teamCardImg'/>
+                        <img src="./img/people/JancsurakNapsugar.jpg" alt="JancsurakNapsugar" className='teamCardImg'/>
                         <div className="teamCardDescription">
                         <p className="teamCardName">
                             <strong>Jancsurák Napsugár</strong>
@@ -83,7 +60,7 @@ const Ingatlanok = () => {
                     </div>
                     <div className="teamCard">
                     <div className="teamCardContent">
-                        <img src="./img/people/VargaAntonia.jpg" alt="" className='teamCardImg'/>
+                        <img src="./img/people/VargaAntonia.jpg" alt="VargaAntonia" className='teamCardImg'/>
                         <div className="teamCardDescription">
                         <p className="teamCardName">
                             <strong>Varga Antónia</strong>
@@ -96,7 +73,7 @@ const Ingatlanok = () => {
                     </div>
                     <div className="teamCard">
                     <div className="teamCardContent">
-                        <img src="./img/people/KatonaAlexandra.jpg" alt="" className='teamCardImg'/>
+                        <img src="./img/people/KatonaAlexandra.jpg" alt="KatonaAlexandra" className='teamCardImg'/>
                         <div className="teamCardDescription">
                         <p className="teamCardName">
                             <strong>Katona Alexandra</strong>
@@ -113,22 +90,22 @@ const Ingatlanok = () => {
                 <h1 className='title'>Értékelések</h1>
                 <div className='ratingsContainer'>
                     <div className='ratingCard'>
-                        <img src="./img/people/VargaJudit.jpeg" alt="" className='ratingCardPfp'/>
+                        <img src="./img/people/VargaJudit.jpeg" alt="VargaJudit" className='ratingCardPfp'/>
                         <p className='ratingCardName'>Varga Judit</p>
                         <p className='ratingCardText'>'A Rentify-en keresztül nemcsak gyorsan találtuk meg a megfelelő nyaralóját a Balaton-parton, de az oldalon található részletes leírások és képek alapján könnyen eldönthettük, hogy melyik ingatlan felel meg az igényeinknek. Az egész folyamat zökkenőmentes volt.'</p>
                     </div>
                     <div className='ratingCard'>
-                        <img src="./img/people/TothBalazs.jpeg" alt="" className='ratingCardPfp'/>
+                        <img src="./img/people/TothBalazs.jpeg" alt="TothBalazs" className='ratingCardPfp'/>
                         <p className='ratingCardName'>Tóth Balázs</p>
                         <p className='ratingCardText'>'A Rentify átlátható és könnyen kezelhető felülete segítségével gyorsan megtaláltam a tökéletes lakást. Nagyon elégedett vagyok a szolgáltatással, és bátran ajánlom mindenkinek, aki lakást keres.</p>
                     </div>
                     <div className='ratingCard'>
-                        <img src="./img/people/NemethEszter.jpeg" alt="" className='ratingCardPfp'/>
+                        <img src="./img/people/NemethEszter.jpeg" alt="NemethEszter" className='ratingCardPfp'/>
                         <p className='ratingCardName'>Németh Eszter</p>
                         <p className='ratingCardText'>'A Rentify felületén nagyon egyszerű volt feltölteni és kiadni a lakásomat. A részletes űrlapok segítségével minden információt könnyedén hozzáadtam, és a képeket is gyorsan feltudtam tölteni. Az ingatlan adatait később is könnyen szerkeszthettem, ha változott valami. A platform átlátható és felhasználóbarát, így minden lépés zökkenőmentes volt.'</p>
                     </div>
                     <div className='ratingCard'>
-                        <img src="./img/people/KovacsJanos.jpeg" alt="" className='ratingCardPfp'/>
+                        <img src="./img/people/KovacsJanos.jpeg" alt="KovacsJanos" className='ratingCardPfp'/>
                         <p className='ratingCardName'>Kovács János</p>
                         <p className='ratingCardText'>'A Rentify-en keresztül nemcsak gyorsan találtam meg a megfelelő bérlőket, de a bérlési időszakokat is könnyedén kezelhettem. Az oldal átlátható felülete és a különböző szolgáltatások nagyban megkönnyítették a dolgomat. Mindenkinek csak ajánlani tudom, aki ingatlant szeretne kiadni.</p>
                     </div>
@@ -136,7 +113,7 @@ const Ingatlanok = () => {
             </div>
             <div className='aboutUsEnd'>
                 <h1 className='title'>500+ aktív bérlő és 1000+ ingatlan vár rád a Rentify-en. Csatlakozz te is közösségünkhöz!</h1>
-                <p>Ha kérdésed van, írj nekünk az info@rentify.com e-mail címen.</p>
+                <p>Ha kérdésed van, írj nekünk az ingatlanberlesiplatform@gmail.com e-mail címen.</p>
             </div>
             </div>
             <img src="img/city2.png" className="footerImg" alt="City view" />

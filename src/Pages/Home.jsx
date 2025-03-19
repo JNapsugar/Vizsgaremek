@@ -34,26 +34,26 @@ const Home = () => {
     const [isFeaturedPending, setFeaturedPending] = useState(false);
     const [cityError, setCityError] = useState(false);
     const [featuredError, setFeaturedError] = useState(false);
-    
+
     useEffect(() => {
-        fetchCities();
-        fetchFeatured();
-    }, []);
-
-    const fetchCities = () => {
-        setCityPending(true);
+        const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"]
+        const fetchCities = () => {
+            setCityPending(true);
             axios.get('https://localhost:7079/api/Telepules/telepulesek')
-            .then(res => {
-                const popularCities = res.data.filter(city => popularCityNames.includes(city.nev));
-                setCities(popularCities);
-            })
-            .catch(error => {
-                setCityError(true);
-                console.error("Hiba a betöltés során: ", error)
-        })
-            .finally(() => setCityPending(false));
-    }
-
+                .then(res => {
+                    const popularCities = res.data.filter(city => popularCityNames.includes(city.nev));
+                    setCities(popularCities);
+                })
+                .catch(error => {
+                    setCityError(true);
+                    console.error("Hiba a betöltés során: ", error);
+                })
+                .finally(() => setCityPending(false));
+        };
+        fetchCities();
+    }, []);
+    
+useEffect(() => {
     const fetchFeatured = () => {
         setFeaturedPending(true);
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
@@ -69,6 +69,8 @@ const Home = () => {
         })
         .finally(() => setFeaturedPending(false));
     }
+    fetchFeatured();
+    }, []);
 
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
@@ -89,7 +91,7 @@ const Home = () => {
             </div>
         </div>      
     );    
-    const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"]
+    
     const CitySection = () => (
         <section className="citySection">
             <h2 className="sectionTitle">Népszerű városok</h2>

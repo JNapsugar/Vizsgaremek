@@ -1,31 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import '../style.css';
 import Navbar from '../Components/Navbar';
+import SmallHeader from '../Components/SmallHeader';
 import PropertyCard from '../Components/PropertyCard';
 import PropertyListItem from '../Components/PropertyListItem';
 import Footer from "../Components/Footer";
 import { RiseLoader } from 'react-spinners';
 import { useSearchParams } from "react-router-dom";
 
-const Ingatlanok = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const images = [
-        "img/headers/header1.jpg",
-        "img/headers/header2.jpg",
-        "img/headers/header3.jpg",
-        "img/headers/header4.jpg",
-        "img/headers/header5.jpg"
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [images.length]);
-
-    
+const Ingatlanok = () => {    
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
     const [locations, setLocations] = useState([]);
@@ -54,7 +38,7 @@ const Ingatlanok = () => {
         babaButorokCb: false,
         grillCb: false,
         horgasztoCb: false,
-        istalloCb: false,
+        garazsCb: false,
         erkelyTeraszCb: false,
         hazimoziCb: false,
         mosogepCb: false,
@@ -76,19 +60,10 @@ const Ingatlanok = () => {
     const toggleFilter = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
-
-    useEffect(() => {
-        if (cityName !== "Összes") {
-            handleFilterChange({ 
-                target: { id: "helyszin", value: cityName } 
-            });
-        }
-    }, [cityName, locations]);
     
-
-    const handleFilterChange = (e) => {
+    const handleFilterChange = useCallback((e) => {
         const { id, value, type, checked } = e.target;
-    
+        
         setFilters(prevFilters => {
             switch (id) {
                 case "helyszin":
@@ -126,8 +101,15 @@ const Ingatlanok = () => {
                     return { ...prevFilters, [id]: type === "checkbox" ? checked : value };
             }
         });
-    };
-    
+    }, [locations]);
+
+    useEffect(() => {
+        if (cityName !== "Összes") {
+            handleFilterChange({ 
+                target: { id: "helyszin", value: cityName } 
+            });
+        }
+    }, [cityName, locations, handleFilterChange]);
 
     const filteredProperties = properties.filter(property => {;
         return (
@@ -145,13 +127,13 @@ const Ingatlanok = () => {
             (!filters.akadalymentesCb || property.szolgaltatasok.includes("akadálymentes")) &&
             (!filters.babaButorokCb || property.szolgaltatasok.includes("baba bútorok")) &&
             (!filters.grillCb || property.szolgaltatasok.includes("grill")) &&
-            (!filters.horgasztoCb || property.szolgaltatasok.includes("horgászási lehetőség")) &&
-            (!filters.istalloCb || property.szolgaltatasok.includes("istálló")) &&
+            (!filters.horgasztoCb || property.szolgaltatasok.includes("horgásztó")) &&
+            (!filters.garazsCb || property.szolgaltatasok.includes("garázs")) &&
             (!filters.erkelyTeraszCb || property.szolgaltatasok.includes("erkély/terasz")) &&
             (!filters.hazimoziCb || property.szolgaltatasok.includes("házi mozi")) &&
             (!filters.mosogepCb || property.szolgaltatasok.includes("mosógép")) &&
             (!filters.kavefozoCb || property.szolgaltatasok.includes("kávéfőző")) &&
-            (!filters.takaritokCb || property.szolgaltatasok.includes("takarítószolgálat")) &&
+            (!filters.takaritokCb || property.szolgaltatasok.includes("takarító szolgálat")) &&
             (!filters.biztonsagiKameraCb || property.szolgaltatasok.includes("biztonsági kamera")) &&
             (!filters.golfpalyaCb || property.szolgaltatasok.includes("golfpálya"))
         );
@@ -199,15 +181,7 @@ const Ingatlanok = () => {
     return (
         <div>
             <Navbar />
-            <header className="smallHeader">
-                <div className="headerImages">
-                    {images.map((image, index) => (
-                        <img key={index} src={image} className={`headerImage ${index === activeIndex ? 'active' : ''}`} alt={`Header ${index + 1}`} />
-                    ))}
-                </div>
-                <h1 className="smallHeaderTitle">Ingatlanok</h1>
-            </header>
-
+            <SmallHeader title="Ingatlanok" />
             <div className="filter" id="filter">
                 <div className="filterRow">
                     <div className="filterSelectContainer">
@@ -280,12 +254,12 @@ const Ingatlanok = () => {
                     <Checkbox id="babaButorokCb" label="Baba bútorok"/>
                     <Checkbox id="grillCb" label="Grill"/>
                     <Checkbox id="horgasztoCb" label="Horgásztó" />
-                    <Checkbox id="istalloCb" label="Istálló"  />
+                    <Checkbox id="garazsCb" label="Garázs"  />
                     <Checkbox id="erkelyTeraszCb" label="Erkély/Terasz"/>
-                    <Checkbox id="hazimoziCb" label="Házimozi" />
+                    <Checkbox id="hazimoziCb" label="Házi mozi" />
                     <Checkbox id="mosogepCb" label="Mosógép" />
                     <Checkbox id="kavefozoCb" label="Kávéfőző" />
-                    <Checkbox id="takaritokCb" label="Takarítószolgálat"  />
+                    <Checkbox id="takaritokCb" label="Takarító szolgálat"  />
                     <Checkbox id="biztonsagiKameraCb" label="Biztonsági kamera"/>
                     <Checkbox id="golfpalyaCb" label="Golfpálya"  />
                     <Checkbox id="spajzCb" label="Spajz"  />

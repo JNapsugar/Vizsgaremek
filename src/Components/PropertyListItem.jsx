@@ -21,7 +21,7 @@ export default function PropertyListItem({ property, propertyImg }) {
                     {displayedServices.map((service, index) => {
                         let iconSrc;
                         switch (service) {
-                            case "Wi-fi": iconSrc = "/img/icons/wifi.svg"; break;
+                            case "Wi-Fi": iconSrc = "/img/icons/wifi.svg"; break;
                             case "kutya hozható": iconSrc = "/img/icons/paw.svg"; break;
                             case "parkolás": iconSrc = "/img/icons/parking.svg"; break;
                             case "medence": iconSrc = "/img/icons/pool.svg"; break;
@@ -33,12 +33,12 @@ export default function PropertyListItem({ property, propertyImg }) {
                             case "baba bútorok": iconSrc = "/img/icons/baby.svg"; break;
                             case "grill": iconSrc = "/img/icons/grill.svg"; break;
                             case "horgásztó": iconSrc = "/img/icons/fishing.svg"; break;
-                            case "istálló": iconSrc = "/img/icons/stable.svg"; break;
+                            case "garázs": iconSrc = "/img/icons/garage.svg"; break;
                             case "erkély/terasz": iconSrc = "/img/icons/balcony.svg"; break;
-                            case "házimozi": iconSrc = "/img/icons/cinema.svg"; break;
+                            case "házi mozi": iconSrc = "/img/icons/cinema.svg"; break;
                             case "mosógép": iconSrc = "/img/icons/washingmachine.svg"; break;
                             case "kávéfőző": iconSrc = "/img/icons/coffeemaker.svg"; break;
-                            case "takarítószolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
+                            case "takarító szolgálat": iconSrc = "/img/icons/cleaning.svg"; break;
                             case "biztonsági kamera": iconSrc = "/img/icons/securitycamera.svg"; break;
                             case "golfpálya": iconSrc = "/img/icons/golf.svg"; break;
                             case "spájz": iconSrc = "/img/icons/pantry.png"; break;

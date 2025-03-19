@@ -2,27 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from '../Components/Navbar';
+import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
 
 import "../style.css";
 
 const IngatlanForm = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const images = [
-        "img/headers/header1.jpg",
-        "img/headers/header2.jpg",
-        "img/headers/header3.jpg",
-        "img/headers/header4.jpg",
-        "img/headers/header5.jpg"
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [images.length]);
-
     const [properties, setProperties] = useState([]);
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
@@ -178,14 +163,6 @@ const IngatlanForm = () => {
             alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
         }
     };
-    
-
-    const handleLogout = () => {
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("username");
-        setIsLoggedIn(false);
-        window.location.href = "/belepes";
-    };
 
     const Checkbox = ({ id, label, checked, onChange }) => {
         return (
@@ -224,14 +201,7 @@ const IngatlanForm = () => {
     return (
         <div>
             <Navbar />
-            <header className="smallHeader">
-                <div className="headerImages">
-                    {images.map((image, index) => (
-                        <img key={index} src={image} className={`headerImage ${index === activeIndex ? 'active' : ''}`} alt={`Header ${index + 1}`} />
-                    ))}
-                </div>
-                <h1 className="smallHeaderTitle">Ingatlan feltöltés</h1>
-            </header>
+            <SmallHeader title="Ingatlan kiadás" />
             {succesful ? (
                 <div className="succesfulUpload">
                     <p>Ingatlan sikeresen hozzáadva!</p>
@@ -326,7 +296,7 @@ const IngatlanForm = () => {
                     <div className="uploadRow">
                         <label className="uploadLabel">Szolgáltatások:</label>
                         <div className="uploadServiceContainer">
-                            <Checkbox id="wifiCb" label="Wi-fi" checked={formData.szolgaltatasok.includes("Wi-fi")} onChange={handleCheckboxChange} />
+                            <Checkbox id="wifiCb" label="Wi-Fi" checked={formData.szolgaltatasok.includes("Wi-Fi")} onChange={handleCheckboxChange} />
                             <Checkbox id="petCb" label="kutya hozható" checked={formData.szolgaltatasok.includes("kutya hozható")} onChange={handleCheckboxChange} />
                             <Checkbox id="parkolasCb" label="parkolás" checked={formData.szolgaltatasok.includes("parkolás")} onChange={handleCheckboxChange} />
                             <Checkbox id="medenceCb" label="medence" checked={formData.szolgaltatasok.includes("medence")} onChange={handleCheckboxChange} />
@@ -338,12 +308,12 @@ const IngatlanForm = () => {
                             <Checkbox id="babaButorokCb" label="baba bútorok" checked={formData.szolgaltatasok.includes("baba bútorok")} onChange={handleCheckboxChange} />
                             <Checkbox id="grillCb" label="grill" checked={formData.szolgaltatasok.includes("grill")} onChange={handleCheckboxChange} />
                             <Checkbox id="horgasztoCb" label="horgásztó" checked={formData.szolgaltatasok.includes("horgásztó")} onChange={handleCheckboxChange} />
-                            <Checkbox id="istalloCb" label="istálló" checked={formData.szolgaltatasok.includes("istálló")} onChange={handleCheckboxChange} />
+                            <Checkbox id="garazsCb" label="garázs" checked={formData.szolgaltatasok.includes("garázs")} onChange={handleCheckboxChange} />
                             <Checkbox id="erkelyTeraszCb" label="erkély/terasz" checked={formData.szolgaltatasok.includes("erkély/terasz")} onChange={handleCheckboxChange} />
-                            <Checkbox id="hazimoziCb" label="házimozi" checked={formData.szolgaltatasok.includes("házimozi")} onChange={handleCheckboxChange} />
+                            <Checkbox id="hazimoziCb" label="házi mozi" checked={formData.szolgaltatasok.includes("házi mozi")} onChange={handleCheckboxChange} />
                             <Checkbox id="mosogepCb" label="mosógép" checked={formData.szolgaltatasok.includes("mosógép")} onChange={handleCheckboxChange} />
                             <Checkbox id="kavefozoCb" label="kávéfőző" checked={formData.szolgaltatasok.includes("kávéfőző")} onChange={handleCheckboxChange} />
-                            <Checkbox id="takaritokCb" label="takarítószolgálat" checked={formData.szolgaltatasok.includes("takarítószolgálat")} onChange={handleCheckboxChange} />
+                            <Checkbox id="takaritokCb" label="takarító szolgálat" checked={formData.szolgaltatasok.includes("takarító szolgálat")} onChange={handleCheckboxChange} />
                             <Checkbox id="biztonsagiKameraCb" label="biztonsági kamera" checked={formData.szolgaltatasok.includes("biztonsági kamera")} onChange={handleCheckboxChange} />
                             <Checkbox id="golfpalyaCb" label="golfpálya" checked={formData.szolgaltatasok.includes("golfpálya")} onChange={handleCheckboxChange} />
                             <Checkbox id="spajzCb" label="spájz" checked={formData.szolgaltatasok.includes("spájz")} onChange={handleCheckboxChange} />

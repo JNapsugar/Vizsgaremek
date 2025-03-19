@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from '../Components/Navbar';
+import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
 import "../style.css";
 
 const Profil = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const images = [
-        "img/headers/header1.jpg",
-        "img/headers/header2.jpg",
-        "img/headers/header3.jpg",
-        "img/headers/header4.jpg",
-        "img/headers/header5.jpg"
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [images.length]);
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+    const navigate = useNavigate();
     const [registrationData, setRegistrationData] = useState({
         loginNev: "Felhasználónév",
         email: "felhasználó@domain.com",
@@ -41,8 +26,6 @@ const Profil = () => {
         const username = sessionStorage.getItem("username");
     
         if (token && username) {
-            setIsLoggedIn(true);
-    
             axios
                 .get(`https://localhost:7079/api/felhasznalo/me/${username}`, {
                     headers: { Authorization: `Bearer ${token}` },
@@ -58,40 +41,43 @@ const Profil = () => {
     }, []);
     
     useEffect(() => {
+        const token = sessionStorage.getItem("token");
         if (registrationData.permissionId === 2) {
-            const token = sessionStorage.getItem("token");     
-            axios .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
-                    headers: { Authorization: `Bearer ${token}` }, })
-                .then((response) => {
-                    const filteredProperties = response.data.filter(property => property.tulajdonosId === registrationData.id);
-                    setProperties(filteredProperties);
-                })
-                .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
+            axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+                const filteredProperties = response.data.filter(property => property.tulajdonosId === registrationData.id);
+                setProperties(filteredProperties);
+            })
+            .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
 
-                axios .get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
-                    headers: { Authorization: `Bearer ${token}` }, })
-                .then((response) => {setPropertyImages(response.data);})
-                .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
+            axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => { setPropertyImages(response.data); })
+            .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
         }
         if (registrationData.permissionId === 3) {
-            const token = sessionStorage.getItem("token");     
-            axios .get(`https://localhost:7079/api/Foglalasok/user/${userId}`, {
-                    headers: { Authorization: `Bearer ${token}` }, })
-                .then((response) => {setBookings(response.data);})
-                .catch((error) => console.error("Hiba a foglalások betöltésekor:", error));
+            axios.get(`https://localhost:7079/api/Foglalasok/user/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => { setBookings(response.data); })
+            .catch((error) => console.error("Hiba a foglalások betöltésekor:", error));
 
-            axios .get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
-                    headers: { Authorization: `Bearer ${token}` }, })
-                .then((response) => {setProperties(response.data);})
-                .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
+            axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => { setProperties(response.data); })
+            .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
 
-            axios .get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
-                    headers: { Authorization: `Bearer ${token}` }, })
-                .then((response) => {setPropertyImages(response.data);})
-                .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
+            axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => { setPropertyImages(response.data); })
+            .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
         }
-    }, [registrationData.id]);
-    
+    }, [registrationData.id, registrationData.permissionId, userId]);
 
     const ProfilePropertyCard = ({ id, kep, cim, helyszin }) => (
         <div className="profilePropertyCard">
@@ -107,7 +93,7 @@ const Profil = () => {
             </div>
         </div>
     );
-    const ProfileBookingCard = ({id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
+    const ProfileBookingCard = ({ id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
         <div className="profileBookingCard">
             <img src={kep} alt="property" />
             <p>{helyszin}<br /><span>{allapot}</span></p>
@@ -149,7 +135,6 @@ const Profil = () => {
         }
     }
 
-    
     const handleSave = () => {
         const token = sessionStorage.getItem("token");
         const username = sessionStorage.getItem("username");
@@ -212,22 +197,19 @@ const Profil = () => {
             });
     };        
     
-    
-
     const handleLogout = () => {
         const token = sessionStorage.getItem("token");
         const username = registrationData.loginNev;
         
         if (token && username) {
-            axios.post(`https://localhost:7079/api/Felhasznalo/logout/`,{ LoginNev: username }, {
+            axios.post(`https://localhost:7079/api/Felhasznalo/logout/`, { LoginNev: username }, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then(() => {
                 sessionStorage.removeItem("token");
                 sessionStorage.removeItem("username");
                 sessionStorage.removeItem("permission");
-                setIsLoggedIn(false);
-                window.location.href = "/belepes";
+                navigate("/belepes");
             })
             .catch(error => {
                 console.error("Hiba történt a kijelentkezés során:", error);
@@ -250,8 +232,7 @@ const Profil = () => {
                 .then(() => {
                     sessionStorage.removeItem("token");
                     sessionStorage.removeItem("username");
-                    setIsLoggedIn(false);
-                    window.location.href = "/belepes";
+                    navigate("/belepes");
                 })
                 .catch(error => {
                     console.error("Hiba történt a fiók törlésekor:", error);
@@ -266,14 +247,7 @@ const Profil = () => {
     return (
         <div>
             <Navbar />
-            <header className="smallHeader">
-                <div className="headerImages">
-                    {images.map((image, index) => (
-                        <img key={index} src={image} className={`headerImage ${index === activeIndex ? 'active' : ''}`} alt={`Header ${index + 1}`} />
-                    ))}
-                </div>
-                <h1 className="smallHeaderTitle" id="profileHeaderTitle">Saját profil</h1>
-            </header>
+            <SmallHeader title="Saját profil" />
             <div className="profileContent">
                 <div className="profileSide">
                     <img 
@@ -293,7 +267,6 @@ const Profil = () => {
                                 properties.map((property, index) => {
                                     let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
                                     const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg";
-                                    const foglalasok = bookings.filter(booking => booking.ingatlanId === property.ingatlanId);
                                     return (
                                         <ProfilePropertyCard
                                             key={index}
@@ -344,13 +317,13 @@ const Profil = () => {
                                 <img src="img/errordog.gif" alt="hiba" width={170} />
                             </div>
                         )}
-
                         </div>
                     </>
                 )}
 
                     <p className="profileTitle">Adatok</p>
-                    {isEditView? <div className="profileData">
+                    {isEditView ? (
+                    <div className="profileData">
                         <p className="profileDataRow">Felhasználónév
                             <input type="text" value={registrationData.loginNev} onChange={(e) => setRegistrationData({ ...registrationData, loginNev: e.target.value })} />
                         </p>
@@ -364,21 +337,22 @@ const Profil = () => {
                             <input type="password" value={registrationData.password} onChange={(e) => setRegistrationData({ ...registrationData, password: e.target.value })} />
                         </p>
                         <p className="profileDataRow">Profilkép
-                        <input type="file" onChange={(e) => setRegistrationData({ ...registrationData, profilePicturePath: e.target.files[0] })}
-                        />
+                            <input type="file" onChange={(e) => setRegistrationData({ ...registrationData, profilePicturePath: e.target.files[0] })}/>
                         </p>
-
                     </div>
-                    :
+                    ) : (
                     <div className="profileData">
                         <p className="profileDataRow">Felhasználónév<span>{registrationData.loginNev}</span></p>
                         <p className="profileDataRow">Teljes név <span>{registrationData.name}</span></p>
                         <p className="profileDataRow">Email <span>{registrationData.email}</span></p>
                         <p className="profileDataRow">Jelszó <span>*********</span></p>
-                    </div>}
-                    {isEditView?
-                    <button className="ProfileEditBtn" onClick={handleSave}>Mentés</button> : 
-                    <button className="ProfileEditBtn" onClick={() => setIsEditView(true)}>Adatok módosítása</button> }
+                    </div>
+                    )}
+                    {isEditView ? (
+                        <button className="ProfileEditBtn" onClick={handleSave}>Mentés</button>
+                    ) : (
+                        <button className="ProfileEditBtn" onClick={() => setIsEditView(true)}>Adatok módosítása</button>
+                    )}
                     <button className="profileRedBtn" onClick={handleLogout}>Kijelentkezés</button>
                     <button className="profileRedBtn" onClick={handleDeleteAccount}>Fiók törlése</button>    
                 </div>

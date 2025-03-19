@@ -229,6 +229,7 @@ html, body {
     .row{
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
     }
     ul{
       list-style: none;
