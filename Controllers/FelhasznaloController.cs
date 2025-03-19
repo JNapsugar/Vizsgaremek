@@ -203,13 +203,13 @@ namespace IngatlanokBackend.Controllers
                 var loginUser = await _context.Felhasznaloks.FirstOrDefaultAsync(u => u.LoginNev == loginDTO.loginName);
                 if (loginUser == null)
                 {
-                    return Unauthorized(new { Message = "Hibás felhasználónév vagy jelszó." });
+                    return Unauthorized("Hibás felhasználónév vagy jelszó.");
                 }
 
                 string computedHash = Program.CreateSHA256(loginDTO.Password, loginUser.Salt);
                 if (loginUser.Hash != computedHash)
                 {
-                    return Unauthorized(new { Message = "Hibás felhasználónév vagy jelszó." });
+                    return Unauthorized("Hibás felhasználónév vagy jelszó.");
                 }
 
                 loginUser.Active = true;
@@ -218,23 +218,11 @@ namespace IngatlanokBackend.Controllers
 
                 var token = await GenerateJwtTokenAsync(loginUser);
 
-                return Ok(new
-                {
-                    Message = "Sikeres bejelentkezés",
-                    Token = token,
-                    User = new
-                    {
-                        loginUser.Id,
-                        loginUser.LoginNev,
-                        loginUser.Name,
-                        loginUser.Email,
-                        loginUser.PermissionId
-                    }
-                });
+                return Ok("Sikeres bejelentkezés!");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { Message = "Hiba történt a bejelentkezés során.", Error = ex.Message });
+                return StatusCode(500, $"Hiba történt a bejelentkezés során: {ex.Message}");
             }
         }
 

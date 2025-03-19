@@ -58,7 +58,7 @@ namespace IngatlanokBackend.Controllers
                     var tulajdonos = await _context.Felhasznaloks.FindAsync(ingatlanDTO.TulajdonosId);
                     if (tulajdonos == null)
                     {
-                        return BadRequest(new { message = "A tulajdonos nem található." });
+                        return BadRequest("A tulajdonos nem található.");
                     }
 
                     var ingatlan = new Ingatlanok
@@ -81,7 +81,7 @@ namespace IngatlanokBackend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(new { message = ex.Message });
+                    return BadRequest(ex.Message);
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace IngatlanokBackend.Controllers
 
                     if (ingatlan == null)
                     {
-                        return NotFound(new { message = "Ingatlan nem található" });
+                        return NotFound("Ingatlan nem található" );
                     }
 
                     ingatlan.Cim = ingatlanDTO.Cim;
@@ -117,7 +117,7 @@ namespace IngatlanokBackend.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(new { message = ex.Message });
+                    return BadRequest(ex.Message);
                 }
             }
         }
