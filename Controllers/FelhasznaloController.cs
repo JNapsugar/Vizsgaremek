@@ -218,7 +218,19 @@ namespace IngatlanokBackend.Controllers
 
                 var token = await GenerateJwtTokenAsync(loginUser);
 
-                return Ok("Sikeres bejelentkezés!");
+                return Ok(new
+                {
+                    Message = "Sikeres bejelentkezés",
+                    Token = token,
+                    User = new
+                    {
+                        loginUser.Id,
+                        loginUser.LoginNev,
+                        loginUser.Name,
+                        loginUser.Email,
+                        loginUser.PermissionId
+                    }
+                });
             }
             catch (Exception ex)
             {
