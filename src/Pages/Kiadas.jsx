@@ -28,7 +28,12 @@ const IngatlanForm = () => {
         tulajdonosId: sessionStorage.getItem("userId"),
         kep:''   
     });
-    
+    const services = [
+        "Wi-Fi", "kutya hozható", "parkolás", "medence", "kert", "légkondícionálás",
+        "billiárd", "ping-pong", "akadálymentes", "baba bútorok", "grill", "horgásztó",
+        "garázs", "erkély/terasz", "házi mozi", "mosógép", "kávéfőző", "takarító szolgálat",
+        "biztonsági kamera", "golfpálya", "spájz"
+    ];
     const [succesful, setSuccesful] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
@@ -129,22 +134,22 @@ const IngatlanForm = () => {
             else{
                 kepUrl = "img/placeholder.jpg";
             }
-            await axios.post(
-                'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
-                {
-                    kepUrl: kepUrl,
-                    ingatlanId: formData.ingatlanId,
-                    feltoltesDatum: new Date().toISOString(),
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-    
+            
             if (response.status === 200 || response.status === 201) {
+                await axios.post(
+                    'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
+                    {
+                        kepUrl: kepUrl,
+                        ingatlanId: formData.ingatlanId,
+                        feltoltesDatum: new Date().toISOString(),
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
                 setSuccesful(true);
                 setFormData({
                     cim: '',
@@ -296,27 +301,15 @@ const IngatlanForm = () => {
                     <div className="uploadRow">
                         <label className="uploadLabel">Szolgáltatások:</label>
                         <div className="uploadServiceContainer">
-                            <Checkbox id="wifiCb" label="Wi-Fi" checked={formData.szolgaltatasok.includes("Wi-Fi")} onChange={handleCheckboxChange} />
-                            <Checkbox id="petCb" label="kutya hozható" checked={formData.szolgaltatasok.includes("kutya hozható")} onChange={handleCheckboxChange} />
-                            <Checkbox id="parkolasCb" label="parkolás" checked={formData.szolgaltatasok.includes("parkolás")} onChange={handleCheckboxChange} />
-                            <Checkbox id="medenceCb" label="medence" checked={formData.szolgaltatasok.includes("medence")} onChange={handleCheckboxChange} />
-                            <Checkbox id="kertCb" label="kert" checked={formData.szolgaltatasok.includes("kert")} onChange={handleCheckboxChange} />
-                            <Checkbox id="legkondiCb" label="légkondícionálás" checked={formData.szolgaltatasok.includes("légkondícionálás")} onChange={handleCheckboxChange} />
-                            <Checkbox id="billiardCb" label="billiárd" checked={formData.szolgaltatasok.includes("billiárd")} onChange={handleCheckboxChange} />
-                            <Checkbox id="pingpongCb" label="ping-pong" checked={formData.szolgaltatasok.includes("ping-pong")} onChange={handleCheckboxChange} />
-                            <Checkbox id="akadalymentesCb" label="akadálymentes" checked={formData.szolgaltatasok.includes("akadálymentes")} onChange={handleCheckboxChange} />
-                            <Checkbox id="babaButorokCb" label="baba bútorok" checked={formData.szolgaltatasok.includes("baba bútorok")} onChange={handleCheckboxChange} />
-                            <Checkbox id="grillCb" label="grill" checked={formData.szolgaltatasok.includes("grill")} onChange={handleCheckboxChange} />
-                            <Checkbox id="horgasztoCb" label="horgásztó" checked={formData.szolgaltatasok.includes("horgásztó")} onChange={handleCheckboxChange} />
-                            <Checkbox id="garazsCb" label="garázs" checked={formData.szolgaltatasok.includes("garázs")} onChange={handleCheckboxChange} />
-                            <Checkbox id="erkelyTeraszCb" label="erkély/terasz" checked={formData.szolgaltatasok.includes("erkély/terasz")} onChange={handleCheckboxChange} />
-                            <Checkbox id="hazimoziCb" label="házi mozi" checked={formData.szolgaltatasok.includes("házi mozi")} onChange={handleCheckboxChange} />
-                            <Checkbox id="mosogepCb" label="mosógép" checked={formData.szolgaltatasok.includes("mosógép")} onChange={handleCheckboxChange} />
-                            <Checkbox id="kavefozoCb" label="kávéfőző" checked={formData.szolgaltatasok.includes("kávéfőző")} onChange={handleCheckboxChange} />
-                            <Checkbox id="takaritokCb" label="takarító szolgálat" checked={formData.szolgaltatasok.includes("takarító szolgálat")} onChange={handleCheckboxChange} />
-                            <Checkbox id="biztonsagiKameraCb" label="biztonsági kamera" checked={formData.szolgaltatasok.includes("biztonsági kamera")} onChange={handleCheckboxChange} />
-                            <Checkbox id="golfpalyaCb" label="golfpálya" checked={formData.szolgaltatasok.includes("golfpálya")} onChange={handleCheckboxChange} />
-                            <Checkbox id="spajzCb" label="spájz" checked={formData.szolgaltatasok.includes("spájz")} onChange={handleCheckboxChange} />
+                            {services.map((service, index) => (
+                                <Checkbox
+                                    key={index}
+                                    id={`${service.replace(/\s+/g, '')}Cb`}
+                                    label={service}
+                                    checked={formData.szolgaltatasok.includes(service)}
+                                    onChange={handleCheckboxChange}
+                                />
+                            ))}
                         </div>
                     </div>
                     

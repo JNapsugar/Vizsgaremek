@@ -5,7 +5,7 @@ import Footer from "../Components/Footer";
 import { Lightbulb, ShieldShaded, People } from 'react-bootstrap-icons';
 
 
-const Ingatlanok = () => {
+const Rolunk = () => {
     return (
         <div>
             <Navbar />
@@ -122,4 +122,4 @@ const Ingatlanok = () => {
     );
 };
 
-export default Ingatlanok;
+export default Rolunk;
