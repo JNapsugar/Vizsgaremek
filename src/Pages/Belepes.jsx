@@ -37,7 +37,7 @@ function LoginPage() {
                     .then(res => {sessionStorage.setItem("permission", res.data.permissionId);
                                     sessionStorage.setItem("userId", res.data.id);
                     })
-                    .catch(error => console.log(error));
+                    .catch(error => console.error(error));
             navigate("/profil");
         } catch (error) {
             console.error("Login error:", error.message);

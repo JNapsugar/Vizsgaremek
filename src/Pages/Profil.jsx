@@ -42,7 +42,7 @@ const Profil = () => {
     
     useEffect(() => {
         const token = sessionStorage.getItem("token");
-        if (registrationData.permissionId === 2) {
+        if (registrationData.permissionId === 2 || registrationData.permissionId === 1) {
             axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
@@ -58,8 +58,10 @@ const Profil = () => {
             .then((response) => { setPropertyImages(response.data); })
             .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
         }
-        if (registrationData.permissionId === 3) {
-            axios.get(`https://localhost:7079/api/Foglalasok/user/${userId}`, {
+        if (registrationData.permissionId === 3 || registrationData.permissionId === 1) {
+            axios.get(registrationData.permissionId === 3?
+                `https://localhost:7079/api/Foglalasok/user/${userId}`:
+                `https://localhost:7079/api/Foglalasok/allBookings`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((response) => { setBookings(response.data); })
@@ -242,7 +244,7 @@ const Profil = () => {
                 alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
             }
         }
-    };
+    };    
     
     return (
         <div>
@@ -259,7 +261,7 @@ const Profil = () => {
                     <p className="ProfileFullname">{registrationData.name}</p>
                 </div>
                 <div className="profileDetails">
-                {registrationData.permissionId === 2 && (
+                {(registrationData.permissionId === 2 || registrationData.permissionId === 1 )&& (
                     <>
                         <p className="profileTitle">Meghirdetett ingatlanok</p>
                         <div className="profileProperties">
@@ -287,9 +289,9 @@ const Profil = () => {
                         </div>
                     </>
                 )}
-                {registrationData.permissionId === 3 && (
+                {(registrationData.permissionId === 3 || registrationData.permissionId === 1) && (
                     <>
-                        <p className="profileTitle">Foglalásaim</p>
+                        <p className="profileTitle">Foglalások</p>
                         <div className="profileProperties">
                         {bookings.length > 0 ? (
                             bookings.map((booking, index) => {

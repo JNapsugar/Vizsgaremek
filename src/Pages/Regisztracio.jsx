@@ -21,7 +21,6 @@ const RegistrationForm = () => {
             ...prevData,
             [name]: value,
         }));
-        console.log(formData.permissionId);
     };
 
     const handleSubmit = async (e) => {

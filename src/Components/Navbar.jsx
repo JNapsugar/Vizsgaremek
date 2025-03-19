@@ -8,7 +8,7 @@ return (
     <nav className="navbar">
         <Link to={"/"} className="navItem">Főoldal</Link>
         <Link to={"/ingatlanok"} className="navItem">Ingatlanok</Link>
-        {permission === "2"? (
+        {permission === "2" || permission === "1"? (
         <Link to={"/kiadas"} className="navItem">Kiadás</Link>):""}
         <Link to={"/rolunk"} className="navItem">Rólunk</Link>
         <button className="belepesBtn">

@@ -169,8 +169,6 @@ const App = () => {
                 console.error("Hiba történt a foglalás során", error);
                 document.getElementById('bookingResponse').innerText = "Hiba történt a foglalási kérelem elküldésekor!";
             });
-
-            console.log(bookingData);
     };
     
     return (
@@ -253,7 +251,7 @@ const App = () => {
                 </div>
             </div>
 
-            {permission === '3' ? (
+            {permission === '3' || permission === '1' ? (
                 <div>
                     <hr />
                     <div className='calendarSection'>

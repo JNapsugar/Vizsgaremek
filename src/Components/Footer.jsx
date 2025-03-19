@@ -20,7 +20,7 @@ export default function Footer() {
                 <ul>
                     <li><Link to={"/regisztracio"} onClick={() => window.scrollTo({ top: 0 })}>Új profil készítés</Link></li>  
                     <li><Link to={"/ingatlanok"} onClick={() => window.scrollTo({ top: 0 })}>Ingatlan keresés</Link></li> 
-                    {permission === "2"? (
+                    {permission === "2" || permission === "1"? (
                         <li><Link to={"/kiadas"} onClick={() => window.scrollTo({ top: 0 })}>Kiadás</Link></li> ):""}  
                 </ul>
             </div>
