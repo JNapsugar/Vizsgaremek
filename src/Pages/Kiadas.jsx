@@ -91,86 +91,75 @@ const IngatlanForm = () => {
             return;
         }
     
-        const submitData = async () => {
-            try {
-                const response = await axios.post(
-                    'https://localhost:7079/api/Ingatlan/ingatlanok',
-                    {
-                        IngatlanId: formData.ingatlanId,
-                        Cim: formData.cim,
-                        Leiras: formData.leiras,
-                        Helyszin: formData.helyszin,
-                        Ar: parseFloat(formData.ar),
-                        Szoba: parseInt(formData.szoba),
-                        Meret: parseInt(formData.meret),
-                        Szolgaltatasok: formData.szolgaltatasok,
-                        TulajdonosId: parseInt(formData.tulajdonosId),
-                        FeltoltesDatum: new Date().toISOString(),
+        try {
+            await axios.post(
+                'https://localhost:7079/api/Ingatlan/ingatlanok',
+                {
+                    IngatlanId: formData.ingatlanId,
+                    Cim: formData.cim,
+                    Leiras: formData.leiras,
+                    Helyszin: formData.helyszin,
+                    Ar: parseFloat(formData.ar),
+                    Szoba: parseInt(formData.szoba),
+                    Meret: parseInt(formData.meret),
+                    Szolgaltatasok: formData.szolgaltatasok,
+                    TulajdonosId: parseInt(formData.tulajdonosId),
+                    FeltoltesDatum: new Date().toISOString(),
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
                     },
+                }
+            );
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            let kepUrl = "img/placeholder.jpg";
+            if (formData.kep) {
+                const fileData = new FormData();
+                fileData.append("file", formData.kep);
+    
+                await axios.post(
+                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    fileData,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data",
                         },
                     }
                 );
-    
-                let kepUrl = "";
-                if (formData.kep) {
-                    const fileData = new FormData();
-                    fileData.append("file", formData.kep);
-    
-                    await axios.post(
-                        'https://localhost:7079/api/FileUpload/FtpServer',
-                        fileData,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                                "Content-Type": "multipart/form-data",
-                            },
-                        }
-                    );
-                    kepUrl = `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`;
-                } else {
-                    kepUrl = "img/placeholder.jpg";
-                }
-    
-                if (response.status === 200 || response.status === 201) {
-                    await axios.post(
-                        'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
-                        {
-                            kepUrl: kepUrl,
-                            ingatlanId: formData.ingatlanId,
-                            feltoltesDatum: new Date().toISOString(),
-                        },
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`,
-                            },
-                        }
-                    );
-                    setSuccesful(true);
-                    setFormData({
-                        cim: '',
-                        leiras: '',
-                        helyszin: '',
-                        ar: '',
-                        szoba: '',
-                        meret: '',
-                        szolgaltatasok: '',
-                        tulajdonosId: '',
-                        kep: ''
-                    });
-                }
-            } catch (error) {
-                console.error('Hiba történt az ingatlan hozzáadása során:', error);
-                setTimeout(() => {
-                    console.log("Újrapróbálkozás...");
-                    submitData();
-                }, 2000);
+                kepUrl = `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`;
             }
-        };
-        submitData();
+            await axios.post(
+                'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
+                {
+                    kepUrl: kepUrl,
+                    ingatlanId: formData.ingatlanId,
+                    feltoltesDatum: new Date().toISOString(),
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            setSuccesful(true);
+            setFormData({
+                cim: '',
+                leiras: '',
+                helyszin: '',
+                ar: '',
+                szoba: '',
+                meret: '',
+                szolgaltatasok: '',
+                tulajdonosId: '',
+                kep: ''
+            });
+        } catch (error) {
+            console.error('Hiba történt az ingatlan hozzáadása során:', error);
+            alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
+        }
     };
 
     const Checkbox = ({ id, label, checked, onChange }) => {
@@ -321,15 +310,8 @@ const IngatlanForm = () => {
                     Ingatlan feltöltése
                     {[...Array(6)].map((_, i) => (
                         <div key={i} className={`absolute star-${i + 1} animate-spin-slow`}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 784.11 815.53"
-                            className="w-6 h-6 text-yellow-400"
-                        >
-                            <path
-                            fill="currentColor"
-                            d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"
-                            />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53">
+                            <path fill="currentColor" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/>
                         </svg>
                         </div>
                     ))}
