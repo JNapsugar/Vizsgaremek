@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Navbar from '../Components/Navbar';
 import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
-
 import "../style.css";
 
 const IngatlanForm = () => {
@@ -92,81 +91,86 @@ const IngatlanForm = () => {
             return;
         }
     
-        try {
-            const response = await axios.post(
-                'https://localhost:7079/api/Ingatlan/ingatlanok',
-                {
-                    IngatlanId: formData.ingatlanId,
-                    Cim: formData.cim,
-                    Leiras: formData.leiras,
-                    Helyszin: formData.helyszin,
-                    Ar: parseFloat(formData.ar),
-                    Szoba: parseInt(formData.szoba),
-                    Meret: parseInt(formData.meret),
-                    Szolgaltatasok: formData.szolgaltatasok,
-                    TulajdonosId: parseInt(formData.tulajdonosId),
-                    FeltoltesDatum: new Date().toISOString(),
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
+        const submitData = async () => {
+            try {
+                const response = await axios.post(
+                    'https://localhost:7079/api/Ingatlan/ingatlanok',
+                    {
+                        IngatlanId: formData.ingatlanId,
+                        Cim: formData.cim,
+                        Leiras: formData.leiras,
+                        Helyszin: formData.helyszin,
+                        Ar: parseFloat(formData.ar),
+                        Szoba: parseInt(formData.szoba),
+                        Meret: parseInt(formData.meret),
+                        Szolgaltatasok: formData.szolgaltatasok,
+                        TulajdonosId: parseInt(formData.tulajdonosId),
+                        FeltoltesDatum: new Date().toISOString(),
                     },
-                }
-            );
-            
-            let kepUrl = "";
-            if (formData.kep) {
-                const fileData = new FormData();
-                fileData.append("file", formData.kep);
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
     
-                await axios.post(
-                    'https://localhost:7079/api/FileUpload/FtpServer',
-                    fileData,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "multipart/form-data",
+                let kepUrl = "";
+                if (formData.kep) {
+                    const fileData = new FormData();
+                    fileData.append("file", formData.kep);
+    
+                    await axios.post(
+                        'https://localhost:7079/api/FileUpload/FtpServer',
+                        fileData,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }
+                    );
+                    kepUrl = `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`;
+                } else {
+                    kepUrl = "img/placeholder.jpg";
+                }
+    
+                if (response.status === 200 || response.status === 201) {
+                    await axios.post(
+                        'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
+                        {
+                            kepUrl: kepUrl,
+                            ingatlanId: formData.ingatlanId,
+                            feltoltesDatum: new Date().toISOString(),
                         },
-                    }
-                );
-                kepUrl = `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`;
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                    setSuccesful(true);
+                    setFormData({
+                        cim: '',
+                        leiras: '',
+                        helyszin: '',
+                        ar: '',
+                        szoba: '',
+                        meret: '',
+                        szolgaltatasok: '',
+                        tulajdonosId: '',
+                        kep: ''
+                    });
+                }
+            } catch (error) {
+                console.error('Hiba történt az ingatlan hozzáadása során:', error);
+                setTimeout(() => {
+                    console.log("Újrapróbálkozás...");
+                    submitData();
+                }, 2000);
             }
-            else{
-                kepUrl = "img/placeholder.jpg";
-            }
-            
-            if (response.status === 200 || response.status === 201) {
-                await axios.post(
-                    'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
-                    {
-                        kepUrl: kepUrl,
-                        ingatlanId: formData.ingatlanId,
-                        feltoltesDatum: new Date().toISOString(),
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                setSuccesful(true);
-                setFormData({
-                    cim: '',
-                    leiras: '',
-                    helyszin: '',
-                    ar: '',
-                    szoba: '',
-                    meret: '',
-                    szolgaltatasok: '',
-                    tulajdonosId: '',
-                    kep: ''
-                });
-            }
-        } catch (error) {
-            console.error('Hiba történt az ingatlan hozzáadása során:', error);
-            alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
-        }
+        };
+        submitData();
     };
 
     const Checkbox = ({ id, label, checked, onChange }) => {
