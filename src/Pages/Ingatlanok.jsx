@@ -9,6 +9,7 @@ import Footer from "../Components/Footer";
 import { RiseLoader } from 'react-spinners';
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import {ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
 const Ingatlanok = () => {    
     const [properties, setProperties] = useState([]);
@@ -64,7 +65,7 @@ const Ingatlanok = () => {
     
     const handleFilterChange = useCallback((e) => {
         const { id, value, type, checked } = e.target;
-        
+        setCurrentPage(1);
         setFilters(prevFilters => {
             switch (id) {
                 case "helyszin":
@@ -139,6 +140,24 @@ const Ingatlanok = () => {
             (!filters.golfpalyaCb || property.szolgaltatasok.includes("golfpálya"))
         );
     });
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const propertiesPerPage = 12;
+    const indexOfLastProperty = currentPage * propertiesPerPage;
+    const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
+    const currentProperties = filteredProperties.slice(indexOfFirstProperty, indexOfLastProperty);
+    
+    const handleNextPage = () => {
+        if (currentPage < Math.ceil(filteredProperties.length / propertiesPerPage)) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+    
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -273,42 +292,51 @@ const Ingatlanok = () => {
             </div>
 
             <div className="cardContainer" id="cards">
-                {isPending ? (
-                    <RiseLoader color='#e09900' loading={isPending} size={15} />
-                ) : error ? (
+            {isPending ? (
+                <RiseLoader color='#e09900' loading={isPending} size={15} />
+            ) : error ? (
+                <div className="errorMessage">
+                    Nem sikerült betölteni az adatokat
+                    <img src="img/errordog.gif" alt="hiba"/>
+                </div>
+            ) : (
+                currentProperties.length === 0 ? (
                     <div className="errorMessage">
-                        Nem sikerült betölteni az adatokat
+                        Nem található ilyen ingatlan
                         <img src="img/errordog.gif" alt="hiba"/>
                     </div>
                 ) : (
-                    filteredProperties.length===0? (
-                        <div className="errorMessage">
-                            Nem található ilyen ingatlan
-                            <img src="img/errordog.gif" alt="hiba"/>
-                        </div>
-                        
-                    ) : (
-                        <div className='cardContainer'>
-                            {filteredProperties.map((property, index) => {
-                                let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                                return filters.nezet === "grid" ? (
+                    <div className='cardContainer'>
+                        {currentProperties.map((property, index) => {
+                            let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
+                            return filters.nezet === "grid" ? (
                                 <PropertyCard
                                     key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
                                     property={property}
                                     propertyImg={propertyImg}
                                 />
-                                ) : (
+                            ) : (
                                 <PropertyListItem
                                     key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
                                     property={property}
                                     propertyImg={propertyImg}
                                 />
-                                );
-                            })}
-                        </div>
-                        )
-                )}
-            </div>
+                            );
+                        })}
+                    </div>
+                )
+            )}
+        </div>
+
+        <div className="pagination">
+            <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                <ArrowLeft />
+            </button>
+            <span>{currentPage} / {Math.ceil(filteredProperties.length / propertiesPerPage)}</span>
+            <button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredProperties.length / propertiesPerPage)}>
+                <ArrowRight/>
+            </button>
+        </div>
 
             <img src="img/city2.png" className="footerImg" alt="City view" />
             <Footer />

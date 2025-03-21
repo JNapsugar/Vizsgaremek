@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { XCircle, Check2Circle } from 'react-bootstrap-icons';
+import { XCircle, Check2Circle, ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import SmallHeader from "../Components/SmallHeader";
@@ -27,7 +27,6 @@ const IngatlanKezeles = () => {
         "garázs", "erkély/terasz", "házi mozi", "mosógép", "kávéfőző", "takarító szolgálat",
         "biztonsági kamera", "golfpálya", "spájz"
     ];
-    const [succesful, setSuccesful] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
 
@@ -41,11 +40,16 @@ const IngatlanKezeles = () => {
         }
     }, []);
 
-    
+    const [succesful, setSuccesful] = useState(false);
     const [bookings, setBookings] = useState([]);
     const [berloNevek, setBerloNevek] = useState({});
     const [berloKepek, setBerloKepek] = useState({});
     const [approvedBookings, setApprovedBookings] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const bookingsPerPage = 5;
+    const indexOfLastBooking = currentPage * bookingsPerPage;
+    const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
+    const currentBookings = bookings.bookings?.slice(indexOfFirstBooking, indexOfLastBooking) || [];
 
     
     useEffect(() => {
@@ -115,6 +119,16 @@ const IngatlanKezeles = () => {
         }
     };
     
+    const handleNextPage = () => {
+        if (currentPage < Math.ceil(bookings.bookings.length / bookingsPerPage)) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
 
     const [locations, setLocations] = useState([]);
     useEffect(() => {
@@ -301,39 +315,48 @@ const IngatlanKezeles = () => {
                         <div></div>
                         <div></div>
                     </div>
-                    {bookings.bookings.map((booking, index) => (
-                    <div className="bookingRow" key={index}>
-                        <div className="bookingCell">
-                            <img className="bookingPfp" src={berloKepek[booking.berloId]} alt="profile"/>
-                            {berloNevek[booking.berloId]}
+                    {currentBookings.map((booking, index) => (
+                        <div className="bookingRow" key={index}>
+                            <div className="bookingCell">
+                                <img className="bookingPfp" src={berloKepek[booking.berloId]} alt="profile" />
+                                {berloNevek[booking.berloId]}
+                            </div>
+                            <div className="bookingCell">
+                                {new Date(booking.kezdesDatum).toLocaleDateString()}
+                            </div>
+                            <div className="bookingCell">
+                                {new Date(booking.befejezesDatum).toLocaleDateString()}
+                            </div>
+                            <div className="bookingCell">
+                                {new Date(booking.letrehozasDatum).toLocaleDateString()}
+                            </div>
+                            <div className="bookingCell">{booking.allapot}</div>
+                            <div className="bookingActions">
+                                {booking.allapot === "függőben" && (
+                                    <>
+                                        <Check2Circle
+                                            title={isOverlapping(booking) ? "Már foglalt időpont" : "Elfogadás"}
+                                            onClick={isOverlapping(booking) ? null : () => handleBookingResponse(booking.foglalasId, "elfogadva")}
+                                            className={isOverlapping(booking) ? "disabled" : ""}
+                                        />
+                                        <XCircle
+                                            title="Elutasítás"
+                                            onClick={() => handleBookingResponse(booking.foglalasId, "elutasítva")}
+                                        />
+                                    </>
+                                )}
+                            </div>
                         </div>
-                        <div className="bookingCell">
-                            {new Date(booking.kezdesDatum).toLocaleDateString()}
-                        </div>
-                        <div className="bookingCell">
-                            {new Date(booking.befejezesDatum).toLocaleDateString()}
-                        </div>
-                        <div className="bookingCell">
-                            {new Date(booking.letrehozasDatum).toLocaleDateString()}
-                        </div>
-                        <div className="bookingCell">{booking.allapot}</div>
-                        <div className="bookingActions">
-                        {booking.allapot === "függőben" && (
-                            <>
-                                <Check2Circle
-                                    title={isOverlapping(booking)? "Már foglalt időpont" : "Elfogadás"}
-                                    onClick={isOverlapping(booking)? null : () => handleBookingResponse(booking.foglalasId, "elfogadva")}
-                                    className={isOverlapping(booking) ? "disabled" : ""}
-                                />
-                                <XCircle
-                                    title="Elutasítás"
-                                    onClick={() => handleBookingResponse(booking.foglalasId, "elutasítva")}
-                                />
-                            </>
-                        )}
-                        </div>
-                    </div>
                     ))}
+                    <div className="pagination">
+                        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                            <ArrowLeft/>
+                        </button>
+                        <span>{currentPage} / {Math.ceil(bookings.bookings?.length / bookingsPerPage)}</span>
+                        <button onClick={handleNextPage} disabled={currentPage === Math.ceil(bookings.bookings?.length / bookingsPerPage)}>
+                            <ArrowRight/>
+                        </button>
+                    </div>
                 </div>
                 ) : (
                     <div className="errorMessage">

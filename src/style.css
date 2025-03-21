@@ -1511,6 +1511,7 @@ hr{
     background-color: #555;
     border-radius: 8px;
     overflow: hidden;
+    min-height: 34rem;
   }
 
   .bookingsHeader {
@@ -1846,6 +1847,27 @@ textarea{
 
 a{
   text-decoration: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+  color: white;
+}
+
+.pagination button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  background-color: #f8b665;
+}
+
+.pagination button:disabled {
+  cursor:default;
+  opacity: 0.5;
 }
 
 /*#endregion Egyéb*/
