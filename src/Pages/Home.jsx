@@ -4,6 +4,7 @@ import axios from "axios";
 import "../style.css";
 import Navbar from "../Components/Navbar";
 import { RiseLoader } from "react-spinners";
+import { motion } from "framer-motion";
 import PropertyCard from "../Components/PropertyCard";
 import Footer from "../Components/Footer";
 
@@ -84,7 +85,7 @@ useEffect(() => {
             <div className="cityCardContent">
                 <p className="cityCardTitle">{city.nev}</p>
                 <p className="cityCardDescription">{city.leiras}</p>
-                <Link to={`/ingatlanok?city=${encodeURIComponent(city.nev)}`} onClick={() => window.scrollTo({ top: 0 })}>
+                <Link to={`/ingatlanok?city=${encodeURIComponent(city.nev)}`}>
                     <button>{city.nev}i ingatlanok megtekintése</button>
                 </Link>
 
@@ -121,7 +122,12 @@ useEffect(() => {
     
     return (
         <div>
-            <Navbar/>
+        <Navbar/>
+        <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 30 }}
+        transition={{ duration: 0.3 }}>
             <header className="header">
                 <div className="headerImages">
                     {images.map((image, index) => (
@@ -157,6 +163,7 @@ useEffect(() => {
                 )}
             </div>
             <Footer />
+        </motion.div>
         </div>
     );
 };

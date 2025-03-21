@@ -6,6 +6,7 @@ import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import SmallHeader from "../Components/SmallHeader";
 import "../style.css";
+import {motion} from "framer-motion";
 
 const IngatlanKezeles = () => {
     const { id } = useParams(); 
@@ -282,6 +283,11 @@ const IngatlanKezeles = () => {
     return (
         <div>
             <Navbar />
+            <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}>
             <SmallHeader title="Ingatlankezelés" />
             <div className="uploadForm">
                 <p className="title">Foglaláskezelés</p>
@@ -451,6 +457,7 @@ const IngatlanKezeles = () => {
             )}
             <img src="/img/city2.png" className="footerImg" alt="City View" />
             <Footer />
+            </motion.div>
         </div>
     );
 };

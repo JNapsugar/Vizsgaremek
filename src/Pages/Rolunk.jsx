@@ -3,12 +3,18 @@ import Navbar from '../Components/Navbar';
 import SmallHeader from '../Components/SmallHeader';
 import Footer from "../Components/Footer";
 import { Lightbulb, ShieldShaded, People } from 'react-bootstrap-icons';
+import {motion} from 'framer-motion';
 
 
 const Rolunk = () => {
     return (
         <div>
             <Navbar />
+            <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}>
             <SmallHeader title="Rólunk" />
             <div className='aboutUs'>
                 <div className='aboutUsTextContainer'>
@@ -118,6 +124,7 @@ const Rolunk = () => {
             </div>
             <img src="img/city2.png" className="footerImg" alt="City view" />
             <Footer />
+            </motion.div>
         </div>
     );
 };

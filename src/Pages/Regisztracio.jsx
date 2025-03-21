@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../style.css';
+import {motion} from 'framer-motion';
 
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -48,6 +49,11 @@ const RegistrationForm = () => {
 
     return (
         <div className='Login'>
+            <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}>
             <div className='wrapper'>
                 <h2 className='registerh2'>Regisztráció</h2>
                 <form onSubmit={handleSubmit}>
@@ -120,6 +126,7 @@ const RegistrationForm = () => {
                 </form>
                 {responseMessage && <p>{responseMessage}</p>}
             </div>
+        </motion.div>
         </div>
     );
 };

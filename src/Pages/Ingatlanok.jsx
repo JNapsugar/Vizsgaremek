@@ -8,6 +8,7 @@ import PropertyListItem from '../Components/PropertyListItem';
 import Footer from "../Components/Footer";
 import { RiseLoader } from 'react-spinners';
 import { useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Ingatlanok = () => {    
     const [properties, setProperties] = useState([]);
@@ -180,7 +181,12 @@ const Ingatlanok = () => {
     
     return (
         <div>
-            <Navbar />
+        <Navbar />
+        <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 30 }}
+        transition={{ duration: 0.3 }}>
             <SmallHeader title="Ingatlanok" />
             <div className="filter" id="filter">
                 <div className="filterRow">
@@ -306,6 +312,7 @@ const Ingatlanok = () => {
 
             <img src="img/city2.png" className="footerImg" alt="City view" />
             <Footer />
+        </motion.div>
         </div>
     );
 };

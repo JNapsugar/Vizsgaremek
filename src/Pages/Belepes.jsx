@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {motion} from "framer-motion";
 
 function LoginPage() {
     const [username, setUsername] = useState("");
@@ -47,6 +48,11 @@ function LoginPage() {
 
     return (
         <div className="Login">
+            <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}>
             <div className="wrapper">
                 <h1>Bejelentkezés</h1>
 
@@ -81,6 +87,7 @@ function LoginPage() {
 
                 <Link to="/regisztracio" className="login-link">Még nincs fiókja? Regisztráljon most!</Link>
             </div>
+            </motion.div>
         </div>
     );
 }

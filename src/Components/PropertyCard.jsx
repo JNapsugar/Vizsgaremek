@@ -20,7 +20,7 @@ export default function PropertyCard({index, property, propertyImg}) {
                         {displayedServices.join(', ')}{services.length > 3 && '...'}
                     </p>
                 </div>
-                <Link to={"/ingatlanok/" + property.ingatlanId} onClick={() => window.scrollTo({ top: 0 })}>
+                <Link to={"/ingatlanok/" + property.ingatlanId}>
                     <button>
                         További információk
                     </button>

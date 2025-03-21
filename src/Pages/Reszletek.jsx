@@ -8,6 +8,7 @@ import SmallHeader from '../Components/SmallHeader';
 import Footer from "../Components/Footer";
 import PropertyCard from '../Components/PropertyCard';
 import Calendar from 'react-calendar';
+import {motion} from 'framer-motion';
 
 const App = () => {
     const [property, setProperty] = useState({});
@@ -174,6 +175,11 @@ const App = () => {
     return (
         <div>
             <Navbar />
+            <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}>
             <SmallHeader title="Részletek" />
             <div className="propertyMainContent">
                 <img src={propertyImage.kepUrl} alt={property.helyszin} loading="lazy" className='propertyImage' />
@@ -303,6 +309,7 @@ const App = () => {
 
             <img src="/img/city2.png" className="footerImg" alt="City View" />
             <Footer />
+            </motion.div>
         </div>
     );
 };

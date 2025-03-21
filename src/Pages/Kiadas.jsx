@@ -5,6 +5,7 @@ import Navbar from '../Components/Navbar';
 import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
 import "../style.css";
+import { motion } from "framer-motion";
 
 const IngatlanForm = () => {
     const [properties, setProperties] = useState([]);
@@ -199,6 +200,11 @@ const IngatlanForm = () => {
     return (
         <div>
             <Navbar />
+            <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}>
             <SmallHeader title="Ingatlan kiadás" />
             {succesful ? (
                 <div className="succesfulUpload">
@@ -320,6 +326,7 @@ const IngatlanForm = () => {
             )}
             <img src="/img/city2.png" className="footerImg" alt="City View" />
             <Footer />
+            </motion.div>
         </div>
     );
 }
