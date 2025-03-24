@@ -10,11 +10,7 @@ const Rolunk = () => {
     return (
         <div>
             <Navbar />
-            <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}>
+            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
             <SmallHeader title="Rólunk" />
             <div className='aboutUs'>
                 <div className='aboutUsTextContainer'>
@@ -55,12 +51,8 @@ const Rolunk = () => {
                     <div className="teamCardContent">
                         <img src="./img/people/JancsurakNapsugar.jpg" alt="JancsurakNapsugar" className='teamCardImg'/>
                         <div className="teamCardDescription">
-                        <p className="teamCardName">
-                            <strong>Jancsurák Napsugár</strong>
-                        </p>
-                        <p className="teamCardInfo">
-                            Frontend
-                        </p>
+                            <p className="teamCardName"><strong>Jancsurák Napsugár</strong></p>
+                            <p className="teamCardInfo">Frontend</p>
                         </div>
                     </div>
                     </div>
@@ -68,12 +60,8 @@ const Rolunk = () => {
                     <div className="teamCardContent">
                         <img src="./img/people/VargaAntonia.jpg" alt="VargaAntonia" className='teamCardImg'/>
                         <div className="teamCardDescription">
-                        <p className="teamCardName">
-                            <strong>Varga Antónia</strong>
-                        </p>
-                        <p className="teamCardInfo">
-                            Backend
-                        </p>
+                            <p className="teamCardName"><strong>Varga Antónia</strong></p>
+                            <p className="teamCardInfo">Backend</p>
                         </div>
                     </div>
                     </div>
@@ -81,12 +69,8 @@ const Rolunk = () => {
                     <div className="teamCardContent">
                         <img src="./img/people/KatonaAlexandra.jpg" alt="KatonaAlexandra" className='teamCardImg'/>
                         <div className="teamCardDescription">
-                        <p className="teamCardName">
-                            <strong>Katona Alexandra</strong>
-                        </p>
-                        <p className="teamCardInfo">
-                            Adatbázis-WPF
-                        </p>
+                            <p className="teamCardName"><strong>Katona Alexandra</strong></p>
+                            <p className="teamCardInfo">Adatbázis-WPF</p>
                         </div>
                     </div>
                     </div>
@@ -113,7 +97,7 @@ const Rolunk = () => {
                     <div className='ratingCard'>
                         <img src="./img/people/KovacsJanos.jpeg" alt="KovacsJanos" className='ratingCardPfp'/>
                         <p className='ratingCardName'>Kovács János</p>
-                        <p className='ratingCardText'>'A Rentify-en keresztül nemcsak gyorsan találtam meg a megfelelő bérlőket, de a bérlési időszakokat is könnyedén kezelhettem. Az oldal átlátható felülete és a különböző szolgáltatások nagyban megkönnyítették a dolgomat. Mindenkinek csak ajánlani tudom, aki ingatlant szeretne kiadni.</p>
+                        <p className='ratingCardText'>'A Rentify-on keresztül nemcsak gyorsan találtam meg a megfelelő bérlőket, de a bérlési időszakokat is könnyedén kezelhettem. Az oldal átlátható felülete és a különböző szolgáltatások nagyban megkönnyítették a dolgomat. Mindenkinek csak ajánlani tudom, aki ingatlant szeretne kiadni.</p>
                     </div>
                 </div>
             </div>

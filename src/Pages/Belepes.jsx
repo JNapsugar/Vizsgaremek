@@ -1,7 +1,7 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 
 function LoginPage() {
     const [username, setUsername] = useState("");
@@ -11,82 +11,77 @@ function LoginPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        const payload = {
-            loginName: username, 
-            Password: password,  
-        };
+        const payload = { loginName: username, Password: password };
 
         try {
-            const response = await fetch("https://localhost:7079/api/felhasznalo/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (!response.ok) {
-                const errorMessage = await response.text(); 
-                throw new Error(errorMessage || "Login failed.");
-            }
-
-            const data = await response.json();
-            sessionStorage.setItem("token", data.token); 
-            sessionStorage.setItem("username", username); 
-            axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`)
-                    .then(res => {sessionStorage.setItem("permission", res.data.permissionId);
-                                    sessionStorage.setItem("userId", res.data.id);
-                    })
-                    .catch(error => console.error(error));
+            const loginResponse = await loginUser(payload);
+            await fetchUserDetails(username);
+            sessionStorage.setItem("token", loginResponse.token);
+            sessionStorage.setItem("username", username);
             navigate("/profil");
         } catch (error) {
-            console.error("Login error:", error.message);
-            setError(error.message); 
+            console.error("Bejelentkezési hiba:", error.message);
+            setError(error.message || "A bejelentkezés nem sikerült.");
+        }
+    };
+
+    const loginUser = async (payload) => {
+        try {
+            const response = await axios.post("https://localhost:7079/api/felhasznalo/login", payload, {
+                headers: { "Content-Type": "application/json" },
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(error.response?.data || "A bejelentkezés nem sikerült");
+        }
+    };
+
+    const fetchUserDetails = async (username) => {
+        try {
+            const response = await axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`);
+            sessionStorage.setItem("permission", response.data.permissionId);
+            sessionStorage.setItem("userId", response.data.id);
+        } catch (error) {
+            console.error("Hiba a felhasználói adatok lekérésekor:", error.message);
+            throw new Error(error.response?.data || "Nem sikerült lekérni a felhasználói adatokat");
         }
     };
 
     return (
         <div className="Login">
-            <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}>
-            <div className="wrapper">
-                <h1>Bejelentkezés</h1>
+            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
+                <div className="wrapper">
+                    <h1>Bejelentkezés</h1>
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-box">
+                            <input
+                                type="text"
+                                placeholder="Felhasználónév"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="input-box">
-                        <input
-                            type="text"
-                            placeholder="Felhasználónév"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
+                        <div className="input-box">
+                            <input
+                                type="password"
+                                placeholder="Jelszó"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-box">
-                        <input
-                            type="password"
-                            placeholder="Jelszó"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                        {error && <p className="error">{error}</p>}
+                        <Link to="/elfelejtettjelszo" className="login-link">Elfelejtette a jelszavát?</Link>
+                        <button type="submit" className="btn">
+                            Bejelentkezés
+                        </button>
+                    </form>
 
-                    {error && <p className="error">{error}</p>}
-
-                    <Link to="/elfelejtettjelszo" className="login-link">Elfelejtett jelszó</Link>
-                    <button type="submit" className="btn">
-                        Bejelentkezés
-                    </button>
-                </form>
-
-                <Link to="/regisztracio" className="login-link">Még nincs fiókja? Regisztráljon most!</Link>
-            </div>
+                    <Link to="/regisztracio" className="login-link">Még nincs fiókja? Regisztráljon most!</Link>
+                </div>
             </motion.div>
         </div>
     );

@@ -24,11 +24,7 @@ function PasswordReset() {
     
     return (
         <div className="Login">
-            <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}>
+            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
             <div className="wrapper">
                 <h1>Jelszó visszaállítása</h1>
                 <form onSubmit={handleSubmit}>

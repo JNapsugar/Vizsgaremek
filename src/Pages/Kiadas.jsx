@@ -7,15 +7,9 @@ import Footer from "../Components/Footer";
 import "../style.css";
 import { motion } from "framer-motion";
 
-const IngatlanForm = () => {
+const Kiadas = () => {
     const [properties, setProperties] = useState([]);
-    useEffect(() => {
-        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
-            .then(res => setProperties(res.data))
-            .catch(error => { console.error(error); })
-    }, []);
-
-
+    const [locations, setLocations] = useState([]);
     const [formData, setFormData] = useState({
         ingatlanId: 0,
         cim: '',
@@ -26,33 +20,36 @@ const IngatlanForm = () => {
         meret: '',
         szolgaltatasok: '',
         tulajdonosId: sessionStorage.getItem("userId"),
-        kep:''   
+        kep:''
     });
+    const [succesful, setSuccesful] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState(null);
+
     const services = [
         "Wi-Fi", "kutya hozható", "parkolás", "medence", "kert", "légkondícionálás",
         "billiárd", "ping-pong", "akadálymentes", "baba bútorok", "grill", "horgásztó",
         "garázs", "erkély/terasz", "házi mozi", "mosógép", "kávéfőző", "takarító szolgálat",
         "biztonsági kamera", "golfpálya", "spájz"
     ];
-    const [succesful, setSuccesful] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState(null);
 
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
             setIsLoggedIn(true);
             setToken(storedToken);
-        } else {
-            setIsLoggedIn(false);
         }
     }, []);
 
-    const [locations, setLocations] = useState([]);
+
     useEffect(() => {
+        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+            .then(res => setProperties(res.data))
+            .catch(error => console.error(error));
+
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
-            .then(res => { setLocations(res.data); })
-            .catch(error => { console.error(error); })
+            .then(res => setLocations(res.data))
+            .catch(error => console.error(error));
     }, []);
 
     useEffect(() => {
@@ -66,269 +63,155 @@ const IngatlanForm = () => {
     }, [properties]);
 
     const handleChange = (e) => {
-        const { name, type } = e.target;
-        if (type === "file") {
-            const file = e.target.files[0];
-            if (file) {
-                const renamedFile = new File([file], `${formData.ingatlanId}.png`, { type: file.type });
-                setFormData((prevData) => ({
-                    ...prevData,
-                    [name]: renamedFile,
-                }));
-            }
+        const { name, type, files, value } = e.target;
+        if (type === "file" && files[0]) {
+            const file = new File([files[0]], `${formData.ingatlanId}.png`, { type: files[0].type });
+            setFormData((prevData) => ({ ...prevData, [name]: file }));
         } else {
-            setFormData((prevData) => ({
-                ...prevData,
-                [name]: e.target.value,
-            }));
+            setFormData((prevData) => ({ ...prevData, [name]: value }));
         }
+    };
+
+    const handleCheckboxChange = (label) => {
+        setFormData((prevData) => {
+            const updatedServices = prevData.szolgaltatasok ? prevData.szolgaltatasok.split(", ") : [];
+            const newServices = updatedServices.includes(label) 
+                ? updatedServices.filter(item => item !== label) 
+                : [...updatedServices, label];
+            return { ...prevData, szolgaltatasok: newServices.join(", ") };
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
         if (!isLoggedIn) {
             alert("Kérlek jelentkezz be!");
             return;
         }
-    
+
         try {
-            await axios.post(
-                'https://localhost:7079/api/Ingatlan/ingatlanok',
-                {
-                    IngatlanId: formData.ingatlanId,
-                    Cim: formData.cim,
-                    Leiras: formData.leiras,
-                    Helyszin: formData.helyszin,
-                    Ar: parseFloat(formData.ar),
-                    Szoba: parseInt(formData.szoba),
-                    Meret: parseInt(formData.meret),
-                    Szolgaltatasok: formData.szolgaltatasok,
-                    TulajdonosId: parseInt(formData.tulajdonosId),
-                    FeltoltesDatum: new Date().toISOString(),
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            const { ingatlanId, cim, leiras, helyszin, ar, szoba, meret, szolgaltatasok, tulajdonosId, kep } = formData;
+            await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
+                IngatlanId: ingatlanId,
+                Cim: cim,
+                Leiras: leiras,
+                Helyszin: helyszin,
+                Ar: parseFloat(ar),
+                Szoba: parseInt(szoba),
+                Meret: parseInt(meret),
+                Szolgaltatasok: szolgaltatasok,
+                TulajdonosId: parseInt(tulajdonosId),
+                FeltoltesDatum: new Date().toISOString(),
+            }, { headers: { Authorization: `Bearer ${token}` } });
+
             let kepUrl = "img/placeholder.jpg";
-            if (formData.kep) {
+            if (kep) {
                 const fileData = new FormData();
-                fileData.append("file", formData.kep);
-    
-                await axios.post(
-                    'https://localhost:7079/api/FileUpload/FtpServer',
-                    fileData,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                );
-                kepUrl = `http://images.ingatlanok.nhely.hu/${formData.ingatlanId}.png`;
+                fileData.append("file", kep);
+                await axios.post('https://localhost:7079/api/FileUpload/FtpServer', fileData, {
+                    headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+                });
+                kepUrl = `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
             }
-            await axios.post(
-                'https://localhost:7079/api/Ingatlankepek/ingatlankepek',
-                {
-                    kepUrl: kepUrl,
-                    ingatlanId: formData.ingatlanId,
-                    feltoltesDatum: new Date().toISOString(),
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            setSuccesful(true);
-            setFormData({
-                cim: '',
-                leiras: '',
-                helyszin: '',
-                ar: '',
-                szoba: '',
-                meret: '',
-                szolgaltatasok: '',
-                tulajdonosId: '',
-                kep: ''
+
+            await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
+                kepUrl,
+                ingatlanId,
+                feltoltesDatum: new Date().toISOString(),
+            }, {
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             });
+
+            setSuccesful(true);
+            setFormData({ cim: '', leiras: '', helyszin: '', ar: '', szoba: '', meret: '', szolgaltatasok: '', tulajdonosId: '', kep: '' });
+
         } catch (error) {
             console.error('Hiba történt az ingatlan hozzáadása során:', error);
             alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
         }
     };
 
-    const Checkbox = ({ id, label, checked, onChange }) => {
-        return (
-            <div className='checkboxContainer'>
-                <label>{label}: </label>
-                <input 
-                    type="checkbox" 
-                    id={id} 
-                    checked={checked} 
-                    onChange={() => onChange(label)} 
-                    className="uploadCheckbox" 
-                />
-            </div>
-        );
-    };
-    
-    const handleCheckboxChange = (label) => {
-        setFormData((prevData) => {
-            const szolgaltatasokArray = prevData.szolgaltatasok ? prevData.szolgaltatasok.split(", ") : [];
-    
-            if (szolgaltatasokArray.includes(label)) {
-                return {
-                    ...prevData,
-                    szolgaltatasok: szolgaltatasokArray.filter(item => item !== label).join(", ")
-                };
-            } else {
-                return {
-                    ...prevData,
-                    szolgaltatasok: [...szolgaltatasokArray, label].join(", ")
-                };
-            }
-        });
-    };
-
+    const Checkbox = ({ id, label, checked, onChange }) => (
+        <div className='checkboxContainer'>
+            <label>{label}: </label>
+            <input 
+                type="checkbox" 
+                id={id} 
+                checked={checked} 
+                onChange={() => onChange(label)} 
+                className="uploadCheckbox" 
+            />
+        </div>
+    );
 
     return (
         <div>
             <Navbar />
-            <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}>
-            <SmallHeader title="Ingatlan kiadás" />
-            {succesful ? (
-                <div className="succesfulUpload">
-                    <p>Ingatlan sikeresen hozzáadva!</p>
-                    <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
-                    <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
-                    
-                </div>
-            ) : (
-                <form onSubmit={handleSubmit} className="uploadForm">
-                    
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Cím:</label>
-                        <input
-                            type="text"
-                            name="cim"
-                            value={formData.cim}
-                            onChange={handleChange}
-                            required
-                            className="uploadInput"
-                        />
+            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
+                <SmallHeader title="Ingatlan kiadás" />
+                {succesful ? (
+                    <div className="succesfulUpload">
+                        <p>Ingatlan sikeresen hozzáadva!</p>
+                        <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
+                        <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
                     </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Ár (Ft):</label>
-                        <input
-                            type="number"
-                            name="ar"
-                            value={formData.ar}
-                            onChange={handleChange}
-                            required
-                            className="uploadInput"
-                        />
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Szobák száma:</label>
-                        <input
-                            type="number"
-                            name="szoba"
-                            value={formData.szoba}
-                            onChange={handleChange}
-                            required
-                            className="uploadInput"
-                        />
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Méret (m²):</label>
-                        <input
-                            type="number"
-                            name="meret"
-                            value={formData.meret}
-                            onChange={handleChange}
-                            required
-                            className="uploadInput"
-                        />
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Helyszín:</label>
-                        <select
-                            name="helyszin"
-                            value={formData.helyszin}
-                            onChange={handleChange}>
-                            <option value=""></option>
-                            {locations.map((location, index) => (
-                                <option key={index} value={location.nev}>{location.nev}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Leírás:</label>
-                        <textarea
-                            name="leiras"
-                            value={formData.leiras}
-                            onChange={handleChange}
-                            className="uploadInput"
-                        />
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Kép:</label>
-                        <input
-                            type="file"
-                            name="kep"
-                            onChange={handleChange}
-                            className="uploadInput"
-                        />
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
-                        <label className="uploadLabel">Szolgáltatások:</label>
-                        <div className="uploadServiceContainer">
-                            {services.map((service, index) => (
-                                <Checkbox
-                                    key={index}
-                                    id={`${service.replace(/\s+/g, '')}Cb`}
-                                    label={service}
-                                    checked={formData.szolgaltatasok.includes(service)}
-                                    onChange={handleCheckboxChange}
-                                />
-                            ))}
+                ) : (
+                    <form onSubmit={handleSubmit} className="uploadForm">
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Cím:</label>
+                            <input type="text" name="cim" value={formData.cim} onChange={handleChange} required className="uploadInput" />
                         </div>
-                    </div>
-                    
-                    <button className="starBtn">
-                    Ingatlan feltöltése
-                    {[...Array(6)].map((_, i) => (
-                        <div key={i} className={`absolute star-${i + 1} animate-spin-slow`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53">
-                            <path fill="currentColor" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"/>
-                        </svg>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Ár (Ft):</label>
+                            <input type="number" name="ar" value={formData.ar} onChange={handleChange} required className="uploadInput" />
                         </div>
-                    ))}
-                    </button>
-                </form>
-            )}
-            <img src="/img/city2.png" className="footerImg" alt="City View" />
-            <Footer />
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Szobák száma:</label>
+                            <input type="number" name="szoba" value={formData.szoba} onChange={handleChange} required className="uploadInput" />
+                        </div>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Méret (m²):</label>
+                            <input type="number" name="meret" value={formData.meret} onChange={handleChange} required className="uploadInput" />
+                        </div>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Helyszín:</label>
+                            <select name="helyszin" value={formData.helyszin} onChange={handleChange}>
+                                <option value=""></option>
+                                {locations.map((location, index) => (
+                                    <option key={index} value={location.nev}>{location.nev}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Leírás:</label>
+                            <textarea name="leiras" value={formData.leiras} onChange={handleChange} className="uploadInput" />
+                        </div>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Kép:</label>
+                            <input type="file" name="kep" onChange={handleChange} className="uploadInput" />
+                        </div>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Szolgáltatások:</label>
+                            <div className="uploadServiceContainer">
+                                {services.map((service, index) => (
+                                    <Checkbox
+                                        key={index}
+                                        id={`${service.replace(/\s+/g, '')}Cb`}
+                                        label={service}
+                                        checked={formData.szolgaltatasok.includes(service)}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <button className="starBtn">Ingatlan feltöltése</button>
+                    </form>
+                )}
+                <img src="/img/city2.png" className="footerImg" alt="City View" />
+                <Footer />
             </motion.div>
         </div>
     );
 }
 
-export default IngatlanForm;
+export default Kiadas;

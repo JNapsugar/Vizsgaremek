@@ -175,11 +175,7 @@ const App = () => {
     return (
         <div>
             <Navbar />
-            <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}>
+            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
             <SmallHeader title="Részletek" />
             <div className="propertyMainContent">
                 <img src={propertyImage.kepUrl} alt={property.helyszin} loading="lazy" className='propertyImage' />

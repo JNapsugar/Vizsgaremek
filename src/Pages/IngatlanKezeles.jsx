@@ -9,6 +9,19 @@ import "../style.css";
 import {motion} from "framer-motion";
 
 const IngatlanKezeles = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        const storedToken = sessionStorage.getItem("token");
+        if (storedToken) {
+            setIsLoggedIn(true);
+            setToken(storedToken);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
+
     const { id } = useParams(); 
     const [formData, setFormData] = useState({
         cim: '',
@@ -27,19 +40,6 @@ const IngatlanKezeles = () => {
         "garázs", "erkély/terasz", "házi mozi", "mosógép", "kávéfőző", "takarító szolgálat",
         "biztonsági kamera", "golfpálya", "spájz"
     ];
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState(null);
-
-    useEffect(() => {
-        const storedToken = sessionStorage.getItem("token");
-        if (storedToken) {
-            setIsLoggedIn(true);
-            setToken(storedToken);
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, []);
-
     const [succesful, setSuccesful] = useState(false);
     const [bookings, setBookings] = useState([]);
     const [berloNevek, setBerloNevek] = useState({});
@@ -297,11 +297,7 @@ const IngatlanKezeles = () => {
     return (
         <div>
             <Navbar />
-            <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3 }}>
+            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
             <SmallHeader title="Ingatlankezelés" />
             <div className="uploadForm">
                 <p className="title">Foglaláskezelés</p>
