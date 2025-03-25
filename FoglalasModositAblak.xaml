@@ -5,31 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IngatlanKarbantartoWPF"
         mc:Ignorable="d"
-        Title="FoglalasModositAblak" Height="450" Width="400">
+        Title="FoglalasModositAblak" Height="400" Width="390">
     <Grid>
-        <!-- Foglalás ID -->
-        <TextBlock Text="Foglalás ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" />
-        <TextBox x:Name="FoglalasIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0" Width="350" IsReadOnly="True"/>
-
         <!-- Ingatlan ID -->
-        <TextBlock Text="Ingatlan ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0" />
-        <TextBox x:Name="IngatlanIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0" Width="350"/>
+        <TextBlock Text="Ingatlan ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" />
+        <TextBox x:Name="IngatlanIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0" Width="350"/>
 
         <!-- Bérlő ID -->
-        <TextBlock Text="Bérlő ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0" />
-        <TextBox x:Name="BerloIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,150,0,0" Width="350"/>
+        <TextBlock Text="Bérlő ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0" />
+        <TextBox x:Name="BerloIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0" Width="350"/>
 
         <!-- Kezdési dátum -->
-        <TextBlock Text="Kezdési dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,190,0,0" />
-        <DatePicker x:Name="KezdesDatumDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,210,0,0" Width="350"/>
+        <TextBlock Text="Kezdési dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0" />
+        <DatePicker x:Name="KezdesDatumDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,150,0,0" Width="350"/>
 
         <!-- Befejezési dátum -->
-        <TextBlock Text="Befejezési dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,250,0,0" />
-        <DatePicker x:Name="BefejezesDatumDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,270,0,0" Width="350"/>
+        <TextBlock Text="Befejezési dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,190,0,0" />
+        <DatePicker x:Name="BefejezesDatumDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,210,0,0" Width="350"/>
 
         <!-- Foglalás állapota -->
-        <TextBlock Text="Foglalás állapota" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,310,0,0" />
-        <ComboBox x:Name="AllapotComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,330,0,0" Width="350">
+        <TextBlock Text="Foglalás állapota" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,250,0,0" />
+        <ComboBox x:Name="AllapotComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,270,0,0" Width="350">
             <ComboBoxItem Content="elfogadva"/>
             <ComboBoxItem Content="függőben"/>
             <ComboBoxItem Content="elutasítva"/>

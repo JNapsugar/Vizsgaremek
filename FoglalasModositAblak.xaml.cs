@@ -11,13 +11,13 @@ namespace IngatlanKarbantartoWPF
     public partial class FoglalasModositAblak : Window
     {
         private static readonly HttpClient _httpClient = new HttpClient();
-        private readonly int _foglalasId;
-        private readonly string ingatlanId;
+        private static int _foglalasId;
+
 
         public FoglalasModositAblak(int foglalasId)
         {
-            InitializeComponent();
             _foglalasId = foglalasId;
+            InitializeComponent();
             LoadFoglalasData();
         }
 
@@ -25,36 +25,27 @@ namespace IngatlanKarbantartoWPF
         {
             try
             {
-                string url = $"https://localhost:7079/api/Foglalasok/ingatlan/{ingatlanId}";
+                string url = $"https://localhost:7079/api/Foglalasok/foglalas/{_foglalasId}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
+
+                
 
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
 
-                    Console.WriteLine("Kapott válasz: " + responseString);
-
                     var options = new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     };
-
                     var foglalas = JsonSerializer.Deserialize<Foglalas>(responseString, options);
 
-                    if (foglalas != null)
-                    {
-                        FoglalasIdTextBox.Text = foglalas.FoglalasId.ToString();
-                        IngatlanIdTextBox.Text = foglalas.IngatlanId.ToString();
-                        BerloIdTextBox.Text = foglalas.BerloId.ToString();
-                        KezdesDatumDatePicker.SelectedDate = foglalas.KezdesDatum;
-                        BefejezesDatumDatePicker.SelectedDate = foglalas.BefejezesDatum;
+                    IngatlanIdTextBox.Text = foglalas.IngatlanId.ToString();
+                    BerloIdTextBox.Text = foglalas.BerloId.ToString();
+                    KezdesDatumDatePicker.Text = foglalas.KezdesDatum.ToString();
+                    BefejezesDatumDatePicker.Text = foglalas.BefejezesDatum.ToString();
+                    AllapotComboBox.SelectedIndex = AllapotComboBox.Items.IndexOf(foglalas.Allapot);
 
-                        var selectedItem = AllapotComboBox.Items
-                            .Cast<ComboBoxItem>()
-                            .FirstOrDefault(item => item.Content.ToString() == foglalas.Allapot);
-
-                        AllapotComboBox.SelectedItem = selectedItem;
-                    }
                 }
                 else
                 {
@@ -96,16 +87,18 @@ namespace IngatlanKarbantartoWPF
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            
         }
 
         public class Foglalas
         {
-            public int FoglalasId { get; set; }
             public int IngatlanId { get; set; }
             public int BerloId { get; set; }
             public DateTime KezdesDatum { get; set; }
             public DateTime BefejezesDatum { get; set; }
             public string Allapot { get; set; }
+
         }
     }
 }
