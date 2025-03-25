@@ -115,11 +115,14 @@ const Kiadas = () => {
             }
 
             await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
-                kepUrl,
-                ingatlanId,
-                feltoltesDatum: new Date().toISOString(),
+                KepUrl: kepUrl,
+                IngatlanId: ingatlanId,
+                FeltoltesDatum: new Date().toISOString(),
             }, {
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    Authorization: `Bearer ${token}` 
+                },
             });
 
             setSuccesful(true);
@@ -162,7 +165,7 @@ const Kiadas = () => {
                             <input type="text" name="cim" value={formData.cim} onChange={handleChange} required className="uploadInput" />
                         </div>
                         <div className="uploadRow">
-                            <label className="uploadLabel">Ár (Ft):</label>
+                            <label className="uploadLabel">Ár/éjszaka (Ft):</label>
                             <input type="number" name="ar" value={formData.ar} onChange={handleChange} required className="uploadInput" />
                         </div>
                         <div className="uploadRow">

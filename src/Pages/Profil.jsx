@@ -49,7 +49,7 @@ const Profil = () => {
                     { headers: { Authorization: `Bearer ${token}` } });
                     setProperties(propertiesResponse.data)
 
-                if (profileData.permissionId === 1 || profileData.permissionId === 2) {
+                if (profileData.permissionId === 2) {
                     const userProperties = propertiesResponse.data.filter(
                         property => property.tulajdonosId === profileData.id);
                         setProperties(userProperties);
@@ -200,7 +200,7 @@ const Profil = () => {
         const propertyImg = propertyImages.find(img => img.ingatlanId === propertyId);
         return propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg";
     };
-
+    
     return (
         <div>
             <Navbar />
@@ -250,9 +250,6 @@ const Profil = () => {
                                         bookings.map((booking) => {
                                             const property = properties.find(p => p.ingatlanId === booking.ingatlanId);
                                             if (!property) return null;
-                                            ;
-                                            ;
-                                            
                                             return (
                                                 <BookingCard
                                                     key={booking.foglalasId}
