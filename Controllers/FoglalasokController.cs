@@ -53,7 +53,7 @@ namespace IngatlanokBackend.Controllers
         }
 
         [HttpGet("foglalas/{id}")]
-        public async Task<IActionResult> GetByFogallasId([FromQuery] int id)
+        public async Task<IActionResult> GetByFogallasId( int id)
         {
             using (var cx = new IngatlanberlesiplatformContext())
             {
