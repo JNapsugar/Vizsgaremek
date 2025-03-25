@@ -13,7 +13,6 @@ namespace IngatlanKarbantartoWPF
         private static readonly HttpClient _httpClient = new HttpClient();
         private static int _foglalasId;
 
-
         public FoglalasModositAblak(int foglalasId)
         {
             _foglalasId = foglalasId;
@@ -27,8 +26,6 @@ namespace IngatlanKarbantartoWPF
             {
                 string url = $"https://localhost:7079/api/Foglalasok/foglalas/{_foglalasId}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
-
-                
 
                 if (response.IsSuccessStatusCode)
                 {
