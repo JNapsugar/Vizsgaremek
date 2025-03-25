@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-function LoginPage() {
+function Belepes() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -87,4 +87,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default Belepes;

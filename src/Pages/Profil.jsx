@@ -44,15 +44,15 @@ const Profil = () => {
         if (!token || !profileData.id) return;
         const fetchData = async () => {
             try {
+                const propertiesResponse = await axios.get(
+                    `https://localhost:7079/api/Ingatlan/ingatlanok`,
+                    { headers: { Authorization: `Bearer ${token}` } });
+                    setProperties(propertiesResponse.data)
+
                 if (profileData.permissionId === 1 || profileData.permissionId === 2) {
-                    const propertiesResponse = await axios.get(
-                        `https://localhost:7079/api/Ingatlan/ingatlanok`,
-                        { headers: { Authorization: `Bearer ${token}` } }
-                    );
                     const userProperties = propertiesResponse.data.filter(
-                        property => property.tulajdonosId === profileData.id
-                    );
-                    setProperties(userProperties);
+                        property => property.tulajdonosId === profileData.id);
+                        setProperties(userProperties);
                 }
 
                 if (profileData.permissionId === 1 || profileData.permissionId === 3) {
@@ -61,9 +61,8 @@ const Profil = () => {
                         : `https://localhost:7079/api/Foglalasok/allBookings`;
                     
                     const bookingsResponse = await axios.get(endpoint, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                    setBookings(bookingsResponse.data);
+                        headers: { Authorization: `Bearer ${token}` }});
+                        setBookings(bookingsResponse.data);
                 }
 
                 const imagesResponse = await axios.get(
@@ -73,7 +72,7 @@ const Profil = () => {
                 setPropertyImages(imagesResponse.data);
 
             } catch (error) {
-                console.error("Error loading data:", error);
+                console.error("Hiba az ingatlanképek betöltésekor:", error);
             }
         };
         fetchData();
@@ -251,6 +250,8 @@ const Profil = () => {
                                         bookings.map((booking) => {
                                             const property = properties.find(p => p.ingatlanId === booking.ingatlanId);
                                             if (!property) return null;
+                                            ;
+                                            ;
                                             
                                             return (
                                                 <BookingCard

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from 'react';
-import Home from './Pages/Home';
+import Fooldal from './Pages/Fooldal';
 import Ingatlanok from './Pages/Ingatlanok';
 import Reszletek from './Pages/Reszletek';
 import Belepes from './Pages/Belepes';
@@ -21,8 +21,8 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}> 
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Fooldal />} />
+        <Route path="/home" element={<Fooldal />} />
         <Route path="/ingatlanok" element={<Ingatlanok />} />
         <Route path="/ingatlanok/:ingatlanId" element={<Reszletek />} />
         <Route path="/belepes" element={<Belepes />} />

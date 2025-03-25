@@ -9,7 +9,7 @@ import PropertyCard from "../Components/PropertyCard";
 import Footer from "../Components/Footer";
 import HomeHeader from "../Components/HomeHeader";
 
-const Home = () => {
+const Fooldal = () => {
     const [cities, setCities] = useState([]);
     const [featured, setFeatured] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
@@ -131,4 +131,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Fooldal;

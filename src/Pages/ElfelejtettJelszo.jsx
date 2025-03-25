@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../style.css';
 import { motion } from 'framer-motion';
 
-function PasswordReset() {
+function ElfelejtettJelszo() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
@@ -46,4 +46,4 @@ function PasswordReset() {
     );
 }
 
-export default PasswordReset;
+export default ElfelejtettJelszo;
