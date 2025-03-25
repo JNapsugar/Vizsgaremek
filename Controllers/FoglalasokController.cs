@@ -52,6 +52,30 @@ namespace IngatlanokBackend.Controllers
             }
         }
 
+        [HttpGet("foglalas/{id}")]
+        public async Task<IActionResult> GetByFogallasId([FromQuery] int id)
+        {
+            using (var cx = new IngatlanberlesiplatformContext())
+            {
+                try
+                {
+                    var foglalas = await cx.Foglalasoks.FirstOrDefaultAsync(x => x.FoglalasId == id);
+                    return (Ok( new
+                    {
+                        IngatlanId = foglalas.IngatlanId,
+                        BerloId = foglalas.BerloId,
+                        Allapot = foglalas.Allapot,
+                        BefejezesDatum = foglalas.BefejezesDatum,
+                        KezdesDatum = foglalas.KezdesDatum,
+                    }));
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
 
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserBookings(int userId)

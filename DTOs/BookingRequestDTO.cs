@@ -1,4 +1,6 @@
-﻿namespace IngatlanokBackend.DTOs
+﻿using IngatlanokBackend.Models;
+
+namespace IngatlanokBackend.DTOs
 {
     public class BookingRequestDTO
     {
