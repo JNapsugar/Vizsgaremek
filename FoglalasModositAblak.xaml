@@ -30,9 +30,9 @@
         <!-- Foglalás állapota -->
         <TextBlock Text="Foglalás állapota" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,310,0,0" />
         <ComboBox x:Name="AllapotComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,330,0,0" Width="350">
-            <ComboBoxItem Content="Aktív"/>
-            <ComboBoxItem Content="Lezárt"/>
-            <ComboBoxItem Content="Lemondva"/>
+            <ComboBoxItem Content="elfogadva"/>
+            <ComboBoxItem Content="függőben"/>
+            <ComboBoxItem Content="elutasítva"/>
         </ComboBox>
 
         <!-- Frissítés Gomb -->
