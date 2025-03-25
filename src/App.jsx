@@ -46,7 +46,3 @@ function App() {
 }
 
 export default App;
-
-/*
-To.do:
-Tisztábbá átírni: Ingatlanok, Ingatlankezelés, Reszletek, Profil, (css?)*/

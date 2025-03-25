@@ -9,94 +9,93 @@ import { motion } from "framer-motion";
 
 const Profil = () => {
     const navigate = useNavigate();
-    const [registrationData, setRegistrationData] = useState({
+    const userId = sessionStorage.getItem("userId");
+    const token = sessionStorage.getItem("token");
+    const username = sessionStorage.getItem("username");
+    const [profileData, setProfileData] = useState({
         loginNev: "Felhasználónév",
         email: "felhasználó@domain.com",
         name: "Teljes név",
-        PermissionId: 0,
+        permissionId: 0,
         profilePicturePath: "",
     });
-    const userId = sessionStorage.getItem("userId");
     const [properties, setProperties] = useState([]);
     const [bookings, setBookings] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
-    const [isEditView, setIsEditView] = useState(false); 
+    const [isEditMode, setIsEditMode] = useState(false);
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
-        const username = sessionStorage.getItem("username");
-    
-        if (token && username) {
-            axios
-                .get(`https://localhost:7079/api/felhasznalo/me/${username}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((res) => {
-                    setRegistrationData(res.data);
-                })
-                .catch((error) => console.error("Hiba az adatok betöltésekor:", error));
-        } else {
-            console.error("Hibás felhasználó");
-        }
-        
-    }, []);
-    
+        if (!token || !username) return;        
+        const fetchProfileData = async () => {
+            try {
+                const response = await axios.get(
+                    `https://localhost:7079/api/felhasznalo/me/${username}`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                setProfileData(response.data);
+            } catch (error) {
+                console.error("Hiba a felhasználói adatok betöltésokor:", error);
+            }
+        };
+        fetchProfileData();
+    }, [token, username]);
+
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
-        if (registrationData.permissionId === 2 || registrationData.permissionId === 1) {
-            axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => {
-                const filteredProperties = response.data.filter(property => property.tulajdonosId === registrationData.id);
-                setProperties(filteredProperties);
-            })
-            .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
+        if (!token || !profileData.id) return;
+        const fetchData = async () => {
+            try {
+                if (profileData.permissionId === 1 || profileData.permissionId === 2) {
+                    const propertiesResponse = await axios.get(
+                        `https://localhost:7079/api/Ingatlan/ingatlanok`,
+                        { headers: { Authorization: `Bearer ${token}` } }
+                    );
+                    const userProperties = propertiesResponse.data.filter(
+                        property => property.tulajdonosId === profileData.id
+                    );
+                    setProperties(userProperties);
+                }
 
-            axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => { setPropertyImages(response.data); })
-            .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
-        }
-        if (registrationData.permissionId === 3 || registrationData.permissionId === 1) {
-            axios.get(registrationData.permissionId === 3?
-                `https://localhost:7079/api/Foglalasok/user/${userId}`:
-                `https://localhost:7079/api/Foglalasok/allBookings`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => { setBookings(response.data); })
-            .catch((error) => console.error("Hiba a foglalások betöltésekor:", error));
+                if (profileData.permissionId === 1 || profileData.permissionId === 3) {
+                    const endpoint = profileData.permissionId === 3 
+                        ? `https://localhost:7079/api/Foglalasok/user/${userId}`
+                        : `https://localhost:7079/api/Foglalasok/allBookings`;
+                    
+                    const bookingsResponse = await axios.get(endpoint, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    setBookings(bookingsResponse.data);
+                }
 
-            axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => { setProperties(response.data); })
-            .catch((error) => console.error("Hiba az ingatlanok betöltésekor:", error));
+                const imagesResponse = await axios.get(
+                    `https://localhost:7079/api/Ingatlankepek/ingatlankepek`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                setPropertyImages(imagesResponse.data);
 
-            axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => { setPropertyImages(response.data); })
-            .catch((error) => console.error("Hiba az ingatlan képek betöltésekor:", error));
-        }
-    }, [registrationData.id, registrationData.permissionId, userId]);
+            } catch (error) {
+                console.error("Error loading data:", error);
+            }
+        };
+        fetchData();
+    }, [profileData.id, profileData.permissionId, token, userId]);
 
-    const ProfilePropertyCard = ({ id, kep, cim, helyszin }) => (
+
+    const PropertyCard = ({ id, kep, cim, helyszin }) => (
         <div className="profilePropertyCard">
             <img src={kep} alt="property" />
             <p>{helyszin}<br /><span>{cim}</span></p>
             <div className="buttonContainer">
                 <button>
-                    <Link to={"/ingatlanok/" + id}>Részletek</Link>
+                    <Link to={`/ingatlanok/${id}`}>Részletek</Link>
                 </button>
                 <button>
-                    <Link to={"/ingatlanKezeles/" + id}>Kezelés</Link>
+                    <Link to={`/ingatlanKezeles/${id}`}>Kezelés</Link>
                 </button>
             </div>
         </div>
     );
-    const ProfileBookingCard = ({ id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
+
+    const BookingCard = ({ id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
         <div className="profileBookingCard">
             <img src={kep} alt="property" />
             <p>{helyszin}<br /><span>{allapot}</span></p>
@@ -106,7 +105,7 @@ const Profil = () => {
             </div>
             <div className="buttonContainer">
                 <button>
-                    <Link to={"/ingatlanok/" + ingatlanId}>Részletek</Link>
+                    <Link to={`/ingatlanok/${ingatlanId}`}>Részletek</Link>
                 </button>
                 <button onClick={() => handleDeleteBooking(id)}>
                     Foglalás törlése
@@ -115,254 +114,220 @@ const Profil = () => {
         </div>
     );
 
-    const handleDeleteBooking = (id) => {
-        const confirmation = window.confirm("Biztosan törölni szeretnéd a foglalást?");
-        if (confirmation) {
-            const token = sessionStorage.getItem("token");
-            const username = sessionStorage.getItem("username");
-            if (token && username) {
-                axios.delete(`https://localhost:7079/api/Foglalasok/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then(() => {
-                    const newBookings = bookings.filter(booking => booking.foglalasId !== id);
-                    setBookings(newBookings);
-                })
-                .catch(error => {
-                    console.error("Hiba történt a foglalás törlésekor:", error);
-                    alert("Hiba történt a foglalás törlésekor.");
-                });
-            } else {
-                alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
-            }
-        }
-    }
-
-    const handleSave = () => {
-        const token = sessionStorage.getItem("token");
-        const username = sessionStorage.getItem("username");
-        const userId = sessionStorage.getItem("userId");
-    
-        if (!token || !username) {
-            alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
-            return;
-        }
-    
-        const uploadImage = async () => {
-            try {
-                if (!registrationData.profilePicturePath || !(registrationData.profilePicturePath instanceof File)) {
-                    return `http://images.ingatlanok.nhely.hu/${userId}pfp.png`;
-                }
-    
-                const file = registrationData.profilePicturePath;
-                const renamedFile = new File([file], `${userId}pfp.png`, { type: file.type });
-    
-                const formData = new FormData();
-                formData.append("file", renamedFile);
-    
-                const fileUploadResponse = await axios.post(
-                    'https://localhost:7079/api/FileUpload/FtpServer',
-                    formData,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "multipart/form-data",
-                        }
-                    }
-                );
-    
-                const newProfilePicturePath = fileUploadResponse.data;
-                return newProfilePicturePath;
-    
-            } catch (error) {
-                console.error("Hiba történt a kép feltöltésekor:", error);
-                throw new Error("Hiba történt a kép feltöltésekor.");
-            }
-        };
-    
-        uploadImage()
-            .then(async (newProfilePicturePath) => {
-                const updatedData = { 
-                    ...registrationData, 
-                    profilePicturePath: `http://images.ingatlanok.nhely.hu/${userId}pfp.png`
-                };
-    
-                await axios.put(`https://localhost:7079/api/Felhasznalo/${userId}`, updatedData, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-    
-                setIsEditView(false);
-                sessionStorage.setItem("username", registrationData.loginNev);
-            })
-            .catch((error) => {
-                console.error("Hiba a profil mentésekor:", error);
-                alert("Hiba történt a profil mentésekor.");
-            });
-    };        
-    
-    const handleLogout = () => {
-        const token = sessionStorage.getItem("token");
-        const username = registrationData.loginNev;
+    const handleDeleteBooking = async (id) => {
+        if (!window.confirm("Biztosan törölni szeretnéd a foglalást?")) return;
         
-        if (token && username) {
-            axios.post(`https://localhost:7079/api/Felhasznalo/logout/`, { LoginNev: username }, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then(() => {
-                sessionStorage.removeItem("token");
-                sessionStorage.removeItem("username");
-                sessionStorage.removeItem("permission");
-                navigate("/belepes");
-            })
-            .catch(error => {
-                console.error("Hiba történt a kijelentkezés során:", error);
-                alert("Hiba történt a kijelentkezés során.");
+        try {
+            await axios.delete(`https://localhost:7079/api/Foglalasok/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
-        } else {
-            alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
+            setBookings(bookings.filter(booking => booking.foglalasId !== id));
+        } catch (error) {
+            console.error("Hiba történt a foglalás törlésekor.", error);
+            alert("Hiba történt a foglalás törlésekor.");
         }
     };
 
-    const handleDeleteAccount = () => {
-        const confirmation = window.confirm("Biztosan törölni szeretnéd a fiókodat? Ez visszafordíthatatlan művelet.");
-        if (confirmation) {
-            const token = sessionStorage.getItem("token");
-            const username = sessionStorage.getItem("username");
-            if (token && username) {
-                axios.delete(`https://localhost:7079/api/Felhasznalo/delete/${username}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then(() => {
-                    sessionStorage.removeItem("token");
-                    sessionStorage.removeItem("username");
-                    navigate("/belepes");
-                })
-                .catch(error => {
-                    console.error("Hiba történt a fiók törlésekor:", error);
-                    alert("Hiba történt a fiók törlésekor.");
-                });
-            } else {
-                alert("Nem található a felhasználói adatok, kérlek jelentkezz be.");
+    const handleSaveProfile = async () => {
+        try {
+            let profilePictureUrl = profileData.profilePicturePath;
+            
+            if (profileData.profilePicturePath instanceof File) {
+                const formData = new FormData();
+                const renamedFile = new File(
+                    [profileData.profilePicturePath], 
+                    `${userId}pfp.png`, 
+                    { type: profileData.profilePicturePath.type }
+                );
+                formData.append("file", renamedFile);
+                
+                await axios.post(
+                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    formData,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                
+                profilePictureUrl = `http://images.ingatlanok.nhely.hu/${userId}pfp.png`;
             }
+
+            await axios.put(
+                `https://localhost:7079/api/Felhasznalo/${userId}`,
+                { ...profileData, profilePicturePath: profilePictureUrl },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setIsEditMode(false);
+            sessionStorage.setItem("username", profileData.loginNev);
+        } catch (error) {
+            console.error("Hiba történt a profil mentésekor.", error);
+            alert("Hiba történt a profil mentésekor.");
         }
-    };    
-    
+    };
+
+    const handleLogout = async () => {
+        try {
+            await axios.post(
+                `https://localhost:7079/api/Felhasznalo/logout/`, 
+                { LoginNev: profileData.loginNev },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            sessionStorage.clear();
+            navigate("/belepes");
+        } catch (error) {
+            console.error("Hiba történt a kijelentkezés során.", error);
+            alert("Hiba történt a kijelentkezés során.");
+        }
+    };
+
+    const handleDeleteAccount = async () => {
+        if (!window.confirm("Biztosan törölni szeretnéd a fiókodat? Ez visszafordíthatatlan művelet.")) return;
+        
+        try {
+            await axios.delete(
+                `https://localhost:7079/api/Felhasznalo/delete/${username}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            sessionStorage.clear();
+            navigate("/belepes");
+        } catch (error) {
+            console.error("Hiba történt a fiók törlésekor.", error);
+            alert("Hiba történt a fiók törlésekor.");
+        }
+    };
+
+    const getPropertyImage = (propertyId) => {
+        const propertyImg = propertyImages.find(img => img.ingatlanId === propertyId);
+        return propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg";
+    };
+
     return (
         <div>
             <Navbar />
             <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
-            <SmallHeader title="Saját profil" />
-            <div className="profileContent">
-                <div className="profileSide">
-                    <img 
-                        src={registrationData.profilePicturePath ? registrationData.profilePicturePath : "/img/defaultPfp.jpg"}
-                        className="profilePicture" alt="profilePicture" loading="lazy"
-                        onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
-                    />
-                    <p className="ProfileUsername">{registrationData.loginNev}</p>
-                    <p className="ProfileFullname">{registrationData.name}</p>
-                </div>
-                <div className="profileDetails">
-                {(registrationData.permissionId === 2 || registrationData.permissionId === 1 )&& (
-                    <>
-                        <p className="profileTitle">Meghirdetett ingatlanok</p>
-                        <div className="profileProperties">
-                        {properties.length > 0 ? (
-                                properties.map((property, index) => {
-                                    let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                                    const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg";
-                                    return (
-                                        <ProfilePropertyCard
-                                            key={index}
-                                            id={property.ingatlanId}
-                                            kep={imageSrc}
-                                            cim={property.cim}
-                                            helyszin={property.helyszin}
-                                        />
-                                    );
-                                })
-                            ) : (
-                                <div className="errorMessage">
-                                    Nincsenek feltöltött ingatlanok
-                                    <img src="img/errordog.gif" alt="hiba" width={170}/>
+                <SmallHeader title="Saját profil" />
+                <div className="profileContent">
+                    <div className="profileSide">
+                        <img 
+                            src={profileData.profilePicturePath || "/img/defaultPfp.jpg"}
+                            className="profilePicture" alt="profile" loading="lazy"
+                            onError={(e) => { e.target.onerror = null; e.target.src = "/img/defaultPfp.jpg"; }}
+                        />
+                        <p className="ProfileUsername">{profileData.loginNev}</p>
+                        <p className="ProfileFullname">{profileData.name}</p>
+                    </div>
+
+                    <div className="profileDetails">
+                        {(profileData.permissionId === 1 || profileData.permissionId === 2) && (
+                            <>
+                                <p className="profileTitle">Meghirdetett ingatlanok</p>
+                                <div className="profileProperties">
+                                    {properties.length > 0 ? (
+                                        properties.map((property) => (
+                                            <PropertyCard
+                                                key={property.ingatlanId}
+                                                id={property.ingatlanId}
+                                                kep={getPropertyImage(property.ingatlanId)}
+                                                cim={property.cim}
+                                                helyszin={property.helyszin}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div className="errorMessage">
+                                            Nincsenek feltöltött ingatlanok
+                                            <img src="img/errordog.gif" alt="hiba" width={170}/>
+                                        </div>
+                                    )}
                                 </div>
-                                
-                            )}
-                        </div>
-                    </>
-                )}
-                {(registrationData.permissionId === 3 || registrationData.permissionId === 1) && (
-                    <>
-                        <p className="profileTitle">Foglalások</p>
-                        <div className="profileProperties">
-                        {bookings.length > 0 ? (
-                            bookings.map((booking, index) => {
-                                let property = properties.find(property => property.ingatlanId === booking.ingatlanId);
-                                if (!property) return null;
-                                let propertyImg = propertyImages.find(img => img.ingatlanId === property.ingatlanId);
-                                const imageSrc = propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg"; 
-                                
-                                return (
-                                    <ProfileBookingCard
-                                        key={index}
-                                        id={booking.foglalasId}
-                                        kep={imageSrc}
-                                        helyszin={property.helyszin}
-                                        kezdesDatum={booking.kezdesDatum}
-                                        befejezesDatum={booking.befejezesDatum}
-                                        allapot={booking.allapot}
-                                        ingatlanId={booking.ingatlanId}
+                            </>
+                        )}
+
+                        {(profileData.permissionId === 1 || profileData.permissionId === 3) && (
+                            <>
+                                <p className="profileTitle">Foglalások</p>
+                                <div className="profileProperties">
+                                    {bookings.length > 0 ? (
+                                        bookings.map((booking) => {
+                                            const property = properties.find(p => p.ingatlanId === booking.ingatlanId);
+                                            if (!property) return null;
+                                            
+                                            return (
+                                                <BookingCard
+                                                    key={booking.foglalasId}
+                                                    id={booking.foglalasId}
+                                                    kep={getPropertyImage(booking.ingatlanId)}
+                                                    helyszin={property.helyszin}
+                                                    kezdesDatum={booking.kezdesDatum}
+                                                    befejezesDatum={booking.befejezesDatum}
+                                                    allapot={booking.allapot}
+                                                    ingatlanId={booking.ingatlanId}
+                                                />
+                                            );
+                                        })
+                                    ) : (
+                                        <div className="errorMessage">
+                                            Nincsenek foglalások
+                                            <img src="img/errordog.gif" alt="hiba" width={170} />
+                                        </div>
+                                    )}
+                                </div>
+                            </>
+                        )}
+
+                        <p className="profileTitle">Adatok</p>
+                        {isEditMode ? (
+                            <div className="profileData">
+                            {[
+                                { label: "Felhasználónév", field: "loginNev", inputType: "text" },
+                                { label: "Teljes név", field: "name", inputType: "text" },
+                                { label: "Email", field: "email", inputType: "text" },
+                                { label: "Jelszó", field: "password", inputType: "password" },
+                                { label: "Profilkép", field: "profilePicturePath", inputType: "file" }
+                            ].map(({ label, field, inputType }) => (
+                                <p key={field} className="profileDataRow">
+                                    {label}
+                                    <input
+                                        type={inputType}
+                                        value={inputType !== "file" ? profileData[field] || "" : undefined}
+                                        onChange={(e) => setProfileData({
+                                            ...profileData,
+                                            [field]: inputType === "file" ? e.target.files[0] : e.target.value
+                                        })}
+                                        {...(inputType === "file" ? {} : { value: profileData[field] || "" })}
                                     />
-                                );
-                            })
+                                </p>
+                            ))}
+                            </div>
                         ) : (
-                            <div className="errorMessage">
-                                Nincsenek foglalások
-                                <img src="img/errordog.gif" alt="hiba" width={170} />
+                            <div className="profileData">
+                                <p className="profileDataRow">Felhasználónév <span>{profileData.loginNev}</span></p>
+                                <p className="profileDataRow">Teljes név <span>{profileData.name}</span></p>
+                                <p className="profileDataRow">Email <span>{profileData.email}</span></p>
+                                <p className="profileDataRow">Jelszó <span>*********</span></p>
                             </div>
                         )}
-                        </div>
-                    </>
-                )}
 
-                    <p className="profileTitle">Adatok</p>
-                    {isEditView ? (
-                    <div className="profileData">
-                        <p className="profileDataRow">Felhasználónév
-                            <input type="text" value={registrationData.loginNev} onChange={(e) => setRegistrationData({ ...registrationData, loginNev: e.target.value })} />
-                        </p>
-                        <p className="profileDataRow">Teljes név
-                            <input type="text" value={registrationData.name} onChange={(e) => setRegistrationData({ ...registrationData, name: e.target.value })} />
-                        </p>
-                        <p className="profileDataRow">Email
-                            <input type="text" value={registrationData.email} onChange={(e) => setRegistrationData({ ...registrationData, email: e.target.value })} />
-                        </p>
-                        <p className="profileDataRow">Jelszó
-                            <input type="password" value={registrationData.password} onChange={(e) => setRegistrationData({ ...registrationData, password: e.target.value })} />
-                        </p>
-                        <p className="profileDataRow">Profilkép
-                            <input type="file" onChange={(e) => setRegistrationData({ ...registrationData, profilePicturePath: e.target.files[0] })}/>
-                        </p>
+                        {isEditMode ? (
+                            <button className="ProfileEditBtn" onClick={handleSaveProfile}>
+                                Mentés
+                            </button>
+                        ) : (
+                            <button className="ProfileEditBtn" onClick={() => setIsEditMode(true)}>
+                                Adatok módosítása
+                            </button>
+                        )}
+                        <button className="profileRedBtn" onClick={handleLogout}>
+                            Kijelentkezés
+                        </button>
+                        <button className="profileRedBtn" onClick={handleDeleteAccount}>
+                            Fiók törlése
+                        </button>    
                     </div>
-                    ) : (
-                    <div className="profileData">
-                        <p className="profileDataRow">Felhasználónév<span>{registrationData.loginNev}</span></p>
-                        <p className="profileDataRow">Teljes név <span>{registrationData.name}</span></p>
-                        <p className="profileDataRow">Email <span>{registrationData.email}</span></p>
-                        <p className="profileDataRow">Jelszó <span>*********</span></p>
-                    </div>
-                    )}
-                    {isEditView ? (
-                        <button className="ProfileEditBtn" onClick={handleSave}>Mentés</button>
-                    ) : (
-                        <button className="ProfileEditBtn" onClick={() => setIsEditView(true)}>Adatok módosítása</button>
-                    )}
-                    <button className="profileRedBtn" onClick={handleLogout}>Kijelentkezés</button>
-                    <button className="profileRedBtn" onClick={handleDeleteAccount}>Fiók törlése</button>    
                 </div>
-            </div>
-            <img src="/img/city2.png" className="footerImg" alt="City View" />
-            <Footer />
+
+                <img src="/img/city2.png" className="footerImg" alt="City View" />
+                <Footer />
             </motion.div>
         </div>
     );

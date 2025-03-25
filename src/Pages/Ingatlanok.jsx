@@ -51,6 +51,56 @@ const Ingatlanok = () => {
         spajzCb: false
     });
 
+    const filteredProperties = properties.filter(property => {;
+        return (
+            (filters.megye === "Összes" || filteredLocations.some(location => location.nev === property.helyszin)) &&
+            (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
+            (filters.szoba === "Mindegy" || (filters.szoba === "Több mint 5" ? property.szoba > 5 : property.szoba === parseInt(filters.szoba))) &&
+            (!filters.wifiCb || property.szolgaltatasok.includes("Wi-Fi")) &&
+            (!filters.petCb || property.szolgaltatasok.includes("kutya hozható")) &&
+            (!filters.parkolasCb || property.szolgaltatasok.includes("parkolás")) &&
+            (!filters.medenceCb || property.szolgaltatasok.includes("medence")) &&
+            (!filters.kertCb || property.szolgaltatasok.includes("kert")) &&
+            (!filters.legkondiCb || property.szolgaltatasok.includes("légkondícionálás")) &&
+            (!filters.billiardCb || property.szolgaltatasok.includes("billiárd")) &&
+            (!filters.pingpongCb || property.szolgaltatasok.includes("ping-pong")) &&
+            (!filters.akadalymentesCb || property.szolgaltatasok.includes("akadálymentes")) &&
+            (!filters.babaButorokCb || property.szolgaltatasok.includes("baba bútorok")) &&
+            (!filters.grillCb || property.szolgaltatasok.includes("grill")) &&
+            (!filters.horgasztoCb || property.szolgaltatasok.includes("horgásztó")) &&
+            (!filters.garazsCb || property.szolgaltatasok.includes("garázs")) &&
+            (!filters.erkelyTeraszCb || property.szolgaltatasok.includes("erkély/terasz")) &&
+            (!filters.hazimoziCb || property.szolgaltatasok.includes("házi mozi")) &&
+            (!filters.mosogepCb || property.szolgaltatasok.includes("mosógép")) &&
+            (!filters.kavefozoCb || property.szolgaltatasok.includes("kávéfőző")) &&
+            (!filters.takaritokCb || property.szolgaltatasok.includes("takarító szolgálat")) &&
+            (!filters.biztonsagiKameraCb || property.szolgaltatasok.includes("biztonsági kamera")) &&
+            (!filters.golfpalyaCb || property.szolgaltatasok.includes("golfpálya"))
+        );
+    });
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const propertiesPerPage = 12;
+    const indexOfLastProperty = currentPage * propertiesPerPage;
+    const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
+    const currentProperties = filteredProperties.slice(indexOfFirstProperty, indexOfLastProperty);
+
+    useEffect(() => {
+        setPending(true);
+        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+            .then(res => setProperties(res.data))
+            .catch(error => { console.error(error); setError(true); })
+            .finally(() => setPending(false));
+    }, []);
+
+    useEffect(() => {
+        setPending(true);
+        axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
+            .then(res => setPropertyImages(res.data))
+            .catch(error => { console.error(error); setError(true); })
+            .finally(() => setPending(false));
+    }, []);
+
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
@@ -112,40 +162,6 @@ const Ingatlanok = () => {
             });
         }
     }, [cityName, locations, handleFilterChange]);
-
-    const filteredProperties = properties.filter(property => {;
-        return (
-            (filters.megye === "Összes" || filteredLocations.some(location => location.nev === property.helyszin)) &&
-            (filters.helyszin === "Összes" || property.helyszin === filters.helyszin) &&
-            (filters.szoba === "Mindegy" || (filters.szoba === "Több mint 5" ? property.szoba > 5 : property.szoba === parseInt(filters.szoba))) &&
-            (!filters.wifiCb || property.szolgaltatasok.includes("Wi-Fi")) &&
-            (!filters.petCb || property.szolgaltatasok.includes("kutya hozható")) &&
-            (!filters.parkolasCb || property.szolgaltatasok.includes("parkolás")) &&
-            (!filters.medenceCb || property.szolgaltatasok.includes("medence")) &&
-            (!filters.kertCb || property.szolgaltatasok.includes("kert")) &&
-            (!filters.legkondiCb || property.szolgaltatasok.includes("légkondícionálás")) &&
-            (!filters.billiardCb || property.szolgaltatasok.includes("billiárd")) &&
-            (!filters.pingpongCb || property.szolgaltatasok.includes("ping-pong")) &&
-            (!filters.akadalymentesCb || property.szolgaltatasok.includes("akadálymentes")) &&
-            (!filters.babaButorokCb || property.szolgaltatasok.includes("baba bútorok")) &&
-            (!filters.grillCb || property.szolgaltatasok.includes("grill")) &&
-            (!filters.horgasztoCb || property.szolgaltatasok.includes("horgásztó")) &&
-            (!filters.garazsCb || property.szolgaltatasok.includes("garázs")) &&
-            (!filters.erkelyTeraszCb || property.szolgaltatasok.includes("erkély/terasz")) &&
-            (!filters.hazimoziCb || property.szolgaltatasok.includes("házi mozi")) &&
-            (!filters.mosogepCb || property.szolgaltatasok.includes("mosógép")) &&
-            (!filters.kavefozoCb || property.szolgaltatasok.includes("kávéfőző")) &&
-            (!filters.takaritokCb || property.szolgaltatasok.includes("takarító szolgálat")) &&
-            (!filters.biztonsagiKameraCb || property.szolgaltatasok.includes("biztonsági kamera")) &&
-            (!filters.golfpalyaCb || property.szolgaltatasok.includes("golfpálya"))
-        );
-    });
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const propertiesPerPage = 12;
-    const indexOfLastProperty = currentPage * propertiesPerPage;
-    const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-    const currentProperties = filteredProperties.slice(indexOfFirstProperty, indexOfLastProperty);
     
     const handleNextPage = () => {
         if (currentPage < Math.ceil(filteredProperties.length / propertiesPerPage)) {
@@ -168,25 +184,8 @@ const Ingatlanok = () => {
                 setIsListDisabled(false);
             }
         };
-    
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    useEffect(() => {
-        setPending(true);
-        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
-            .then(res => setProperties(res.data))
-            .catch(error => { console.error(error); setError(true); })
-            .finally(() => setPending(false));
-    }, []);
-
-    useEffect(() => {
-        setPending(true);
-        axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
-            .then(res => setPropertyImages(res.data))
-            .catch(error => { console.error(error); setError(true); })
-            .finally(() => setPending(false));
     }, []);
 
     const Checkbox = ({ id, label}) => {

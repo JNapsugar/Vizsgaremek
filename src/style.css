@@ -621,20 +621,21 @@ html, body {
 	margin: 0 5px;
 }
 
-input[type="checkbox"] {
+.permission-toggle input[type="checkbox"] {
 	display: none;
 }
 
-input[type="checkbox"] + .slider {
+.permission-toggle input[type="checkbox"] + .slider {
 	position: relative;
 	width: 60px;
 	height: 30px;
 	background-color: #f8b665;
 	border-radius: 30px;
 	transition: 0.4s;
+	display: inline-block;
 }
 
-.slider:before {
+.permission-toggle .slider:before {
 	content: "";
 	position: absolute;
 	height: 22px;
@@ -646,13 +647,14 @@ input[type="checkbox"] + .slider {
 	transition: 0.4s;
 }
 
-input[type="checkbox"]:checked + .slider:before {
+.permission-toggle input[type="checkbox"]:checked + .slider:before {
 	transform: translateX(30px);
 }
 
-input[type="checkbox"]:focus + .slider {
+.permission-toggle input[type="checkbox"]:focus + .slider {
 	box-shadow: 0 0 1px #2196F3;
 }
+
 
 /*#endregion Bejelentkezés/Regisztráció*/
 
@@ -1463,6 +1465,8 @@ hr{
 
 .teamCardImg {
   width: 8rem;
+  height: 8rem;
+  object-fit: cover;
   border-radius: 50%;
   margin-top: 1rem;
 }
