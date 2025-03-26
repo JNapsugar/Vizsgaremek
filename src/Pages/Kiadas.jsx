@@ -6,8 +6,11 @@ import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
 import "../style.css";
 import { motion } from "framer-motion";
+import { RiseLoader } from "react-spinners";
 
 const Kiadas = () => {
+    const [submitted, setSubmitted] = useState(false);
+    const [succesful, setSuccesful] = useState(false);
     const [properties, setProperties] = useState([]);
     const [locations, setLocations] = useState([]);
     const [formData, setFormData] = useState({
@@ -22,17 +25,14 @@ const Kiadas = () => {
         tulajdonosId: sessionStorage.getItem("userId"),
         kep:''
     });
-    const [succesful, setSuccesful] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState(null);
-
     const services = [
         "Wi-Fi", "kutya hozható", "parkolás", "medence", "kert", "légkondícionálás",
         "billiárd", "ping-pong", "akadálymentes", "baba bútorok", "grill", "horgásztó",
         "garázs", "erkély/terasz", "házi mozi", "mosógép", "kávéfőző", "takarító szolgálat",
         "biztonsági kamera", "golfpálya", "spájz"
     ];
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState(null);
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
@@ -90,6 +90,7 @@ const Kiadas = () => {
         }
 
         try {
+            setSubmitted(true);
             const { ingatlanId, cim, leiras, helyszin, ar, szoba, meret, szolgaltatasok, tulajdonosId, kep } = formData;
             await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
                 IngatlanId: ingatlanId,
@@ -113,7 +114,7 @@ const Kiadas = () => {
                 });
                 kepUrl = `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
             }
-
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
                 KepUrl: kepUrl,
                 IngatlanId: ingatlanId,
@@ -124,13 +125,10 @@ const Kiadas = () => {
                     Authorization: `Bearer ${token}` 
                 },
             });
-
             setSuccesful(true);
-            setFormData({ cim: '', leiras: '', helyszin: '', ar: '', szoba: '', meret: '', szolgaltatasok: '', tulajdonosId: '', kep: '' });
-
         } catch (error) {
             console.error('Hiba történt az ingatlan hozzáadása során:', error);
-            alert('Nem sikerült hozzáadni az ingatlant. Ellenőrizd az adatokat és próbáld újra.');
+            document.getElementById('Message').innerText= 'Nem sikerült hozzáadni az ingatlant.';
         }
     };
 
@@ -208,6 +206,7 @@ const Kiadas = () => {
                             </div>
                         </div>
                         <button className="starBtn">Ingatlan feltöltése</button>
+                        {submitted ? (<div className="uploadMessage" id="Message"><RiseLoader color="#e09900" size={10}/></div>) : ""}
                     </form>
                 )}
                 <img src="/img/city2.png" className="footerImg" alt="City View" />
