@@ -41,7 +41,6 @@ const Kiadas = () => {
         }
     }, []);
 
-
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
             .then(res => setProperties(res.data))
@@ -53,12 +52,9 @@ const Kiadas = () => {
     }, []);
 
     useEffect(() => {
-        if (properties.length > 0) {
-            const newIngatlanId = properties[properties.length - 1].ingatlanId + 1;
-            setFormData((prevData) => ({
-                ...prevData,
-                ingatlanId: newIngatlanId
-            }));
+        if (properties.length > 0 && formData.ingatlanId === 0) {
+            const newIngatlanId = Math.max(...properties.map(p => p.ingatlanId)) + 1;
+            setFormData(prev => ({ ...prev, ingatlanId: newIngatlanId }));
         }
     }, [properties]);
 
@@ -92,7 +88,11 @@ const Kiadas = () => {
         try {
             setSubmitted(true);
             const { ingatlanId, cim, leiras, helyszin, ar, szoba, meret, szolgaltatasok, tulajdonosId, kep } = formData;
-            await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
+
+            console.log("Form Data:", formData); // Az adatokat logoljuk a kérés előtt
+
+            // Első POST kérés: Ingatlan létrehozása
+            const response = await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
                 IngatlanId: ingatlanId,
                 Cim: cim,
                 Leiras: leiras,
@@ -105,16 +105,25 @@ const Kiadas = () => {
                 FeltoltesDatum: new Date().toISOString(),
             }, { headers: { Authorization: `Bearer ${token}` } });
 
+            console.log("Ingatlan létrehozása válasz:", response); // Logoljuk a választ
+
             let kepUrl = "img/placeholder.jpg";
             if (kep) {
+                // Kép feltöltése
                 const fileData = new FormData();
                 fileData.append("file", kep);
-                await axios.post('https://localhost:7079/api/FileUpload/FtpServer', fileData, {
+
+                const fileUploadResponse = await axios.post('https://localhost:7079/api/FileUpload/FtpServer', fileData, {
                     headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
                 });
-                kepUrl = `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
+
+                console.log("Kép feltöltés válasz:", fileUploadResponse); // Logoljuk a válasz a kép feltöltése után
+
+                // A válaszból kinyert URL
+                kepUrl = fileUploadResponse.data.imageUrl || `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
             }
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            // Második POST kérés: Kép URL hozzáadása az ingatlanhoz
             await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
                 KepUrl: kepUrl,
                 IngatlanId: ingatlanId,
@@ -125,10 +134,17 @@ const Kiadas = () => {
                     Authorization: `Bearer ${token}` 
                 },
             });
+
             setSuccesful(true);
         } catch (error) {
             console.error('Hiba történt az ingatlan hozzáadása során:', error);
-            document.getElementById('Message').innerText= 'Nem sikerült hozzáadni az ingatlant.';
+
+            // Logoljuk a részletes hibaüzenetet
+            if (error.response) {
+                console.error("Válasz hibaüzenet:", error.response.data);
+            }
+
+            document.getElementById('Message').innerText = 'Nem sikerült hozzáadni az ingatlant.';
         }
     };
 
