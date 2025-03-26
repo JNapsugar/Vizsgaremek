@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 14. 07:53
+-- Létrehozás ideje: 2025. Már 26. 12:24
 -- Kiszolgáló verziója: 10.4.32-MariaDB
--- PHP verzió: 8.0.30
+-- PHP verzió: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,109 +46,111 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`Id`, `LoginNev`, `HASH`, `SALT`, `Name`, `PermissionId`, `Active`, `Email`, `ProfilePicturePath`) VALUES
-(23, 'user1', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'salt1', 'User One', 2, 1, 'user1@example.com', 'profile1.jpg'),
-(24, 'user2', '6dcd4ce23d88e2ee9568ba546c007c63b2992cc9', 'salt2', 'User Two', 2, 1, 'user2@example.com', 'profile2.jpg'),
-(25, 'user3', 'd2d2d2d2c8d37c7a8fb319f9057f8977d9233a29', 'salt3', 'User Three', 2, 1, 'user3@example.com', 'profile3.jpg'),
-(26, 'user4', 'd41d8cd98f00b204e9800998ecf8427e', 'salt4', 'User Four', 2, 1, 'user4@example.com', 'profile4.jpg'),
-(27, 'user5', '98f13708210194c475687be6106a3b84c7f3d0f2', 'salt5', 'User Five', 2, 1, 'user5@example.com', 'profile5.jpg'),
-(28, 'user6', 'd3b07384d113edec49eaa6238ad5ff00', 'salt6', 'User Six', 2, 1, 'user6@example.com', 'profile6.jpg'),
-(29, 'user7', 'e2fc714c4727ee9395f324cd2e7b1692', 'salt7', 'User Seven', 2, 1, 'user7@example.com', 'profile7.jpg'),
-(30, 'user8', '0cc175b9c0f1b6a831c399e269772661', 'salt8', 'User Eight', 2, 1, 'user8@example.com', 'profile8.jpg'),
-(31, 'user9', 'c81e728d9d4c2f636f067f89cc14862c5', 'salt9', 'User Nine', 2, 1, 'user9@example.com', 'profile9.jpg'),
-(32, 'user10', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'salt10', 'User Ten', 2, 1, 'user10@example.com', 'profile10.jpg'),
-(33, 'user11', 'a87ff679a2f3e71d9181a67b7542122c', 'salt11', 'User Eleven', 2, 1, 'user11@example.com', 'profile11.jpg'),
-(34, 'user12', 'e1dbdfd1f1c1ed70e8766cc0f3951db3', 'salt12', 'User Twelve', 2, 1, 'user12@example.com', 'profile12.jpg'),
-(35, 'user13', 'de41e3e7ed2df91b7779d77823477909', 'salt13', 'User Thirteen', 2, 1, 'user13@example.com', 'profile13.jpg'),
-(36, 'user14', 'b64a09c85b1fc75b467774b947f4a9de', 'salt14', 'User Fourteen', 2, 1, 'user14@example.com', 'profile14.jpg'),
-(37, 'user15', '1f3870be274f6c49b3e31a0c6728957f', 'salt15', 'User Fifteen', 2, 1, 'user15@example.com', 'profile15.jpg'),
-(38, 'user16', '2f1c8cb9d8039e736ef2d36a8b6ad80c', 'salt16', 'User Sixteen', 2, 1, 'user16@example.com', 'profile16.jpg'),
-(39, 'user17', '24b3f679d3c57fa2e8e24c2fe6c0109b', 'salt17', 'User Seventeen', 2, 1, 'user17@example.com', 'profile17.jpg'),
-(40, 'user18', '3e03f66538a370a234992233f6980a92', 'salt18', 'User Eighteen', 2, 1, 'user18@example.com', 'profile18.jpg'),
-(41, 'user19', '45b63b9fe4429d213fd98446a1be4b33', 'salt19', 'User Nineteen', 2, 1, 'user19@example.com', 'profile19.jpg'),
-(42, 'user20', 'b4c7f0a3f5c848b8d0178f6b7f8b9932', 'salt20', 'User Twenty', 2, 1, 'user20@example.com', 'profile20.jpg'),
-(43, 'user21', 'e4789b2d8b1a7e74bc812e55f62ac0e4', 'salt21', 'User Twenty-One', 2, 1, 'user21@example.com', 'profile21.jpg'),
-(44, 'user22', '6c6cfc57c70a212ba9462670cf9fe5f3', 'salt22', 'User Twenty-Two', 2, 1, 'user22@example.com', 'profile22.jpg'),
-(45, 'user23', 'f38cc25b9235e4644b97b8ac7d303731', 'salt23', 'User Twenty-Three', 2, 1, 'user23@example.com', 'profile23.jpg'),
-(46, 'user24', '5e5cbb90663d4d6a1e387f75ed89c4bb', 'salt24', 'User Twenty-Four', 2, 1, 'user24@example.com', 'profile24.jpg'),
-(47, 'user25', '4109a5d6c38f46c5b67a65ec9cc9c46a', 'salt25', 'User Twenty-Five', 2, 1, 'user25@example.com', 'profile25.jpg'),
-(48, 'user26', 'b9bdb21e1747b2fdf049f8699998c404', 'salt26', 'User Twenty-Six', 2, 1, 'user26@example.com', 'profile26.jpg'),
-(49, 'user27', '9b73f1ccead6a94fae467cc12463be7d', 'salt27', 'User Twenty-Seven', 2, 1, 'user27@example.com', 'profile27.jpg'),
-(50, 'user28', 'd6096e3202f3f15813e2d5e9d0406a1e', 'salt28', 'User Twenty-Eight', 2, 1, 'user28@example.com', 'profile28.jpg'),
-(51, 'user29', 'a528402ef6b9b2d3c9359d063d10751f', 'salt29', 'User Twenty-Nine', 2, 1, 'user29@example.com', 'profile29.jpg'),
-(52, 'user30', 'da4b9237bacccdf19c0760cab7aec4a4', 'salt30', 'User Thirty', 2, 1, 'user30@example.com', 'profile30.jpg'),
-(53, 'user31', 'f1e29b14c7a49b76b4dbce1182553e09', 'salt31', 'User Thirty-One', 2, 1, 'user31@example.com', 'profile31.jpg'),
-(54, 'user32', 'af60fdc64a74e89aab6787b45f960902', 'salt32', 'User Thirty-Two', 2, 1, 'user32@example.com', 'profile32.jpg'),
-(55, 'user33', 'b96e599c46e5cb938b08dba1b564b2c3', 'salt33', 'User Thirty-Three', 2, 1, 'user33@example.com', 'profile33.jpg'),
-(56, 'user34', '9f91ff5b4ec0cb2e9a99b051a5cfb7f6', 'salt34', 'User Thirty-Four', 2, 1, 'user34@example.com', 'profile34.jpg'),
-(57, 'user35', '23f4501d215d7a7fd800d24c5b21217a', 'salt35', 'User Thirty-Five', 2, 1, 'user35@example.com', 'profile35.jpg'),
-(58, 'user36', 'e87c2a5e8f5a28876f629e6248b7ffdc', 'salt36', 'User Thirty-Six', 2, 1, 'user36@example.com', 'profile36.jpg'),
-(59, 'user37', '0f65d77865ccfe6eaa12b59c2400d362', 'salt37', 'User Thirty-Seven', 2, 1, 'user37@example.com', 'profile37.jpg'),
-(60, 'user38', '56fe4a2d384a220948d86b29c8b2a074', 'salt38', 'User Thirty-Eight', 2, 1, 'user38@example.com', 'profile38.jpg'),
-(61, 'user39', 'b4f1b9ccba12907fd1042b8d5a885590', 'salt39', 'User Thirty-Nine', 2, 1, 'user39@example.com', 'profile39.jpg'),
-(62, 'user40', '497e4bbf0fe68e10fd3b5b157e49f327', 'salt40', 'User Forty', 2, 1, 'user40@example.com', 'profile40.jpg'),
-(63, 'user41', 'd3494b76be46d2bb0561fa6faee6a1a7', 'salt41', 'User Forty-One', 2, 1, 'user41@example.com', 'profile41.jpg'),
-(64, 'user42', '581b21edb28a77cd5a2049cc29b25492', 'salt42', 'User Forty-Two', 2, 1, 'user42@example.com', 'profile42.jpg'),
-(65, 'user43', 'e71f6fa45b30069d84c11eb0e1735a5a', 'salt43', 'User Forty-Three', 2, 1, 'user43@example.com', 'profile43.jpg'),
-(66, 'user44', 'f98339ed5ffbe42c0bb9fffa7a233759', 'salt44', 'User Forty-Four', 2, 1, 'user44@example.com', 'profile44.jpg'),
-(67, 'user45', '258b3cd0a3f020eb58dbff58eaa2a4b2', 'salt45', 'User Forty-Five', 2, 1, 'user45@example.com', 'profile45.jpg'),
-(68, 'user46', 'caa74e16db5f227394d4ff2bcf8f0e5f', 'salt46', 'User Forty-Six', 2, 1, 'user46@example.com', 'profile46.jpg'),
-(69, 'user47', 'b2796351c334d1a3ff3884bb83bb6093', 'salt47', 'User Forty-Seven', 2, 1, 'user47@example.com', 'profile47.jpg'),
-(70, 'user48', '1b02d7c213ff6e9b9826a4055e06fc31', 'salt48', 'User Forty-Eight', 2, 1, 'user48@example.com', 'profile48.jpg'),
-(71, 'user49', 'da9c90857d79b1a99bc6e83de488312f', 'salt49', 'User Forty-Nine', 2, 1, 'user49@example.com', 'profile49.jpg'),
-(72, 'user50', '58287efbe35a75202d65ca1701b85517', 'salt50', 'User Fifty', 2, 1, 'user50@example.com', 'profile50.jpg'),
-(73, 'user51', '0e7d913618c941e9b17c4c80cc9066f2', 'salt51', 'User Fifty-One', 2, 1, 'user51@example.com', 'profile51.jpg'),
-(74, 'user52', 'b5046c576098a56be0eaf7b629be467b', 'salt52', 'User Fifty-Two', 2, 1, 'user52@example.com', 'profile52.jpg'),
-(75, 'user53', 'cb3205d0410eac66cf35b50915c12ff5', 'salt53', 'User Fifty-Three', 2, 1, 'user53@example.com', 'profile53.jpg'),
-(76, 'user54', 'd347f2fd28c6ad7b8b0cd85f62a9e35d', 'salt54', 'User Fifty-Four', 2, 1, 'user54@example.com', 'profile54.jpg'),
-(77, 'user55', 'e16a357a149f7f5746e59ffeb768b167', 'salt55', 'User Fifty-Five', 2, 1, 'user55@example.com', 'profile55.jpg'),
-(78, 'user56', '5b58b6c89ebd07f0d9d465f1fda9e4c1', 'salt56', 'User Fifty-Six', 2, 1, 'user56@example.com', 'profile56.jpg'),
-(79, 'user57', '94b071b6b0f179d7130b9a7b0f8c9a61', 'salt57', 'User Fifty-Seven', 2, 1, 'user57@example.com', 'profile57.jpg'),
-(80, 'user58', 'd76b4f5613f83b088438963a803aa0a4', 'salt58', 'User Fifty-Eight', 2, 1, 'user58@example.com', 'profile58.jpg'),
-(81, 'user59', '73197b94b140f16cd7810e7b3d283a2b', 'salt59', 'User Fifty-Nine', 2, 1, 'user59@example.com', 'profile59.jpg'),
-(82, 'user60', '54b13c7e5d9c6e8e3d72ab9f63e8bb96', 'salt60', 'User Sixty', 2, 1, 'user60@example.com', 'profile60.jpg'),
-(83, 'user61', '6e49a746ab7457f8f396eb0cc9cfa520', 'salt61', 'User Sixty-One', 2, 1, 'user61@example.com', 'profile61.jpg'),
-(84, 'user62', 'c742d66b7a2201f1588c60f1b0baf890', 'salt62', 'User Sixty-Two', 2, 1, 'user62@example.com', 'profile62.jpg'),
-(85, 'user63', 'c75f8f547a636b9b17ed0fc746712935', 'salt63', 'User Sixty-Three', 2, 1, 'user63@example.com', 'profile63.jpg'),
-(86, 'user64', '49d55ab98f956cc493d6c67d381f7dbf', 'salt64', 'User Sixty-Four', 2, 1, 'user64@example.com', 'profile64.jpg'),
-(87, 'user65', '2e0b4e9116d1a8f9ec7ca7fdb07a5a25', 'salt65', 'User Sixty-Five', 2, 1, 'user65@example.com', 'profile65.jpg'),
-(88, 'user66', '8be7a9b5e71058965870e69cdab0b32a', 'salt66', 'User Sixty-Six', 2, 1, 'user66@example.com', 'profile66.jpg'),
-(89, 'user67', '1b10c6875ad70c90f9cf074a58b939fc', 'salt67', 'User Sixty-Seven', 2, 1, 'user67@example.com', 'profile67.jpg'),
-(90, 'user68', '4abcbdd804f0467354b2067ad2c5442e', 'salt68', 'User Sixty-Eight', 2, 1, 'user68@example.com', 'profile68.jpg'),
-(91, 'user69', 'ad6ff191d23c7411ad0d51d64d9b519e', 'salt69', 'User Sixty-Nine', 2, 1, 'user69@example.com', 'profile69.jpg'),
-(92, 'user70', '52c1b8460eb05a694a0ff50d33490392', 'salt70', 'User Seventy', 2, 1, 'user70@example.com', 'profile70.jpg'),
-(93, 'user71', '6ebac8f9b8fe9f729d9e4b85de2a3974', 'salt71', 'User Seventy-One', 2, 1, 'user71@example.com', 'profile71.jpg'),
-(94, 'user72', '2f5b7f8c3b0b7ca0e390d35840d2d118', 'salt72', 'User Seventy-Two', 2, 1, 'user72@example.com', 'profile72.jpg'),
-(95, 'user73', '786c9c8ad835f98d922b88b9ff2182f0', 'salt73', 'User Seventy-Three', 2, 1, 'user73@example.com', 'profile73.jpg'),
-(96, 'user74', '9cd3308ed8245cb7e53f40e264b42e1e', 'salt74', 'User Seventy-Four', 2, 1, 'user74@example.com', 'profile74.jpg'),
-(97, 'user75', '232cbfc4baedb870d8e5990b8ab544eb', 'salt75', 'User Seventy-Five', 2, 1, 'user75@example.com', 'profile75.jpg'),
-(98, 'user76', 'd6b71fbe2091c8b52f00b32db51ff041', 'salt76', 'User Seventy-Six', 2, 1, 'user76@example.com', 'profile76.jpg'),
-(99, 'user77', '2dbed8d40d25b5a7a23ed8e529139469', 'salt77', 'User Seventy-Seven', 2, 1, 'user77@example.com', 'profile77.jpg'),
-(100, 'user78', '346b5b18a9e8be14f6f8b9ca44015645', 'salt78', 'User Seventy-Eight', 2, 1, 'user78@example.com', 'profile78.jpg'),
-(101, 'user79', '12b9db92e1dbab5d7b5bc2b4f3a37c62', 'salt79', 'User Seventy-Nine', 2, 1, 'user79@example.com', 'profile79.jpg'),
-(102, 'user80', 'b8a98e4f9a93775c6d1b09f89a15a0b8', 'salt80', 'User Eighty', 2, 1, 'user80@example.com', 'profile80.jpg'),
-(103, 'user81', 'e7f539e6b121d559d941b3505ef357d5', 'salt81', 'User Eighty-One', 2, 1, 'user81@example.com', 'profile81.jpg'),
-(104, 'user82', 'b0ec17fbed76b79d5367f1c710d3d5b2', 'salt82', 'User Eighty-Two', 2, 1, 'user82@example.com', 'profile82.jpg'),
-(105, 'user83', 'be43d274c6b907a15c6f5c35f6b7e1bb', 'salt83', 'User Eighty-Three', 2, 1, 'user83@example.com', 'profile83.jpg'),
-(106, 'user84', '23b9b1e06b9ae8d2cf72ec1c3e3c68c7', 'salt84', 'User Eighty-Four', 2, 1, 'user84@example.com', 'profile84.jpg'),
-(107, 'user85', 'a9436d01da3a410dc05e3cf5f7d5a0a3', 'salt85', 'User Eighty-Five', 2, 1, 'user85@example.com', 'profile85.jpg'),
-(108, 'user86', '59a621ed2f9b736592fa8f3a9a975c80', 'salt86', 'User Eighty-Six', 2, 1, 'user86@example.com', 'profile86.jpg'),
-(109, 'user87', 'e23e5cf63cbe45b87be67c57801d3284', 'salt87', 'User Eighty-Seven', 2, 1, 'user87@example.com', 'profile87.jpg'),
-(110, 'user88', '67a2ab115d8e91cd0e139342f86a88ad', 'salt88', 'User Eighty-Eight', 2, 1, 'user88@example.com', 'profile88.jpg'),
-(111, 'user89', '235bb8be5cc775f58de948657cd549ae', 'salt89', 'User Eighty-Nine', 2, 1, 'user89@example.com', 'profile89.jpg'),
-(112, 'user90', '7b465d9451f125e1898b8db2a9b3733d', 'salt90', 'User Ninety', 2, 1, 'user90@example.com', 'profile90.jpg'),
-(113, 'user91', '986a04c1b0800c3eeb2702fefda0e5b8', 'salt91', 'User Ninety-One', 2, 1, 'user91@example.com', 'profile91.jpg'),
-(114, 'user92', '65c69473f61b2379e8b647a6e7b4d11f', 'salt92', 'User Ninety-Two', 2, 1, 'user92@example.com', 'profile92.jpg'),
-(115, 'user93', '8a7b6509ab4a96b7f99699c26f0634b9', 'salt93', 'User Ninety-Three', 2, 1, 'user93@example.com', 'profile93.jpg'),
-(116, 'user94', '409e3d24f57c2d98c1c1b72d8312d607', 'salt94', 'User Ninety-Four', 2, 1, 'user94@example.com', 'profile94.jpg'),
-(117, 'user95', '5d4cdd4b41e2f42ab6741c2fe9a5f0a4', 'salt95', 'User Ninety-Five', 2, 1, 'user95@example.com', 'profile95.jpg'),
-(118, 'user96', 'db383a6432b6d22d6990516701c2f6f7', 'salt96', 'User Ninety-Six', 2, 1, 'user96@example.com', 'profile96.jpg'),
-(119, 'user97', '5292c68b5109e6d970c197ba4a7b7b65', 'salt97', 'User Ninety-Seven', 2, 1, 'user97@example.com', 'profile97.jpg'),
-(120, 'user98', '2bb2a65e3ecfc70c022e9249fdde7b3e', 'salt98', 'User Ninety-Eight', 2, 1, 'user98@example.com', 'profile98.jpg'),
-(121, 'user99', '75895375dbd5fd0fe4b70343678c6f87', 'salt99', 'User Ninety-Nine', 2, 1, 'user99@example.com', 'profile99.jpg'),
-(122, 'user100', '9f86d081884c7d659a2feaa0d3b073b8', 'salt100', 'User One Hundred', 2, 1, 'user100@example.com', 'profile100.jpg'),
-(551, 'berlo', '29530337fcb01da04514d1891e007768198c27dbbe0eb1a6058adcd56a05dc07', 'I8hoAsHqK1DfJJ5Iz06WLsuQjcITlaLm6JTDONM8Ih1k0NWxEOegmzdrCvgMPnTc', 'berlo', 3, 0, 'berlo@gmail.com', 'http://images.ingatlanok.nhely.hu/551pfp.png'),
-(553, 'vargaa', 'e82712299a83251d0000cc02688a51529892a21b09c4436123a7e6402004d088', '05QHUMHp3SzGgHhahk8EbCGseey3NE1agg7uYjEpGfLfY4noAPFUK98dxYHXjXrz', 'Varga Antónia', 2, 1, 'vargaa@kkszki.hu', 'http://images.ingatlanok.nhely.hu/553pfp.png'),
-(555, 'katonaa', '60467cac433237053a5332f50d9499767501683dbe02e275b910bc53de9da0ea', 'TTVJoGVuimdtYpm6VOwHqvb5mYm6sp0kv2jZAOYCOShbRPoxJM2XYC6MmxW2hMqQ', 'Katona Alexandra', 2, 1, 'katonaa@gmail.com', '');
+(23, 'tesztuser1', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'salt1', 'Teszt Felhasználó 1', 2, 1, 'user1@example.com', 'profile1.jpg'),
+(24, 'tesztuser2', '6dcd4ce23d88e2ee9568ba546c007c63b2992cc9', 'salt2', 'Teszt Felhasználó 2', 2, 1, 'user2@example.com', 'profile2.jpg'),
+(25, 'tesztuser3', 'd2d2d2d2c8d37c7a8fb319f9057f8977d9233a29', 'salt3', 'Teszt Felhasználó 3', 2, 1, 'user3@example.com', 'profile3.jpg'),
+(26, 'tesztuser4', 'd41d8cd98f00b204e9800998ecf8427e', 'salt4', 'Teszt Felhasználó 4', 2, 1, 'user4@example.com', 'profile4.jpg'),
+(27, 'tesztuser5', '98f13708210194c475687be6106a3b84c7f3d0f2', 'salt5', 'Teszt Felhasználó 5', 2, 1, 'user5@example.com', 'profile5.jpg'),
+(28, 'tesztuser6', 'd3b07384d113edec49eaa6238ad5ff00', 'salt6', 'Teszt Felhasználó 6', 2, 1, 'user6@example.com', 'profile6.jpg'),
+(29, 'tesztuser7', 'e2fc714c4727ee9395f324cd2e7b1692', 'salt7', 'Teszt Felhasználó 7', 2, 1, 'user7@example.com', 'profile7.jpg'),
+(30, 'tesztuser8', '0cc175b9c0f1b6a831c399e269772661', 'salt8', 'Teszt Felhasználó 8', 2, 1, 'user8@example.com', 'profile8.jpg'),
+(31, 'tesztuser9', 'c81e728d9d4c2f636f067f89cc14862c5', 'salt9', 'Teszt Felhasználó 9', 2, 1, 'user9@example.com', 'profile9.jpg'),
+(32, 'tesztuser10', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'salt10', 'Teszt Felhasználó 10', 2, 1, 'user10@example.com', 'profile10.jpg'),
+(33, 'tesztuser11', 'a87ff679a2f3e71d9181a67b7542122c', 'salt11', 'Teszt Felhasználó 11', 2, 1, 'user11@example.com', 'profile11.jpg'),
+(34, 'tesztuser12', 'e1dbdfd1f1c1ed70e8766cc0f3951db3', 'salt12', 'Teszt Felhasználó 12', 2, 1, 'user12@example.com', 'profile12.jpg'),
+(35, 'tesztuser13', 'de41e3e7ed2df91b7779d77823477909', 'salt13', 'Teszt Felhasználó 13', 2, 1, 'user13@example.com', 'profile13.jpg'),
+(36, 'tesztuser14', 'b64a09c85b1fc75b467774b947f4a9de', 'salt14', 'Teszt Felhasználó 14', 2, 1, 'user14@example.com', 'profile14.jpg'),
+(37, 'tesztuser15', '1f3870be274f6c49b3e31a0c6728957f', 'salt15', 'Teszt Felhasználó 15', 2, 1, 'user15@example.com', 'profile15.jpg'),
+(38, 'tesztuser16', '2f1c8cb9d8039e736ef2d36a8b6ad80c', 'salt16', 'Teszt Felhasználó 16', 2, 1, 'user16@example.com', 'profile16.jpg'),
+(39, 'tesztuser17', '24b3f679d3c57fa2e8e24c2fe6c0109b', 'salt17', 'Teszt Felhasználó 17', 2, 1, 'user17@example.com', 'profile17.jpg'),
+(40, 'tesztuser18', '3e03f66538a370a234992233f6980a92', 'salt18', 'Teszt Felhasználó 18', 2, 1, 'user18@example.com', 'profile18.jpg'),
+(41, 'tesztuser19', '45b63b9fe4429d213fd98446a1be4b33', 'salt19', 'Teszt Felhasználó 19', 2, 1, 'user19@example.com', 'profile19.jpg'),
+(42, 'tesztuser20', 'b4c7f0a3f5c848b8d0178f6b7f8b9932', 'salt20', 'Teszt Felhasználó 20', 2, 1, 'user20@example.com', 'profile20.jpg'),
+(43, 'tesztuser21', 'e4789b2d8b1a7e74bc812e55f62ac0e4', 'salt21', 'Teszt Felhasználó 21', 2, 1, 'user21@example.com', 'profile21.jpg'),
+(44, 'tesztuser22', '6c6cfc57c70a212ba9462670cf9fe5f3', 'salt22', 'Teszt Felhasználó 22', 2, 1, 'user22@example.com', 'profile22.jpg'),
+(45, 'tesztuser23', 'f38cc25b9235e4644b97b8ac7d303731', 'salt23', 'Teszt Felhasználó 23', 2, 1, 'user23@example.com', 'profile23.jpg'),
+(46, 'tesztuser24', '5e5cbb90663d4d6a1e387f75ed89c4bb', 'salt24', 'Teszt Felhasználó 24', 2, 1, 'user24@example.com', 'profile24.jpg'),
+(47, 'tesztuser25', '4109a5d6c38f46c5b67a65ec9cc9c46a', 'salt25', 'Teszt Felhasználó 25', 2, 1, 'user25@example.com', 'profile25.jpg'),
+(48, 'tesztuser26', 'b9bdb21e1747b2fdf049f8699998c404', 'salt26', 'Teszt Felhasználó 26', 2, 1, 'user26@example.com', 'profile26.jpg'),
+(49, 'tesztuser27', '9b73f1ccead6a94fae467cc12463be7d', 'salt27', 'Teszt Felhasználó 27', 2, 1, 'user27@example.com', 'profile27.jpg'),
+(50, 'tesztuser28', 'd6096e3202f3f15813e2d5e9d0406a1e', 'salt28', 'Teszt Felhasználó 28', 2, 1, 'user28@example.com', 'profile28.jpg'),
+(51, 'tesztuser29', 'a528402ef6b9b2d3c9359d063d10751f', 'salt29', 'Teszt Felhasználó 29', 2, 1, 'user29@example.com', 'profile29.jpg'),
+(52, 'tesztuser30', 'da4b9237bacccdf19c0760cab7aec4a4', 'salt30', 'Teszt Felhasználó 30', 2, 1, 'user30@example.com', 'profile30.jpg'),
+(53, 'tesztuser31', 'f1e29b14c7a49b76b4dbce1182553e09', 'salt31', 'Teszt Felhasználó 31', 2, 1, 'user31@example.com', 'profile31.jpg'),
+(54, 'tesztuser32', 'af60fdc64a74e89aab6787b45f960902', 'salt32', 'Teszt Felhasználó 32', 2, 1, 'user32@example.com', 'profile32.jpg'),
+(55, 'tesztuser33', 'b96e599c46e5cb938b08dba1b564b2c3', 'salt33', 'Teszt Felhasználó 33', 2, 1, 'user33@example.com', 'profile33.jpg'),
+(56, 'tesztuser34', '9f91ff5b4ec0cb2e9a99b051a5cfb7f6', 'salt34', 'Teszt Felhasználó 34', 2, 1, 'user34@example.com', 'profile34.jpg'),
+(57, 'tesztuser35', '23f4501d215d7a7fd800d24c5b21217a', 'salt35', 'Teszt Felhasználó 35', 2, 1, 'user35@example.com', 'profile35.jpg'),
+(58, 'tesztuser36', 'e87c2a5e8f5a28876f629e6248b7ffdc', 'salt36', 'Teszt Felhasználó 36', 2, 1, 'user36@example.com', 'profile36.jpg'),
+(59, 'tesztuser37', '0f65d77865ccfe6eaa12b59c2400d362', 'salt37', 'Teszt Felhasználó 37', 2, 1, 'user37@example.com', 'profile37.jpg'),
+(60, 'tesztuser38', '56fe4a2d384a220948d86b29c8b2a074', 'salt38', 'Teszt Felhasználó 38', 2, 1, 'user38@example.com', 'profile38.jpg'),
+(61, 'tesztuser39', 'b4f1b9ccba12907fd1042b8d5a885590', 'salt39', 'Teszt Felhasználó 39', 2, 1, 'user39@example.com', 'profile39.jpg'),
+(62, 'tesztuser40', '497e4bbf0fe68e10fd3b5b157e49f327', 'salt40', 'Teszt Felhasználó 40', 2, 1, 'user40@example.com', 'profile40.jpg'),
+(63, 'tesztuser41', 'd3494b76be46d2bb0561fa6faee6a1a7', 'salt41', 'Teszt Felhasználó 41', 2, 1, 'user41@example.com', 'profile41.jpg'),
+(64, 'tesztuser42', '581b21edb28a77cd5a2049cc29b25492', 'salt42', 'Teszt Felhasználó 42', 2, 1, 'user42@example.com', 'profile42.jpg'),
+(65, 'tesztuser43', 'e71f6fa45b30069d84c11eb0e1735a5a', 'salt43', 'Teszt Felhasználó 43', 2, 1, 'user43@example.com', 'profile43.jpg'),
+(66, 'tesztuser44', 'f98339ed5ffbe42c0bb9fffa7a233759', 'salt44', 'Teszt Felhasználó 44', 2, 1, 'user44@example.com', 'profile44.jpg'),
+(67, 'tesztuser45', '258b3cd0a3f020eb58dbff58eaa2a4b2', 'salt45', 'Teszt Felhasználó 45', 2, 1, 'user45@example.com', 'profile45.jpg'),
+(68, 'tesztuser46', 'caa74e16db5f227394d4ff2bcf8f0e5f', 'salt46', 'Teszt Felhasználó 46', 2, 1, 'user46@example.com', 'profile46.jpg'),
+(69, 'tesztuser47', 'b2796351c334d1a3ff3884bb83bb6093', 'salt47', 'Teszt Felhasználó 47', 2, 1, 'user47@example.com', 'profile47.jpg'),
+(70, 'tesztuser48', '1b02d7c213ff6e9b9826a4055e06fc31', 'salt48', 'Teszt Felhasználó 48', 2, 1, 'user48@example.com', 'profile48.jpg'),
+(71, 'tesztuser49', 'da9c90857d79b1a99bc6e83de488312f', 'salt49', 'Teszt Felhasználó 49', 2, 1, 'user49@example.com', 'profile49.jpg'),
+(72, 'tesztuser50', '58287efbe35a75202d65ca1701b85517', 'salt50', 'Teszt Felhasználó 50', 2, 1, 'user50@example.com', 'profile50.jpg'),
+(73, 'tesztuser51', '0e7d913618c941e9b17c4c80cc9066f2', 'salt51', 'Teszt Felhasználó 51', 2, 1, 'user51@example.com', 'profile51.jpg'),
+(74, 'tesztuser52', 'b5046c576098a56be0eaf7b629be467b', 'salt52', 'Teszt Felhasználó 52', 2, 1, 'user52@example.com', 'profile52.jpg'),
+(75, 'tesztuser53', 'cb3205d0410eac66cf35b50915c12ff5', 'salt53', 'Teszt Felhasználó 53', 2, 1, 'user53@example.com', 'profile53.jpg'),
+(76, 'tesztuser54', 'd347f2fd28c6ad7b8b0cd85f62a9e35d', 'salt54', 'Teszt Felhasználó 54', 2, 1, 'user54@example.com', 'profile54.jpg'),
+(77, 'tesztuser55', 'e16a357a149f7f5746e59ffeb768b167', 'salt55', 'Teszt Felhasználó 55', 2, 1, 'user55@example.com', 'profile55.jpg'),
+(78, 'tesztuser56', '5b58b6c89ebd07f0d9d465f1fda9e4c1', 'salt56', 'Teszt Felhasználó 56', 2, 1, 'user56@example.com', 'profile56.jpg'),
+(79, 'tesztuser57', '94b071b6b0f179d7130b9a7b0f8c9a61', 'salt57', 'Teszt Felhasználó 57', 2, 1, 'user57@example.com', 'profile57.jpg'),
+(80, 'tesztuser58', 'd76b4f5613f83b088438963a803aa0a4', 'salt58', 'Teszt Felhasználó 58', 2, 1, 'user58@example.com', 'profile58.jpg'),
+(81, 'tesztuser59', '73197b94b140f16cd7810e7b3d283a2b', 'salt59', 'Teszt Felhasználó 59', 2, 1, 'user59@example.com', 'profile59.jpg'),
+(82, 'tesztuser60', '54b13c7e5d9c6e8e3d72ab9f63e8bb96', 'salt60', 'Teszt Felhasználó 60', 2, 1, 'user60@example.com', 'profile60.jpg'),
+(83, 'tesztuser61', '6e49a746ab7457f8f396eb0cc9cfa520', 'salt61', 'Teszt Felhasználó 61', 2, 1, 'user61@example.com', 'profile61.jpg'),
+(84, 'tesztuser62', 'c742d66b7a2201f1588c60f1b0baf890', 'salt62', 'Teszt Felhasználó 62', 2, 1, 'user62@example.com', 'profile62.jpg'),
+(85, 'tesztuser63', 'c75f8f547a636b9b17ed0fc746712935', 'salt63', 'Teszt Felhasználó 63', 2, 1, 'user63@example.com', 'profile63.jpg'),
+(86, 'tesztuser64', '49d55ab98f956cc493d6c67d381f7dbf', 'salt64', 'Teszt Felhasználó 64', 2, 1, 'user64@example.com', 'profile64.jpg'),
+(87, 'tesztuser65', '2e0b4e9116d1a8f9ec7ca7fdb07a5a25', 'salt65', 'Teszt Felhasználó 65', 2, 1, 'user65@example.com', 'profile65.jpg'),
+(88, 'tesztuser66', '8be7a9b5e71058965870e69cdab0b32a', 'salt66', 'Teszt Felhasználó 66', 2, 1, 'user66@example.com', 'profile66.jpg'),
+(89, 'tesztuser67', '1b10c6875ad70c90f9cf074a58b939fc', 'salt67', 'Teszt Felhasználó 67', 2, 1, 'user67@example.com', 'profile67.jpg'),
+(90, 'tesztuser68', '4abcbdd804f0467354b2067ad2c5442e', 'salt68', 'Teszt Felhasználó 68', 2, 1, 'user68@example.com', 'profile68.jpg'),
+(91, 'tesztuser69', 'ad6ff191d23c7411ad0d51d64d9b519e', 'salt69', 'Teszt Felhasználó 69', 2, 1, 'user69@example.com', 'profile69.jpg'),
+(92, 'tesztuser70', '52c1b8460eb05a694a0ff50d33490392', 'salt70', 'Teszt Felhasználó 70', 2, 1, 'user70@example.com', 'profile70.jpg'),
+(93, 'tesztuser71', '6ebac8f9b8fe9f729d9e4b85de2a3974', 'salt71', 'Teszt Felhasználó 71', 2, 1, 'user71@example.com', 'profile71.jpg'),
+(94, 'tesztuser72', '2f5b7f8c3b0b7ca0e390d35840d2d118', 'salt72', 'Teszt Felhasználó 72', 2, 1, 'user72@example.com', 'profile72.jpg'),
+(95, 'tesztuser73', '786c9c8ad835f98d922b88b9ff2182f0', 'salt73', 'Teszt Felhasználó 73', 2, 1, 'user73@example.com', 'profile73.jpg'),
+(96, 'tesztuser74', '9cd3308ed8245cb7e53f40e264b42e1e', 'salt74', 'Teszt Felhasználó 74', 2, 1, 'user74@example.com', 'profile74.jpg'),
+(97, 'tesztuser75', '232cbfc4baedb870d8e5990b8ab544eb', 'salt75', 'Teszt Felhasználó 75', 2, 1, 'user75@example.com', 'profile75.jpg'),
+(98, 'tesztuser76', 'd6b71fbe2091c8b52f00b32db51ff041', 'salt76', 'Teszt Felhasználó 76', 2, 1, 'user76@example.com', 'profile76.jpg'),
+(99, 'tesztuser77', '2dbed8d40d25b5a7a23ed8e529139469', 'salt77', 'Teszt Felhasználó 77', 2, 1, 'user77@example.com', 'profile77.jpg'),
+(100, 'tesztuser78', '346b5b18a9e8be14f6f8b9ca44015645', 'salt78', 'Teszt Felhasználó 78', 2, 1, 'user78@example.com', 'profile78.jpg'),
+(101, 'tesztuser79', '12b9db92e1dbab5d7b5bc2b4f3a37c62', 'salt79', 'Teszt Felhasználó 79', 2, 1, 'user79@example.com', 'profile79.jpg'),
+(102, 'tesztuser80', 'b8a98e4f9a93775c6d1b09f89a15a0b8', 'salt80', 'Teszt Felhasználó 80', 2, 1, 'user80@example.com', 'profile80.jpg'),
+(103, 'tesztuser81', 'e7f539e6b121d559d941b3505ef357d5', 'salt81', 'Teszt Felhasználó 81', 2, 1, 'user81@example.com', 'profile81.jpg'),
+(104, 'tesztuser82', 'b0ec17fbed76b79d5367f1c710d3d5b2', 'salt82', 'Teszt Felhasználó 82', 2, 1, 'user82@example.com', 'profile82.jpg'),
+(105, 'tesztuser83', 'be43d274c6b907a15c6f5c35f6b7e1bb', 'salt83', 'Teszt Felhasználó 83', 2, 1, 'user83@example.com', 'profile83.jpg'),
+(106, 'tesztuser84', '23b9b1e06b9ae8d2cf72ec1c3e3c68c7', 'salt84', 'Teszt Felhasználó 84', 2, 1, 'user84@example.com', 'profile84.jpg'),
+(107, 'tesztuser85', 'a9436d01da3a410dc05e3cf5f7d5a0a3', 'salt85', 'Teszt Felhasználó 85', 2, 1, 'user85@example.com', 'profile85.jpg'),
+(108, 'tesztuser86', '59a621ed2f9b736592fa8f3a9a975c80', 'salt86', 'Teszt Felhasználó 86', 2, 1, 'user86@example.com', 'profile86.jpg'),
+(109, 'tesztuser87', 'e23e5cf63cbe45b87be67c57801d3284', 'salt87', 'Teszt Felhasználó 87', 2, 1, 'user87@example.com', 'profile87.jpg'),
+(110, 'tesztuser88', '67a2ab115d8e91cd0e139342f86a88ad', 'salt88', 'Teszt Felhasználó 88', 2, 1, 'user88@example.com', 'profile88.jpg'),
+(111, 'tesztuser89', '235bb8be5cc775f58de948657cd549ae', 'salt89', 'Teszt Felhasználó 89', 2, 1, 'user89@example.com', 'profile89.jpg'),
+(112, 'tesztuser90', '7b465d9451f125e1898b8db2a9b3733d', 'salt90', 'Teszt Felhasználó 90', 2, 1, 'user90@example.com', 'profile90.jpg'),
+(113, 'tesztuser91', '986a04c1b0800c3eeb2702fefda0e5b8', 'salt91', 'Teszt Felhasználó 91', 2, 1, 'user91@example.com', 'profile91.jpg'),
+(114, 'tesztuser92', '65c69473f61b2379e8b647a6e7b4d11f', 'salt92', 'Teszt Felhasználó 92', 2, 1, 'user92@example.com', 'profile92.jpg'),
+(115, 'tesztuser93', '8a7b6509ab4a96b7f99699c26f0634b9', 'salt93', 'Teszt Felhasználó 93', 2, 1, 'user93@example.com', 'profile93.jpg'),
+(116, 'tesztuser94', '409e3d24f57c2d98c1c1b72d8312d607', 'salt94', 'Teszt Felhasználó 94', 2, 1, 'user94@example.com', 'profile94.jpg'),
+(117, 'tesztuser95', '5d4cdd4b41e2f42ab6741c2fe9a5f0a4', 'salt95', 'Teszt Felhasználó 95', 2, 1, 'user95@example.com', 'profile95.jpg'),
+(118, 'tesztuser96', 'db383a6432b6d22d6990516701c2f6f7', 'salt96', 'Teszt Felhasználó 96', 2, 1, 'user96@example.com', 'profile96.jpg'),
+(119, 'tesztuser97', '5292c68b5109e6d970c197ba4a7b7b65', 'salt97', 'Teszt Felhasználó 97', 2, 1, 'user97@example.com', 'profile97.jpg'),
+(120, 'tesztuser98', '2bb2a65e3ecfc70c022e9249fdde7b3e', 'salt98', 'Teszt Felhasználó 98', 2, 1, 'user98@example.com', 'profile98.jpg'),
+(121, 'tesztuser99', '75895375dbd5fd0fe4b70343678c6f87', 'salt99', 'Teszt Felhasználó 99', 2, 1, 'user99@example.com', 'profile99.jpg'),
+(122, 'tesztuser100', '9f86d081884c7d659a2feaa0d3b073b8', 'salt100', 'Teszt Felhasználó 100', 2, 1, 'user100@example.com', 'profile100.jpg'),
+(553, 'vargaa', 'e82712299a83251d0000cc02688a51529892a21b09c4436123a7e6402004d088', '05QHUMHp3SzGgHhahk8EbCGseey3NE1agg7uYjEpGfLfY4noAPFUK98dxYHXjXrz', 'Varga Antónia', 1, 1, 'vargaa@kkszki.hu', 'http://images.ingatlanok.nhely.hu/553pfp.png'),
+(555, 'katonaa', '60467cac433237053a5332f50d9499767501683dbe02e275b910bc53de9da0ea', 'TTVJoGVuimdtYpm6VOwHqvb5mYm6sp0kv2jZAOYCOShbRPoxJM2XYC6MmxW2hMqQ', 'Katona Alexandra', 1, 1, 'katonaa@gmail.com', ''),
+(576, 'jancsurakn', '4f04e8cafc93cdaf96a04bc93236b54768a4aaa0d6d4421a3efa3452b35fff9f', 'rFW4m7ZDc9bHJxI7X2zcdxmGwkaAO75CJVJUTciX0SXyh8l0CLoy8S8ARFzWQvOw', 'Jancsurák Napsugár', 1, 0, 'jancsurakn@kkszki.hu', 'http://images.ingatlanok.nhely.hu/576pfp.png'),
+(578, 'Kiado', '0553f9740e0a0ca745f74c4051ba6121f4f55234c3747e538844926e6dd2bcfb', 'SC8THT5mjj1UxYJmOAXmUc0mmvpc1AgBDWoukeUZMyE304bm8Q640PzXltIYxgcw', 'Kiadó Példa', 2, 0, 'kiado@gmail.com', ''),
+(580, 'Berlo', 'fe62ac6a0d5a9de723cc2d1255f50a9c1aa0d05b3a21b7420797711b62b9fc9d', 'Uf4XgAStZufL1gLByqjsjzoTFockUl74bFxiXBCPjrTchf4SxEshVzlUUUA2r7Wq', 'Bérlő Példa', 3, 0, 'berlo@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -270,22 +272,12 @@ INSERT INTO `foglalasok` (`foglalas_id`, `ingatlan_id`, `berlo_id`, `kezdes_datu
 (399, 137, 119, '2025-09-15', '2025-09-20', 'elfogadva', '2025-04-06 12:30:00'),
 (400, 138, 120, '2025-10-10', '2025-10-15', 'függőben', '2025-04-07 08:50:00'),
 (401, 139, 121, '2025-11-01', '2025-11-05', 'elutasítva', '2025-04-08 10:00:00'),
-(402, 140, 122, '2025-12-10', '2025-12-15', 'elfogadva', '2025-04-09 11:10:00'),
-(405, 41, 551, '2025-03-06', '2025-03-11', 'függőben', '2025-03-06 10:50:24'),
-(406, 41, 551, '2025-03-06', '2025-03-11', 'függőben', '2025-03-06 10:52:27'),
-(407, 41, 551, '2025-03-06', '2025-03-11', 'függőben', '2025-03-06 10:54:17'),
-(408, 41, 551, '2025-03-06', '2025-03-11', 'függőben', '2025-03-06 10:54:18'),
-(409, 41, 551, '2025-03-06', '2025-03-14', 'függőben', '2025-03-06 10:55:03'),
-(410, 41, 551, '2025-03-06', '2025-03-19', 'függőben', '2025-03-06 10:55:41'),
-(411, 41, 551, '2025-03-06', '2025-03-13', 'függőben', '2025-03-06 10:56:25'),
-(412, 41, 551, '2025-03-21', '2025-03-28', 'függőben', '2025-03-06 10:56:41'),
-(413, 41, 551, '2025-03-12', '2025-03-19', 'függőben', '2025-03-06 10:56:57'),
-(414, 41, 551, '2025-03-14', '2025-03-21', 'függőben', '2025-03-06 10:57:24'),
-(415, 41, 551, '2025-03-06', '2025-03-13', 'függőben', '2025-03-06 10:58:05'),
-(416, 41, 551, '2025-03-13', '2025-03-21', 'függőben', '2025-03-06 10:58:14'),
-(425, 42, 551, '2025-03-10', '2025-03-17', 'függőben', '2025-03-10 12:08:47'),
 (426, 50, 100, '2025-03-10', '2025-03-10', 'függőben', '2025-03-10 12:11:33'),
-(427, 42, 551, '2025-03-12', '2025-03-21', 'függőben', '2025-03-10 12:12:23');
+(454, 314, 580, '2025-06-17', '2025-06-21', 'elfogadva', '2025-03-26 11:07:56'),
+(455, 314, 580, '2025-06-26', '2025-06-29', 'elutasítva', '2025-03-26 11:08:08'),
+(456, 314, 580, '2025-06-20', '2025-06-22', 'függőben', '2025-03-26 11:08:16'),
+(457, 314, 580, '2025-04-16', '2025-04-20', 'függőben', '2025-03-26 11:08:27'),
+(458, 314, 580, '2025-06-13', '2025-06-15', 'függőben', '2025-03-26 11:09:02');
 
 --
 -- Eseményindítók `foglalasok`
@@ -425,15 +417,19 @@ INSERT INTO `ingatlankepek` (`kep_id`, `ingatlan_id`, `kep_url`, `feltoltes_datu
 (101, 137, 'http://images.ingatlanok.nhely.hu/137.png', '2025-02-03 07:35:37'),
 (102, 138, 'http://images.ingatlanok.nhely.hu/138.png', '2025-02-03 07:35:38'),
 (103, 139, 'http://images.ingatlanok.nhely.hu/139.png', '2025-02-03 07:35:39'),
-(104, 140, 'http://images.ingatlanok.nhely.hu/140.png', '2025-02-03 07:35:40'),
-(105, 50, 'string', '2025-03-03 07:49:09'),
+(105, 50, 'http://images.ingatlanok.nhely.hu/105.png', '2025-03-03 07:49:09'),
 (106, 125, 'http://images.ingatlanok.nhely.hu/125.png', '2025-03-03 07:49:58'),
 (107, 126, 'http://images.ingatlanok.nhely.hu/126.png', '2025-03-03 07:51:22'),
 (108, 127, 'http://images.ingatlanok.nhely.hu/127.png', '2025-03-03 07:53:51'),
 (109, 128, 'http://images.ingatlanok.nhely.hu/128.png', '2025-03-03 07:56:23'),
 (110, 129, 'http://images.ingatlanok.nhely.hu/129.png', '2025-03-03 09:02:43'),
 (111, 130, 'http://images.ingatlanok.nhely.hu/130.png', '2025-03-03 09:04:00'),
-(112, 131, 'http://images.ingatlanok.nhely.hu/131.png', '2025-03-03 09:04:53');
+(112, 131, 'http://images.ingatlanok.nhely.hu/131.png', '2025-03-03 09:04:53'),
+(310, 314, 'http://images.ingatlanok.nhely.hu/314.png', '2025-03-26 08:16:36'),
+(311, 315, 'http://images.ingatlanok.nhely.hu/315.png', '2025-03-26 08:20:02'),
+(312, 316, 'http://images.ingatlanok.nhely.hu/316.png', '2025-03-26 08:21:58'),
+(315, 319, 'http://images.ingatlanok.nhely.hu/319.png', '2025-03-26 09:07:31'),
+(326, 328, 'http://images.ingatlanok.nhely.hu/328.png', '2025-03-26 10:04:22');
 
 -- --------------------------------------------------------
 
@@ -529,7 +525,7 @@ INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `hely
 (107, 89, 'Pécs, Hunyadi utca 9.', 'Ez az új lakás ideális választás mindazok számára, akik a modern életstílust keresik, miközben a város központjának közelségét élvezhetik. Az ingatlan a legújabb építési szabványoknak megfelelően készült, így biztosítva van a magas szintű energiahatékonyság, a korszerű anyagok és a kényelmes elrendezés. A lakás tágas, világos terei tökéletesek a pihenésre és a mindennapi élethez szükséges tevékenységekre. A nappali a lakás központi helyisége, melyet nagy ablakok világítanak meg, így maximálisan kihasználja a természetes fényt. Az étkező és konyha egy nyitott térben található, praktikus elrendezésének köszönhetően ideális a családi étkezésekhez és baráti összejövetelekhez. A konyha modern felszereltséggel rendelkezik, amely lehetővé teszi a kényelmes főzést és étkezést. A hálószoba csendes és pihentető, ideális hely a mindennapi pihenésre, ráadásul elegendő tárolóhellyel is rendelkezik. A fürdőszoba a legújabb design szerint lett kialakítva, magas minőségű felszerelésekkel és praktikus tárolási lehetőségekkel. Az ingatlan központ közeli elhelyezkedése lehetővé teszi, hogy minden fontosabb szolgáltatás könnyedén elérhető legyen: üzletek, éttermek, kávézók, közlekedési lehetőségek és egyéb városi szolgáltatások mind pár percre találhatóak. A lakás környezetét friss és nyugodt légkör jellemzi, biztosítva ezzel a kellemes városi életet. Ez az új lakás ideális választás mindazok számára, akik kényelmes, modern otthont keresnek, miközben élvezhetik a városi élet minden előnyét.', 'Pécs', 31000.00, 115, 'Wi-Fi, medence, légkondícionálás', 4, '2025-02-03 07:38:07');
 INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `helyszin`, `ar`, `meret`, `szolgaltatasok`, `szoba`, `feltoltes_datum`) VALUES
 (108, 90, 'Budapest, Margit körút 6.', 'Ez a tágas belvárosi lakás ideális választás azok számára, akik szeretnék élvezni a városi élet minden előnyét, miközben egy kényelmes, modern otthonra vágynak. Az ingatlan központi elhelyezkedésének köszönhetően mindössze pár perc sétára találhatóak a város legfontosabb helyszínei, mint üzletek, éttermek, kávézók, kulturális központok és szórakozóhelyek, így minden szükséges szolgáltatás könnyedén elérhető. A lakás belső terei tágasak és világosak, így ideálisak a mindennapi élethez. A nappali szoba az egész lakás központját képezi, ahol kényelmesen pihenhetünk vagy barátainkkal együtt tölthetjük az időt. A nyitott konyha-étkező rész praktikus elrendezése lehetővé teszi a kényelmes főzést és étkezést, míg a konyha modern eszközökkel és elegendő tárolóhellyel van felszerelve. A hálószobák tágasak, világosak és kényelmesek, megfelelő tárolóhelyekkel a ruhák és egyéb személyes tárgyak számára. A fürdőszoba modern kialakítású, magas minőségű berendezésekkel, amelyek kényelmes és pihentető fürdőzést biztosítanak. A lakás előnye, hogy az elrendezés maximálisan kihasználja a rendelkezésre álló teret, így minden szoba praktikus és kényelmes. Az ingatlan központi elhelyezkedése biztosítja, hogy gyorsan elérhetők legyenek a közlekedési csomópontok is, így könnyedén hozzáférhetők a város többi része. Ez a tágas belvárosi lakás ideális választás mindazok számára, akik szeretnék élvezni a városi élet dinamikáját, miközben egy kényelmes és tágas otthont keresnek.', 'Budapest', 40000.00, 140, 'Wi-Fi, parkolás, kutya hozható', 4, '2025-02-03 07:38:08'),
-(109, 91, 'Szentendre, Római part 3.', 'Kis ház áll a folyópart közelében, ahol a reggeli napfény csókkal ébreszti a természetet. A kertjében vadvirágok nyílnak, és a madarak éneke betölti a levegőt, miközben a folyó csendesen csobog, mintha meséket mondana a régi időkől. A ház ablakaiból lenézve gyakran látni a halászbárkát, amint lassan úszik el, míg a tetőn pihennek a galambok, és néha egy-egy mókus is ellátogat a közeli fára. Este a ház fénye melegséget áraszt, és a füst szaga keveredik a friss levegővel, miközben a ház előtt álló kis padon az öregember gyakran üldögél, és nézi a vizet. Tavasszal a folyó partján sárga nárciszok törnek elő, mint apró napok, és a ház falait borító zöld klimatiszek mindig újra virágoznak, mintha örök élet lenne bennük. Itt, ezen a csendes helyen, az idő megáll, és az ember megtalálja a békét, amit máshol hiába keres.', 'Szentendre', 35000.00, 130, 'Wi-Fi, horgásztó, erkély/terasz', 4, '2025-02-03 07:38:09'),
+(109, 91, 'Szentendre, Római part 3.', 'Kis ház áll a folyópart közelében, ahol a reggeli napfény csókkal ébreszti a természetet. A kertjében vadvirágok nyílnak, és a madarak éneke betölti a levegőt, miközben a folyó csendesen csobog, mintha meséket mondana a régi időkől. A ház ablakaiból lenézve gyakran látni a halászbárkát, amint lassan úszik el, míg a tetőn pihennek a galambok, és néha egy-egy mókus is ellátogat a közeli fára. Este a ház fénye melegséget áraszt, és a füst szaga keveredik a friss levegővel, miközben a ház előtt álló kis padon az öregember gyakran üldögél, és nézi a vizet. Tavasszal a folyó partján sárga nárciszok törnek elő, mint apró napok, és a ház falait borító zöld klimatiszek mindig újra virágoznak, mintha örök élet lenne bennük. Itt, ezen a csendes helyen, az idő megáll, és az ember megtalálja a békét, amit máshol hiába keres.', 'Szentendre', 35000.00, 130, 'Wi-Fi, horgászó, erkély/terasz', 4, '2025-02-03 07:38:09'),
 (110, 92, 'Zalaegerszeg, Arany János utca 7.', 'Kényelmes, két szobás lakás található a város szívében, ahol a modern kényelmet összekapcsolják az otthon meleg hangulatával. A nappali tágas és világos, nagy ablakokkal, amelyeken át ömlik be a napfény, és kiemeli a falak világos színét. A kanapé puha, a könyvespolc pedig tele van kedvenc könyvekkel és emlékekkel, amelyek a lakók történetét mesélik el. A konyha kiválóan felszerelt, modern gépekkel és elegáns burkolattal, ahol könnyedén elkészíthető egy reggeli kávé vagy egy hosszú vacsora barátokkal. A hálószoba nyugodt színei és a kényelmes ágy garantálják a pihentető éjszakákat, míg a második szoba akár irodaként, akár vendégszobaként funkcionál, rugalmasságot biztosítva. A lakásban minden gondolat megvalósult, hogy otthon érezze magát az ember, ahol a mindennapok zajától elvonulhat, és feltöltődhet.\n\n', 'Zalaegerszeg', 22000.00, 75, 'Wi-Fi, házi mozi, mosógép', 2, '2025-02-03 07:38:10'),
 (111, 93, 'Szombathely, Vasvári Pál utca 10.', 'Új építésű lakás található a város központja közelében, ahol a modern élet minden kényelmét magában foglalja. A lakás tágas és világos, nagy ablakokkal, amelyeken át bőségesen árad be a napfény, kiemelve a falak friss, világos színeit és a modern bútorok letisztult vonalait. A nyílt elrendezésű nappali és étkező terület tökéletes együttlétre és szórakoztatásra, míg a konyha csillogó fehér felületekkel és legújabb készülékekkel várja a főzés szerelmeseit. A hálószoba igazi nyugalom szigete, puha szövetekkel és kényelmes ággyal, ahol a fáradt nap után tökéletesen ki lehet pihenni. A második szoba sokoldalúan használható, akár gyerekszobaként, akár irodaként, rugalmasságot biztosítva a lakók számára. A fürdőszoba modern, zuhanyfülkével és elegáns csempékkel, ahol reggelente felélénkülve indulhat a nap. A lakás központi elhelyezkedése lehetővé teszi, hogy minden, amire szükség van, csak néhány percre legyen, mégis a csendes udvar és a dupla rétegű ablakok biztosítják a nyugalmat. Ez a lakás nem csupán egy otthon, hanem egy életstílus, ahol a kényelem és a funkcionalitás találkozik.\n\n', 'Szombathely', 33000.00, 120, 'Wi-Fi, parkolás, légkondícionálás', 3, '2025-02-03 07:38:11'),
 (112, 94, 'Kaposvár, Zrínyi utca 14.', 'Szép, napfényes lakás vár a harmadik emeleten, ahol a napsugarak egész nap átölelik a tereket, és meleget, vidámságot hoznak a mindennapokba. A lakás tágas és légies, nagy ablakokkal, amelyeken keresztül lenyűgöző kilátás nyílik a városra vagy a zöldellő udvarra. A falak világos színei és a természetes fény hatására a lakás még tágasabbnak és barátságosabbnak tűnik, miközben a modern bútorok és a gondosan kiválasztott dekoráció harmonikusan egészítik ki az egészet. A nappali központja egy kényelmes kanapénak, ahol a napfényben olvasni vagy pihenni lehet, míg az étkezőasztalnál reggelente egy friss kávé mellett élvezhető a napsütés. A konyha kiválóan felszerelt, tiszta vonalakkal és praktikus megoldásokkal, ahol a főzés örömévé válik. A hálószoba nyugodt hangulatú, puha textíliákkal és egy kényelmes ággyal, ahol a nap végén tökéletesen ki lehet pihenni. A fürdőszoba modern, tiszta vonalakkal és friss színekkel, ahol a reggeli zuhany egy igazi ébredési élmény. Ez a lakás nem csupán egy otthon, hanem egy olyan hely, ahol a napfény és a szépség minden nap inspirál.\n\n', 'Kaposvár', 27000.00, 95, 'Wi-Fi, erkély/terasz, kávéfőző', 3, '2025-02-03 07:38:12'),
@@ -560,7 +556,11 @@ INSERT INTO `ingatlanok` (`ingatlan_id`, `tulajdonos_id`, `cim`, `leiras`, `hely
 (137, 119, 'Szombathely, Béke utca 7.', 'Egy családi ház, kényelmes kerttel, amely tökéletes választás azok számára, akik a nyugodt, természetközeli életet keresik. A ház tágas nappalija világos és barátságos, ideális hely a családi együttlétekhez. A modern konyha minden szükséges eszközzel felszerelt, hogy a főzés élvezetes és egyszerű legyen, miközben az étkező is kényelmes helyet biztosít a közös étkezésekhez. A hálószobák nyugodt pihenést biztosítanak, tágasak és kényelmesek, így minden családtag számára kényelmes pihenőhelyet kínálnak. A fürdőszoba elegáns kialakítással, káddal és zuhanyzóval biztosítja a kikapcsolódást. A ház egyik legnagyobb vonzereje a kényelmes kert, amely tökéletes helyszínt biztosít a szabadidős tevékenységekhez, mint a kertészkedés, a gyermekek játékai vagy egy kellemes szabadtéri étkezés a családdal. A terasz is ideális hely a nyári esték eltöltésére, egy pohár bor mellett, miközben élvezhetjük a csendes környéket. A környék biztonságos, csendes, mégis könnyen megközelíthető a város, így minden kényelmi szolgáltatás és közlekedési lehetőség elérhető. Ez a családi ház ideális otthont kínál azoknak, akik a kényelmet, a nyugalmat és a természet közelségét egyesíteni szeretnék.\n\n\n\n\n\n\n\n', 'Szombathely', 35000.00, 140, 'Wi-Fi, parkolás, grill', 4, '2025-02-03 07:38:37'),
 (138, 120, 'Kaposvár, Munkácsy utca 2.', 'Egy új lakás, világos szobákkal, amely ideális választás azok számára, akik modern környezetben, kényelmesen szeretnének élni. Az ingatlan frissen épített, így minden elem vadonatúj, és a legújabb technológiai megoldásokkal van felszerelve. A nappali tágas és világos, nagy ablakain keresztül bőséges természetes fény áramlik be, így egész nap napos és kellemes helyiség. A konyha modern, jól felszerelt és praktikus elrendezésű, ideális a mindennapi étkezésekhez. A hálószobák szintén világosak és barátságosak, kényelmesek és nyugodt pihenést biztosítanak. A fürdőszoba ízlésesen van kialakítva, prémium minőségű anyagokkal, és mind zuhanyzóval, mind kádas opcióval rendelkezik a kényelem érdekében. Az ingatlan elhelyezkedése kiváló, hiszen a város szívében található, közel a közlekedési lehetőségekhez, így a tömegközlekedés könnyen elérhető. A lakás egy erkélyt is kínál, ahol a friss levegőt élvezhetjük a nyugodt környezetben. Ez az új lakás ideális otthont biztosít azoknak, akik a modern stílust, a kényelmet és a világos tereket kedvelik.', 'Kaposvár', 25000.00, 90, 'Wi-Fi, házi mozi, takarító szolgálat', 3, '2025-02-03 07:38:38'),
 (139, 121, 'Eger, Jókai utca 12.', 'Egy tágas, napfényes lakás, amely tökéletes választás azok számára, akik a világos és nyitott tereket kedvelik. A lakás nappalija hatalmas ablakain keresztül bőséges napfényt kap, így egész nap világos és friss légkört biztosít. A tágas tér lehetőséget ad a kényelmes pihenésre és a családi összejövetelekre, miközben a modern bútorok és elegáns dekoráció fokozzák a hangulatot. A konyha jól felszerelt, praktikus elrendezéssel, így könnyedén elkészíthetők az étkezések, miközben a tágas étkezőhely kényelmes helyet biztosít a közös étkezésekhez. A hálószobák szintén tágasak és napfényesek, így ideálisak a pihenésre és feltöltődésre. A fürdőszoba modern, igényes kialakítással, káddal és zuhanyzóval biztosítja a kényelmet. A lakás elhelyezkedése ideális, hiszen a környéken üzletek, éttermek és tömegközlekedési lehetőségek találhatók, így minden könnyen elérhető. A lakás egy erkélyt is kínál, ahol élvezhetjük a friss levegőt és a város panorámáját. Ez a tágas, napfényes lakás ideális választás mindazok számára, akik szeretik a világos, légies tereket és a kényelmes életet.\n\n\n\n\n\n\n\n', 'Eger', 30000.00, 110, 'Wi-Fi, parkolás, kávéfőző', 3, '2025-02-03 07:38:39'),
-(140, 122, 'Visegrád, Király utca 7.', 'Egy családi ház, csodás kilátással, amely ideális választás azok számára, akik a természet közelségét és a nyugalmat keresik, miközben egy kényelmes, modern otthonra vágynak. A ház tágas nappalija nagy ablakain keresztül csodálatos kilátást nyújt a környező tájra, legyen szó a zöldellő erdőkről vagy a város panorámájáról. A helyiség világos és barátságos, ideális hely a családi összejövetelekhez vagy a pihenéshez. A modern konyha minden szükséges felszereléssel rendelkezik, hogy a főzés és étkezés könnyedén élvezhető legyen. A hálószobák tágasak és kényelmesek, mindegyik nyugodt pihenést biztosít, miközben a gyönyörű kilátás minden szobából elérhető. A fürdőszoba elegáns kialakítással, kényelmes káddal és zuhanyzóval várja a lakókat. A kert és a terasz tökéletes hely a szabadidő eltöltésére, így akár reggelente a friss levegőt élvezhetjük, vagy egy pohár bor mellett a naplementét figyelhetjük. A ház elhelyezkedése biztosítja a csendet és a nyugalmat, miközben a város közelsége minden kényelmi szolgáltatást könnyen elérhetővé tesz. Ez a családi ház igazi oázist kínál, amely a csodás kilátás mellett minden modern kényelmet biztosít a lakóknak.', 'Visegrád', 45000.00, 160, 'Wi-Fi, medence, házi mozi', 5, '2025-02-03 07:38:40');
+(314, 578, 'Ady Endre u. 3', 'Egy álom valakinek, aki a város zajától távol szeretne pihenni! Ez a csodálható ház a természet ölelésében várja új lakóit. Körülötte zöldellő erdők, madárcsicsergés és friss levegő biztosítja a tökéletes kikapcsolódást. Tágas erkélyről élvezheted a reggeli napsütést vagy az esti csillagokat. Modern kényelmet nyújt, miközben harmonikus egységben áll a környezetével. Ideális visszavonulás, kreatív munkára, vagy családi kikapcsolódásra!', 'Abádszalók', 20000.00, 20, 'kutya hozható, kert, kávéfőző, horgásztó, erkély/terasz', 2, '2025-03-26 08:27:00'),
+(315, 578, 'Kossuth Lajos u. 5', 'Ez a kortárs építészeti remekmű tökéletes választás azoknak, akik a modern dizájnt szeretik, de nem akarnak lemondani a zöld övezet nyugalmáról. A ház tágas, világos helyiségei, nagy ablakokkal és letisztult vonalakkal készültek. A csodálatos kert kiváló lehetőséget kínál grillezésre, napozásra vagy akár egy kis kerti munkára. Garantált a minőség és a kényelem – a város közelében, mégis a magad kis paradicsomában!', 'Abaliget', 18000.00, 25, 'Wi-Fi, kert, légkondícionálás, házi mozi, biztonsági kamera, billiárd, grill', 3, '2025-03-26 08:27:36'),
+(316, 578, 'József Attila u. 4', 'Ha valami igazán különlegeset keresel, ez a kacsa alakú ház biztosan lenyűgöz! Ez az egyedi épület nemcsak vicces és emlékezetes külsővel rendelkezik, hanem kényelmes és hangulatos belső térrel is. Tökéletes választás különleges nyaralásra vagy egyszerűen azoknak, akik szeretik a szokatlan otthonokat.', 'Aba', 15000.00, 15, 'Wi-Fi, kutya hozható, parkolás, akadálymentes, légkondícionálás', 1, '2025-03-26 09:29:47'),
+(319, 578, 'Vösörmarty Mihály u. 5', 'Ez a luxus lakás a város legmagasabb pontjain egyik, lenyűgöző panorámát kínálva az egész metropoliszra. Modern felszereltség, prémium anyagok és intelligens otthontechnológia teszi ezt a lakást a kényelem és stílus mintapéldájává. Ha szereted a vibráló városi életet és a kiváló kilátást, itt a tökéletes hely!', 'Abaújalpár', 25000.00, 23, 'Wi-Fi, mosógép, parkolás, légkondícionálás, erkély/terasz', 3, '2025-03-26 09:07:24'),
+(328, 578, 'Folyópart út 5.', 'Ez a modern úszóház mindent kínál a kényelemhez, miközben a víz nyugodt ringatásában lebeg. A ház tágas nappalival, teljes felszerelt konyhával és kényelmes hálószobával vár. Nagy ablakokból gyönyörű kilátás nyílik a tóra vagy folyóra. Az árnyékos fedélzeti teraszon tökéletes kikapcsolódásra van lehetőség.\n\nKiváló választás nyaralóként vagy állandó lakásként is, különleges élményt nyújtva a víz közelében. Könnyen mozgatható, így akár új helyszíneken is élvezheted a táj változásait.', 'Ács', 30000.00, 30, 'Wi-Fi, kutya hozható, horgásztó, kávéfőző', 2, '2025-03-26 10:09:45');
 
 -- --------------------------------------------------------
 
@@ -3867,25 +3867,25 @@ ALTER TABLE `telepulesek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=556;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=581;
 
 --
 -- AUTO_INCREMENT a táblához `foglalasok`
 --
 ALTER TABLE `foglalasok`
-  MODIFY `foglalas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=428;
+  MODIFY `foglalas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=459;
 
 --
 -- AUTO_INCREMENT a táblához `ingatlankepek`
 --
 ALTER TABLE `ingatlankepek`
-  MODIFY `kep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+  MODIFY `kep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
 
 --
 -- AUTO_INCREMENT a táblához `ingatlanok`
 --
 ALTER TABLE `ingatlanok`
-  MODIFY `ingatlan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
+  MODIFY `ingatlan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
 
 --
 -- AUTO_INCREMENT a táblához `jogosultsagok`
