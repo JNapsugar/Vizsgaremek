@@ -95,7 +95,6 @@ namespace IngatlanKarbantartoWPF
             public DateTime KezdesDatum { get; set; }
             public DateTime BefejezesDatum { get; set; }
             public string Allapot { get; set; }
-
         }
     }
 }

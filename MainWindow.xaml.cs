@@ -105,22 +105,19 @@ namespace IngatlanKarbantartoWPF
         {
             try
             {
-                // Ha nincs kiválasztott végpont, figyelmeztető üzenet
                 if (string.IsNullOrEmpty(path))
                 {
                     MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                string url = $"https://localhost:7079/api/{path}";  // Az aktuális API végpont URL-je
+                string url = $"https://localhost:7079/api/{path}";
 
-                // API hívás a GET metódussal
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();  // Ellenőrzi a válasz státuszát
+                response.EnsureSuccessStatusCode(); 
 
-                string responseContent = await response.Content.ReadAsStringAsync();  // A válasz tartalmának lekérése
+                string responseContent = await response.Content.ReadAsStringAsync();
 
-                // JSON válasz deszerializálása és az adatok megjelenítése
                 if (path == "ingatlan/ingatlanok")
                 {
                     dtg.ItemsSource = JsonSerializer.Deserialize<List<Ingatlanok>>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -138,7 +135,6 @@ namespace IngatlanKarbantartoWPF
                     MessageBox.Show("Ismeretlen végpont!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                // Ha nem volt végpont kiválasztva, akkor automatikusan az elsőt válassza
                 if (endpointsList.SelectedIndex == -1 && endpointsList.Items.Count > 0)
                 {
                     endpointsList.SelectedIndex = 0;
@@ -147,7 +143,6 @@ namespace IngatlanKarbantartoWPF
             }
             catch (Exception ex)
             {
-                // Hibaüzenet megjelenítése, ha a hívás nem sikerült
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -157,36 +152,31 @@ namespace IngatlanKarbantartoWPF
         {
             try
             {
-                // Ha nincs kiválasztott végpont, figyelmeztető üzenet
                 if (string.IsNullOrEmpty(path))
                 {
                     MessageBox.Show("Kérlek, válassz egy végpontot!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                string requestUrl = $"https://localhost:7079/api/{path}";  // Az API végpont URL-je
+                string requestUrl = $"https://localhost:7079/api/{path}";
 
-                // A kiválasztott végpont alapján új adatokat adunk hozzá
-                // Ingatlan hozzáadása
                 if (path == "ingatlan/ingatlanok")
                 {
                     var felvitelAblak = new FelvitelAblak(path);
                     if (felvitelAblak.ShowDialog() == true)
                     {
-                        Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;  // Az új ingatlan adatainak lekérése
+                        Ingatlanok ujIngatlan = felvitelAblak.UjIngatlan;
 
-                        string json = JsonSerializer.Serialize(ujIngatlan);  // Az új ingatlan adatainak JSON formátumra konvertálása
+                        string json = JsonSerializer.Serialize(ujIngatlan);
                         StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                        // POST kérés küldése
                         HttpResponseMessage postResponse = await _httpClient.PostAsync(requestUrl, content);
-                        postResponse.EnsureSuccessStatusCode();  // A válasz ellenőrzése
+                        postResponse.EnsureSuccessStatusCode(); 
 
                         MessageBox.Show("Sikeres ingatlan mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                        GET_Click(sender, e);  // Az adatok frissítése
+                        GET_Click(sender, e);
                     }
                 }
-                // Felhasználó hozzáadása
                 else if (path == "Felhasznalo/allUsers")
                 {
                     var felhasznaloAblak = new FelhasznaloFelvitelAblak(path);
@@ -204,7 +194,7 @@ namespace IngatlanKarbantartoWPF
                             if (postResponse.IsSuccessStatusCode)
                             {
                                 MessageBox.Show("Sikeres felhasználó mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                                GET_Click(sender, e);  // Az adatok frissítés
+                                GET_Click(sender, e);
                             }
                             else
                             {
@@ -217,7 +207,6 @@ namespace IngatlanKarbantartoWPF
                         }
                     }
                 }
-                // Foglalás hozzáadása
                 else if (path == "Foglalasok/allBookings")
                 {
                     var foglalasAblak = new FoglalasFelvitelAblak(path);
@@ -243,7 +232,7 @@ namespace IngatlanKarbantartoWPF
                             if (postResponse.IsSuccessStatusCode)
                             {
                                 MessageBox.Show("Sikeres foglalás mentés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                                GET_Click(sender, e);  // Az adatok frissítés
+                                GET_Click(sender, e);
                             }
                             else
                             {
@@ -278,8 +267,6 @@ namespace IngatlanKarbantartoWPF
                     return;
                 }
 
-                // A kiválasztott elem törlésére vonatkozó kód
-                // Felhasználó loginNev alapján kerül törlésre
                 if (dtg.SelectedItem is Felhasznalok selectedFelhasznalo)
                 {
                     MessageBoxResult result = MessageBox.Show(
@@ -300,7 +287,6 @@ namespace IngatlanKarbantartoWPF
                     MessageBox.Show("Sikeres törlés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
                     GET_Click(sender, e);
                 }
-                // Az ingatlan cím alapján kerül törlésre
                 else if (dtg.SelectedItem is Ingatlanok selectedIngatlan)
                 {
                     MessageBoxResult result = MessageBox.Show(
@@ -321,7 +307,6 @@ namespace IngatlanKarbantartoWPF
                     MessageBox.Show("Sikeres törlés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
                     GET_Click(sender, e);
                 }
-                // Ellenőrizd, hogy van-e kiválasztott elem és a megfelelő típus
                 else if (dtg.SelectedItem is Foglalasok selectedFoglalas)
                 {
                     MessageBoxResult result = MessageBox.Show(
@@ -335,33 +320,28 @@ namespace IngatlanKarbantartoWPF
                         return;
                     }
 
-                    // Törlés URL beállítása
                     string url = $"https://localhost:7079/api/Foglalasok/{selectedFoglalas.FoglalasId}";
 
-                    // API hívás a törléshez
                     try
                     {
                         HttpResponseMessage response = await _httpClient.DeleteAsync(url);
-                        response.EnsureSuccessStatusCode();  // Ha nem sikerült a kérés, kiváltja az exception-t
+                        response.EnsureSuccessStatusCode();
 
                         MessageBox.Show("Sikeres foglalás törlés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
-                        GET_Click(sender, e);  // Frissíti az adatokat a törlés után
+                        GET_Click(sender, e);
                     }
                     catch (Exception ex)
                     {
-                        // Ha hiba történt a törlésnél
                         MessageBox.Show($"Hiba történt a törlés során: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    // Ha nincs kiválasztott elem vagy nem a megfelelő típusú elem
                     MessageBox.Show("Kérlek, válassz egy elemet a törléshez (Felhasználó, Ingatlan vagy Foglalás)!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
             {
-                // Hibaüzenet a törlés során fellépő hibákra
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -377,7 +357,6 @@ namespace IngatlanKarbantartoWPF
                     return;
                 }
 
-                // Ingatlan módosítása
                 if (dtg.SelectedItem is Ingatlanok selectedIngatlan && selectedIngatlan.IngatlanId > 0)
                 {
                     if (selectedIngatlan.IngatlanId < 0)
@@ -392,7 +371,6 @@ namespace IngatlanKarbantartoWPF
                     return;
                 }
 
-                // Felhasználó módosítása
                 if (dtg.SelectedItem is Felhasznalok selectedUser && selectedUser.id > 0)
                 {
                     if (selectedUser.id <= 0)
@@ -406,7 +384,6 @@ namespace IngatlanKarbantartoWPF
                     GET_Click(sender, e);
                 }
 
-                // Foglalás módosítása
                 if (dtg.SelectedItem is Foglalasok selectedFoglalas && selectedFoglalas.FoglalasId > 0)
                 {
                     if (selectedFoglalas.FoglalasId <= 0)
@@ -415,7 +392,6 @@ namespace IngatlanKarbantartoWPF
                         return;
                     }
 
-                    // A foglalás módosító ablak megnyitása
                     var foglalasModositAblak = new FoglalasModositAblak(selectedFoglalas.FoglalasId);
                     foglalasModositAblak.ShowDialog();
                     GET_Click(sender, e);
@@ -424,13 +400,11 @@ namespace IngatlanKarbantartoWPF
 
                 else
                 {
-                    // Ha nincs kiválasztott elem
                     MessageBox.Show("Kérlek, válassz ki egy frissíteni kívánt elemet!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                // Hiba üzenet
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
