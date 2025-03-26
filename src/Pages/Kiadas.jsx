@@ -9,8 +9,7 @@ import { motion } from "framer-motion";
 import { RiseLoader } from "react-spinners";
 
 const Kiadas = () => {
-    const [submitted, setSubmitted] = useState(false);
-    const [succesful, setSuccesful] = useState(false);
+    const [uploadStatus, setUploadStatus] = useState('');
     const [properties, setProperties] = useState([]);
     const [locations, setLocations] = useState([]);
     const [formData, setFormData] = useState({
@@ -23,7 +22,7 @@ const Kiadas = () => {
         meret: '',
         szolgaltatasok: '',
         tulajdonosId: sessionStorage.getItem("userId"),
-        kep:''
+        kep: ''
     });
     const services = [
         "Wi-Fi", "kutya hozható", "parkolás", "medence", "kert", "légkondícionálás",
@@ -33,6 +32,7 @@ const Kiadas = () => {
     ];
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
+
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
@@ -56,7 +56,7 @@ const Kiadas = () => {
             const newIngatlanId = Math.max(...properties.map(p => p.ingatlanId)) + 1;
             setFormData(prev => ({ ...prev, ingatlanId: newIngatlanId }));
         }
-    }, [properties]);
+    }, [properties, formData.ingatlanId]);
 
     const handleChange = (e) => {
         const { name, type, files, value } = e.target;
@@ -84,15 +84,11 @@ const Kiadas = () => {
             alert("Kérlek jelentkezz be!");
             return;
         }
-
+        setUploadStatus('uploading');
+        
         try {
-            setSubmitted(true);
             const { ingatlanId, cim, leiras, helyszin, ar, szoba, meret, szolgaltatasok, tulajdonosId, kep } = formData;
-
-            console.log("Form Data:", formData); // Az adatokat logoljuk a kérés előtt
-
-            // Első POST kérés: Ingatlan létrehozása
-            const response = await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
+            await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
                 IngatlanId: ingatlanId,
                 Cim: cim,
                 Leiras: leiras,
@@ -105,46 +101,47 @@ const Kiadas = () => {
                 FeltoltesDatum: new Date().toISOString(),
             }, { headers: { Authorization: `Bearer ${token}` } });
 
-            console.log("Ingatlan létrehozása válasz:", response); // Logoljuk a választ
-
+            let imageUploadSuccess = true;
             let kepUrl = "img/placeholder.jpg";
+            
             if (kep) {
-                // Kép feltöltése
-                const fileData = new FormData();
-                fileData.append("file", kep);
-
-                const fileUploadResponse = await axios.post('https://localhost:7079/api/FileUpload/FtpServer', fileData, {
-                    headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
-                });
-
-                console.log("Kép feltöltés válasz:", fileUploadResponse); // Logoljuk a válasz a kép feltöltése után
-
-                // A válaszból kinyert URL
-                kepUrl = fileUploadResponse.data.imageUrl || `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
+                try {
+                    const fileData = new FormData();
+                    fileData.append("file", kep);
+                    await axios.post('https://localhost:7079/api/FileUpload/FtpServer', fileData, {
+                        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+                    });
+                    kepUrl = `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
+                } catch (error) {
+                    console.error('Hiba történt a kép feltöltése során:', error);
+                    imageUploadSuccess = false;
+                }
             }
 
-            // Második POST kérés: Kép URL hozzáadása az ingatlanhoz
-            await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
-                KepUrl: kepUrl,
-                IngatlanId: ingatlanId,
-                FeltoltesDatum: new Date().toISOString(),
-            }, {
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    Authorization: `Bearer ${token}` 
-                },
-            });
+            try {
+                await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
+                    KepUrl: kepUrl,
+                    IngatlanId: ingatlanId,
+                    FeltoltesDatum: new Date().toISOString(),
+                }, {
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        Authorization: `Bearer ${token}` 
+                    },
+                });
+            } catch (error) {
+                console.error('Hiba történt a kép adatbázisba mentése során:', error);
+                imageUploadSuccess = false;
+            }
 
-            setSuccesful(true);
+            if (imageUploadSuccess || !kep) {
+                setUploadStatus('success');
+            } else {
+                setUploadStatus('image_error');
+            }
         } catch (error) {
             console.error('Hiba történt az ingatlan hozzáadása során:', error);
-
-            // Logoljuk a részletes hibaüzenetet
-            if (error.response) {
-                console.error("Válasz hibaüzenet:", error.response.data);
-            }
-
-            document.getElementById('Message').innerText = 'Nem sikerült hozzáadni az ingatlant.';
+            setUploadStatus('error');
         }
     };
 
@@ -166,9 +163,16 @@ const Kiadas = () => {
             <Navbar />
             <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
                 <SmallHeader title="Ingatlan kiadás" />
-                {succesful ? (
+                {uploadStatus === 'success' ? (
                     <div className="succesfulUpload">
                         <p>Ingatlan sikeresen hozzáadva!</p>
+                        <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
+                        <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
+                    </div>
+                ) : uploadStatus === 'image_error' ? (
+                    <div className="succesfulUpload">
+                        <p>Az ingatlan adatai sikeresen feltöltve, de a kép feltöltése nem sikerült.</p>
+                        <p>Később módosíthatod az ingatlant és újra próbálkozhatsz a kép feltöltésével.</p>
                         <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
                         <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
                     </div>
@@ -192,8 +196,8 @@ const Kiadas = () => {
                         </div>
                         <div className="uploadRow">
                             <label className="uploadLabel">Helyszín:</label>
-                            <select name="helyszin" value={formData.helyszin} onChange={handleChange}>
-                                <option value=""></option>
+                            <select name="helyszin" value={formData.helyszin} onChange={handleChange} required>
+                                <option value="">Válassz várost</option>
                                 {locations.map((location, index) => (
                                     <option key={index} value={location.nev}>{location.nev}</option>
                                 ))}
@@ -201,11 +205,11 @@ const Kiadas = () => {
                         </div>
                         <div className="uploadRow">
                             <label className="uploadLabel">Leírás:</label>
-                            <textarea name="leiras" value={formData.leiras} onChange={handleChange} className="uploadInput" />
+                            <textarea name="leiras" value={formData.leiras} onChange={handleChange} className="uploadInput" required />
                         </div>
                         <div className="uploadRow">
                             <label className="uploadLabel">Kép:</label>
-                            <input type="file" name="kep" onChange={handleChange} className="uploadInput" />
+                            <input type="file" name="kep" onChange={handleChange} className="uploadInput" accept="image/*" />
                         </div>
                         <div className="uploadRow">
                             <label className="uploadLabel">Szolgáltatások:</label>
@@ -221,8 +225,17 @@ const Kiadas = () => {
                                 ))}
                             </div>
                         </div>
-                        <button className="starBtn">Ingatlan feltöltése</button>
-                        {submitted ? (<div className="uploadMessage" id="Message"><RiseLoader color="#e09900" size={10}/></div>) : ""}
+                        <button className="starBtn" disabled={uploadStatus === 'uploading'}>
+                            Ingatlan feltöltése
+                        </button>
+                        <div className="uploadMessage">
+                            {uploadStatus === 'uploading' && (
+                                <div className="uploadMessage"><RiseLoader color="#e09900" size={10} /></div>
+                            )}
+                            {uploadStatus === 'error' && (
+                                <p>Nem sikerült hozzáadni az ingatlant. Kérjük próbáld újra később.</p>
+                            )}
+                        </div>
                     </form>
                 )}
                 <img src="/img/city2.png" className="footerImg" alt="City View" />

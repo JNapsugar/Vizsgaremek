@@ -217,20 +217,14 @@ const IngatlanKezeles = () => {
                         },
                     }
                 );
-                await axios.put(
-                    `https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`,
-                    {
-                        KepUrl: `http://images.ingatlanok.nhely.hu/${id}.png`,
-                        IngatlanId: id,
-                        FeltoltesDatum: new Date().toISOString(),
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                let endpoint = `https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`;
+                let method = (await axios.get(endpoint).status === 200 ? 'put' : 'post');
+                endpoint = (method === 'put' ? endpoint : endpoint.replace(`/${id}`, ''));
+                await axios[method](endpoint, {
+                    KepUrl: `http://images.ingatlanok.nhely.hu/${id}.png`,
+                    IngatlanId: id,
+                    FeltoltesDatum: new Date().toISOString(),
+                }, { headers: { Authorization: `Bearer ${token}` } });
             }
 
             if (response.status === 200 || response.status === 204) {
