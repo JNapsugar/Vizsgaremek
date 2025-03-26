@@ -299,26 +299,26 @@ const IngatlanKezeles = () => {
                     <div className="bookingsContainer">
                     <div className="bookingsHeader">
                         <div>Bérlő</div>
+                        <div>Foglalás dátuma</div>
                         <div>Kezdés dátuma</div>
                         <div>Befejezés dátuma</div>
-                        <div>Foglalás dátuma</div>
                         <div></div>
                         <div></div>
                     </div>
                     {currentBookings.map((booking, index) => (
                         <div className="bookingRow" key={index}>
                             <div className="bookingCell">
-                                <img className="bookingPfp" src={berloKepek[booking.berloId]} alt="profile" />
+                                <img className="bookingPfp" src={berloKepek[booking.berloId]? berloKepek[booking.berloId] : "../img/defaultPfp.jpg"} alt="profile" />
                                 {berloNevek[booking.berloId]}
+                            </div>
+                            <div className="bookingCell">
+                                {new Date(booking.letrehozasDatum).toLocaleDateString()}
                             </div>
                             <div className="bookingCell">
                                 {new Date(booking.kezdesDatum).toLocaleDateString()}
                             </div>
                             <div className="bookingCell">
                                 {new Date(booking.befejezesDatum).toLocaleDateString()}
-                            </div>
-                            <div className="bookingCell">
-                                {new Date(booking.letrehozasDatum).toLocaleDateString()}
                             </div>
                             <div className="bookingCell">{booking.allapot}</div>
                             <div className="bookingActions">
