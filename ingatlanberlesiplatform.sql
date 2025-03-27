@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 26. 12:24
+-- Létrehozás ideje: 2025. Már 27. 10:08
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -149,7 +149,7 @@ INSERT INTO `felhasznalok` (`Id`, `LoginNev`, `HASH`, `SALT`, `Name`, `Permissio
 (553, 'vargaa', 'e82712299a83251d0000cc02688a51529892a21b09c4436123a7e6402004d088', '05QHUMHp3SzGgHhahk8EbCGseey3NE1agg7uYjEpGfLfY4noAPFUK98dxYHXjXrz', 'Varga Antónia', 1, 1, 'vargaa@kkszki.hu', 'http://images.ingatlanok.nhely.hu/553pfp.png'),
 (555, 'katonaa', '60467cac433237053a5332f50d9499767501683dbe02e275b910bc53de9da0ea', 'TTVJoGVuimdtYpm6VOwHqvb5mYm6sp0kv2jZAOYCOShbRPoxJM2XYC6MmxW2hMqQ', 'Katona Alexandra', 1, 1, 'katonaa@gmail.com', ''),
 (576, 'jancsurakn', '4f04e8cafc93cdaf96a04bc93236b54768a4aaa0d6d4421a3efa3452b35fff9f', 'rFW4m7ZDc9bHJxI7X2zcdxmGwkaAO75CJVJUTciX0SXyh8l0CLoy8S8ARFzWQvOw', 'Jancsurák Napsugár', 1, 0, 'jancsurakn@kkszki.hu', 'http://images.ingatlanok.nhely.hu/576pfp.png'),
-(578, 'Kiado', '0553f9740e0a0ca745f74c4051ba6121f4f55234c3747e538844926e6dd2bcfb', 'SC8THT5mjj1UxYJmOAXmUc0mmvpc1AgBDWoukeUZMyE304bm8Q640PzXltIYxgcw', 'Kiadó Példa', 2, 0, 'kiado@gmail.com', ''),
+(578, 'Kiado', '0553f9740e0a0ca745f74c4051ba6121f4f55234c3747e538844926e6dd2bcfb', 'SC8THT5mjj1UxYJmOAXmUc0mmvpc1AgBDWoukeUZMyE304bm8Q640PzXltIYxgcw', 'Kiadó Példa', 2, 1, 'kiado@gmail.com', ''),
 (580, 'Berlo', 'fe62ac6a0d5a9de723cc2d1255f50a9c1aa0d05b3a21b7420797711b62b9fc9d', 'Uf4XgAStZufL1gLByqjsjzoTFockUl74bFxiXBCPjrTchf4SxEshVzlUUUA2r7Wq', 'Bérlő Példa', 3, 0, 'berlo@gmail.com', '');
 
 -- --------------------------------------------------------
@@ -275,9 +275,7 @@ INSERT INTO `foglalasok` (`foglalas_id`, `ingatlan_id`, `berlo_id`, `kezdes_datu
 (426, 50, 100, '2025-03-10', '2025-03-10', 'függőben', '2025-03-10 12:11:33'),
 (454, 314, 580, '2025-06-17', '2025-06-21', 'elfogadva', '2025-03-26 11:07:56'),
 (455, 314, 580, '2025-06-26', '2025-06-29', 'elutasítva', '2025-03-26 11:08:08'),
-(456, 314, 580, '2025-06-20', '2025-06-22', 'függőben', '2025-03-26 11:08:16'),
-(457, 314, 580, '2025-04-16', '2025-04-20', 'függőben', '2025-03-26 11:08:27'),
-(458, 314, 580, '2025-06-13', '2025-06-15', 'függőben', '2025-03-26 11:09:02');
+(456, 314, 580, '2025-06-20', '2025-06-22', 'függőben', '2025-03-26 11:08:16');
 
 --
 -- Eseményindítók `foglalasok`
@@ -3879,13 +3877,13 @@ ALTER TABLE `foglalasok`
 -- AUTO_INCREMENT a táblához `ingatlankepek`
 --
 ALTER TABLE `ingatlankepek`
-  MODIFY `kep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
+  MODIFY `kep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 
 --
 -- AUTO_INCREMENT a táblához `ingatlanok`
 --
 ALTER TABLE `ingatlanok`
-  MODIFY `ingatlan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
+  MODIFY `ingatlan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
 
 --
 -- AUTO_INCREMENT a táblához `jogosultsagok`
@@ -3927,6 +3925,16 @@ ALTER TABLE `ingatlankepek`
 --
 ALTER TABLE `ingatlanok`
   ADD CONSTRAINT `ingatlanok_ibfk_1` FOREIGN KEY (`tulajdonos_id`) REFERENCES `felhasznalok` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+DELIMITER $$
+--
+-- Események
+--
+CREATE DEFINER=`root`@`localhost` EVENT `frissit_foglalasok` ON SCHEDULE EVERY 1 DAY STARTS '2025-03-27 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE foglalasok
+SET allapot = 'elutasítva'
+WHERE kezdes_datum < NOW() AND allapot = 'függőben'$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
