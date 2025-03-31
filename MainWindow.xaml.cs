@@ -23,33 +23,32 @@ namespace IngatlanKarbantartoWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly HttpClient _httpClient = new HttpClient();  // HTTP kliens az API hívásokhoz
+        private readonly HttpClient _httpClient = new HttpClient();
 
-        public static bool isLoggedIn = false; // Statikus változó, amely jelzi, hogy a felhasználó be van-e jelentkezve
+        public static bool isLoggedIn = false;
         
-        private static List<string> endpoints = new List<string>() // Az API végpontok listája, amelyeket az alkalmazás kezel
+        private static List<string> endpoints = new List<string>()
         {
-            "Felhasznalo/allUsers",     // Felhasználók lekérése
-            "ingatlan/ingatlanok",      // Ingatlanok lekérése
-            "Foglalasok/allBookings",   // Foglalások lekérése
+            "Felhasznalo/allUsers",
+            "ingatlan/ingatlanok",
+            "Foglalasok/allBookings",
         };
 
-        public static string path = string.Empty;  // Az aktuális végpont, amelyet az alkalmazás használ
+        public static string path = string.Empty;
 
         public MainWindow()
         {
-            // Bejelentkezési ablak megjelenítése
             Login login = new Login(); 
             login.ShowDialog();
 
-            if (!isLoggedIn) // Ha a felhasználó nem jelentkezett be, akkor bezárjuk az alkalmazást
+            if (!isLoggedIn) 
             {
                 this.Close();
             }
 
-            InitializeComponent();  // Alkalmazás inicializálása
+            InitializeComponent();
             
-            endpointsList.ItemsSource = endpoints; // Végpontok listájának megjelenítése
+            endpointsList.ItemsSource = endpoints;
         }
 
         // Az endpointok közötti választás kezelése
@@ -57,7 +56,7 @@ namespace IngatlanKarbantartoWPF
         {
             if (endpointsList.SelectedIndex > -1)
             {
-                path = endpointsList.SelectedItem.ToString();  // Az aktuális választott végpont beállítása
+                path = endpointsList.SelectedItem.ToString();
             }
         }
 

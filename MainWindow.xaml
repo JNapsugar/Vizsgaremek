@@ -19,18 +19,15 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Bal oldali ListBox -->
         <StackPanel Grid.RowSpan="3">
             <ListBox Name="endpointsList" SelectionChanged="endpointsList_SelectionChanged"/>
         </StackPanel>
 
-        <!-- DataGrid teljes magasságban, saját görgetéssel -->
         <Grid Grid.RowSpan="3" Grid.Column="1">
             <DataGrid Name="dtg" AutoGenerateColumns="True" CanUserAddRows="False" 
                       IsReadOnly="True" VerticalAlignment="Stretch"/>
         </Grid>
 
-        <!-- Jobb oldali kisebb gombok két soros felirattal -->
         <UniformGrid Grid.Column="2" Grid.RowSpan="3" Rows="4" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Width="100" Height="50" Padding="5" Click="GET_Click" Margin="10">
                 <TextBlock TextAlignment="Center">
