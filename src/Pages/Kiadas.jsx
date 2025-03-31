@@ -59,10 +59,17 @@ const Kiadas = () => {
     }, [properties, formData.ingatlanId]);
 
     const handleChange = (e) => {
-        const { name, type, files, value } = e.target;
-        if (type === "file" && files[0]) {
-            const file = new File([files[0]], `${formData.ingatlanId}.png`, { type: files[0].type });
-            setFormData((prevData) => ({ ...prevData, [name]: file }));
+        const { name, type, value } = e.target;
+        if (type === "file") {
+            const file = e.target.files[0];
+            if (file) {
+                const renamedFile = new File([file], `${formData.ingatlanId}.png`, { type: file.type });
+                setFormData((prevData) => ({
+                    ...prevData,
+                    [name]: renamedFile,
+                    kepPreview: URL.createObjectURL(renamedFile)
+                }));
+            }
         } else {
             setFormData((prevData) => ({ ...prevData, [name]: value }));
         }
@@ -157,7 +164,7 @@ const Kiadas = () => {
             />
         </div>
     );
-
+    
     return (
         <div>
             <Navbar />
@@ -208,10 +215,6 @@ const Kiadas = () => {
                             <textarea name="leiras" value={formData.leiras} onChange={handleChange} className="uploadInput" required />
                         </div>
                         <div className="uploadRow">
-                            <label className="uploadLabel">Kép:</label>
-                            <input type="file" name="kep" onChange={handleChange} className="uploadInput" accept="image/*" />
-                        </div>
-                        <div className="uploadRow">
                             <label className="uploadLabel">Szolgáltatások:</label>
                             <div className="uploadServiceContainer">
                                 {services.map((service, index) => (
@@ -224,6 +227,12 @@ const Kiadas = () => {
                                     />
                                 ))}
                             </div>
+                        </div>
+                        <div className="uploadRow">
+                            <label className="uploadLabel">Kép:</label>
+                            <label htmlFor="fileUpload" className="imgUploadButton">Fájl kiválasztása</label>
+                            <input type="file" id="fileUpload" name="kep" onChange={handleChange} className="imgUploadInput"/>
+                            {formData.kepPreview && <img src={formData.kepPreview} alt="Preview" className="imgPreview" />}
                         </div>
                         <button className="starBtn" disabled={uploadStatus === 'uploading'}>
                             Ingatlan feltöltése

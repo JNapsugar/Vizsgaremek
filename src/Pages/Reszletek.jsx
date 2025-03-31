@@ -226,13 +226,14 @@ const Reszletek = () => {
             });
     };
 
+    
     return (
         <div>
             <Navbar />
             <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
                 <SmallHeader title="Részletek" />
                 <div className="propertyMainContent">
-                    <img src={propertyImage.kepUrl} alt={property.helyszin} loading="lazy" className='propertyImage' />
+                    <img src={propertyImage? propertyImage.kepUrl : "../img/placeholder.jpg"} alt={property.helyszin} loading="lazy" className='propertyImage' />
                     <div className="mainDetails">
                         <p className="propertyTitle">{property.helyszin}</p>
                         <p className="propertyLocation">{property.cim}</p>

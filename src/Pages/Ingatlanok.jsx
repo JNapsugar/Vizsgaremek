@@ -308,7 +308,7 @@ const Ingatlanok = () => {
                                 <PropertyCard
                                     key={property.IngatlanId ? property.IngatlanId : `key-${index}`}
                                     property={property}
-                                    propertyImg={propertyImg}
+                                    propertyImg={propertyImg ? propertyImg : "../img/placeholder.jpg"}
                                 />
                             ) : (
                                 <PropertyListItem

@@ -11,17 +11,17 @@ export default function Footer() {
             <div className="footer-col">
                 <h4>Információk</h4>
                 <ul>
-                    <li><Link to={"/rolunk"} onClick={() => window.scrollTo({ top: 0 })}>Rólunk</Link></li>
-                    <li><a href="mailto:ingatlanberlesiplatform@gmail.com">ingatlanberlesiplatform@gmail.com</a></li>
+                    <li><Link to={"/rolunk"}>Rólunk</Link></li>
+                    <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=ingatlanberlesiplatform@gmail.com" target="_blank" rel="noopener noreferrer">ingatlanberlesiplatform@gmail.com</a></li> 
                 </ul>
             </div>
             <div className="footer-col">
                 <h4>Szolgáltatásaink</h4>
                 <ul>
                     <li><Link to={"/regisztracio"}>Új profil készítés</Link></li>  
-                    <li><Link to={"/ingatlanok"} onClick={() => window.scrollTo({ top: 0 })}>Ingatlan keresés</Link></li> 
+                    <li><Link to={"/ingatlanok"}>Ingatlan keresés</Link></li> 
                     {permission === "2" || permission === "1"? (
-                        <li><Link to={"/kiadas"} onClick={() => window.scrollTo({ top: 0 })}>Kiadás</Link></li> ):""}  
+                        <li><Link to={"/kiadas"}>Kiadás</Link></li> ):""}  
                 </ul>
             </div>
             <div className="footer-col">

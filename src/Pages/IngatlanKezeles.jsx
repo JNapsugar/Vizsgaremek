@@ -156,6 +156,19 @@ const IngatlanKezeles = () => {
             });
     }, [id]);
 
+    useEffect(() => {
+        axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`)
+            .then(res => {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    kep: res.data,
+                }));
+            })
+            .catch(error => {
+                console.error("Hiba történt az ingatlankép betöltése során:", error);
+            });
+    }, [id]);
+
     const handleChange = (e) => {
         const { name, type } = e.target;
         if (type === "file") {
@@ -165,6 +178,7 @@ const IngatlanKezeles = () => {
                 setFormData((prevData) => ({
                     ...prevData,
                     [name]: renamedFile,
+                    kepPreview: URL.createObjectURL(renamedFile)
                 }));
             }
         } else {
@@ -217,6 +231,7 @@ const IngatlanKezeles = () => {
                         },
                     }
                 );
+
                 let endpoint = `https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`;
                 let method = (await axios.get(endpoint).status === 200 ? 'put' : 'post');
                 endpoint = (method === 'put' ? endpoint : endpoint.replace(`/${id}`, ''));
@@ -282,6 +297,7 @@ const IngatlanKezeles = () => {
 
             if (response.status === 200) {
                 setSuccesful(true);
+                document.getElementById("foglalaskezeles").style.display = "none";
             }
         } catch (error) {
             console.error("Hiba történt az ingatlan törlése során:", error);
@@ -293,7 +309,8 @@ const IngatlanKezeles = () => {
             <Navbar />
             <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
             <SmallHeader title="Ingatlankezelés" />
-            <div className="uploadForm">
+            
+            <div className="uploadForm" id="foglalaskezeles">
                 <p className="title">Foglaláskezelés</p>
                 {bookings.hasBookings? (
                     <div className="bookingsContainer">
@@ -436,16 +453,6 @@ const IngatlanKezeles = () => {
                     </div>
                     <hr />
                     <div className="uploadRow">
-                        <label className="uploadLabel">Kép:</label>
-                        <input
-                            type="file"
-                            name="kep"
-                            onChange={handleChange}
-                            className="uploadInput"
-                        />
-                    </div>
-                    <hr />
-                    <div className="uploadRow">
                         <label className="uploadLabel">Szolgáltatások:</label>
                         <div className="uploadServiceContainer">
                             {services.map((service, index) => (
@@ -459,7 +466,23 @@ const IngatlanKezeles = () => {
                             ))}
                         </div>
                     </div>
-
+                    <hr />
+                    <div className="uploadRow">
+                        <label className="uploadLabel">Kép:</label>
+                        <label htmlFor="fileUpload" className="imgUploadButton">Fájl kiválasztása</label>
+                        <input
+                            type="file"
+                            id="fileUpload"
+                            name="kep"
+                            onChange={handleChange}
+                            className="imgUploadInput"
+                        />
+                        {formData.kepPreview ? (
+                            <img src={formData.kepPreview} alt="Preview" className="imgPreview" />
+                        ) : (
+                            formData.kep && <img src={formData.kep.kepUrl} alt="Preview" className="imgPreview" />
+                        )}
+                    </div>
                     <button type="submit" className="starBtn">
                         Ingatlan módosítása
                     </button>
