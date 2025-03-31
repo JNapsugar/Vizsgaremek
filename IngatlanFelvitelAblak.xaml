@@ -21,7 +21,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Új beviteli mező a tulajdonos ID számára az első sorban -->
         <TextBlock Text="Tulajdonos ID:" Grid.Row="1" Margin="5" />
         <TextBox x:Name="TulajdonosIdTextBox" Grid.Row="1" Margin="120,5,5,5" Width="250" />
 

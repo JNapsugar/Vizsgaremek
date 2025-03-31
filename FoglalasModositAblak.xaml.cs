@@ -84,8 +84,6 @@ namespace IngatlanKarbantartoWPF
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            
         }
 
         public class Foglalas

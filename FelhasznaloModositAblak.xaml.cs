@@ -89,7 +89,6 @@ namespace IngatlanKarbantartoWPF
                     return;
                 }
 
-                // UI frissítése
                 _originalUserData.LoginNev = updatedUser.LoginNev;
                 _originalUserData.Name = updatedUser.Name;
                 _originalUserData.Email = updatedUser.Email;

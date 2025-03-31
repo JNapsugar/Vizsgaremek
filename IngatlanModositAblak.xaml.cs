@@ -17,6 +17,7 @@ namespace IngatlanKarbantartoWPF
         public ModositAblak(int ingatlanId, string path)
         {
             InitializeComponent();
+
             this.ingatlanId = ingatlanId;
             this.path = path;
 
@@ -79,7 +80,6 @@ namespace IngatlanKarbantartoWPF
                 MessageBox.Show($"Váratlan hiba történt: {ex.Message}\nPróbálja újra később, vagy forduljon a rendszergazdához.",
                     "Ismeretlen hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)

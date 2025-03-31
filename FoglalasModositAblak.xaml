@@ -7,23 +7,18 @@
         mc:Ignorable="d"
         Title="FoglalasModositAblak" Height="400" Width="390">
     <Grid>
-        <!-- Ingatlan ID -->
         <TextBlock Text="Ingatlan ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" />
         <TextBox x:Name="IngatlanIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0" Width="350"/>
 
-        <!-- Bérlő ID -->
         <TextBlock Text="Bérlő ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0" />
         <TextBox x:Name="BerloIdTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0" Width="350"/>
 
-        <!-- Kezdési dátum -->
         <TextBlock Text="Kezdési dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0" />
         <DatePicker x:Name="KezdesDatumDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,150,0,0" Width="350"/>
 
-        <!-- Befejezési dátum -->
         <TextBlock Text="Befejezési dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,190,0,0" />
         <DatePicker x:Name="BefejezesDatumDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,210,0,0" Width="350"/>
 
-        <!-- Foglalás állapota -->
         <TextBlock Text="Foglalás állapota" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,250,0,0" />
         <ComboBox x:Name="AllapotComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,270,0,0" Width="350">
             <ComboBoxItem Content="elfogadva"/>
@@ -31,7 +26,6 @@
             <ComboBoxItem Content="elutasítva"/>
         </ComboBox>
 
-        <!-- Frissítés Gomb -->
         <Button Content="Frissítés" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Margin="0,0,10,10" Click="UpdateButton_Click"/>
     </Grid>
 </Window>
