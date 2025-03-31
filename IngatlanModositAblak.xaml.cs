@@ -57,6 +57,7 @@ namespace IngatlanKarbantartoWPF
                 ArTextBox.Text = loadedIngatlan.Ar.ToString();
                 MeretTextBox.Text = loadedIngatlan.Meret.ToString() ?? string.Empty;
                 SzobaTextBox.Text = loadedIngatlan.Szoba.ToString();
+                SzolgaltatasokTextBox.Text = loadedIngatlan.Szolgaltatasok ?? string.Empty;
             }
             catch (HttpRequestException httpEx)
             {
@@ -92,7 +93,8 @@ namespace IngatlanKarbantartoWPF
                     Helyszin = HelyszinTextBox.Text,
                     Ar = decimal.Parse(ArTextBox.Text),
                     Meret = int.Parse(MeretTextBox.Text),
-                    Szolgaltatasok = "---", 
+                    Szoba = int.Parse(SzobaTextBox.Text),
+                    Szolgaltatasok = SzolgaltatasokTextBox.Text,
                     FeltoltesDatum = DateTime.UtcNow,
                     TulajdonosId = loadedIngatlan.TulajdonosId
                 };
@@ -109,6 +111,7 @@ namespace IngatlanKarbantartoWPF
                 HelyszinTextBox.Text = updatedIngatlanDTO.Helyszin;
                 ArTextBox.Text = updatedIngatlanDTO.Ar.ToString();
                 MeretTextBox.Text = updatedIngatlanDTO.Meret.ToString();
+                SzolgaltatasokTextBox.Text = updatedIngatlanDTO.Szolgaltatasok;
 
                 MessageBox.Show("Sikeres frissítés!", "Siker", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
