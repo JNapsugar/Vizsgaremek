@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../Styles/Belepes_Regisztacio.css";
 import { motion } from "framer-motion";
 
 function Belepes() {
@@ -50,8 +51,8 @@ function Belepes() {
     return (
         <div className="Login">
             <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
-                <div className="wrapper">
-                    <h1>Bejelentkezés</h1>
+                <div className="loginDiv">
+                    <h1 className="loginTitle">Bejelentkezés</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="input-box">
                             <input
@@ -75,7 +76,7 @@ function Belepes() {
 
                         {error && <p className="error">{error}</p>}
                         <Link to="/elfelejtettjelszo" className="login-link">Elfelejtette a jelszavát?</Link>
-                        <button type="submit" className="btn">
+                        <button type="submit" className="loginBtn">
                             Bejelentkezés
                         </button>
                     </form>

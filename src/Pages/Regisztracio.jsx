@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../style.css';
+import "../Styles/Belepes_Regisztacio.css";
 import { motion } from 'framer-motion';
 
 const Regisztracio = () => {
@@ -64,8 +64,8 @@ const Regisztracio = () => {
     return (
         <div className='Login'>
             <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} transition={{ duration: 0.3 }}>
-                <div className='wrapper'>
-                    <h2 className='registerh2'>Regisztráció</h2>
+                <div className='loginDiv'>
+                    <h1 className='loginTitle'>Regisztráció</h1>
                     <form onSubmit={handleSubmit}>
                         <div className='input-box'>
                             <input
@@ -122,7 +122,7 @@ const Regisztracio = () => {
                                 <span>Bérlő</span>
                             </label>
                         </div>
-                        <button type="submit" className='btn'>Regisztráció</button>
+                        <button type="submit" className='loginBtn'>Regisztráció</button>
                     </form>
                     {responseMessage && (
                         <p className='response-message'>{responseMessage}</p>

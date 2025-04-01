@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../Styles/Profil.css";
 import Navbar from '../Components/Navbar';
 import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
-import "../style.css";
 import { motion } from "framer-motion";
 
 const Profil = () => {
@@ -84,12 +84,14 @@ const Profil = () => {
             <img src={kep} alt="property" />
             <p>{helyszin}<br /><span>{cim}</span></p>
             <div className="buttonContainer">
-                <button>
-                    <Link to={`/ingatlanok/${id}`}>Részletek</Link>
-                </button>
-                <button>
-                    <Link to={`/ingatlanKezeles/${id}`}>Kezelés</Link>
-                </button>
+                <Link to={`/ingatlanok/${id}`}>
+                    <button>Részletek</button>
+                </Link>
+                <Link to={`/ingatlanKezeles/${id}`}>
+                    <button>
+                        Kezelés
+                    </button>
+                </Link>
             </div>
         </div>
     );

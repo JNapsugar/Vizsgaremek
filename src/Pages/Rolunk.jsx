@@ -1,7 +1,7 @@
-import '../style.css';
 import Navbar from '../Components/Navbar';
 import SmallHeader from '../Components/SmallHeader';
 import Footer from "../Components/Footer";
+import "../Styles/Rolunk.css";
 import { Lightbulb, ShieldShaded, People } from 'react-bootstrap-icons';
 import {motion} from 'framer-motion';
 

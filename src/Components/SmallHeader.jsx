@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import '../style.css';
 
 const SmallHeader = ({ title }) => {
     const [activeIndex, setActiveIndex] = useState(0);

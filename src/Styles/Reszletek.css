@@ -1,0 +1,323 @@
+/*#region Ingatlanadatok*/
+.propertyMainContent{
+    display: flex;
+    flex-direction: row;
+}
+
+.propertyImage{
+    margin: 2rem;
+    border-radius: 2rem;
+    width: 35%;
+    object-fit: contain;
+}
+
+.mainDetails{
+    width: 60%;
+    color: white;
+    padding: 2rem 5rem 2rem 2rem;
+    margin-bottom: 1rem;
+}
+
+.propertyTitle{
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+.propertyLocation{
+    font-size: 2rem;
+    font-weight: 600;
+    color: rgb(147, 147, 147);
+}
+
+.propertyPrice{
+    text-align: right;
+    font-size: 2rem;
+    font-weight: 200;
+    color: #e09900;
+}
+
+.propertyDescription{
+    margin-top: 1rem;
+    font-size: 1.2rem;
+}
+
+hr{
+    width: 100%;
+    border: #000000 3px solid;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.propertyOtherContent {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    justify-content: space-between;
+}
+
+.otherDetails{
+    width: 50%;
+    padding: 2rem 7rem 2rem 5rem;
+    color: white;
+}
+
+.propertyDetails{
+    line-height: 2.5rem;
+}
+
+.services{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.service{
+    height: 3rem;
+    margin: 1rem;
+    background-color: rgba(78, 77, 77, 0.664);
+    border: 3px rgb(78, 77, 77) solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    img{
+        height: 2rem;
+        filter: invert(100%);
+        margin-right: 1rem;
+    }
+}
+/*#endregion Ingatlanadatok*/
+
+/*#region Elérhetőség card*/
+.propertyContactCard {
+    background-color: rgb(78, 77, 77);
+    border-radius: 2rem;
+    height: 22rem;
+    width: 20rem;
+    box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    font-weight: 1000;
+    color: black;
+    text-align: center;
+    padding: 2rem 2rem;
+    float: right;
+    margin: 0 2rem;
+}
+
+.uploaderName{
+    color: black;
+    text-decoration: none;
+    font-style: italic;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.uploaderImg{
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.propertyContactTitle{
+    font-size: 1.5rem;
+    text-decoration: underline;
+}
+
+.propertyContact{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.propertyContactValue{
+    float: right;
+}
+
+/*#endregion Elérhetőség card*/
+
+/*#region Foglalás*/
+.calendarSection {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+
+.calendarContainer, .datesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6rem 2rem;
+    width: 100%;
+    h1{
+        color: #e09900;
+        font-weight: 100;
+    }
+    .starBtn{
+        margin: 5rem;
+        margin-bottom: 0;
+        border-radius: 1.5rem;
+        height: 4rem;
+        font-size: 2rem;
+        font-family: Poiret One;
+    }
+}
+
+.dateInput{
+    width: 15rem;
+    height: 3rem;
+    margin: 0.5rem;
+    background-color: #888;
+    border-radius: 1rem;
+    text-align: center;
+    color: black;
+    border: 1px solid black;
+    font-size: 1rem;
+}
+
+.dateInput::placeholder {
+    color:#555;
+}
+
+.react-calendar {
+    border: none;
+    background-color: #333 !important;
+    color: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    width: 35rem !important;
+    min-height: 27rem !important;
+}
+
+.react-calendar__tile {
+    background: transparent;
+    color: #ffffff;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    height: 3rem;
+    border: 2px #333 solid !important;
+}
+
+.react-calendar__tile:hover {
+    background: rgb(64, 64, 64) !important;
+}
+
+.react-calendar__tile:disabled, .react-calendar__tile--disabled{
+    background: rgba(30, 30, 30, 0.7) !important;
+}
+
+.startDateTile {
+    background-color: rgb(13, 125, 190) !important;
+    color: white;
+}
+
+.endDateTile {
+    background-color: rgb(223, 94, 94) !important;
+    color: white;
+}
+
+.highlighted {
+    background-color: rgb(120, 120, 119) !important;
+    color: white;
+}
+
+.react-calendar__navigation button, .react-calendar__navigation button:disabled {
+    background: none !important;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.react-calendar__navigation button:hover {
+    color: #ffa500 !important;
+    background: none !important;
+}
+/*#endregion Foglalás*/
+
+/*#region További ingatlanok*/
+.moreRecs{
+    margin-left: 5rem;
+    display: flex;
+}
+
+.moreRecsTitle{
+    margin-left: 5rem;
+    margin-top: 2rem;
+}
+/*#endregion További ingatlanok*/
+
+/*#region Reszponzivitás*/
+@media (max-width: 1300px) {
+    .propertyMainContent{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .propertyImage{
+        width: 80%;
+        display: block;
+        margin: auto;
+        margin-top: 2rem;
+    }
+    
+    .mainDetails{
+        display: block;
+        margin: auto;
+    }
+    
+    .otherDetails{
+        width: 100%;
+    }
+    
+    .propertyContactCard{
+        margin: 2rem auto;
+    }
+    .calendarSection {
+        flex-direction: column;
+    }
+    
+    .calendarContainer, .datesContainer {
+        width: 100%;
+        padding: 0;
+    }
+    
+    .react-calendar {
+        width: 70% !important;
+    }
+    
+    .react-calendar__tile {
+        height: 5rem;
+    }
+}
+@media (max-width: 750px) {
+    .mainDetails{
+        width: 90%;
+    }
+    
+    .react-calendar__tile {
+        height: 10%;
+    }
+
+    .propertyMainContent{
+        flex-direction: column;
+    }
+
+    .propertyImage{
+        width: 90%;
+        margin: 2rem auto;
+    }
+
+    .propertyContactCard{
+        width: 50%;
+        margin: 2rem auto;
+    }
+}
+
+/*#endregion Reszponzivitás*/

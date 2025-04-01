@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import "../Styles/Kiadas_Ingatlankezeles.css";
 import { Link, useParams } from "react-router-dom";
 import { XCircle, Check2Circle, ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 import Navbar from '../Components/Navbar';
 import Footer from "../Components/Footer";
 import SmallHeader from "../Components/SmallHeader";
-import "../style.css";
 import {motion} from "framer-motion";
 
 const IngatlanKezeles = () => {

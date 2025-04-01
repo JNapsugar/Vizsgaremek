@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../style.css";
+import "../Styles/Fooldal.css";
 import Navbar from "../Components/Navbar";
 import { RiseLoader } from "react-spinners";
 import { motion } from "framer-motion";

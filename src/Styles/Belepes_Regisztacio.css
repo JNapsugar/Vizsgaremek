@@ -1,0 +1,166 @@
+.Login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../../public/img/LoginBg.jpg');
+    background-size: cover; background-position: center;
+}
+
+.loginDiv{
+    width: 400px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(9px);
+    color: white; 
+    padding: 30px 40px;
+    border-radius: 12px;
+}
+
+.loginTitle{
+    font-size: 30px;
+    text-align: center;
+}
+
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input{
+    width: 70%;
+    height: 10px;
+    border-radius: 40px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 17px;
+    color: white;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box ::placeholder{
+    color: white;
+}
+
+.login-link{
+    font-size: 14.5px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+    
+.login-link:hover{
+    text-decoration: underline;
+}
+
+.loginBtn{
+    width: 100%;
+    height: 45px;
+    border: none;
+    outline: none;
+    background-color: white;
+    border-radius: 40px;
+    cursor: pointer;
+    color: black;
+    font-weight: 600;
+    margin: 1rem 0;
+}
+
+.loginBtn:hover{
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.05);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+/*#region Szerepkör választás toggle*/
+.permission-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 15px 0;
+}
+
+.toggle-label {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.toggle-label span {
+	margin: 0 5px;
+}
+
+.permission-toggle input[type="checkbox"] {
+	display: none;
+}
+
+.permission-toggle input[type="checkbox"] + .slider {
+	position: relative;
+	width: 60px;
+	height: 30px;
+	background-color: #f8b665;
+	border-radius: 30px;
+	transition: 0.4s;
+	display: inline-block;
+}
+
+.permission-toggle .slider:before {
+	content: "";
+	position: absolute;
+	height: 22px;
+	width: 22px;
+	border-radius: 50%;
+	background-color: white;
+	left: 4px;
+	bottom: 4px;
+	transition: 0.4s;
+}
+
+.permission-toggle input[type="checkbox"]:checked + .slider:before {
+	transform: translateX(30px);
+}
+
+.permission-toggle input[type="checkbox"]:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+/*endregion Szerepkör választás*/
+
+/*region Elfelejtett jelszó*/
+.forgot{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.forgot label input{
+    margin-right: 8px;
+    accent-color: white;
+}
+
+.forgot a{
+    text-decoration: none;
+    color: white;
+    transition: .4s ease-in-out;
+}
+
+.forgot a:hover{
+    text-decoration: underline;
+}
+
+/*endregion Elfelejtett jelszó*/

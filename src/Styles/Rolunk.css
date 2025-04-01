@@ -1,0 +1,308 @@
+.aboutUs {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #1e1e1e, #2c2c2c);
+}
+
+/*#region Bemutatkozás*/
+.aboutUsLogo {
+    width: 30%;
+    animation: glowEffect 3s ease-in-out infinite;
+    text-align: center;
+}
+
+@keyframes glowEffect {
+    0% {
+        filter: drop-shadow(0 0 5px #d3932bd0);
+    }
+    50% {
+        filter: drop-shadow(0 0 10px #d3932bd0) drop-shadow(0 0 30px #d3932bd0);
+    }
+    100% {
+        filter: drop-shadow(0 0 5px #d3932bd0);
+    }
+}
+
+.aboutUsTextContainer {
+    padding: 2rem;
+}
+
+.aboutUsText {
+    color: white;
+    margin: 6rem 3rem;
+    font-size: 1.5rem;
+    width: 45%;
+    float: right;
+}
+
+/*#endregion Bemutatkozás*/
+
+/*#region Értékeink*/
+.aboutUsValues {
+    background: url('../../public/img/aboutUs1.jpg') center center / cover no-repeat;
+    padding: 2rem;
+    position: relative;
+    min-height: 40rem;
+}
+
+.aboutUsValues::before, .aboutUsValues::after, .aboutUsRatings::before, .aboutUsRatings::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.aboutUsValues::before, .aboutUsRatings::before {
+    top: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, #222, transparent);
+}
+
+.aboutUsValues::after, .aboutUsRatings::after {
+    bottom: 0;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, #222);
+}
+
+.valueCardContainer, .teamCardContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    margin: auto;
+    padding-bottom: 5rem;
+}
+
+.valueCard {
+    background-color: #181818cc;
+    color: white;
+    width: 30%;
+    float: left;
+    padding: 2rem;
+    margin: 1rem;
+    border-radius: 1rem;
+    transition:all 0.5s ease;
+}
+
+.valueCard h1 {
+    font-size: 1.5rem;
+    color: #eeb53a;
+}
+
+.valueCard svg {
+    color: white;
+    height: 3rem;
+    width: 3rem;
+}
+
+.valueCard:hover, .ratingCard:hover {
+    transform: scale(1.05);
+}
+
+/*#endregion Értékeink*/
+
+/*#region Csapatunk*/
+.aboutUsTeam{
+    background-color: #222;
+    text-align: center;
+    min-height: 35rem;
+}
+
+.teamCard {
+    width: 12rem;
+    height: 17rem;
+    overflow: visible;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.teamCard::before, .teamCardContent {
+    border-radius: 0.8rem;
+    box-shadow: 0px 0px 5px 1px #00000022;
+    transition: transform 300ms, box-shadow 200ms;
+}
+
+.teamCard::before {
+    position: absolute;
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #f8b665;
+    transform: rotateZ(5deg);
+}
+
+.teamCardDescription {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    p {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.teamCardName{
+    font-size: 1.2rem;
+}
+
+.teamCardInfo {
+    color: #00000066;
+    font-weight: bold;
+}
+
+.teamCardImg {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 1rem;
+}
+
+.teamCard .teamCardContent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #444;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotateZ(-5deg);
+}
+
+.teamCard:hover::before, .teamCard:hover .teamCardContent {
+    transform: rotateZ(0deg);
+}
+
+.teamCard:active::before, .teamCard:active .teamCardContent {
+    box-shadow: none;
+}
+
+/*#endregion Csapatunk*/
+
+/*#region Vélemények*/
+.aboutUsRatings {
+    background: url('../../public/img/aboutUs2.jpg') center center / cover no-repeat;
+    padding: 2rem 2rem;
+    position: relative;
+    min-height: 42rem;
+    text-align: center;
+}
+
+.ratingCard{
+    background-color: #181818cc;
+    color: white;
+    text-align: left;
+    height: 10rem;
+    padding: 1rem;
+    width: 45%;
+    border-radius: 1rem;
+    float: left;
+    margin: 1rem;
+    transition:all 0.5s ease;
+}
+
+.ratingCardPfp{
+    height: 80%;
+    border-radius: 50%;
+    float: left;
+    margin: 1rem;
+}
+
+.ratingCardName{
+    font-size: 1.1rem;
+}
+/*#endregion Vélemények*/
+
+/*#region Zárás*/
+.aboutUsEnd{
+    background-color: #222;
+    .title{
+        margin-top: 5rem;
+        font-size: 2rem;
+    }
+    p{
+        font-size: 1.5rem;
+        color: #555;
+    }
+}
+/*#endregion Zárás*/
+
+/*#region Reszponzivitás*/
+@media (max-width: 1300px) {
+    .aboutUsText {
+        width: 70%;
+        font-size: 1.2rem;
+        margin: 4rem auto;
+        float: none;
+        text-align: center;
+    }
+    
+    .valueCardContainer, .teamCardContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .valueCard, .teamCard {
+        width: 80%;
+    }
+    
+    .aboutUsRatings .ratingCard {
+        width: 80%;
+    }
+    
+    .teamCard{
+        margin-bottom: 5rem;
+    }
+}
+
+@media (max-width: 750px) {
+
+    .aboutUsLogo {
+        width: 50%;
+    }
+    
+    .aboutUsText {
+        width: 90%;
+        font-size: 1rem;
+    }
+    
+    .valueCardContainer {
+        width: 100%;
+    }
+    
+    .valueCard {
+        width: 90%;
+        padding: 1.5rem;
+    }
+    
+    .teamCard {
+        width: 90%;
+        height: 18rem;
+        margin-bottom: 4rem;
+    }
+    
+    .ratingCard {
+        width: 100%;
+        height: 19rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ratingCardPfp {
+        height: 35%;
+        display: block;
+        margin: auto;
+    }
+
+    .ratingCardName{
+        margin-bottom: 0.2rem;
+    }
+    
+    .aboutUsEnd{
+        padding: 1.5rem;
+    }
+}
+
+/*#endregion Reszponzivitás*/

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../Styles/Kiadas_Ingatlankezeles.css";
 import { Link } from "react-router-dom";
 import Navbar from '../Components/Navbar';
 import SmallHeader from "../Components/SmallHeader";
 import Footer from "../Components/Footer";
-import "../style.css";
 import { motion } from "framer-motion";
 import { RiseLoader } from "react-spinners";
 

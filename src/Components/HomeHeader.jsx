@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../style.css';
 
 const HomeHeader = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const images = [
-        "/img/headers/header1.jpg",
-        "/img/headers/header2.jpg",
-        "/img/headers/header3.jpg",
-        "/img/headers/header4.jpg",
-        "/img/headers/header5.jpg"
+        "../../img/headers/header1.jpg",
+        "../../img/headers/header2.jpg",
+        "../../img/headers/header3.jpg",
+        "../../img/headers/header4.jpg",
+        "../../img/headers/header5.jpg"
     ];
 
     useEffect(() => {

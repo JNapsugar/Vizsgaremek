@@ -11,6 +11,7 @@ import Profil from './Pages/Profil';
 import Kiadas from './Pages/Kiadas';
 import IngatlanKezeles from './Pages/IngatlanKezeles';
 import Rolunk from './Pages/Rolunk';
+import "./Styles/Alap.css";
 
 function AnimatedRoutes() {
   const location = useLocation();

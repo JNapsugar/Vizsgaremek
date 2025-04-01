@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import '../style.css';
+import "../Styles/Ingatlanok.css";
 import Navbar from '../Components/Navbar';
 import SmallHeader from '../Components/SmallHeader';
 import PropertyCard from '../Components/PropertyCard';

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import "../Styles/Reszletek.css";
 import { motion } from 'framer-motion';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../style.css';
 import Navbar from '../Components/Navbar';
 import SmallHeader from '../Components/SmallHeader';
 import Footer from "../Components/Footer";

@@ -1,0 +1,138 @@
+.homeContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionTitle{
+    font-size: 3rem;
+    margin: 3rem 0;
+    text-align: center;
+    color: white;
+}
+
+.cityCards, .kiemeltCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cityImg{
+    height: 25rem;
+}
+
+.kiemeltSection{
+    text-align: center;
+    background-color: rgb(187,187,187);
+    background-image: url('../../public/img/pattern.png');
+    background-repeat: repeat;
+    background-position: left;
+    background-blend-mode: soft-light;
+    box-shadow: inset 0 100px 40px 10px rgb(187,187,187);
+    .sectionTitle{
+        color: black;
+    }
+}
+
+.moreBtn{
+    height: 4rem;
+    width: 25rem;
+    margin: 1rem;
+    background-color: #333;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    border-radius: 1.5rem;
+    color: white;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    padding: 0.5rem;
+    font-family: "Poiret One", sans-serif;
+    font-weight: 1000;
+    font-size: large;
+    cursor: pointer;
+}
+
+
+/*#region Város card*/
+.cityCard {
+    width: 500px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 5px #ffffff80;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background-position: center;
+    background-size: cover;
+    margin: 1rem;
+    position: relative;
+    img {
+        position: absolute;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        filter: contrast(80%);
+    }
+
+    button {
+        background-color:#ffffff64;
+        border: 1px solid black solid;
+        border-radius: 0.4rem;
+        color: black;
+        height: 2rem;
+        width: 20rem;
+        margin-top: 1rem;
+        cursor: pointer;
+        inset: auto auto auto 30px; 
+        transition: inset .8s ease-out;
+        &:hover {
+            background-color:#ffffffbe;
+            color: #e09900;
+            border: 3px solid #e09900;
+        }
+    }
+}
+
+.cityCard:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.cityCardContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f2f2f2b5;
+    transform: rotateX(-90deg);
+    transform-origin: bottom;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cityCard:hover .cityCardContent {
+    transform: rotateX(0deg);
+}
+
+.cityCardTitle {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+    font-weight: 700;
+}
+
+.cityCardDescription {
+    margin: 10px 0 0;
+    font-size: 14px;
+    color: #000000;
+    line-height: 1.4;
+}
+/*#endregion*/
+
+/*#region Reszponzivitás*/
+@media (max-width: 750px) {
+    .cityImg{
+        height: 10rem;
+    }
+}
+/*#endregion Reszponzivitás*/
