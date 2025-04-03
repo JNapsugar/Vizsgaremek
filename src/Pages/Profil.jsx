@@ -24,6 +24,7 @@ const Profil = () => {
     const [propertyImages, setPropertyImages] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
 
+    //Felhasználói adatok lekérése
     useEffect(() => {
         if (!token || !username) return;        
         const fetchProfileData = async () => {
@@ -40,6 +41,8 @@ const Profil = () => {
         fetchProfileData();
     }, [token, username]);
 
+    //Ingatlanok(Kiadóknak) vagy foglalások(Bérlőknek) lekérése (Adminok esetében mindkettő)
+    //1-Admin, 2-Kiadó, 3-Bérlő:
     useEffect(() => {
         if (!token || !profileData.id) return;
         const fetchData = async () => {
@@ -49,12 +52,13 @@ const Profil = () => {
                     { headers: { Authorization: `Bearer ${token}` } });
                     setProperties(propertiesResponse.data)
 
+                //A kiadók ingatlanjai
                 if (profileData.permissionId === 2) {
                     const userProperties = propertiesResponse.data.filter(
                         property => property.tulajdonosId === profileData.id);
                         setProperties(userProperties);
                 }
-
+                //A bérlők foglalásai
                 if (profileData.permissionId === 1 || profileData.permissionId === 3) {
                     const endpoint = profileData.permissionId === 3 
                         ? `https://localhost:7079/api/Foglalasok/user/${userId}`
@@ -65,6 +69,7 @@ const Profil = () => {
                         setBookings(bookingsResponse.data);
                 }
 
+                //Képek lekérése
                 const imagesResponse = await axios.get(
                     `https://localhost:7079/api/Ingatlankepek/ingatlankepek`,
                     { headers: { Authorization: `Bearer ${token}` } }
@@ -78,43 +83,7 @@ const Profil = () => {
         fetchData();
     }, [profileData.id, profileData.permissionId, token, userId]);
 
-
-    const PropertyCard = ({ id, kep, cim, helyszin }) => (
-        <div className="profilePropertyCard">
-            <img src={kep} alt="property" />
-            <p>{helyszin}<br /><span>{cim}</span></p>
-            <div className="buttonContainer">
-                <Link to={`/ingatlanok/${id}`}>
-                    <button>Részletek</button>
-                </Link>
-                <Link to={`/ingatlanKezeles/${id}`}>
-                    <button>
-                        Kezelés
-                    </button>
-                </Link>
-            </div>
-        </div>
-    );
-
-    const BookingCard = ({ id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
-        <div className="profileBookingCard">
-            <img src={kep} alt="property" />
-            <p>{helyszin}<br /><span>{allapot}</span></p>
-            <div className="bookingDatesContainer">
-                <p>Kezdés: {new Date(kezdesDatum).toLocaleDateString()}</p>
-                <p>Befejezés: {new Date(befejezesDatum).toLocaleDateString()}</p>
-            </div>
-            <div className="buttonContainer">
-                <button>
-                    <Link to={`/ingatlanok/${ingatlanId}`}>Részletek</Link>
-                </button>
-                <button onClick={() => handleDeleteBooking(id)}>
-                    Foglalás törlése
-                </button>
-            </div>
-        </div>
-    );
-
+    //Foglalás törlése
     const handleDeleteBooking = async (id) => {
         if (!window.confirm("Biztosan törölni szeretnéd a foglalást?")) return;
         
@@ -129,6 +98,7 @@ const Profil = () => {
         }
     };
 
+    //Felhasználói adatok módosítása
     const handleSaveProfile = async () => {
         try {
             let profilePictureUrl = profileData.profilePicturePath;
@@ -165,6 +135,7 @@ const Profil = () => {
         }
     };
 
+    //Kijelenkezés
     const handleLogout = async () => {
         try {
             await axios.post(
@@ -181,6 +152,7 @@ const Profil = () => {
         }
     };
 
+    //Profil törlése
     const handleDeleteAccount = async () => {
         if (!window.confirm("Biztosan törölni szeretnéd a fiókodat? Ez visszafordíthatatlan művelet.")) return;
         
@@ -198,10 +170,49 @@ const Profil = () => {
         }
     };
 
+    //Ingatlanokhoz tartozó képek
     const getPropertyImage = (propertyId) => {
         const propertyImg = propertyImages.find(img => img.ingatlanId === propertyId);
         return propertyImg ? propertyImg.kepUrl : "img/placeholder.jpg";
     };
+
+    //Kiadott ingatlan cardok
+    const PropertyCard = ({ id, kep, cim, helyszin }) => (
+        <div className="profilePropertyCard">
+            <img src={kep} alt="property" />
+            <p>{helyszin}<br /><span>{cim}</span></p>
+            <div className="buttonContainer">
+                <Link to={`/ingatlanok/${id}`}>
+                    <button>Részletek</button>
+                </Link>
+                <Link to={`/ingatlanKezeles/${id}`}>
+                    <button>
+                        Kezelés
+                    </button>
+                </Link>
+            </div>
+        </div>
+    );
+
+    //Foglalás cardok
+    const BookingCard = ({ id, kep, helyszin, kezdesDatum, befejezesDatum, allapot, ingatlanId }) => (
+        <div className="profileBookingCard">
+            <img src={kep} alt="property" />
+            <p>{helyszin}<br /><span>{allapot}</span></p>
+            <div className="bookingDatesContainer">
+                <p>Kezdés: {new Date(kezdesDatum).toLocaleDateString()}</p>
+                <p>Befejezés: {new Date(befejezesDatum).toLocaleDateString()}</p>
+            </div>
+            <div className="buttonContainer">
+                <button>
+                    <Link to={`/ingatlanok/${ingatlanId}`}>Részletek</Link>
+                </button>
+                <button onClick={() => handleDeleteBooking(id)}>
+                    Foglalás törlése
+                </button>
+            </div>
+        </div>
+    );
     
     return (
         <div>

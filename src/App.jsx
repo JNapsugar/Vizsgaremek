@@ -13,6 +13,7 @@ import IngatlanKezeles from './Pages/IngatlanKezeles';
 import Rolunk from './Pages/Rolunk';
 import "./Styles/Alap.css";
 
+//Lapváltás animációval + Tekerjen az oldal tetejére
 function AnimatedRoutes() {
   const location = useLocation();
   useEffect(() => {

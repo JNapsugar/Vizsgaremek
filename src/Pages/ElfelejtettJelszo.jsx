@@ -9,6 +9,7 @@ function ElfelejtettJelszo() {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
+    //Új jelszó kérés
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

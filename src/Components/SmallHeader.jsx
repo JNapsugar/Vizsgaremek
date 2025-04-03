@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const SmallHeader = ({ title }) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
+    //Header képek
     const images = [
         "/img/headers/header1.jpg",
         "/img/headers/header2.jpg",
@@ -11,6 +12,7 @@ const SmallHeader = ({ title }) => {
         "/img/headers/header5.jpg"
     ];
 
+    //Header váltakozása
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);

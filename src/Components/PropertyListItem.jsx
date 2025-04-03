@@ -26,10 +26,10 @@ const icons = {
 };
 
 export default function PropertyListItem({ property, propertyImg }) {
+    //Szolgáltatások megjelenítése
     const services = property.szolgaltatasok ? property.szolgaltatasok.split(', ') : [];
     const displayedServices = services.slice(0, 4);
     const hasMoreServices = services.length > 4;
-
     const renderServiceIcon = (service) => {
         return icons[service] || "/img/icons/plus.svg";
     };

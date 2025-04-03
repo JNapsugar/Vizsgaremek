@@ -9,9 +9,10 @@ import SmallHeader from "../Components/SmallHeader";
 import {motion} from "framer-motion";
 
 const IngatlanKezeles = () => {
+
+    //Bejelentkezés ellenőrzés
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
-
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
@@ -51,7 +52,7 @@ const IngatlanKezeles = () => {
     const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
     const currentBookings = bookings.bookings?.slice(indexOfFirstBooking, indexOfLastBooking) || [];
 
-    
+    //Foglalások lekérése
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Foglalasok/ingatlan/${id}`)
             .then(res => { 
@@ -59,6 +60,8 @@ const IngatlanKezeles = () => {
                 const accepted = allBookings.filter(booking => booking.allapot === "elfogadva");
                 setBookings(res.data);
                 setApprovedBookings(accepted);
+
+                // Bérlők nevének és profilképének lekérése
                 res.data.bookings.forEach(booking => {
                     axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${booking.berloId}`)
                         .then(response => {
@@ -79,6 +82,7 @@ const IngatlanKezeles = () => {
             .catch(error => { console.error(error); });
     }, [id]);
 
+    //Foglalási időszakok ütközés vizsgálat
     const isOverlapping = (newBooking) => {
         return approvedBookings.some(existing => 
             new Date(newBooking.kezdesDatum) < new Date(existing.befejezesDatum) &&
@@ -86,6 +90,7 @@ const IngatlanKezeles = () => {
         );
     };
 
+    //Foglalás elfogadása/elutasítása
     const handleBookingResponse = async (bookingId, status) => {
         try {
             const response = await axios.put(
@@ -119,6 +124,7 @@ const IngatlanKezeles = () => {
         }
     };
     
+    //Lapozás
     const handleNextPage = () => {
         if (currentPage < Math.ceil(bookings.bookings.length / bookingsPerPage)) {
             setCurrentPage(prevPage => prevPage + 1);
@@ -130,6 +136,7 @@ const IngatlanKezeles = () => {
         }
     };
 
+    //Települések lekérése a comboboxhoz
     const [locations, setLocations] = useState([]);
     useEffect(() => {
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
@@ -137,6 +144,7 @@ const IngatlanKezeles = () => {
             .catch(error => { console.error(error); });
     }, []);
 
+    //Ingatlan adatainak lekérése
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${id}`)
             .then(res => {
@@ -155,7 +163,6 @@ const IngatlanKezeles = () => {
                 console.error("Hiba történt az ingatlan adatainak betöltése során:", error);
             });
     }, [id]);
-
     useEffect(() => {
         axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`)
             .then(res => {
@@ -169,6 +176,7 @@ const IngatlanKezeles = () => {
             });
     }, [id]);
 
+    //Ingatlan adatainak módosítása
     const handleChange = (e) => {
         const { name, type } = e.target;
         if (type === "file") {
@@ -190,6 +198,7 @@ const IngatlanKezeles = () => {
     };
     
 
+    //Módosítások elküldése
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -218,7 +227,9 @@ const IngatlanKezeles = () => {
                     },
                 }
             );
+
             if (formData.kep) {
+                //Kép küldése az ftp szerverre
                 const fileData = new FormData();
                 fileData.append("file", formData.kep);
                 await axios.post(
@@ -231,7 +242,7 @@ const IngatlanKezeles = () => {
                         },
                     }
                 );
-
+                //Kép url-jének küldése az adatbázisba
                 let endpoint = `https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`;
                 let method = (await axios.get(endpoint).status === 200 ? 'put' : 'post');
                 endpoint = (method === 'put' ? endpoint : endpoint.replace(`/${id}`, ''));
@@ -250,6 +261,7 @@ const IngatlanKezeles = () => {
         }
     };
 
+    //Szolgáltatás checkboxok
     const Checkbox = ({ id, label, checked, onChange }) => {
         return (
             <div className='checkboxContainer'>
@@ -265,6 +277,7 @@ const IngatlanKezeles = () => {
         );
     };
 
+    //Szolgáltatások hozzáfűzése
     const handleCheckboxChange = (label) => {
         setFormData((prevData) => {
             const szolgaltatasokArray = prevData.szolgaltatasok ? prevData.szolgaltatasok.split(", ") : [];
@@ -283,6 +296,7 @@ const IngatlanKezeles = () => {
         });
     };
 
+    //Ingatlan törlése
     const handleDelete = async () => {
         if (!window.confirm("Biztosan törölni szeretnéd az ingatlant? Ez a művelet nem visszavonható!")) {
             return;
@@ -304,6 +318,7 @@ const IngatlanKezeles = () => {
         }
     };
     
+
     return (
         <div>
             <Navbar />

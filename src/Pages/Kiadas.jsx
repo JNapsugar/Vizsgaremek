@@ -30,9 +30,10 @@ const Kiadas = () => {
         "garázs", "erkély/terasz", "házi mozi", "mosógép", "kávéfőző", "takarító szolgálat",
         "biztonsági kamera", "golfpálya", "spájz"
     ];
+
+    //Bejelentkezés ellenőrzés
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [token, setToken] = useState(null);
-
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
         if (storedToken) {
@@ -41,16 +42,17 @@ const Kiadas = () => {
         }
     }, []);
 
+    //Ingatlanok(az id meghatározásához) és települések(a combobox-hoz) lekérése
     useEffect(() => {
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
             .then(res => setProperties(res.data))
-            .catch(error => console.error(error));
-
+            .catch(error => console.error("Hiba történt az ingatlanok lekérésekor: "+error));
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
             .then(res => setLocations(res.data))
-            .catch(error => console.error(error));
+            .catch(error => console.error("Hiba történt a települések lekérésekor: "+error));
     }, []);
 
+    //IngatlanId meghatározása
     useEffect(() => {
         if (properties.length > 0 && formData.ingatlanId === 0) {
             const newIngatlanId = Math.max(...properties.map(p => p.ingatlanId)) + 1;
@@ -58,6 +60,7 @@ const Kiadas = () => {
         }
     }, [properties, formData.ingatlanId]);
 
+    //Ingatlan adatainak módosítása
     const handleChange = (e) => {
         const { name, type, value } = e.target;
         if (type === "file") {
@@ -74,7 +77,7 @@ const Kiadas = () => {
             setFormData((prevData) => ({ ...prevData, [name]: value }));
         }
     };
-
+    //Szolgáltatások hozzáfűzése
     const handleCheckboxChange = (label) => {
         setFormData((prevData) => {
             const updatedServices = prevData.szolgaltatasok ? prevData.szolgaltatasok.split(", ") : [];
@@ -85,6 +88,7 @@ const Kiadas = () => {
         });
     };
 
+    //Módosítások elküldése
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isLoggedIn) {
@@ -112,6 +116,7 @@ const Kiadas = () => {
             let kepUrl = "img/placeholder.jpg";
             
             if (kep) {
+                //Kép feltöltése az ftp szerverre
                 try {
                     const fileData = new FormData();
                     fileData.append("file", kep);
@@ -124,7 +129,7 @@ const Kiadas = () => {
                     imageUploadSuccess = false;
                 }
             }
-
+            //Kép url-jének mentése az adatbázisba
             try {
                 await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
                     KepUrl: kepUrl,
@@ -152,6 +157,7 @@ const Kiadas = () => {
         }
     };
 
+    //Szogáltatás checkboxok
     const Checkbox = ({ id, label, checked, onChange }) => (
         <div className='checkboxContainer'>
             <label>{label}: </label>

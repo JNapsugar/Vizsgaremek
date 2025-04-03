@@ -14,10 +14,11 @@ import {ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 const Ingatlanok = () => {    
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
-    const [locations, setLocations] = useState([]);
-    const [filteredLocations, setFilteredLocations] = useState([]);
     const [isPending, setPending] = useState(false);
     const [error, setError] = useState(false);
+    //Szűrőbeállítások
+    const [locations, setLocations] = useState([]);
+    const [filteredLocations, setFilteredLocations] = useState([]);
     const [searchParams] = useSearchParams();
     const cityName = searchParams.get("city") || "Összes";
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
@@ -50,7 +51,7 @@ const Ingatlanok = () => {
         golfpalyaCb: false,
         spajzCb: false
     });
-
+    //Szűrők alkalmazása
     const filteredProperties = properties.filter(property => {;
         return (
             (filters.megye === "Összes" || filteredLocations.some(location => location.nev === property.helyszin)) &&
@@ -78,13 +79,15 @@ const Ingatlanok = () => {
             (!filters.golfpalyaCb || property.szolgaltatasok.includes("golfpálya"))
         );
     });
-
+    //Lapozás
     const [currentPage, setCurrentPage] = useState(1);
     const propertiesPerPage = 12;
     const indexOfLastProperty = currentPage * propertiesPerPage;
     const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
     const currentProperties = filteredProperties.slice(indexOfFirstProperty, indexOfLastProperty);
 
+
+    //Ingatlanok lekérése
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
@@ -93,6 +96,7 @@ const Ingatlanok = () => {
             .finally(() => setPending(false));
     }, []);
 
+    //Képek lekérése
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
@@ -101,6 +105,7 @@ const Ingatlanok = () => {
             .finally(() => setPending(false));
     }, []);
 
+    //Települések lekérése
     useEffect(() => {
         setPending(true);
         axios.get('https://localhost:7079/api/Telepules/telepulesek')
@@ -113,6 +118,7 @@ const Ingatlanok = () => {
         setIsFilterExpanded(!isFilterExpanded);
     };
     
+    //Szűrő változása
     const handleFilterChange = useCallback((e) => {
         const { id, value, type, checked } = e.target;
         setCurrentPage(1);
@@ -154,7 +160,7 @@ const Ingatlanok = () => {
             }
         });
     }, [locations]);
-
+    //Paraméterként kapott város
     useEffect(() => {
         if (cityName !== "Összes") {
             handleFilterChange({ 
@@ -163,18 +169,19 @@ const Ingatlanok = () => {
         }
     }, [cityName, locations, handleFilterChange]);
     
+    //Lapozás
     const handleNextPage = () => {
         if (currentPage < Math.ceil(filteredProperties.length / propertiesPerPage)) {
             setCurrentPage(prevPage => prevPage + 1);
         }
     };
-    
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
     };
 
+    //Kis képernyőn csak grid nézet
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 1300) {
@@ -188,6 +195,7 @@ const Ingatlanok = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    
     const Checkbox = ({ id, label}) => {
         return (
             <div className='checkboxContainer'>

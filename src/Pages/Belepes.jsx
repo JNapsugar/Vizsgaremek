@@ -13,7 +13,6 @@ function Belepes() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const payload = { loginName: username, Password: password };
-
         try {
             const loginResponse = await loginUser(payload);
             await fetchUserDetails(username);
@@ -26,6 +25,7 @@ function Belepes() {
         }
     };
 
+    //Bejelentkezés
     const loginUser = async (payload) => {
         try {
             const response = await axios.post("https://localhost:7079/api/felhasznalo/login", payload, {
@@ -37,6 +37,7 @@ function Belepes() {
         }
     };
 
+    //Felhasználó adatainak lekérése
     const fetchUserDetails = async (username) => {
         try {
             const response = await axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`);

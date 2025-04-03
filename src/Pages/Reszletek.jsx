@@ -11,21 +11,24 @@ import Footer from "../Components/Footer";
 import PropertyCard from '../Components/PropertyCard';
 
 const Reszletek = () => {
-    const { ingatlanId } = useParams();
     const permission = sessionStorage.getItem("permission");
     const userId = sessionStorage.getItem("userId");
+    //Ingatlan adatai
+    const { ingatlanId } = useParams();
     const [property, setProperty] = useState({});
     const [propertyImage, setPropertyImage] = useState({});
     const [owner, setOwner] = useState({});
+    //További ingatlan ajánlatok
     const [properties, setProperties] = useState([]);
     const [propertyImages, setPropertyImages] = useState([]);
+    //Foglalás
     const [bookedDates, setBookedDates] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [selectingStart, setSelectingStart] = useState(true);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
+    //Szolgáltatás ikonok
     const serviceIcons = {
         "Wi-Fi": "/img/icons/wifi.svg",
         "kutya hozható": "/img/icons/paw.svg",
@@ -50,6 +53,7 @@ const Reszletek = () => {
         "spájz": "/img/icons/pantry.png"
     };
 
+    //Ingatlan adatainak lekérése
     useEffect(() => {
         const fetchProperty = async () => {
             try {
@@ -74,6 +78,7 @@ const Reszletek = () => {
         fetchPropertyImage();
     }, [ingatlanId]);
 
+    //Tulaj lekérése
     useEffect(() => {
         const fetchOwner = async () => {
             if (property.tulajdonosId) {
@@ -88,6 +93,7 @@ const Reszletek = () => {
         fetchOwner();
     }, [property.tulajdonosId]);
 
+    //További ajánlatok lekérése
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -113,6 +119,7 @@ const Reszletek = () => {
         fetchPropertyImages();
     }, []);
 
+    //Foglalások lekérése és a foglalható időpontok szűrése
     useEffect(() => {
         const fetchBookedDates = async () => {
             try {
@@ -136,12 +143,13 @@ const Reszletek = () => {
                 
                 setBookedDates(allBookedDates);
             } catch (error) {
-                console.error("Error fetching booked dates:", error);
+                console.error("Hiba a foglalások lekérésekor:", error);
             }
         };
         fetchBookedDates();
     }, [ingatlanId]);
 
+    //Dátumválasztás
     const handleDateChange = (date) => {
         const adjustedDate = new Date(date);
         adjustedDate.setHours(12, 0, 0, 0);
@@ -167,7 +175,6 @@ const Reszletek = () => {
             setSelectingStart(true);
         }
     };
-
     const getDateRange = (start, end) => {
         const dates = [];
         let currentDate = new Date(start);
@@ -178,13 +185,14 @@ const Reszletek = () => {
         return dates;
     };
 
-    const isBetween = (date) => {
-        return startDate && endDate && date > startDate && date < endDate;
-    };
-
+    //Dátum mezők beállításai
     const tileDisabled = ({ date }) => {
         const dateStr = date.toISOString().split('T')[0];
         return bookedDates.includes(dateStr); 
+    };
+
+    const isBetween = (date) => {
+        return startDate && endDate && date > startDate && date < endDate;
     };
 
     const tileClassName = ({ date, view }) => {
@@ -202,6 +210,7 @@ const Reszletek = () => {
         return '';
     };
 
+    //Foglalás elküldése
     const handleBooking = () => {
         if (!startDate || !endDate) {
             document.getElementById('bookingResponse').innerText = "Kérlek válassz kezdő és végdátumot!";

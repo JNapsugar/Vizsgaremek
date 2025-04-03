@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 
 export default function PropertyCard({ index, property, propertyImg }) {
+    //Szolgáltatások megjelenítése
     const services = property.szolgaltatasok ? property.szolgaltatasok.split(', ') : [];
     const displayedServices = services.slice(0, 5);
     

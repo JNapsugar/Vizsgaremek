@@ -245,6 +245,7 @@ hr{
 .moreRecs{
     margin-left: 5rem;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .moreRecsTitle{
@@ -294,6 +295,12 @@ hr{
     
     .react-calendar__tile {
         height: 5rem;
+    }
+
+    .moreRecs, .moreRecsTitle{
+        margin: 0;
+        text-align: center;
+        justify-content: center;
     }
 }
 @media (max-width: 750px) {

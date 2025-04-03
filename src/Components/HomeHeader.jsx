@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const HomeHeader = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
+    //Header képek
     const images = [
         "../../img/headers/header1.jpg",
         "../../img/headers/header2.jpg",
@@ -12,6 +13,7 @@ const HomeHeader = () => {
         "../../img/headers/header5.jpg"
     ];
 
+    //Header képek váltakozása
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex(prevIndex => (prevIndex + 1) % images.length);

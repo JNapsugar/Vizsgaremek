@@ -18,6 +18,7 @@ const Fooldal = () => {
     const [cityError, setCityError] = useState(false);
     const [featuredError, setFeaturedError] = useState(false);
 
+    //Városok lekérése
     useEffect(() => {
         const popularCityNames = ["Budapest", "Miskolc", "Debrecen", "Szeged", "Pécs", "Siófok"];        
         const fetchCities = async () => {
@@ -37,6 +38,7 @@ const Fooldal = () => {
         fetchCities();
     }, []);
 
+    //Ingatlanok lekérése
     useEffect(() => {
         const fetchFeatured = async () => {
             try {
@@ -55,6 +57,7 @@ const Fooldal = () => {
         fetchFeatured();
     }, []);
 
+    //Ingatlanképek lekérése
     useEffect(() => {
         const fetchPropertyImages = async () => {
             try {
@@ -68,7 +71,7 @@ const Fooldal = () => {
         fetchPropertyImages();
     }, []);
 
-
+    //Város kártya
     const CityCard = ({ city }) => (
         <div className="cityCard">
             <img src={city.kep} alt={city.nev} loading="lazy" />
@@ -82,6 +85,7 @@ const Fooldal = () => {
         </div>
     );
 
+    //Népszerű városook szekció
     const CitySection = () => (
         <section className="citySection">
             <h2 className="sectionTitle">Népszerű városok</h2>
@@ -93,6 +97,7 @@ const Fooldal = () => {
         </section>
     );
 
+    //Kiemelt ingatlanok szekció
     const FeaturedSection = () => (
         <section className="kiemeltSection">
             <h2 className="sectionTitle">Kiemelt ingatlanok</h2>

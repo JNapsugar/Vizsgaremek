@@ -16,6 +16,7 @@ const Regisztracio = () => {
     const [responseMessage, setResponseMessage] = useState("");
     const navigate = useNavigate();
 
+    //Jelszóellenőrzés
 	const validatePassword = (password) => {
 		const requirements = [
 			{ regex: /.{8,}/, message: "Legalább 8 karakter hosszúnak kell lennie" },
@@ -27,6 +28,7 @@ const Regisztracio = () => {
 		return failedRequirement ? `A jelszónak ${failedRequirement.message}` : null;
 	};
 
+    //Regisztációs adatok módosítása
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -35,6 +37,7 @@ const Regisztracio = () => {
         }));
     };
 
+    //Regisztációs adatok elküldése
     const handleSubmit = async (e) => {
         e.preventDefault();
         const passwordError = validatePassword(formData.password);
