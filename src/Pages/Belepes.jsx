@@ -4,7 +4,7 @@ import axios from "axios";
 import "../Styles/Belepes_Regisztacio.css";
 import { motion } from "framer-motion";
 
-function Belepes() {
+export const Belepes = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -89,4 +89,4 @@ function Belepes() {
     );
 }
 
-export default Belepes;
+//export default Belepes;

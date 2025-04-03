@@ -185,7 +185,7 @@ const Kiadas = () => {
                 ) : uploadStatus === 'image_error' ? (
                     <div className="succesfulUpload">
                         <p>Az ingatlan adatai sikeresen feltöltve, de a kép feltöltése nem sikerült.</p>
-                        <p>Később módosíthatod az ingatlant és újra próbálkozhatsz a kép feltöltésével.</p>
+                        <p>Módosíthatod az ingatlant a profilodban, vagy próbáld újra</p>
                         <Link to={"/profil"}><button className="starBtn">Ingatlanjaim</button></Link>
                         <Link to={"/"}><button className="starBtn">Főoldal</button></Link>
                     </div>

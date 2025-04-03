@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Fooldal from './Pages/Fooldal';
 import Ingatlanok from './Pages/Ingatlanok';
 import Reszletek from './Pages/Reszletek';
-import Belepes from './Pages/Belepes';
+import {Belepes } from './Pages/Belepes';
 import Regisztracio from './Pages/Regisztracio';
 import ElfelejtettJelszo from './Pages/ElfelejtettJelszo';
 import Profil from './Pages/Profil';
@@ -13,7 +13,6 @@ import IngatlanKezeles from './Pages/IngatlanKezeles';
 import Rolunk from './Pages/Rolunk';
 import "./Styles/Alap.css";
 
-//Lapváltás animációval + Tekerjen az oldal tetejére
 function AnimatedRoutes() {
   const location = useLocation();
   useEffect(() => {

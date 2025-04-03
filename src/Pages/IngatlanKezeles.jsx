@@ -9,20 +9,6 @@ import SmallHeader from "../Components/SmallHeader";
 import {motion} from "framer-motion";
 
 const IngatlanKezeles = () => {
-
-    //Bejelentkezés ellenőrzés
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState(null);
-    useEffect(() => {
-        const storedToken = sessionStorage.getItem("token");
-        if (storedToken) {
-            setIsLoggedIn(true);
-            setToken(storedToken);
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, []);
-
     const { id } = useParams(); 
     const [formData, setFormData] = useState({
         cim: '',
@@ -51,6 +37,19 @@ const IngatlanKezeles = () => {
     const indexOfLastBooking = currentPage * bookingsPerPage;
     const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
     const currentBookings = bookings.bookings?.slice(indexOfFirstBooking, indexOfLastBooking) || [];
+
+    //Bejelentkezés ellenőrzés
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState(null);
+    useEffect(() => {
+        const storedToken = sessionStorage.getItem("token");
+        if (storedToken) {
+            setIsLoggedIn(true);
+            setToken(storedToken);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
 
     //Foglalások lekérése
     useEffect(() => {
