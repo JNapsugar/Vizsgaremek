@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 31. 10:53
+-- Létrehozás ideje: 2025. Ápr 03. 09:31
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -149,8 +149,9 @@ INSERT INTO `felhasznalok` (`Id`, `LoginNev`, `HASH`, `SALT`, `Name`, `Permissio
 (553, 'vargaa', 'e82712299a83251d0000cc02688a51529892a21b09c4436123a7e6402004d088', '05QHUMHp3SzGgHhahk8EbCGseey3NE1agg7uYjEpGfLfY4noAPFUK98dxYHXjXrz', 'Varga Antónia', 1, 1, 'vargaa@kkszki.hu', 'http://images.ingatlanok.nhely.hu/553pfp.png'),
 (555, 'katonaa', '60467cac433237053a5332f50d9499767501683dbe02e275b910bc53de9da0ea', 'TTVJoGVuimdtYpm6VOwHqvb5mYm6sp0kv2jZAOYCOShbRPoxJM2XYC6MmxW2hMqQ', 'Katona Alexandra', 1, 1, 'katonaa@gmail.com', ''),
 (576, 'jancsurakn', '4f04e8cafc93cdaf96a04bc93236b54768a4aaa0d6d4421a3efa3452b35fff9f', 'rFW4m7ZDc9bHJxI7X2zcdxmGwkaAO75CJVJUTciX0SXyh8l0CLoy8S8ARFzWQvOw', 'Jancsurák Napsugár', 1, 0, 'jancsurakn@kkszki.hu', 'http://images.ingatlanok.nhely.hu/576pfp.png'),
-(578, 'Kiado', '0553f9740e0a0ca745f74c4051ba6121f4f55234c3747e538844926e6dd2bcfb', 'SC8THT5mjj1UxYJmOAXmUc0mmvpc1AgBDWoukeUZMyE304bm8Q640PzXltIYxgcw', 'Kiadó Példa', 2, 1, 'kiado@gmail.com', ''),
-(580, 'Berlo', 'fe62ac6a0d5a9de723cc2d1255f50a9c1aa0d05b3a21b7420797711b62b9fc9d', 'Uf4XgAStZufL1gLByqjsjzoTFockUl74bFxiXBCPjrTchf4SxEshVzlUUUA2r7Wq', 'Bérlő Példa', 3, 0, 'berlo@gmail.com', '');
+(578, 'Kiado', '0553f9740e0a0ca745f74c4051ba6121f4f55234c3747e538844926e6dd2bcfb', 'SC8THT5mjj1UxYJmOAXmUc0mmvpc1AgBDWoukeUZMyE304bm8Q640PzXltIYxgcw', 'Kiadó Példa', 2, 0, 'kiado@gmail.com', ''),
+(580, 'Berlo', 'fe62ac6a0d5a9de723cc2d1255f50a9c1aa0d05b3a21b7420797711b62b9fc9d', 'Uf4XgAStZufL1gLByqjsjzoTFockUl74bFxiXBCPjrTchf4SxEshVzlUUUA2r7Wq', 'Bérlő Példa', 3, 0, 'berlo@gmail.com', ''),
+(581, 'Admin', 'dd55647eeca20b8221526d2e3ecd76197a42f27c7c175250eaf453ee957e58a9', 'yj4Sk7zzPLdvcVaRl4qyb9SkS3h9w8jzrQjrplUlydrXzgxEl4JSU0pFfLLsNPY4', 'Admin Példa', 1, 1, 'admin@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -3865,7 +3866,7 @@ ALTER TABLE `telepulesek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=581;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=582;
 
 --
 -- AUTO_INCREMENT a táblához `foglalasok`
