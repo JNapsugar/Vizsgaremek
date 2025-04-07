@@ -5,10 +5,9 @@ A Teszt branch biztosítja a rendszer minőségének ellenőrzését, amely mag�
 ### Automatizált tesztelés:
 ##
 - Selenium WebDriver-rel végzett integrációs tesztek.
-- Egységtesztelés a Jest keretrendszerrel a frontend komponensek ellenőrzésére.
-- Backend API tesztelése Postman és Jest segítségével.
+- Egységtesztelés a Jest keretrendszerrel a komponensek ellenőrzésére.
+- A helyes működést vizsgáló Funkcionális Python tesztek.
 
-  
 ### Manuális tesztelés:
 ##
 - Felhasználói élmény tesztelése valós környezetben.
