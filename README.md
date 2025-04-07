@@ -52,7 +52,6 @@ A Teszt branch a rendszer minőségének ellenőrzését végző automatikus és
 - Egységtesztelés a Jest keretrendszerrel a frontend komponensek ellenőrzésére.
 - Backend API tesztelése Postman és Jest segítségével.
 - Tesztdokumentáció
-
   
 ### 6. Dokumentáció
 A Dokumentáció branch az összes projektmunkával kapcsolatos dokumentációt tartalmazza. Ezen a branch-en található:
@@ -62,3 +61,6 @@ A Dokumentáció branch az összes projektmunkával kapcsolatos dokumentációt 
 - In progress dokumentumok: A projekt fejlesztésének aktuális állapotát és a már elvégzett munkákat tartalmazó dokumentációk.
 - Felhasználói dokumentáció: Az alkalmazás használatát bemutató kézikönyv a végfelhasználók számára.
 - Prezentáció: A projekt bemutatásához készített prezentáció a projekt céljáról, funkcióiról és megoldásairól.
+
+### 7. React Natív mobilalkalmazás
+Az weblapunk telefonos nézete: (https://snack.expo.dev/zOEAz6GGQLesL8KICsZnx).
