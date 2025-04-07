@@ -62,5 +62,6 @@ A Dokumentáció branch az összes projektmunkával kapcsolatos dokumentációt 
 - Felhasználói dokumentáció: Az alkalmazás használatát bemutató kézikönyv a végfelhasználók számára.
 - Prezentáció: A projekt bemutatásához készített prezentáció a projekt céljáról, funkcióiról és megoldásairól.
 
+##
 ### 7. React Natív mobilalkalmazás
 Az weblapunk telefonos nézete: (https://snack.expo.dev/zOEAz6GGQLesL8KICsZnx).
