@@ -88,5 +88,4 @@ export const Belepes = () => {
         </div>
     );
 }
-
-//export default Belepes;
+export default Belepes;

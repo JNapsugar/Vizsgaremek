@@ -25,6 +25,7 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.15.0",
     "react-switch": "^7.1.0",
+    "selenium-webdriver": "^4.31.0",
     "text-encoding": "^0.7.0",
     "util": "^0.12.5"
   },
@@ -52,16 +53,18 @@
       "last 1 safari version"
     ]
   },
-"jest": {
-  "testEnvironment": "jsdom",
-  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
-  "moduleNameMapper": {
-   "\\.(css)$": "<rootDir>/__mocks__/styleMock.js"
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!text-encoding|fast-text-encoding)"
+    ]
   },
-  "transformIgnorePatterns": [
-    "node_modules/(?!text-encoding|fast-text-encoding)"
-  ]
-},
   "setupFiles": [
     "<rootDir>/jest.setup.js"
   ],
