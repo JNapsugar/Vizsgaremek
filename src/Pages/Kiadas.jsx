@@ -44,10 +44,10 @@ const Kiadas = () => {
 
     //Ingatlanok(az id meghatározásához) és települések(a combobox-hoz) lekérése
     useEffect(() => {
-        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+        axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok')
             .then(res => setProperties(res.data))
             .catch(error => console.error("Hiba történt az ingatlanok lekérésekor: "+error));
-        axios.get('https://localhost:7079/api/Telepules/telepulesek')
+        axios.get('https://vizsgaremek-2jmg.onrender.com/api/Telepules/telepulesek')
             .then(res => setLocations(res.data))
             .catch(error => console.error("Hiba történt a települések lekérésekor: "+error));
     }, []);
@@ -99,7 +99,7 @@ const Kiadas = () => {
         
         try {
             const { ingatlanId, cim, leiras, helyszin, ar, szoba, meret, szolgaltatasok, tulajdonosId, kep } = formData;
-            await axios.post('https://localhost:7079/api/Ingatlan/ingatlanok', {
+            await axios.post('https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok', {
                 IngatlanId: ingatlanId,
                 Cim: cim,
                 Leiras: leiras,
@@ -120,7 +120,7 @@ const Kiadas = () => {
                 try {
                     const fileData = new FormData();
                     fileData.append("file", kep);
-                    await axios.post('https://localhost:7079/api/FileUpload/FtpServer', fileData, {
+                    await axios.post('https://vizsgaremek-2jmg.onrender.com/api/FileUpload/FtpServer', fileData, {
                         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
                     });
                     kepUrl = `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
@@ -131,7 +131,7 @@ const Kiadas = () => {
             }
             //Kép url-jének mentése az adatbázisba
             try {
-                await axios.post('https://localhost:7079/api/Ingatlankepek/ingatlankepek', {
+                await axios.post('https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek', {
                     KepUrl: kepUrl,
                     IngatlanId: ingatlanId,
                     FeltoltesDatum: new Date().toISOString(),

@@ -57,7 +57,7 @@ const Reszletek = () => {
     useEffect(() => {
         const fetchProperty = async () => {
             try {
-                const res = await axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${ingatlanId}`);
+                const res = await axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok/${ingatlanId}`);
                 setProperty(res.data);
             } catch (error) {
                 console.error("Hiba az ingatlan betöltésekor:", error);
@@ -69,7 +69,7 @@ const Reszletek = () => {
     useEffect(() => {
         const fetchPropertyImage = async () => {
             try {
-                const res = await axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek/${ingatlanId}`);
+                const res = await axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek/${ingatlanId}`);
                 setPropertyImage(res.data);
             } catch (error) {
                 console.error("Hiba az ingatlankép betöltésekor:", error);
@@ -83,7 +83,7 @@ const Reszletek = () => {
         const fetchOwner = async () => {
             if (property.tulajdonosId) {
                 try {
-                    const res = await axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${property.tulajdonosId}`);
+                    const res = await axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/felhasznalo/${property.tulajdonosId}`);
                     setOwner(res.data);
                 } catch (error) {
                     console.error("Hiba a tulajdonos adatainak betltésekor:", error);
@@ -97,7 +97,7 @@ const Reszletek = () => {
     useEffect(() => {
         const fetchProperties = async () => {
             try {
-                const res = await axios.get('https://localhost:7079/api/Ingatlan/ingatlanok');
+                const res = await axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok');
                 const randomProperties = res.data.sort(() => Math.random() - 0.5);
                 setProperties(randomProperties.slice(0, 3));
             } catch (error) {
@@ -110,7 +110,7 @@ const Reszletek = () => {
     useEffect(() => {
         const fetchPropertyImages = async () => {
             try {
-                const res = await axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek');
+                const res = await axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek');
                 setPropertyImages(res.data);
             } catch (error) {
                 console.error("Hiba a további ingatlanképek betöltésekor:", error);
@@ -123,7 +123,7 @@ const Reszletek = () => {
     useEffect(() => {
         const fetchBookedDates = async () => {
             try {
-                const res = await axios.get(`https://localhost:7079/api/Foglalasok/ingatlan/${ingatlanId}`);
+                const res = await axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/ingatlan/${ingatlanId}`);
                 const bookings = res.data.bookings || [];
                 const acceptedBookings = bookings.filter(booking => booking.allapot === "elfogadva");
 
@@ -225,7 +225,7 @@ const Reszletek = () => {
             allapot: "függőben"
         };
 
-        axios.post('https://localhost:7079/api/Foglalasok/addBooking', bookingData)
+        axios.post('https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/addBooking', bookingData)
             .then(() => {
                 document.getElementById('bookingResponse').innerText = "Foglalási kérelem sikeresen elküldve!";
             })

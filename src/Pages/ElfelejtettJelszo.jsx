@@ -13,7 +13,7 @@ function ElfelejtettJelszo() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`https://localhost:7079/api/Felhasznalo/RequestPassword/${email}`);
+            const response = await axios.post(`https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/RequestPassword/${email}`);
             setMessage(response.data);
             setTimeout(() => {
                 navigate('/belepes');

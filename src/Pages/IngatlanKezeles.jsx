@@ -53,7 +53,7 @@ const IngatlanKezeles = () => {
 
     //Foglalások lekérése
     useEffect(() => {
-        axios.get(`https://localhost:7079/api/Foglalasok/ingatlan/${id}`)
+        axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/ingatlan/${id}`)
             .then(res => { 
                 const allBookings = res.data.bookings;
                 const accepted = allBookings.filter(booking => booking.allapot === "elfogadva");
@@ -62,7 +62,7 @@ const IngatlanKezeles = () => {
 
                 // Bérlők nevének és profilképének lekérése
                 res.data.bookings.forEach(booking => {
-                    axios.get(`https://localhost:7079/api/Felhasznalo/felhasznalo/${booking.berloId}`)
+                    axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/felhasznalo/${booking.berloId}`)
                         .then(response => {
                             setBerloNevek(prevState => ({
                                 ...prevState,
@@ -93,7 +93,7 @@ const IngatlanKezeles = () => {
     const handleBookingResponse = async (bookingId, status) => {
         try {
             const response = await axios.put(
-                `https://localhost:7079/api/Foglalasok/valasz/${bookingId}`,
+                `https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/valasz/${bookingId}`,
                 status, 
                 {
                     headers: {
@@ -138,14 +138,14 @@ const IngatlanKezeles = () => {
     //Települések lekérése a comboboxhoz
     const [locations, setLocations] = useState([]);
     useEffect(() => {
-        axios.get('https://localhost:7079/api/Telepules/telepulesek')
+        axios.get('https://vizsgaremek-2jmg.onrender.com/api/Telepules/telepulesek')
             .then(res => { setLocations(res.data); })
             .catch(error => { console.error(error); });
     }, []);
 
     //Ingatlan adatainak lekérése
     useEffect(() => {
-        axios.get(`https://localhost:7079/api/Ingatlan/ingatlanok/${id}`)
+        axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok/${id}`)
             .then(res => {
                 setFormData({
                     cim: res.data.cim,
@@ -163,7 +163,7 @@ const IngatlanKezeles = () => {
             });
     }, [id]);
     useEffect(() => {
-        axios.get(`https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`)
+        axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek/${id}`)
             .then(res => {
                 setFormData((prevData) => ({
                     ...prevData,
@@ -208,7 +208,7 @@ const IngatlanKezeles = () => {
 
         try {
             const response = await axios.put(
-                `https://localhost:7079/api/Ingatlan/ingatlanok/${id}`,
+                `https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok/${id}`,
                 {
                     Cim: formData.cim,
                     Leiras: formData.leiras,
@@ -232,7 +232,7 @@ const IngatlanKezeles = () => {
                 const fileData = new FormData();
                 fileData.append("file", formData.kep);
                 await axios.post(
-                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    'https://vizsgaremek-2jmg.onrender.com/api/FileUpload/FtpServer',
                     fileData,
                     {
                         headers: {
@@ -242,7 +242,7 @@ const IngatlanKezeles = () => {
                     }
                 );
                 //Kép url-jének küldése az adatbázisba
-                let endpoint = `https://localhost:7079/api/Ingatlankepek/ingatlankepek/${id}`;
+                let endpoint = `https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek/${id}`;
                 let method = (await axios.get(endpoint).status === 200 ? 'put' : 'post');
                 endpoint = (method === 'put' ? endpoint : endpoint.replace(`/${id}`, ''));
                 await axios[method](endpoint, {
@@ -302,7 +302,7 @@ const IngatlanKezeles = () => {
         }
     
         try {
-            const response = await axios.delete(`https://localhost:7079/api/Ingatlan/ingatlanok/${id}`, {
+            const response = await axios.delete(`https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

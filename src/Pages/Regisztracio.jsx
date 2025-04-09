@@ -47,7 +47,7 @@ const Regisztracio = () => {
         }
 
         try {
-            const response = await axios.post("https://localhost:7079/api/Felhasznalo/Register", formData);
+            const response = await axios.post("https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/Register", formData);
 
             if (response.status === 200) {
                 const { token, username } = response.data;
