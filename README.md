@@ -1,6 +1,7 @@
 # Frontend Branch
 A Frontend branch tartalmazza az ingatlanbérlési platform felhasználói felületét (UI), amely egy React alapú alkalmazás.
 Ezen a branch-en találhatók a felhasználók számára látható vizuális és interaktív elemek.
+Deploy (Titkosítás miatt a képek csak localhoston jelennek meg): https://vizsgaremek-frontend.onrender.com
 
 ## Tartalma:
 ### React komponensek:
