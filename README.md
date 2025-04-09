@@ -28,12 +28,14 @@ A Frontend branch a platform felhasználói felületét (UI) tartalmazza, amely 
 - React komponensek: Az ingatlanok megjelenítéséhez és kereséséhez szükséges komponensek.
 - CSS stílusok: Az alkalmazás stílusai, reszponzív dizájn és vizuális elemek.
 - Képek és média: A platformhoz szükséges képek, ikonok és egyéb vizuális tartalmak.
+- Deploy (Titkosítás miatt a képek csak localhoston jelennek meg): https://vizsgaremek-frontend.onrender.com
 
 ### 2. Backend
 A Backend branch a web API-t tartalmazza, amely az ingatlanbérlési platform működését biztosítja. Ezen a branch-en található:
 ##
 - API fejlesztés: Az ingatlanok, felhasználók, bérlési tranzakciók kezeléséhez szükséges RESTful API.
 - Felhasználói fiók kezelése: A regisztráció, bejelentkezés, fiók adatok kezelése, valamint a jelszóváltoztatás és fiók biztonság kezelése.
+- Deploy: https://vizsgaremek-2jmg.onrender.com/swagger/index.html
 
 ### 3. Adatbázis
 Az Adatbázis branch a platform adatbázis struktúráját tartalmazza. Ez a branch a következőket tartalmazza:
