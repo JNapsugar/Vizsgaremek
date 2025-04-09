@@ -109,6 +109,7 @@ namespace IngatlanokBackend
 
             var app = builder.Build();
 
+
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseAuthentication();
