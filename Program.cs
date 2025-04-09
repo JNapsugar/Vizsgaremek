@@ -75,7 +75,7 @@ namespace IngatlanokBackend
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<IngatlanberlesiplatformContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+                options.UseMySQL(connectionString));
 
             builder.Services.AddControllers();
 
