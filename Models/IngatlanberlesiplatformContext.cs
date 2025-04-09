@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
 namespace IngatlanokBackend.Models;
 
@@ -11,7 +12,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
     }
 
     public IngatlanberlesiplatformContext(DbContextOptions<IngatlanberlesiplatformContext> options)
-        : base(options)
+                : base(options)
     {
     }
 
@@ -31,8 +32,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySQL("SERVER=localhost;PORT=3306;DATABASE=ingatlanberlesiplatform;USER=root;PASSWORD=;SSL MODE=none;");
-
+    => optionsBuilder.UseMySQL("server=rentify-vargah-bd68.i.aivencloud.com;port=21578;database=ingatlanberlesiplatform;user=avnadmin;password=AVNS_a717duW9FNrjSuHlgTb");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Felhasznalok>(entity =>
