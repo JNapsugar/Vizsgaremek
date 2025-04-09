@@ -246,7 +246,7 @@ const IngatlanKezeles = () => {
                 let method = (await axios.get(endpoint).status === 200 ? 'put' : 'post');
                 endpoint = (method === 'put' ? endpoint : endpoint.replace(`/${id}`, ''));
                 await axios[method](endpoint, {
-                    KepUrl: `http://images.ingatlanok.nhely.hu/${id}.png`,
+                    KepUrl: `https://vizsgaremek-2jmg.onrender.com/api/Kepek/${id}.png`,
                     IngatlanId: id,
                     FeltoltesDatum: new Date().toISOString(),
                 }, { headers: { Authorization: `Bearer ${token}` } });
