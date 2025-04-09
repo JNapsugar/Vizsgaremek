@@ -24,7 +24,7 @@ const Fooldal = () => {
         const fetchCities = async () => {
             try {
                 setCityPending(true);
-                const response = await axios.get('https://localhost:7079/api/Telepules/telepulesek');
+                const response = await axios.get('https://vizsgaremek-2jmg.onrender.com/api/Telepules/telepulesek');
                 const popularCities = response.data.filter(city => popularCityNames.includes(city.nev));
                 setCities(popularCities);
             } catch (error) {
@@ -43,7 +43,7 @@ const Fooldal = () => {
         const fetchFeatured = async () => {
             try {
                 setFeaturedPending(true);
-                const response = await axios.get('https://localhost:7079/api/Ingatlan/ingatlanok');
+                const response = await axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok');
                 const randomProperties = response.data.sort(() => Math.random() - 0.5).slice(0, 9);
                 setFeatured(randomProperties);
             } catch (error) {
@@ -61,7 +61,7 @@ const Fooldal = () => {
     useEffect(() => {
         const fetchPropertyImages = async () => {
             try {
-                const response = await axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek');
+                const response = await axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek');
                 setPropertyImages(response.data);
             } catch (error) {
                 console.error("Hiba az ingatlan képek betöltése során: ", error);
