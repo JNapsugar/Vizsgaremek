@@ -118,7 +118,7 @@ const Profil = () => {
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 
-                profilePictureUrl = `https://vizsgaremek-2jmg.onrender.com/api/kepek/${userId}pfp.png`;
+                profilePictureUrl = `http://images.ingatlanok.nhely.hu/${userId}pfp.png`;
             }
 
             await axios.put(

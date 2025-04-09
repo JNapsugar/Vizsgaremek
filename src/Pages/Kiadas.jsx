@@ -123,7 +123,7 @@ const Kiadas = () => {
                     await axios.post('https://vizsgaremek-2jmg.onrender.com/api/FileUpload/FtpServer', fileData, {
                         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
                     });
-                    kepUrl = `https://vizsgaremek-2jmg.onrender.com/api/kepek/${ingatlanId}`;
+                    kepUrl = `http://images.ingatlanok.nhely.hu/${ingatlanId}.png`;
                 } catch (error) {
                     console.error('Hiba történt a kép feltöltése során:', error);
                     imageUploadSuccess = false;
