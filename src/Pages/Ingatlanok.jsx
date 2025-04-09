@@ -90,7 +90,7 @@ const Ingatlanok = () => {
     //Ingatlanok lekérése
     useEffect(() => {
         setPending(true);
-        axios.get('https://localhost:7079/api/Ingatlan/ingatlanok')
+        axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok')
             .then(res => setProperties(res.data))
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
@@ -99,7 +99,7 @@ const Ingatlanok = () => {
     //Képek lekérése
     useEffect(() => {
         setPending(true);
-        axios.get('https://localhost:7079/api/Ingatlankepek/ingatlankepek')
+        axios.get('https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek')
             .then(res => setPropertyImages(res.data))
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));
@@ -108,7 +108,7 @@ const Ingatlanok = () => {
     //Települések lekérése
     useEffect(() => {
         setPending(true);
-        axios.get('https://localhost:7079/api/Telepules/telepulesek')
+        axios.get('https://vizsgaremek-2jmg.onrender.com/api/Telepules/telepulesek')
             .then(res => {setLocations(res.data); setFilteredLocations(res.data)})
             .catch(error => { console.error(error); setError(true); })
             .finally(() => setPending(false));

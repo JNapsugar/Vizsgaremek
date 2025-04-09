@@ -30,7 +30,7 @@ const Profil = () => {
         const fetchProfileData = async () => {
             try {
                 const response = await axios.get(
-                    `https://localhost:7079/api/felhasznalo/me/${username}`,
+                    `https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/me/${username}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setProfileData(response.data);
@@ -48,7 +48,7 @@ const Profil = () => {
         const fetchData = async () => {
             try {
                 const propertiesResponse = await axios.get(
-                    `https://localhost:7079/api/Ingatlan/ingatlanok`,
+                    `https://vizsgaremek-2jmg.onrender.com/api/Ingatlan/ingatlanok`,
                     { headers: { Authorization: `Bearer ${token}` } });
                     setProperties(propertiesResponse.data)
 
@@ -61,8 +61,8 @@ const Profil = () => {
                 //A bérlők foglalásai
                 if (profileData.permissionId === 1 || profileData.permissionId === 3) {
                     const endpoint = profileData.permissionId === 3 
-                        ? `https://localhost:7079/api/Foglalasok/user/${userId}`
-                        : `https://localhost:7079/api/Foglalasok/allBookings`;
+                        ? `https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/me/${userId}`
+                        : `https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/allBookings`;
                     
                     const bookingsResponse = await axios.get(endpoint, {
                         headers: { Authorization: `Bearer ${token}` }});
@@ -71,7 +71,7 @@ const Profil = () => {
 
                 //Képek lekérése
                 const imagesResponse = await axios.get(
-                    `https://localhost:7079/api/Ingatlankepek/ingatlankepek`,
+                    `https://vizsgaremek-2jmg.onrender.com/api/Ingatlankepek/ingatlankepek`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setPropertyImages(imagesResponse.data);
@@ -88,7 +88,7 @@ const Profil = () => {
         if (!window.confirm("Biztosan törölni szeretnéd a foglalást?")) return;
         
         try {
-            await axios.delete(`https://localhost:7079/api/Foglalasok/${id}`, {
+            await axios.delete(`https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBookings(bookings.filter(booking => booking.foglalasId !== id));
@@ -113,7 +113,7 @@ const Profil = () => {
                 formData.append("file", renamedFile);
                 
                 await axios.post(
-                    'https://localhost:7079/api/FileUpload/FtpServer',
+                    'https://vizsgaremek-2jmg.onrender.com/api/FileUpload/FtpServer',
                     formData,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -122,7 +122,7 @@ const Profil = () => {
             }
 
             await axios.put(
-                `https://localhost:7079/api/Felhasznalo/${userId}`,
+                `https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/${userId}`,
                 { ...profileData, profilePicturePath: profilePictureUrl },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -139,7 +139,7 @@ const Profil = () => {
     const handleLogout = async () => {
         try {
             await axios.post(
-                `https://localhost:7079/api/Felhasznalo/logout/`, 
+                `https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/logout/`, 
                 { LoginNev: profileData.loginNev },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -158,7 +158,7 @@ const Profil = () => {
         
         try {
             await axios.delete(
-                `https://localhost:7079/api/Felhasznalo/delete/${username}`,
+                `https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/delete/${username}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             

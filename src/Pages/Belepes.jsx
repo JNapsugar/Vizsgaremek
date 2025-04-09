@@ -28,7 +28,7 @@ export const Belepes = () => {
     //Bejelentkezés
     const loginUser = async (payload) => {
         try {
-            const response = await axios.post("https://localhost:7079/api/felhasznalo/login", payload, {
+            const response = await axios.post("https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/login", payload, {
                 headers: { "Content-Type": "application/json" },
             });
             return response.data;
@@ -40,7 +40,7 @@ export const Belepes = () => {
     //Felhasználó adatainak lekérése
     const fetchUserDetails = async (username) => {
         try {
-            const response = await axios.get(`https://localhost:7079/api/Felhasznalo/me/${username}`);
+            const response = await axios.get(`https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/me/${username}`);
             sessionStorage.setItem("permission", response.data.permissionId);
             sessionStorage.setItem("userId", response.data.id);
         } catch (error) {
