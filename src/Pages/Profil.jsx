@@ -61,7 +61,7 @@ const Profil = () => {
                 //A bérlők foglalásai
                 if (profileData.permissionId === 1 || profileData.permissionId === 3) {
                     const endpoint = profileData.permissionId === 3 
-                        ? `https://vizsgaremek-2jmg.onrender.com/api/Felhasznalo/me/${userId}`
+                        ? `https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/user/${userId}`
                         : `https://vizsgaremek-2jmg.onrender.com/api/Foglalasok/allBookings`;
                     
                     const bookingsResponse = await axios.get(endpoint, {
