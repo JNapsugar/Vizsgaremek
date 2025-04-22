@@ -1,5 +1,5 @@
-# Backend Branch
-A Backend branch tartalmazza a web API-t, amely az ingatlanbérlési platform működését biztosítja. Az adatok kezelése és a frontend kommunikációja ezen keresztül történik.
+# Localbackend Branch
+A Localbackend branch tartalmazza a web API helyben működő verzióját, amely az ingatlanbérlési platform működését biztosítja. Az adatok kezelése és a frontend kommunikációja ezen keresztül történik.
 *Deploy: https://vizsgaremek-2jmg.onrender.com/swagger/index.html*
 
 ## Tartalma:
