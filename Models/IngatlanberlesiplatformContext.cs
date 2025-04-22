@@ -32,7 +32,7 @@ public partial class IngatlanberlesiplatformContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    => optionsBuilder.UseMySQL("server=rentify-vargah-bd68.i.aivencloud.com;port=21578;database=ingatlanberlesiplatform;user=avnadmin;password=AVNS_a717duW9FNrjSuHlgTb");
+    => optionsBuilder.UseMySQL("server=localhost;database=ingatlanberlesiplatform;user=root;password=;SSL Mode=none;");
  
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
